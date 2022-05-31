@@ -1,0 +1,7166 @@
+<document xmlns="http://cnx.rice.edu/cnxml"> 
+<title>Java1485-Spectrum Analysis using Java, Forward and Inverse Transforms, Filtering in the Frequency Domain</title>
+<metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m49799</md:content-id>
+  <md:title>Java1485-Spectrum Analysis using Java, Forward and Inverse Transforms, Filtering in the Frequency Domain</md:title>
+  <md:abstract>Baldwin illustrates and explains forward and inverse Fourier transforms using both DFT and FFT algorithms.  He also illustrates and explains the implementation of frequency filtering by modifying the complex spectrum in the frequency domain and transforming the modified complex spectrum back into the time domain.</md:abstract>
+  <md:uuid>d4a9b39f-233d-4145-aefe-065f172755b6</md:uuid>
+</metadata>
+
+<content>
+
+
+
+
+
+
+<quote id="blockquote1000" display="block">
+
+
+
+<para id="p1000">
+Revised: Sat Oct 17 17:00:21 CDT 2015
+
+</para>
+
+
+
+This page is included in the following book: 
+
+<link id="a1000" url="http://cnx.org/contents/98d253c0-8044-4e22-a707-7b8d819bc8a7">
+
+
+        Digital Signal Processing - DSP
+
+</link>
+
+
+
+
+</quote>
+
+
+
+
+
+
+
+
+
+
+
+<section id="h11000">
+<title>
+<emphasis id="Table_of_contents" effect="bold">
+
+Table of contents
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+<list id="ul1000" list-type="bulleted">
+<item id="li1000">
+<link id="a1001" target-id="Table_of_contents">
+
+Table of contents
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1001">
+<link id="a1002" target-id="Preface">
+
+Preface
+
+</link>
+
+
+
+
+<list id="ul1001" list-type="bulleted">
+<item id="li1002">
+<link id="a1003" target-id="Viewing_tip">
+
+Viewing tip
+
+</link>
+
+
+
+
+<list id="ul1002" list-type="bulleted">
+<item id="li1003">
+<link id="a1004" target-id="Figures">
+
+Figures
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1004">
+<link id="a1005" target-id="Listings">
+
+Listings
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1005">
+<link id="a1006" target-id="Preview">
+
+Preview
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1006">
+<link id="a1007" target-id="Discussion_and_sample_code">
+
+Discussion and sample code
+
+</link>
+
+
+
+
+<list id="ul1003" list-type="bulleted">
+<item id="li1007">
+<link id="a1008" target-id="Description_of_the_program_named_Dsp035">
+
+Description of the 
+	program named Dsp035
+
+</link>
+
+
+
+
+<list id="ul1004" list-type="bulleted">
+<item id="li1008">
+<link id="a1009" target-id="The_order_of_the_plotted_results">
+
+The order of the plotted results
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1009">
+<link id="a1010" target-id="The_format_of_the_plots">
+
+The format of the plots
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1010">
+<link id="a1011" target-id="The_forward_Fourier_transform">
+
+The forward Fourier transform
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1011">
+<link id="a1012" target-id="The_inverse_Fourier_transform">
+
+The inverse Fourier transform
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1012">
+<link id="a1013" target-id="Results">
+
+Results
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1013">
+<link id="a1014" target-id="The_program_named_Dsp035">
+
+The program named Dsp035
+
+</link>
+
+
+
+
+<list id="ul1005" list-type="bulleted">
+<item id="li1014">
+<link id="a1015" target-id="The_beginning_of_the_class_named_Dsp035">
+
+The beginning of the class 
+named Dsp035
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1015">
+<link id="a1016" target-id="constructor">
+
+Beginning of the constructor
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1016">
+<link id="a1017" target-id="Compute_the_complex_spectrum">
+
+Compute the complex spectrum
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1017">
+<link id="a1018" target-id="Perform_the_inverse_Fourier_transform">
+
+Perform the inverse Fourier 
+transform
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1018">
+<link id="a1019" target-id="The_InverseComplexToReal01_class">
+
+The InverseComplexToReal01 class
+
+</link>
+
+
+
+
+<list id="ul1006" list-type="bulleted">
+<item id="li1019">
+<link id="a1020" target-id="Parameters_for_the_inverseTransform_method">
+
+Parameters for the 
+inverseTransform method
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1020">
+<link id="a1021" target-id="Beginning_of_the_inverseTransform_method">
+
+Beginning of the inverseTransform method
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1021">
+<link id="a1022" target-id="The_program_named_Dsp036">
+
+The program named Dsp036
+
+</link>
+
+
+
+
+<list id="ul1007" list-type="bulleted">
+<item id="li1022">
+<link id="a1023" target-id="The_output_from_Dsp036">
+
+The output from Dsp036
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1023">
+<link id="a1024" target-id="Some_code_from_Dsp036">
+
+Some code from Dsp036
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1024">
+<link id="a1025" target-id="The_signature_of_the_complexToComplex_method">
+
+The signature of the complexToComplex method
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1025">
+<link id="a1026" target-id="Using_a_Fourier_transform_to_perform_frequency_filtering">
+
+Using a Fourier transform to perform frequency filtering
+
+</link>
+
+
+
+
+<list id="ul1008" list-type="bulleted">
+<item id="li1026">
+<link id="a1027" target-id="Operation_of_the_program">
+
+Operation of the program
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1027">
+<link id="a1028" target-id="Beginning_of_the_class_for_Dsp037">
+
+Beginning of the class for 
+Dsp037
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1028">
+<link id="a1029" target-id="Beginning_of_the_constructor01">
+
+Beginning of the constructor
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1029">
+<link id="a1030" target-id="Compute_the_Fourier_transform">
+
+Compute the Fourier transform
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1030">
+<link id="a1031" target-id="Apply_the_filter_to_the_frequency_data">
+
+Apply the filter to the 
+frequency data
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1031">
+<link id="a1032" target-id="Recompute_the_magnitude">
+
+Re-compute the magnitude
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1032">
+<link id="a1033" target-id="Compute_the_inverse_Fourier_transform">
+
+Compute the inverse Fourier 
+transform
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1033">
+<link id="a1034" target-id="Display_the_results">
+
+Display the results
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1034">
+<link id="a1035" target-id="One_more_example_Dsp038">
+
+One more example, Dsp038
+
+</link>
+
+
+
+
+<list id="ul1009" list-type="bulleted">
+<item id="li1035">
+<link id="a1036" target-id="Compare_the_results">
+
+Compare the results
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1036">
+<link id="a1037" target-id="Run_the_program">
+
+Run the programs
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1037">
+<link id="a1038" target-id="Summary">
+
+Summary
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1038">
+<link id="a1039" target-id="Complete_program_listings">
+
+Complete program listings
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1039">
+<link id="a1040" target-id="Miscellaneous">
+
+Miscellaneous
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+
+	
+
+</section>
+<section id="h11001">
+<title>
+<emphasis id="Preface" effect="bold">
+
+Preface
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1001">
+A previous module titled
+	
+
+<link id="a1041" url="http://cnx.org/contents/201ece7a-a2bf-4576-9528-4c3c4e5322c9/Java1482-Spectrum-Analysis-usi">
+
+
+	Fun with Java, How and Why Spectral Analysis Works
+
+</link>
+
+ explained some of the 
+fundamentals regarding spectral analysis. 
+
+</para>
+
+
+
+
+
+
+<para id="p1002">
+The module titled
+
+
+<link id="a1042" url="http://cnx.org/contents/201ece7a-a2bf-4576-9528-4c3c4e5322c9/Java1482-Spectrum-Analysis-usi">
+
+
+Spectrum Analysis using Java, Sampling Frequency, Folding Frequency, and the FFT 
+Algorithm
+
+</link>
+
+ presented and explained several Java programs for doing spectral 
+analysis, including both DFT programs and FFT programs. That module illustrated 
+the fundamental aspects of spectral analysis that center around the sampling 
+frequency and the Nyquist folding frequency.
+
+</para>
+
+
+
+
+
+<para id="p1003">
+The module titled
+
+
+<link id="a1043" url="http://cnx.org/contents/97db670f-e425-49a8-8899-875426fc316d/Java1483-Spectrum-Analysis-usi">
+
+
+Spectrum Analysis using Java, Frequency Resolution versus Data Length
+
+</link>
+
+ used 
+similar Java programs to explain spectral frequency resolution.
+
+</para>
+
+
+
+
+
+<para id="p1004">
+The module titled
+
+
+<link id="a1044" url="http://cnx.org/contents/50125581-8665-4687-b43f-fd30f2f1ba28/Java1484-Spectrum-Analysis-usi">
+
+
+Spectrum Analysis using Java, Complex Spectrum and Phase Angle
+
+</link>
+
+ explained 
+issues involving the complex spectrum, the phase angle, and shifts in the time 
+domain.
+
+</para>
+
+
+
+
+
+<para id="p1005">
+This module will illustrate and explain 
+
+<emphasis id="em1000" effect="italics">
+forward
+
+</emphasis>
+ and 
+
+<emphasis id="em1001" effect="italics">
+inverse
+
+</emphasis>
+ 
+Fourier transforms using both DFT and FFT algorithms. I will also illustrate and 
+explain the implementation of frequency filtering by modifying the complex 
+spectrum in the frequency domain and then transforming the modified complex 
+spectra back into the time domain.
+
+</para>
+
+
+
+	
+	
+
+<section id="h21000">
+<title>
+<emphasis id="Viewing_tip" effect="bold">
+
+Viewing tip
+
+</emphasis>
+
+
+</title>
+
+
+	
+
+<para id="p1006">
+I recommend that you open another copy of this module in a separate 
+browser window and use the following links to easily find and view the Figures 
+and Listings while you are reading about them.
+
+</para>
+
+
+
+	
+
+<section id="h31000">
+<title>
+<emphasis id="Figures" effect="bold">
+
+Figures
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<list id="ul1010" list-type="bulleted">
+
+
+
+<item id="li1040">
+<link id="a1045" target-id="Figure_1">
+
+Figure 1.
+
+</link>
+
+
+ Forward and inverse transform of a time series using DFT algorithm.
+
+</item>
+
+
+
+
+<item id="li1041">
+<link id="a1046" target-id="Figure_2">
+
+Figure 2.
+
+</link>
+
+
+ Forward and inverse transform of a time series using FFT algorithm.
+
+</item>
+
+
+
+
+<item id="li1042">
+<link id="a1047" target-id="Figure_3">
+
+Figure 3.
+
+</link>
+
+
+ The signature of the complexToComplex method.
+
+</item>
+
+
+
+
+<item id="li1043">
+<link id="a1048" target-id="Figure_4">
+
+Figure 4.
+
+</link>
+
+
+ Filtering in the frequency domain.
+
+</item>
+
+
+
+
+<item id="li1044">
+<link id="a1049" target-id="Figure_5">
+
+Figure 5.
+
+</link>
+
+
+ Filtering in the frequency domain.
+
+</item>
+
+
+
+
+</list>
+
+
+
+	
+
+</section>
+<section id="h31001">
+<title>
+<emphasis id="Listings" effect="bold">
+
+Listings
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<list id="ul1011" list-type="bulleted">
+
+
+
+<item id="li1045">
+<link id="a1050" target-id="Listing_1">
+
+Listing 1.
+
+</link>
+
+
+ The beginning of the class named Dsp035.
+
+</item>
+
+
+
+
+<item id="li1046">
+<link id="a1051" target-id="Listing_2">
+
+Listing 2.
+
+</link>
+
+
+ Beginning of the constructor.
+
+</item>
+
+
+
+
+<item id="li1047">
+<link id="a1052" target-id="Listing_3">
+
+Listing 3.
+
+</link>
+
+
+ Compute the complex spectrum.
+
+</item>
+
+
+
+
+<item id="li1048">
+<link id="a1053" target-id="Listing_4">
+
+Listing 4.
+
+</link>
+
+
+ Perform the inverse Fourier transform.
+
+</item>
+
+
+
+
+<item id="li1049">
+<link id="a1054" target-id="Listing_5">
+
+Listing 5.
+
+</link>
+
+
+ Beginning of the class named InverseComplexToReal01.
+
+</item>
+
+
+
+
+<item id="li1050">
+<link id="a1055" target-id="Listing_6">
+
+Listing 6.
+
+</link>
+
+
+ The inverse transform computation.
+
+</item>
+
+
+
+
+<item id="li1051">
+<link id="a1056" target-id="Listing_7">
+
+Listing 7.
+
+</link>
+
+
+ Some code from Dsp036.
+
+</item>
+
+
+
+
+<item id="li1052">
+<link id="a1057" target-id="Listing_8">
+
+Listing 8.
+
+</link>
+
+
+ Beginning of the class for Dsp037.
+
+</item>
+
+
+
+
+<item id="li1053">
+<link id="a1058" target-id="Listing_9">
+
+Listing 9.
+
+</link>
+
+
+ Beginning of the constructor.
+
+</item>
+
+
+
+
+<item id="li1054">
+<link id="a1059" target-id="Listing_10">
+
+Listing 10.
+
+</link>
+
+
+ Compute the Fourier transform.
+
+</item>
+
+
+
+
+<item id="li1055">
+<link id="a1060" target-id="Listing_11">
+
+Listing 11.
+
+</link>
+
+
+ Apply the filter to the frequency data.
+
+</item>
+
+
+
+
+<item id="li1056">
+<link id="a1061" target-id="Listing_12">
+
+Listing 12.
+
+</link>
+
+
+ Re-compute the magnitude.
+
+</item>
+
+
+
+
+<item id="li1057">
+<link id="a1062" target-id="Listing_13">
+
+Listing 13.
+
+</link>
+
+
+ Compute the inverse Fourier transform.
+
+</item>
+
+
+
+
+<item id="li1058">
+<link id="a1063" target-id="Listing_14">
+
+Listing 14.
+
+</link>
+
+
+ Dsp035.java.
+
+</item>
+
+
+
+
+<item id="li1059">
+<link id="a1064" target-id="Listing_15">
+
+Listing 15.
+
+</link>
+
+
+ InverseComplexToReal01.hava.
+
+</item>
+
+
+
+
+<item id="li1060">
+<link id="a1065" target-id="Listing_16">
+
+Listing 16.
+
+</link>
+
+
+ Dsp036.java.
+
+</item>
+
+
+
+
+<item id="li1061">
+<link id="a1066" target-id="Listing_17">
+
+Listing 17.
+
+</link>
+
+
+ InverseComplexToRealFFT01.java,
+
+</item>
+
+
+
+
+<item id="li1062">
+<link id="a1067" target-id="Listing_18">
+
+Listing 18.
+
+</link>
+
+
+ Dsp037.java.
+
+</item>
+
+
+
+
+<item id="li1063">
+<link id="a1068" target-id="Listing_19">
+
+Listing 19.
+
+</link>
+
+
+ Dsp038.java.
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h11002">
+<title>
+<emphasis id="Preview" effect="bold">
+
+Preview
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1007">
+In this module, I will present and explain the following new programs:
+
+</para>
+
+
+
+
+
+<list id="ul1012" list-type="bulleted">
+
+	
+
+<item id="li1064">
+<emphasis id="strong1000" effect="bold">
+Dsp035
+
+</emphasis>
+ - Illustrates the reversible nature of the 
+	Fourier transform. This program transforms a real time series into a complex 
+	spectrum, and then reproduces the real time series by performing an inverse 
+	Fourier transform on the complex spectrum. This is accomplished using a DFT 
+	algorithm.
+
+</item>
+
+
+	
+
+<item id="li1065">
+<emphasis id="strong1001" effect="bold">
+InverseComplexToReal01
+
+</emphasis>
+ - Class that implements an 
+	inverse DFT algorithm for transforming a complex spectrum into a real time 
+	series.
+
+</item>
+
+
+	
+
+<item id="li1066">
+<emphasis id="strong1002" effect="bold">
+Dsp036
+
+</emphasis>
+ - Replicates the behavior of the program named 
+	Dsp035 but uses an FFT algorithm instead of a DFT algorithm.
+
+</item>
+
+
+	
+
+<item id="li1067">
+<emphasis id="strong1003" effect="bold">
+InverseComplexToRealFFT01
+
+</emphasis>
+ - Class that implements an 
+	inverse FFT algorithm for transforming a complex spectrum into a real time 
+	series.
+
+</item>
+
+
+	
+
+<item id="li1068">
+<emphasis id="strong1004" effect="bold">
+Dsp037
+
+</emphasis>
+ - Illustrates filtering in the frequency domain. 
+	Uses an FFT algorithm to transform a time-domain impulse into the frequency 
+	domain. Modifies the complex spectrum, eliminating energy within a specific 
+	band of frequencies. Uses an inverse FFT algorithm to produce the filtered 
+	version of the impulse in the time domain.
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1008">
+In addition, I will use the following programs that I explained in the module 
+titled 
+
+<link id="a1069" url="http://cnx.org/contents/201ece7a-a2bf-4576-9528-4c3c4e5322c9/Java1482-Spectrum-Analysis-usi">
+
+
+Spectrum Analysis using Java, Sampling Frequency, Folding Frequency, and the FFT 
+Algorithm
+
+</link>
+
+ and other previous modules.
+
+</para>
+
+
+
+
+
+<list id="ul1013" list-type="bulleted">
+
+	
+
+<item id="li1069">
+<emphasis id="strong1005" effect="bold">
+ForwardRealToComplex01
+
+</emphasis>
+ - Class that implements a 
+	forward DFT algorithm for transforming a real time series into a complex 
+	spectrum.
+
+</item>
+
+
+	
+
+<item id="li1070">
+<emphasis id="strong1006" effect="bold">
+ForwardRealToComplexFFT01
+
+</emphasis>
+ - Class that implements a 
+	forward FFT algorithm for transforming a real time series into a complex 
+	spectrum.
+
+</item>
+
+
+	
+
+<item id="li1071">
+<emphasis id="strong1007" effect="bold">
+Graph03
+
+</emphasis>
+ - Used to display various types of data. (The 
+	concepts were explained in an earlier module.)
+
+</item>
+
+
+	
+
+<item id="li1072">
+<emphasis id="strong1008" effect="bold">
+Graph06
+
+</emphasis>
+ - Also used to display various types of data in 
+	a somewhat different format. (The concepts were also explained in an earlier 
+	module.)
+
+</item>
+
+
+	
+
+<item id="li1073">
+<emphasis id="strong1009" effect="bold">
+GraphIntfc01
+
+</emphasis>
+ - An interface that is required by 
+
+<emphasis id="strong1010" effect="bold">
+Graph03
+
+</emphasis>
+ 
+	and 
+
+<emphasis id="strong1011" effect="bold">
+Graph06
+
+</emphasis>
+.
+
+</item>
+
+
+
+
+</list>
+
+
+	
+	
+
+</section>
+<section id="h11003">
+<title>
+<emphasis id="Discussion_and_sample_code" effect="bold">
+
+Discussion and sample code
+
+</emphasis>
+
+
+</title>
+
+
+	
+	
+
+<section id="h21001">
+<title>
+<emphasis id="Description_of_the_program_named_Dsp035" effect="bold">
+
+Description of the 
+	program named Dsp035
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1009">
+The program named 
+
+<emphasis id="strong1012" effect="bold">
+Dsp035
+
+</emphasis>
+ illustrates 
+
+<emphasis id="em1002" effect="italics">
+forward
+
+</emphasis>
+ and 
+
+
+<emphasis id="em1003" effect="italics">
+inverse
+
+</emphasis>
+ Fourier transforms 
+using DFT algorithms.
+
+</para>
+
+
+
+
+
+<para id="p1010">
+The program performs spectral analysis on a time series consisting of pulses 
+and a sinusoid. Then it passes the resulting real and complex parts of the 
+spectrum to an inverse Fourier transform program. This program performs an 
+inverse Fourier transform on the complex spectral data to reconstruct the 
+original time series.
+
+</para>
+
+
+
+
+
+<para id="p1011">
+This program can be run with either 
+
+<emphasis id="strong1013" effect="bold">
+Graph03
+
+</emphasis>
+ or 
+
+<emphasis id="strong1014" effect="bold">
+
+Graph06
+
+</emphasis>
+ in order to plot the results. Enter the following at the 
+command-line prompt to run the program with 
+
+<emphasis id="strong1015" effect="bold">
+Graph03
+
+</emphasis>
+ after everything is compiled:
+
+</para>
+
+
+
+
+
+<code id="pre1000" display="block">java Graph03 Dsp035</code>
+
+
+
+
+<para id="p1012">
+The program was tested using JDK 1.8 under Windows 7.
+
+</para>
+
+
+
+
+
+
+<section id="h31002">
+<title>
+<emphasis id="The_order_of_the_plotted_results" effect="bold">
+
+The order of the plotted results
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1013">
+When the data is plotted 
+
+<emphasis id="em1004" effect="italics">
+(see 
+
+<link id="a1070" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+)
+
+</emphasis>
+ using the programs 
+
+<emphasis id="strong1016" effect="bold">
+Graph03
+
+</emphasis>
+ or 
+
+
+<emphasis id="strong1017" effect="bold">
+Graph06
+
+</emphasis>
+, the plots appear in the following order from top to bottom:
+
+</para>
+
+
+
+
+
+<list id="ul1014" list-type="bulleted">
+
+	
+
+<item id="li1074">
+The input time series
+
+</item>
+
+
+	
+
+<item id="li1075">
+The real spectrum of the input time series
+
+</item>
+
+
+	
+
+<item id="li1076">
+The imaginary spectrum of the input time series
+
+</item>
+
+
+	
+
+<item id="li1077">
+The amplitude spectrum of the input time series
+
+</item>
+
+
+	
+
+<item id="li1078">
+The output time series produced by the inverse Fourier transform
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+</section>
+<section id="h31003">
+<title>
+<emphasis id="The_format_of_the_plots" effect="bold">
+
+The format of the plots
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1014">
+There were 256 values plotted horizontally in each section. I plotted the 
+values on a grid that is 270 units wide to make it easier to view the plots on 
+the rightmost end. This leaves some blank space on the rightmost end to contain 
+the numbers, preventing the numbers from being mixed in with the plotted values. 
+The last actual data value coincides with the rightmost tick mark on each plot.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31004">
+<title>
+<emphasis id="The_forward_Fourier_transform" effect="bold">
+
+The forward Fourier transform
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1015">
+A static method named 
+
+<emphasis id="strong1018" effect="bold">
+transform
+
+</emphasis>
+ belonging to the class named 
+
+
+<emphasis id="strong1019" effect="bold">
+ForwardRealToComplex01
+
+</emphasis>
+ was used to perform the forward Fourier transform.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1001" display="block">
+
+	
+
+<para id="p1016">
+<emphasis id="em1005" effect="italics">
+(I explained this class and the 
+
+<emphasis id="strong1020" effect="bold">
+transform
+
+</emphasis>
+ method in the earlier module 
+	titled 
+
+</emphasis>
+
+	
+
+<link id="a1071" url="http://cnx.org/contents/201ece7a-a2bf-4576-9528-4c3c4e5322c9/Java1482-Spectrum-Analysis-usi">
+
+
+	
+
+<emphasis id="em1006" effect="italics">
+Spectrum Analysis using Java, Sampling Frequency, Folding Frequency, and the 
+	FFT Algorithm
+
+</emphasis>
+</link>
+
+
+<emphasis id="em1007" effect="italics">
+.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1017">
+The method named 
+
+<emphasis id="strong1021" effect="bold">
+transform
+
+</emphasis>
+ does not implement an FFT algorithm. Rather, it 
+implements a DFT algorithm, which is more general than, but much slower than an 
+FFT algorithm.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1002" display="block">
+
+	
+
+<para id="p1018">
+<emphasis id="em1008" effect="italics">
+(See the program named 
+
+<emphasis id="strong1022" effect="bold">
+Dsp036
+
+</emphasis>
+ later in the module for the use of an FFT 
+	algorithm.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h31005">
+<title>
+<emphasis id="The_inverse_Fourier_transform" effect="bold">
+
+The inverse Fourier transform
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1019">
+A static method named 
+
+<emphasis id="strong1023" effect="bold">
+inverseTransform
+
+</emphasis>
+ belonging to the class named 
+
+
+<emphasis id="strong1024" effect="bold">
+InverseComplexToReal01
+
+</emphasis>
+ was used to perform the inverse Fourier transform. I will 
+explain this method later in this module.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31006">
+<title>
+<emphasis id="Results" effect="bold">
+
+Results
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1020">
+Before getting into the technical details of the program, let's take a look 
+at the results shown in 
+
+<link id="a1072" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1021">
+The top plot in 
+
+<link id="a1073" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ shows the input time series used in this experiment.
+
+</para>
+
+
+
+	
+
+
+<table id="table1000" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1000">
+<row id="tr1000">
+<entry id="th1000">
+
+
+
+<emphasis id="Figure_1" effect="bold">
+
+Figure 1.
+
+</emphasis>
+
+ Forward and inverse transform of a time series using DFT algorithm.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1000">
+<row id="tr1001">
+<entry id="td1000">
+
+
+
+
+<media id="media1000" alt="missing image" display="block">
+<image id="img1000" mime-type="image/jpeg" src="../../media/java1485a01.jpg" width="409" height="430"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h41000">
+<title>
+<emphasis id="Length_is_a_power_of_two" effect="bold">
+
+Length is a power of two
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1022">
+The time series is 256 samples long. Although the DFT algorithm can 
+accommodate time series of arbitrary lengths, I set the length of this time 
+series to a power of two so that I can compare the results with results produced 
+by an FFT algorithm later in the module.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1003" display="block">
+
+	
+
+<para id="p1023">
+<emphasis id="em1009" effect="italics">
+(Recall that most FFT algorithms are restricted to input data lengths 
+	that are a power of two.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41001">
+<title>
+<emphasis id="The_input_time_series" effect="bold">
+
+The input time series
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1024">
+As you can see, the input time series consists of three concatenated pulses 
+separated by blank spaces. The pulse on the leftmost end consists simply of some 
+values that I entered into the time series to create a pulse with an interesting 
+shape.
+
+</para>
+
+
+
+
+
+<para id="p1025">
+The middle pulse is a truncated sinusoid.
+
+</para>
+
+
+
+
+
+<para id="p1026">
+The rightmost pulse is a truncated square wave.
+
+</para>
+
+
+
+
+
+
+</section>
+<section id="h41002">
+<title>
+<emphasis id="The_objective" effect="bold">
+
+The objective
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1027">
+The objective of the experiment is to confirm that it is possible to 
+transform this time series into the frequency domain using a forward Fourier 
+transform, and then to recreate the time series by using an inverse Fourier 
+transform to transform the complex spectrum back into the time domain.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41003">
+<title>
+The real part of the spectrum is symmetrical
+
+</title>
+
+
+
+
+<para id="p1028">
+The real part of the complex spectrum is shown in the second plot from the 
+top in 
+
+<link id="a1074" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+. It will become important later to note that the real part of 
+the spectrum is symmetrical about the folding frequency near the center of the 
+plot 
+
+<emphasis id="em1010" effect="italics">
+(at the eighth tick mark)
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<para id="p1029">
+Without attempting to explain why, I will simply tell you that the real part 
+of the Fourier transform of a complex series whose imaginary part is all zeros
+
+
+<emphasis id="em1011" effect="italics">
+(like a typical sampled time series for real-world data)
+
+</emphasis>
+ 
+is always symmetrical about the folding frequency.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41004">
+<title>
+The imaginary part of the spectrum is asymmetrical
+
+</title>
+
+
+
+
+<para id="p1030">
+The imaginary part of the complex spectrum is shown in the third plot from 
+the top. Again, it will become important later to note that the imaginary part 
+of the spectrum is asymmetrical about the folding frequency.
+
+</para>
+
+
+
+
+
+<para id="p1031">
+Once again, without attempting to explain why, the imaginary part of the 
+Fourier transform of a complex series whose imaginary part is all zeros 
+
+<emphasis id="em1012" effect="italics">
+
+(like a typical sampled time series for real-world data)
+
+</emphasis>
+ is 
+always asymmetrical about the folding frequency.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41005">
+<title>
+The converse is also true
+
+</title>
+
+
+
+
+<para id="p1032">
+It is also true that the values of the imaginary part of the Fourier 
+transform of a complex spectrum whose real part is symmetrical about the folding 
+frequency and whose imaginary part is asymmetrical about the folding frequency 
+will all be zero. I will take advantage of these facts later to simplify the 
+computing and plotting process.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41006">
+<title>
+The amplitude spectrum
+
+</title>
+
+
+
+
+<para id="p1033">
+The amplitude spectrum is shown in the fourth plot down from the top. Recall 
+from previous modules that the amplitude values are always positive, consisting 
+of the square root of the sum of the squares of the real and imaginary parts.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41007">
+<title>
+The output time series
+
+</title>
+
+
+
+
+<para id="p1034">
+The output time series, produced by performing an inverse Fourier transform 
+on the complex spectrum is shown in the bottom plot in 
+
+<link id="a1075" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+. Compare the 
+bottom plot to the top plot. As you can see, they are the same, demonstrating 
+the reversible nature of the Fourier transform.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h21002">
+<title>
+<emphasis id="The_program_named_Dsp035" effect="bold">
+
+The program named Dsp035
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1035">
+I will discuss this program in fragments. A complete listing of the program 
+is provided in 
+
+<link id="a1076" target-id="Listing_14">
+
+ Listing 14
+
+</link>
+
+ near the end of the module.
+
+</para>
+
+
+
+
+
+<section id="h31007">
+<title>
+<emphasis id="The_beginning_of_the_class_named_Dsp035" effect="bold">
+
+The beginning of the class 
+named Dsp035
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1036">
+The beginning of the class for 
+
+<emphasis id="strong1025" effect="bold">
+Dsp035
+
+</emphasis>
+, including the declaration of some 
+variables and the creation of some array objects is shown in 
+
+<link id="a1077" target-id="Listing_1">
+
+ Listing 1
+
+</link>
+
+. This 
+code is straightforward.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1001" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1001">
+<row id="tr1002">
+
+
+
+<entry id="th1001">
+<emphasis id="Listing_1" effect="bold">
+
+Listing 1.
+
+</emphasis>
+
+ The beginning of the class named Dsp035.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1001">
+<row id="tr1003">
+<entry id="td1001">
+
+		
+
+<code id="pre1001" display="block">class Dsp035 implements GraphIntfc01{
+  final double pi = Math.PI;
+
+  int len = 256;
+
+  double[] timeDataIn = new double[len];
+  double[] realSpect = new double[len];
+  double[] imagSpect = new double[len];
+  double[] angle = new double[len];//unused
+  double[] magnitude = new double[len];
+  double[] timeDataOut = new double[len];</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+</section>
+<section id="h31008">
+<title>
+<emphasis id="constructor" effect="bold">
+
+Beginning of the constructor
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1037">
+The constructor begins in 
+
+<link id="a1078" target-id="Listing_2">
+
+ Listing 2
+
+</link>
+
+. The code in 
+
+<link id="a1079" target-id="Listing_2">
+
+ Listing 2
+
+</link>
+
+ creates the input 
+time series data shown in the top plot of 
+
+<link id="a1080" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<table id="table1002" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1002">
+<row id="tr1004">
+
+
+
+<entry id="th1002">
+<emphasis id="Listing_2" effect="bold">
+
+Listing 2.
+
+</emphasis>
+
+ Beginning of the constructor.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1002">
+<row id="tr1005">
+<entry id="td1002">
+
+		
+
+<code id="pre1002" display="block">  public Dsp035(){//constructor
+
+    //Create the raw data pulses
+    timeDataIn[0] = 0;
+    timeDataIn[1] = 50;
+//...
+//code deleted for brevity
+//...
+    timeDataIn[254] = -80;
+    timeDataIn[255] = -80;
+
+    //Create raw data sinusoid
+    for(int x = len/3;x &lt; 3*len/4;x++){
+      timeDataIn[x] = 80.0 * Math.sin(
+                              2*pi*(x)*1.0/20.0);
+    }//end for loop</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1038">
+Note that I deleted much of the code from 
+
+<link id="a1081" target-id="Listing_2">
+
+ Listing 2
+
+</link>
+
+ for brevity. You can view 
+the missing code in 
+
+<link id="a1082" target-id="Listing_14">
+
+ Listing 14
+
+</link>
+
+ near the end of the module.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31009">
+<title>
+<emphasis id="Compute_the_complex_spectrum" effect="bold">
+
+Compute the complex spectrum
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1039">
+The code in 
+
+<link id="a1083" target-id="Listing_3">
+
+ Listing 3
+
+</link>
+
+ calls the static 
+
+<emphasis id="strong1026" effect="bold">
+transform
+
+</emphasis>
+ method of the 
+
+
+<emphasis id="strong1027" effect="bold">
+ForwardRealToComplex01
+
+</emphasis>
+ class to compute and save the complex spectrum of the 
+time series shown in the top plot of 
+
+<link id="a1084" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<table id="table1003" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1003">
+<row id="tr1006">
+
+
+
+<entry id="th1003">
+<emphasis id="Listing_3" effect="bold">
+
+Listing 3.
+
+</emphasis>
+
+ Compute the complex spectrum.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1003">
+<row id="tr1007">
+<entry id="td1003">
+
+		
+
+<code id="pre1003" display="block">    ForwardRealToComplex01.transform(timeDataIn,
+                                     realSpect,
+                                     imagSpect,
+                                     angle,
+                                     magnitude,
+                                     zero,
+                                     0.0,
+                                     1.0);
+</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41008">
+<title>
+The method parameters
+
+</title>
+
+
+
+
+<para id="p1040">
+I explained the 
+
+<emphasis id="strong1028" effect="bold">
+transform
+
+</emphasis>
+ method in the earlier module 
+titled
+
+
+<link id="a1085" url="http://cnx.org/contents/201ece7a-a2bf-4576-9528-4c3c4e5322c9/Java1482-Spectrum-Analysis-usi">
+
+
+Spectrum Analysis using Java, Sampling Frequency, Folding Frequency, and the FFT 
+Algorithm
+
+</link>
+
+. The three middle plots in 
+
+<link id="a1086" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ are plots of the data returned 
+in the arrays referred to by 
+
+<emphasis id="strong1029" effect="bold">
+realSpect
+
+</emphasis>
+, 
+
+<emphasis id="strong1030" effect="bold">
+imagSpect
+
+</emphasis>
+, 
+and 
+
+<emphasis id="strong1031" effect="bold">
+magnitude
+
+</emphasis>
+ by the transform method.
+
+</para>
+
+
+
+
+
+<para id="p1041">
+The angle results returned by the transform program are not used in this 
+module.
+
+</para>
+
+
+
+
+
+<para id="p1042">
+One of the parameters 
+
+<emphasis id="em1013" effect="italics">
+(zero)
+
+</emphasis>
+ establishes that the first sample in 
+the time series array referred to by 
+
+<emphasis id="strong1032" effect="bold">
+timeDataIn
+
+</emphasis>
+ represents the 
+zero time origin.
+
+</para>
+
+
+
+
+
+<para id="p1043">
+The parameters also specify that the complex spectrum is to be computed at a 
+set of equally spaced frequencies ranging from zero 
+
+<emphasis id="em1014" effect="italics">
+(0.0)
+
+</emphasis>
+ to the 
+sampling frequency 
+
+<emphasis id="em1015" effect="italics">
+(1.0)
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31010">
+<title>
+<emphasis id="Perform_the_inverse_Fourier_transform" effect="bold">
+
+Perform the inverse Fourier 
+transform
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1044">
+The code in 
+
+<link id="a1087" target-id="Listing_4">
+
+ Listing 4
+
+</link>
+
+ calls the static 
+
+<emphasis id="strong1033" effect="bold">
+inverseTransform
+
+</emphasis>
+ 
+method of the 
+
+<emphasis id="strong1034" effect="bold">
+InverseComplexToReal01
+
+</emphasis>
+ class to perform an inverse Fourier 
+transform on the complex spectral data, producing the output time series shown 
+in the bottom plot in 
+
+<link id="a1088" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<table id="table1004" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1004">
+<row id="tr1008">
+
+
+
+<entry id="th1004">
+<emphasis id="Listing_4" effect="bold">
+
+Listing 4.
+
+</emphasis>
+
+ Perform the inverse Fourier transform.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1004">
+<row id="tr1009">
+<entry id="td1004">
+
+		
+
+<code id="pre1004" display="block">    InverseComplexToReal01.inverseTransform(
+                    realSpect,
+                    imagSpect,
+                    timeDataOut);
+  }//end constructor</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1045">
+I will explain the inverseTransform method later.
+
+</para>
+
+
+
+
+
+<section id="h41009">
+<title>
+An object of the class Dsp035
+
+</title>
+
+
+
+
+<para id="p1046">
+<link id="a1089" target-id="Listing_4">
+
+ Listing 4
+
+</link>
+
+ also signals the end of the constructor. Once the constructor has 
+completed executing, an object of the 
+
+<emphasis id="strong1035" effect="bold">
+Dsp035
+
+</emphasis>
+ class exists. The 
+array objects belonging to the object have been populated with the original time 
+series, the complex spectrum of the original time series, and the output time 
+series produced by performing an inverse Fourier transform on that complex 
+spectrum. This data is ready for plotting.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41010">
+<title>
+The interface methods
+
+</title>
+
+
+
+
+<para id="p1047">
+All of the remaining code in 
+
+<emphasis id="strong1036" effect="bold">
+Dsp035
+
+</emphasis>
+ consists of the six 
+methods necessary to satisfy the interface named 
+
+<emphasis id="strong1037" effect="bold">
+GraphIntfc01
+
+</emphasis>
+. 
+Those methods are required to provide data to the plotting program, as explained 
+in earlier modules in this series.
+
+</para>
+
+
+
+
+
+<para id="p1048">
+If you have studied the earlier modules in this series, you probably don't 
+want to hear any more about those methods, so I won't discuss them further. You 
+can view the six interface methods in 
+
+<link id="a1090" target-id="Listing_14">
+
+ Listing 14
+
+</link>
+
+ near the end of the modules.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h21003">
+<title>
+<emphasis id="The_InverseComplexToReal01_class" effect="bold">
+
+The InverseComplexToReal01 class
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1049">
+The static method named 
+
+<emphasis id="strong1038" effect="bold">
+inverseTransform
+
+</emphasis>
+ performs a 
+complex-to-real inverse discrete Fourier transform returning a real result only. 
+In other words, the method transforms a complex input to a real output.
+
+</para>
+
+
+
+
+
+<para id="p1050">
+There are more efficient ways to write this method taking known symmetry and 
+asymmetry conditions into account. However, I wrote the method the way that I 
+did because I wanted it to mimic the behavior of an FFT algorithm. Therefore, 
+the complex input must extend from zero to the sampling frequency.
+
+</para>
+
+
+
+
+
+<para id="p1051">
+The method does not implement an FFT algorithm. Rather, the 
+
+<emphasis id="strong1039" effect="bold">
+
+inverseTransform
+
+</emphasis>
+ method implements a straight-forward sampled-data 
+version of the continuous inverse Fourier transform that is defined using 
+integral calculus.
+
+</para>
+
+
+
+
+
+<section id="h31011">
+<title>
+<emphasis id="Parameters_for_the_inverseTransform_method" effect="bold">
+
+Parameters for the 
+inverseTransform method
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1052">
+The parameters to the 
+
+<emphasis id="strong1040" effect="bold">
+inverseTransform
+
+</emphasis>
+ method are:
+
+</para>
+
+
+
+
+
+<list id="ul1015" list-type="bulleted">
+
+	
+
+<item id="li1079">
+double[] realIn - incoming real data
+
+</item>
+
+
+	
+
+<item id="li1080">
+double[] imagIn - incoming image data
+
+</item>
+
+
+	
+
+<item id="li1081">
+double[] realOut - outgoing real data
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1053">
+The method considers the data length to be 
+
+<emphasis id="strong1041" effect="bold">
+realIn.length
+
+</emphasis>
+, 
+and considers the computational time increment to be 
+
+<emphasis id="strong1042" effect="bold">
+1.0/realIn.length
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<section id="h41011">
+<title>
+Assumptions
+
+</title>
+
+
+
+
+<para id="p1054">
+The method returns a number of points equal to the data length. It assumes 
+that the real input consists of positive frequency points for a symmetric real 
+frequency function. That is, the real input is assumed to be symmetric about the 
+folding frequency. The method does not test this assumption.
+
+</para>
+
+
+
+
+
+<para id="p1055">
+The method assumes that the imaginary input consists of positive frequency 
+points for an asymmetric imaginary frequency function. That is, the imaginary 
+input is assumed to be asymmetric about the folding frequency. Once again, the 
+method does not test this assumption.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41012">
+<title>
+A real output
+
+</title>
+
+
+
+
+<para id="p1056">
+A symmetric real part and an asymmetric imaginary part guarantee that the 
+imaginary output will be all zero values. Having made that assumption, the 
+program makes no attempt to compute an imaginary output. If the assumptions 
+described above are not valid, the results won't be valid.
+
+</para>
+
+
+
+
+
+<para id="p1057">
+The program was tested using JDK 1.8 under Windows 7.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31012">
+<title>
+<emphasis id="Beginning_of_the_inverseTransform_method" effect="bold">
+
+Beginning of the inverseTransform method
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1058">
+The beginning of the class and the beginning of the static 
+
+<emphasis id="strong1043" effect="bold">
+inverseTransform
+
+</emphasis>
+ 
+method is shown in 
+
+<link id="a1091" target-id="Listing_5">
+
+ Listing 5
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<table id="table1005" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1005">
+<row id="tr1010">
+
+
+
+<entry id="th1005">
+<emphasis id="Listing_5" effect="bold">
+
+Listing 5.
+
+</emphasis>
+
+ Beginning of the class named InverseComplexToReal01.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1005">
+<row id="tr1011">
+<entry id="td1005">
+
+		
+
+<code id="pre1005" display="block">public class InverseComplexToReal01{
+
+  public static void inverseTransform(
+                               double[] realIn,
+                               double[] imagIn,
+                               double[] realOut){
+
+    int dataLen = realIn.length;
+    double delT = 1.0/realIn.length;
+    double startTime = 0.0;</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1059">
+<link id="a1092" target-id="Listing_5">
+
+ Listing 5
+
+</link>
+
+ declares and initializes some variables that will be used later.
+
+</para>
+
+
+
+
+
+<para id="p1060">
+The inverse transform computation
+
+</para>
+
+
+
+
+
+<para id="p1061">
+<link id="a1093" target-id="Listing_6">
+
+ Listing 6
+
+</link>
+
+ contains a pair of nested for loops that perform the actual inverse 
+transform computation.
+
+</para>
+
+
+
+
+
+
+<table id="table1006" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1006">
+<row id="tr1012">
+
+
+
+<entry id="th1006">
+<emphasis id="Listing_6" effect="bold">
+
+Listing 6.
+
+</emphasis>
+
+ The inverse transform computation.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1006">
+<row id="tr1013">
+<entry id="td1006">
+
+		
+
+<code id="pre1006" display="block">    //Outer loop interates on time domain
+    // values.
+    for(int i=0; i &lt; dataLen;i++){
+      double time = startTime + i*delT;
+      double real = 0;
+      //Inner loop iterates on frequency
+      // domain values.
+      for(int j=0; j &lt; dataLen; j++){
+        real += realIn[j]*
+                      Math.cos(2*Math.PI*time*j)
+             + imagIn[j]*
+                      Math.sin(2*Math.PI*time*j);
+      }//end inner loop
+      realOut[i] = real;
+    }//end outer loop
+  }//end inverseTransform
+
+}//end class InverseComplexToReal01</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1062">
+If you have been studying the earlier modules in this series, you should be 
+able to understand the code in 
+
+<link id="a1094" target-id="Listing_6">
+
+ Listing 6
+
+</link>
+
+ without further explanation. Pay 
+particular attention to the comments that describe the two 
+
+<emphasis id="strong1044" effect="bold">
+for
+
+</emphasis>
+ 
+loops.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h21004">
+<title>
+<emphasis id="The_program_named_Dsp036" effect="bold">
+
+The program named Dsp036
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1063">
+The program named 
+
+<emphasis id="strong1045" effect="bold">
+Dsp036
+
+</emphasis>
+ replicates the behavior of the 
+program named 
+
+<emphasis id="strong1046" effect="bold">
+Dsp035
+
+</emphasis>
+, except that it uses an FFT algorithm to 
+perform the inverse Fourier transform instead of using a DFT algorithm as in
+
+
+<emphasis id="strong1047" effect="bold">
+Dsp035
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<section id="h31013">
+<title>
+<emphasis id="The_output_from_Dsp036" effect="bold">
+
+The output from Dsp036
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1064">
+The output produced by running the program named 
+
+<emphasis id="strong1048" effect="bold">
+Dsp036
+
+</emphasis>
+ and 
+plotting the output using the program named 
+
+<emphasis id="strong1049" effect="bold">
+Graph03
+
+</emphasis>
+ is shown in 
+
+
+<link id="a1095" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1007" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1007">
+<row id="tr1014">
+<entry id="th1007">
+
+
+
+<emphasis id="Figure_2" effect="bold">
+
+Figure 2.
+
+</emphasis>
+
+ Forward and inverse transform of a time series using FFT algorithm.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1007">
+<row id="tr1015">
+<entry id="td1007">
+
+
+
+
+<media id="media1001" alt="missing image" display="block">
+<image id="img1001" mime-type="image/jpeg" src="../../media/java1485a02.jpg" width="409" height="431"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<para id="p1065">
+Compare 
+
+<link id="a1096" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ with 
+
+<link id="a1097" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+. The two should be identical. The program 
+named 
+
+<emphasis id="strong1050" effect="bold">
+Dsp036
+
+</emphasis>
+ was designed to use an FFT algorithm for the 
+inverse Fourier transform and to replicate the behavior of the program named
+
+
+<emphasis id="strong1051" effect="bold">
+Dsp035
+
+</emphasis>
+, which uses a DFT algorithm for the inverse Fourier 
+transform. In addition, the same plotting parameters were used for both figures.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31014">
+<title>
+<emphasis id="Some_code_from_Dsp036" effect="bold">
+
+Some code from Dsp036
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1066">
+I'm only going to show you one short code fragment from the program named 
+
+
+<emphasis id="strong1052" effect="bold">
+Dsp036
+
+</emphasis>
+. 
+
+<link id="a1098" target-id="Listing_7">
+
+ Listing 7
+
+</link>
+
+ shows the code that calls the methods to perform the forward 
+and inverse Fourier transforms using the FFT algorithm. A complete listing of 
+the program named 
+
+<emphasis id="strong1053" effect="bold">
+Dsp036
+
+</emphasis>
+ is shown in 
+
+<link id="a1099" target-id="Listing_16">
+
+ Listing 16
+
+</link>
+
+ near the end of the module.
+
+</para>
+
+
+
+
+
+
+
+
+<table id="table1008" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1008">
+<row id="tr1016">
+
+
+
+<entry id="th1008">
+<emphasis id="Listing_7" effect="bold">
+
+Listing 7.
+
+</emphasis>
+
+ Some code from Dsp036.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1008">
+<row id="tr1017">
+<entry id="td1008">
+
+		
+
+<code id="pre1007" display="block">    //Compute FFT of the time data and save it in
+    // the output arrays.
+    ForwardRealToComplexFFT01.transform(
+                                     timeDataIn,
+                                     realSpect,
+                                     imagSpect,
+                                     angle,
+                                     magnitude);
+
+    //Compute inverse FFT of the spectral data
+    InverseComplexToRealFFT01.
+                                inverseTransform(
+                                     realSpect,
+                                     imagSpect,
+                                     timeOut);
+</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41013">
+<title>
+The forward Fourier transform
+
+</title>
+
+
+
+
+<para id="p1067">
+The 
+
+<emphasis id="strong1054" effect="bold">
+transform
+
+</emphasis>
+ method used to perform the forward Fourier 
+transform in 
+
+<link id="a1100" target-id="Listing_7">
+
+ Listing 7
+
+</link>
+
+ was discussed in an earlier module, so I won't discuss it 
+further here.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41014">
+<title>
+The inverse Fourier transform
+
+</title>
+
+
+
+
+<para id="p1068">
+The static 
+
+<emphasis id="strong1055" effect="bold">
+inverseTransform
+
+</emphasis>
+ method of the 
+
+<emphasis id="strong1056" effect="bold">
+
+InverseComplexToRealFFT01
+
+</emphasis>
+ class was used to perform the inverse Fourier 
+transform in 
+
+<link id="a1101" target-id="Listing_7">
+
+ Listing 7
+
+</link>
+
+. You can view this method in 
+
+<link id="a1102" target-id="Listing_17">
+
+ Listing 17
+
+</link>
+
+ near the end of 
+the module.
+
+</para>
+
+
+
+
+
+<para id="p1069">
+I'm not going to discuss this method in detail either, because it is very 
+similar to the method named 
+
+<emphasis id="strong1057" effect="bold">
+InverseComplexToReal01
+
+</emphasis>
+ discussed 
+earlier in conjunction with 
+
+<link id="a1103" target-id="Listing_4">
+
+ Listing 4
+
+</link>
+
+ and the listings following that one.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41015">
+<title>
+A couple of things to note
+
+</title>
+
+
+
+
+<para id="p1070">
+There are a couple of things, however, that I do want to point out. 
+
+</para>
+
+
+
+
+
+<para id="p1071">
+The 
+
+<emphasis id="strong1058" effect="bold">
+transform
+
+</emphasis>
+ method and the 
+
+<emphasis id="strong1059" effect="bold">
+inverseTransform
+
+</emphasis>
+ method each call a method named 
+
+
+<emphasis id="strong1060" effect="bold">
+complexToComplex
+
+</emphasis>
+ to actually perform the Fourier transform. This method 
+implements a classical FFT algorithm accepting complex input data and producing 
+complex output data. The restriction of real-to-complex and complex-to-real is 
+imposed in this program by the methods named 
+
+<emphasis id="strong1061" effect="bold">
+transform
+
+</emphasis>
+ and
+
+
+<emphasis id="strong1062" effect="bold">
+inverseTransform
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1004" display="block">
+
+	
+
+<para id="p1072">
+<emphasis id="em1016" effect="italics">
+(The method named 
+
+<emphasis id="strong1063" effect="bold">
+complexToComplex
+
+</emphasis>
+ is also suitable for use if you have a 
+	need to perform complex-to-complex Fourier transforms.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+</section>
+<section id="h31015">
+<title>
+<emphasis id="The_signature_of_the_complexToComplex_method" effect="bold">
+
+The signature of the complexToComplex method
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1073">
+The signature for the complexToComplex method is shown in 
+
+<link id="a1104" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+<table id="table1009" summary="This is a table." pgwide="630">
+<tgroup cols="1">
+
+
+<thead id="thead1009">
+<row id="tr1018">
+<entry id="th1009">
+
+
+
+<emphasis id="Figure_3" effect="bold">
+
+Figure 3.
+
+</emphasis>
+
+ The signature of the complexToComplex method.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1009">
+<row id="tr1019">
+<entry id="td1009">
+
+		
+
+<code id="pre1008" display="block">  public static void complexToComplex(
+                                  int sign,
+                                  int len,
+                                  double real[],
+                                  double imag[]){</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1074">
+The 
+
+<emphasis id="strong1064" effect="bold">
+complexToComplex
+
+</emphasis>
+ method can be used to perform either a 
+forward or an inverse transform. The value of the first parameter determines 
+whether the method performs a forward or an inverse Fourier transform.
+
+</para>
+
+
+
+
+
+<section id="h41016">
+<title>
+The first parameter of the complexToComplex method
+
+</title>
+
+
+
+
+<para id="p1075">
+A value of +1 for the first parameter causes the 
+
+<emphasis id="strong1065" effect="bold">
+complexToComplex
+
+</emphasis>
+ 
+method to perform a forward Fourier transform.
+
+</para>
+
+
+
+
+
+<para id="p1076">
+A value of -1 for the first parameter causes the 
+
+<emphasis id="strong1066" effect="bold">
+complexToComplex
+
+</emphasis>
+ 
+method to perform an inverse Fourier transform.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41017">
+<title>
+The forward transform
+
+</title>
+
+
+
+
+<para id="p1077">
+Although I didn't include the code in this module, 
+
+<emphasis id="em1017" effect="italics">
+(because it was shown 
+in an earlier module)
+
+</emphasis>
+, the 
+
+<emphasis id="strong1067" effect="bold">
+transform
+
+</emphasis>
+ method in 
+
+<link id="a1105" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+ 
+passes a value of +1 to the 
+
+<emphasis id="strong1068" effect="bold">
+complexToComplex
+
+</emphasis>
+ method to cause it to perform a 
+forward Fourier transform.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41018">
+<title>
+The inverse transform
+
+</title>
+
+
+
+
+<para id="p1078">
+Similarly, the 
+
+<emphasis id="strong1069" effect="bold">
+inverseTransform
+
+</emphasis>
+ method shown in 
+
+<link id="a1106" target-id="Listing_17">
+
+ Listing 17
+
+</link>
+
+ 
+passes a value of -1 to the 
+
+<emphasis id="strong1070" effect="bold">
+complexToComplex
+
+</emphasis>
+ method to cause it 
+to perform an inverse Fourier transform.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41019">
+<title>
+FFT and DFT produce equivalent results
+
+</title>
+
+
+
+
+<para id="p1079">
+As evidenced in 
+
+<link id="a1107" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ and 
+
+<link id="a1108" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+, the program named 
+
+<emphasis id="strong1071" effect="bold">
+Dsp035
+
+</emphasis>
+, 
+which uses a DFT algorithm, produces the same results as the program named
+
+
+<emphasis id="strong1072" effect="bold">
+Dsp036
+
+</emphasis>
+, which uses an FFT algorithm. However, if you were to 
+put a timer on each of the programs, you would find that 
+
+<emphasis id="strong1073" effect="bold">
+Dsp036
+
+</emphasis>
+ 
+runs faster due to the improved speed of the FFT algorithm over the DFT 
+algorithm.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h21005">
+<title>
+<emphasis id="Using_a_Fourier_transform_to_perform_frequency_filtering" effect="bold">
+
+Using a Fourier transform to perform frequency filtering
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1080">
+The program named 
+
+<emphasis id="strong1074" effect="bold">
+Dsp037
+
+</emphasis>
+ illustrates frequency filtering 
+accomplished by modifying the complex spectrum in the frequency domain and then 
+performing an inverse Fourier transform on the modified frequency-domain data. 
+The results are shown in 
+
+<link id="a1109" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+<table id="table1010" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1010">
+<row id="tr1020">
+<entry id="th1010">
+
+
+
+<emphasis id="Figure_4" effect="bold">
+
+Figure 4.
+
+</emphasis>
+
+ Filtering in the frequency domain.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1010">
+<row id="tr1021">
+<entry id="td1010">
+
+
+
+
+<media id="media1002" alt="missing image" display="block">
+<image id="img1002" mime-type="image/jpeg" src="../../media/java1485a03.jpg" width="409" height="431"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h31016">
+<title>
+<emphasis id="Operation_of_the_program" effect="bold">
+
+Operation of the program
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1081">
+The program begins by using an FFT algorithm to perform a forward Fourier 
+transform on a single impulse in the time domain.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1005" display="block">
+
+	
+
+<para id="p1082">
+<emphasis id="em1018" effect="italics">
+(A DFT algorithm could have been used equally as well, but it would 
+	have been slower.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1083">
+The impulse is shown as the input time series in the topmost plot in 
+
+
+<link id="a1110" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1006" display="block">
+
+	
+
+<para id="p1084">
+<emphasis id="em1019" effect="italics">
+(Although I didn't show the complex spectrum of the impulse, we know 
+	that the magnitude of the spectrum of an impulse is constant across all 
+	frequencies. In other words, the magnitude spectrum of an impulse is a flat 
+	line from zero to the sampling frequency and above.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<section id="h41020">
+<title>
+Modify the complex spectrum
+
+</title>
+
+
+
+
+<para id="p1085">
+Then the program eliminates all energy between one-sixth and five-sixths of 
+the sampling frequency by setting the real and imaginary parts of the FFT output 
+to zero.
+
+</para>
+
+
+
+
+
+<para id="p1086">
+The second, third, and fourth plots in 
+
+<link id="a1111" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ show the real part, imaginary 
+part, and amplitude respectively of the modified complex spectrum.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1007" display="block">
+
+	
+
+<para id="p1087">
+<emphasis id="em1020" effect="italics">
+(The two boxes in the fourth plot in 
+
+<link id="a1112" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ show what's left of the 
+	spectral energy after the energy in the middle of the band has been 
+	eliminated.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1088">
+The folding frequency in these three plots is near the center of the plot at 
+the eighth tick mark.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41021">
+<title>
+The plotting format
+
+</title>
+
+
+
+
+<para id="p1089">
+The input data length was 256 samples. All but one of the input data values 
+was set to zero resulting in a single impulse in the input time series near the 
+second tick mark in 
+
+<link id="a1113" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1008" display="block">
+
+	
+
+<para id="p1090">
+<emphasis id="em1021" effect="italics">
+(The real and complex parts of the frequency spectrum were computed 
+	at 256 frequencies between zero and the sampling frequency.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1091">
+There were 256 values plotted horizontally in each separate plot. Once again, 
+to make it easier to view the plots on the rightmost end, I plotted the values 
+on a grid that is 270 units wide. This leaves some blank space on the rightmost 
+end to contain the numbers, thus preventing the numbers from being mixed in with 
+the plotted values. The last actual data value coincides with the rightmost tick 
+mark on each plot.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41022">
+<title>
+Perform an inverse Fourier transform
+
+</title>
+
+
+
+
+<para id="p1092">
+After modifying the complex spectrum as described above, the program performs 
+an inverse Fourier transform on the modified complex spectrum to produce the 
+filtered impulse.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41023">
+<title>
+The filtered impulse
+
+</title>
+
+
+
+
+<para id="p1093">
+The filtered impulse is shown as the bottom plot in 
+
+<link id="a1114" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+. As you can see, 
+the pulse is smeared out in time relative to the input pulse in the top plot. 
+This is the typical result of reducing the bandwidth of a pulse. 
+
+</para>
+
+
+
+
+
+<quote id="blockquote1009" display="block">
+
+	
+
+<para id="p1094">
+<emphasis id="em1022" effect="italics">
+(This particular modification of the complex spectrum resulted in a 
+	filtered pulse that has the waveform of a SIN(X)/X function. A different 
+	modification of the complex spectrum would have resulted in a filtered pulse 
+	with a different waveform.
+
+</emphasis>
+</para>
+
+
+
+	
+
+<para id="p1095">
+<emphasis id="em1023" effect="italics">
+This example also illustrates one of the miracles of digital signal 
+	processing. Energy appears in the output before it occurs in the input. 
+	Obviously that is not possible in the real world of analog systems, but many 
+	things are possible in the digital world that are not possible in the real 
+	world.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+</section>
+<section id="h31017">
+<title>
+<emphasis id="Beginning_of_the_class_for_Dsp037" effect="bold">
+
+Beginning of the class for 
+Dsp037
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1096">
+<link id="a1115" target-id="Listing_8">
+
+ Listing 8
+
+</link>
+
+ shows the beginning of the class definition for the program named 
+Dsp037.
+
+</para>
+
+
+
+
+
+
+
+
+<table id="table1011" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1011">
+<row id="tr1022">
+
+
+
+<entry id="th1011">
+<emphasis id="Listing_8" effect="bold">
+
+Listing 8.
+
+</emphasis>
+
+ Beginning of the class for Dsp037.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1011">
+<row id="tr1023">
+<entry id="td1011">
+
+		
+
+<code id="pre1009" display="block">class Dsp037 implements GraphIntfc01{
+  final double pi = Math.PI;
+
+  int len = 256;
+
+  double[] timeDataIn = new double[len];
+  double[] realSpect = new double[len];
+  double[] imagSpect = new double[len];
+  double[] angle = new double[len];//unused
+  double[] magnitude = new double[len];
+  double[] timeOut = new double[len];</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1097">
+<link id="a1116" target-id="Listing_8">
+
+ Listing 8
+
+</link>
+
+ simply declares and initializes some variables that will be used 
+later.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31018">
+<title>
+<emphasis id="Beginning_of_the_constructor01" effect="bold">
+
+Beginning of the constructor
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+<para id="p1098">
+The constructor begins in 
+
+<link id="a1117" target-id="Listing_9">
+
+ Listing 9
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<table id="table1012" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1012">
+<row id="tr1024">
+
+
+
+<entry id="th1012">
+<emphasis id="Listing_9" effect="bold">
+
+Listing 9.
+
+</emphasis>
+
+ Beginning of the constructor.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1012">
+<row id="tr1025">
+<entry id="td1012">
+
+		
+
+<code id="pre1010" display="block">  public Dsp037(){//constructor
+
+    timeDataIn[32] = 90;</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1099">
+<link id="a1118" target-id="Listing_9">
+
+ Listing 9
+
+</link>
+
+ creates the raw pulse data shown in the topmost plot in 
+
+<link id="a1119" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1100">
+When the array object referred to by 
+
+<emphasis id="strong1075" effect="bold">
+timeDataIn
+
+</emphasis>
+ is created, 
+the values of all array elements are set to zero by default. 
+
+<link id="a1120" target-id="Listing_9">
+
+ Listing 9
+
+</link>
+
+ modifies 
+one of the elements to have a value of 90. This results in a single impulse at 
+an index of 32.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31019">
+<title>
+<emphasis id="Compute_the_Fourier_transform" effect="bold">
+
+Compute the Fourier transform
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1101">
+Continuing with the constructor, the code in 
+
+<link id="a1121" target-id="Listing_10">
+
+ Listing 10
+
+</link>
+
+ uses an FFT algorithm in the 
+method named 
+
+<emphasis id="strong1076" effect="bold">
+transform
+
+</emphasis>
+ 
+
+<emphasis id="em1024" effect="italics">
+(discussed earlier)
+
+</emphasis>
+ to compute the Fourier transform of 
+the impulse.
+
+</para>
+
+
+
+
+
+<table id="table1013" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1013">
+<row id="tr1026">
+
+
+
+<entry id="th1013">
+<emphasis id="Listing_10" effect="bold">
+
+Listing 10.
+
+</emphasis>
+
+ Compute the Fourier transform.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1013">
+<row id="tr1027">
+<entry id="td1013">
+
+		
+
+<code id="pre1011" display="block">    //Compute FFT of the time data and save it in
+    // the output arrays.
+    ForwardRealToComplexFFT01.transform(
+                                     timeDataIn,
+                                     realSpect,
+                                     imagSpect,
+                                     angle,
+                                     magnitude);</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1102">
+The results of the Fourier transform are stored in the array objects referred 
+to by 
+
+<emphasis id="strong1077" effect="bold">
+realSpect
+
+</emphasis>
+, 
+
+<emphasis id="strong1078" effect="bold">
+imagSpect
+
+</emphasis>
+, and 
+
+<emphasis id="strong1079" effect="bold">
+
+magnitude
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1010" display="block">
+
+	
+
+<para id="p1103">
+<emphasis id="em1025" effect="italics">
+(The phase angle is also computed but is of no interest in this 
+	example.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h31020">
+<title>
+<emphasis id="Apply_the_filter_to_the_frequency_data" effect="bold">
+
+Apply the filter to the 
+frequency data
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1104">
+<link id="a1122" target-id="Listing_11">
+
+ Listing 11
+
+</link>
+
+ applies the filter by setting sample values in a portion of the 
+real and imaginary parts of the complex spectrum to zero.
+
+</para>
+
+
+
+
+
+<table id="table1014" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1014">
+<row id="tr1028">
+
+
+
+<entry id="th1014">
+<emphasis id="Listing_11" effect="bold">
+
+Listing 11.
+
+</emphasis>
+
+ Apply the filter to the frequency data.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1014">
+<row id="tr1029">
+<entry id="td1014">
+
+		
+
+<code id="pre1012" display="block">    for(int cnt = len/6;cnt &lt; 5*len/6;cnt++){
+      realSpect[cnt] = 0.0;
+      imagSpect[cnt] = 0.0;
+    }//end for loop</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1105">
+This code eliminates all energy between one-sixth and five-sixths of the 
+sampling frequency. The modified data for the real and imaginary parts of the 
+complex spectrum are shown in the second and third plots in 
+
+<link id="a1123" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31021">
+<title>
+<emphasis id="Recompute_the_magnitude" effect="bold">
+
+Re-compute the magnitude
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1106">
+<link id="a1124" target-id="Listing_12">
+
+ Listing 12
+
+</link>
+
+ re-computes the magnitude values for the modified real and 
+imaginary values of the complex spectrum.
+
+</para>
+
+
+
+
+
+<table id="table1015" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1015">
+<row id="tr1030">
+
+
+
+<entry id="th1015">
+<emphasis id="Listing_12" effect="bold">
+
+Listing 12.
+
+</emphasis>
+
+ Re-compute the magnitude.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1015">
+<row id="tr1031">
+<entry id="td1015">
+
+		
+
+<code id="pre1013" display="block">    //Recompute the magnitude based on the
+    // modified real and imaginary spectra.
+    for(int cnt = 0;cnt &lt; len;cnt++){
+      magnitude[cnt] =
+        (Math.sqrt(
+           realSpect[cnt]*realSpect[cnt]
+           + imagSpect[cnt]*imagSpect[cnt])/len);
+    }//end for loop</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1107">
+The modified data for the amplitude of the complex spectrum are shown in the 
+fourth plot in 
+
+<link id="a1125" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31022">
+<title>
+<emphasis id="Compute_the_inverse_Fourier_transform" effect="bold">
+
+Compute the inverse Fourier 
+transform
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1108">
+<link id="a1126" target-id="Listing_13">
+
+ Listing 13
+
+</link>
+
+ uses the inverseTransform method to compute the inverse Fourier 
+transform of the modified complex spectrum stored in realSpect and imagSpect. 
+The results of the inverse transform are stored in timeOut.
+
+</para>
+
+
+
+
+
+<table id="table1016" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1016">
+<row id="tr1032">
+
+
+
+<entry id="th1016">
+<emphasis id="Listing_13" effect="bold">
+
+Listing 13.
+
+</emphasis>
+
+ Compute the inverse Fourier transform.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1016">
+<row id="tr1033">
+<entry id="td1016">
+
+		
+
+<code id="pre1014" display="block">    InverseComplexToRealFFT01.inverseTransform(
+                                       realSpect,
+                                       imagSpect,
+                                       timeOut);
+  }//end constructor</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1109">
+The results of the inverse transform are shown in the bottom plot in 
+
+
+<link id="a1127" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1110">
+<link id="a1128" target-id="Listing_13">
+
+ Listing 13
+
+</link>
+
+ also signals the end of the constructor.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31023">
+<title>
+<emphasis id="Display_the_results" effect="bold">
+
+Display the results
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1111">
+Once the constructor returns, all of the data that is to be plotted has been 
+stored in the various array objects. The remaining code in the program consists 
+of the definition of the six methods required by the interface named 
+GraphIntfc01. These methods are required to make it possible to use the program 
+named Graph03 to plot the results as shown in 
+
+<link id="a1129" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1112">
+I have discussed these methods on numerous previous occasions, and won't 
+repeat that discussion here.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h21006">
+<title>
+<emphasis id="One_more_example_Dsp038" effect="bold">
+
+One more example, Dsp038
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1113">
+<link id="a1130" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ illustrates one more example of performing frequency filtering by 
+modifying the complex spectrum and then performing an inverse transform on the 
+modified spectrum.
+
+</para>
+
+
+
+
+
+<para id="p1114">
+While discussing the program named 
+
+<emphasis id="strong1080" effect="bold">
+Dsp037
+
+</emphasis>
+, I told you that performing a 
+different modification on the complex spectrum would result in a different 
+waveform for the filtered impulse. The program named 
+
+<emphasis id="strong1081" effect="bold">
+Dsp038
+
+</emphasis>
+ applies a different 
+modification to the complex spectrum, but is otherwise the same as Dsp037.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1011" display="block">
+
+	
+
+<para id="p1115">
+<emphasis id="em1026" effect="italics">
+(Because of the similarity of the two programs, I won't discuss the code 
+	in Dsp038. You can view that code in 
+
+<link id="a1131" target-id="Listing_19">
+
+ Listing 19
+
+</link>
+
+ near the end of the module.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1116">
+<link id="a1132" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ shows the output produced by the program named 
+
+<emphasis id="strong1082" effect="bold">
+Dsp038
+
+</emphasis>
+. 
+
+</para>
+
+
+
+
+
+
+<table id="table1017" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1017">
+<row id="tr1034">
+<entry id="th1017">
+
+
+
+<emphasis id="Figure_5" effect="bold">
+
+Figure 5.
+
+</emphasis>
+
+ Filtering in the frequency domain.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1017">
+<row id="tr1035">
+<entry id="td1017">
+
+
+
+
+<media id="media1003" alt="missing image" display="block">
+<image id="img1003" mime-type="image/jpeg" src="../../media/java1485a04.jpg" width="409" height="431"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h31024">
+<title>
+<emphasis id="Compare_the_results" effect="bold">
+
+Compare the results
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1117">
+The basic plotting format of 
+
+<link id="a1133" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ is the same as 
+
+<link id="a1134" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<section id="h41024">
+<title>
+Compare 
+
+<link id="a1135" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ with 
+
+<link id="a1136" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+
+</title>
+
+
+
+
+<para id="p1118">
+The first difference to note between the two figures is that I moved the 
+impulse in the input time series in the topmost plot sixteen samples further to 
+the right in 
+
+<emphasis id="strong1083" effect="bold">
+Dsp038
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1012" display="block">
+
+	
+
+<para id="p1119">
+<emphasis id="em1027" effect="italics">
+(This has no impact on the final result, which you can verify by 
+	modifying the program to move the impulse to a different position and then 
+	compiling and running the modified program.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41025">
+<title>
+Compare the bandwidth of the pass band
+
+</title>
+
+
+
+
+<para id="p1120">
+The second difference to note is shown in the modified amplitude spectrum in 
+the fourth plot in the two figures. The bandwidth of the pass band is 
+significantly narrower in 
+
+<link id="a1137" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ than in 
+
+<link id="a1138" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+. Also, the pass band in 
+
+
+<link id="a1139" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ extends all the way down to zero frequency, while 
+
+<link id="a1140" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ eliminates 
+all energy below a frequency of three thirty-seconds of the sampling frequency.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41026">
+<title>
+Waveforms of filtered impulse
+
+</title>
+
+
+
+
+<para id="p1121">
+Finally, note the waveforms of the two filtered impulses. The overall 
+amplitude of the filtered impulse in 
+
+<link id="a1141" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ is less than in 
+
+<link id="a1142" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+, simply 
+because it contains less total energy. In addition, the filtered impulse in 
+
+
+<link id="a1143" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ is broader than the filtered impulse in 
+
+<link id="a1144" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+. This is because it 
+has a narrower bandwidth.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1013" display="block">
+
+	
+
+<para id="p1122">
+<emphasis id="em1028" effect="italics">
+(Pulses that are narrow in terms of time duration require a wider 
+	bandwidth than pulses that have a longer time duration. The time duration of 
+	the pulse tends to be inversely related to the required bandwidth for the 
+	pulse.)
+
+</emphasis>
+ 
+
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+
+</section>
+</section>
+</section>
+</section>
+<section id="h11004">
+<title>
+<emphasis id="Run_the_program" effect="bold">
+
+Run the programs
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+<para id="p1123">
+I encourage you to copy, compile, and run the programs provided in this 
+module. Experiment with them, making changes and observing the results of your 
+changes.
+
+</para>
+
+
+
+
+
+<para id="p1124">
+Create more complex experiments. For example, use more complex input time 
+series when experimenting with frequency filtering. Apply different 
+modifications to the complex spectrum when experimenting with frequency 
+filtering.
+
+</para>
+
+
+
+
+
+<para id="p1125">
+Most of all enjoy yourself and learn something in the process.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h11005">
+<title>
+<emphasis id="Summary" effect="bold">
+
+Summary
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1126">
+This module illustrates and explains forward and inverse Fourier transforms 
+using both DFT and FFT algorithms.
+
+</para>
+
+
+
+
+
+<para id="p1127">
+The module also illustrates and explains the implementation of frequency 
+filtering by modifying the complex spectrum in the frequency domain and then 
+transforming the modified complex spectrum back into the time domain.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h11006">
+<title>
+<emphasis id="Complete_program_listings" effect="bold">
+
+Complete program listings
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1128">
+Complete listings of the programs discussed in this module are provided 
+below.
+
+</para>
+
+
+
+
+
+
+
+<para id="p1129">
+Listings for other programs mentioned in the module, such as 
+
+<emphasis id="strong1084" effect="bold">
+Graph03
+
+</emphasis>
+ 
+and 
+
+<emphasis id="strong1085" effect="bold">
+Graph06
+
+</emphasis>
+, are provided in other modules. Those modules are 
+identified in the text of this module. 
+
+</para>
+
+
+
+
+
+
+
+<table id="table1018" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1018">
+<row id="tr1036">
+
+
+
+<entry id="th1018">
+<emphasis id="Listing_14" effect="bold">
+
+Listing 14.
+
+</emphasis>
+
+ Dsp035.java.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1018">
+<row id="tr1037">
+<entry id="td1018">
+
+		
+
+<code id="pre1015" display="block">import java.util.*;
+
+class Dsp035 implements GraphIntfc01{
+  final double pi = Math.PI;
+
+  int len = 256;
+
+  double[] timeDataIn = new double[len];
+  double[] realSpect = new double[len];
+  double[] imagSpect = new double[len];
+  double[] angle = new double[len];//unused
+  double[] magnitude = new double[len];
+  double[] timeDataOut = new double[len];
+  int zero = 0;
+
+  public Dsp035(){//constructor
+
+    //Create the raw data pulses
+    timeDataIn[0] = 0;
+    timeDataIn[1] = 50;
+    timeDataIn[2] = 75;
+    timeDataIn[3] = 80;
+    timeDataIn[4] = 75;
+    timeDataIn[5] = 50;
+    timeDataIn[6] = 25;
+    timeDataIn[7] = 0;
+    timeDataIn[8] = -25;
+    timeDataIn[9] = -50;
+    timeDataIn[10] = -75;
+    timeDataIn[11] = -80;
+    timeDataIn[12] = -60;
+    timeDataIn[13] = -40;
+    timeDataIn[14] = -26;
+    timeDataIn[15] = -17;
+    timeDataIn[16] = -11;
+    timeDataIn[17] = -8;
+    timeDataIn[18] = -5;
+    timeDataIn[19] = -3;
+    timeDataIn[20] = -2;
+    timeDataIn[21] = -1;
+
+    timeDataIn[240] = 80;
+    timeDataIn[241] = 80;
+    timeDataIn[242] = 80;
+    timeDataIn[243] = 80;
+    timeDataIn[244] = -80;
+    timeDataIn[245] = -80;
+    timeDataIn[246] = -80;
+    timeDataIn[247] = -80;
+    timeDataIn[248] = 80;
+    timeDataIn[249] = 80;
+    timeDataIn[250] = 80;
+    timeDataIn[251] = 80;
+    timeDataIn[252] = -80;
+    timeDataIn[253] = -80;
+    timeDataIn[254] = -80;
+    timeDataIn[255] = -80;
+
+    //Create raw data sinusoid
+    for(int x = len/3;x &lt; 3*len/4;x++){
+      timeDataIn[x] = 80.0 * Math.sin(
+                              2*pi*(x)*1.0/20.0);
+    }//end for loop
+
+    //Compute DFT of the time data and save it in
+    // the output arrays.
+    ForwardRealToComplex01.transform(timeDataIn,
+                                     realSpect,
+                                     imagSpect,
+                                     angle,
+                                     magnitude,
+                                     zero,
+                                     0.0,
+                                     1.0);
+
+    //Compute inverse DFT of spectral data and
+    // save output time data in output array
+    InverseComplexToReal01.inverseTransform(
+                    realSpect,
+                    imagSpect,
+                    timeDataOut);
+  }//end constructor
+
+  //-------------------------------------------//
+  //The following six methods are required by the
+  // interface named GraphIntfc01.
+  public int getNmbr(){
+    //Return number of curves to plot.  Must not
+    // exceed 5.
+    return 5;
+  }//end getNmbr
+  //-------------------------------------------//
+  public double f1(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; timeDataIn.length-1){
+      return 0;
+    }else{
+      return timeDataIn[index];
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f2(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; realSpect.length-1){
+      return 0;
+    }else{
+      //scale for convenient viewing
+      return 5*realSpect[index];
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f3(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; imagSpect.length-1){
+      return 0;
+    }else{
+      //scale for convenient viewing
+      return 5*imagSpect[index];
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f4(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; magnitude.length-1){
+      return 0;
+    }else{
+      //scale for convenient viewing
+      return 5*magnitude[index];
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f5(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 ||
+                   index &gt; timeDataOut.length-1){
+      return 0;
+    }else{
+      return timeDataOut[index];
+    }//end else
+  }//end function
+
+}//end sample class Dsp035</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<table id="table1019" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1019">
+<row id="tr1038">
+
+
+
+<entry id="th1019">
+<emphasis id="Listing_15" effect="bold">
+
+Listing 15.
+
+</emphasis>
+
+ InverseComplexToReal01.hava.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1019">
+<row id="tr1039">
+<entry id="td1019">
+
+		
+
+<code id="pre1016" display="block">/*File InverseComplexToReal01.java
+Copyright 2004, R.G.Baldwin
+Rev 5/24/04
+
+Although there are more efficient ways to write
+this program, it was written the way it was to
+mimic the behavior of an FFT algorithm.
+Therefore, the complex input must extend from
+zero to the sampling frequency.
+
+The static method named inverseTransform performs
+a complex to real inverse discrete Fourier
+transform returning a real result only.  In other
+words, the method transforms a complex input to a
+real output.
+
+Does not implement the FFT algorithm. Implements
+a straight-forward sampled-data version of the
+continuous inverse Fourier transform defined
+using integral calculus.
+
+The parameters are:
+double[] realIn - incoming real data
+double[] imagIn - incoming imag data
+double[] realOut - outgoing real data
+
+Considers the data length to be
+ realIn.length
+Computational time increment is
+ 1.0/realIn.length
+
+Returns a number of points equal to the data
+length.
+
+Assumes real input consists of positive
+frequency points for a symmetric real frequency
+function.  That is, the real input is assumed to
+be symmetric about the folding frequency.  Does
+not test this assumption.
+
+Assumes imaginary input consists of positive
+frequency points for an asymmetric imaginary
+frequency function.  That is, the imaginary input
+is assumed to be asymmetric about  the
+folding frequency.  Does not test this
+assumption.
+
+The assumption of a symmetric real part and an
+asymmetric imaginary part guarantees that the
+imaginary output would be all zero if it were to
+be computed.  Thus the program makes no attempt
+to compute an imaginary output.
+
+Tested using J2SE v1.4.2 under WinXP.
+************************************************/
+
+public class InverseComplexToReal01{
+
+  public static void inverseTransform(
+                               double[] realIn,
+                               double[] imagIn,
+                               double[] realOut){
+    int dataLen = realIn.length;
+    double delT = 1.0/realIn.length;
+    double startTime = 0.0;
+    //Outer loop interates on time domain
+    // values.
+    for(int i=0; i &lt; dataLen;i++){
+      double time = startTime + i*delT;
+      double real = 0;
+      //Inner loop iterates on frequency
+      // domain values.
+      for(int j=0; j &lt; dataLen; j++){
+        real += realIn[j]*
+                      Math.cos(2*Math.PI*time*j)
+             + imagIn[j]*
+                      Math.sin(2*Math.PI*time*j);
+      }//end inner loop
+      realOut[i] = real;
+    }//end outer loop
+  }//end inverseTransform
+
+}//end class InverseComplexToReal01</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<table id="table1020" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1020">
+<row id="tr1040">
+
+
+
+<entry id="th1020">
+<emphasis id="Listing_16" effect="bold">
+
+Listing 16.
+
+</emphasis>
+
+ Dsp036.java.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1020">
+<row id="tr1041">
+<entry id="td1020">
+
+		
+
+<code id="pre1017" display="block">/* File Dsp036.java
+Copyright 2004, R.G.Baldwin
+Revised 5/24/04
+
+Illustrates forward and inverse Fourier
+ transforms using FFT algorithms.
+
+Performs spectral analysis on a time series
+consisting of pulses and a sinusoid.
+
+Passes resulting real and complex parts to
+inverse Fourier transform program to reconstruct
+the original time series.
+
+Run with Graph03.
+
+Tested using J2SE 1.4.2 under WinXP.
+************************************************/
+import java.util.*;
+
+class Dsp036 implements GraphIntfc01{
+  final double pi = Math.PI;
+
+  int len = 256;
+
+  double[] timeDataIn = new double[len];
+  double[] realSpect = new double[len];
+  double[] imagSpect = new double[len];
+  double[] angle = new double[len];//unused
+  double[] magnitude = new double[len];
+  double[] timeOut = new double[len];
+
+  public Dsp036(){//constructor
+
+    //Create the raw data pulses
+    timeDataIn[0] = 0;
+    timeDataIn[1] = 50;
+    timeDataIn[2] = 75;
+    timeDataIn[3] = 80;
+    timeDataIn[4] = 75;
+    timeDataIn[5] = 50;
+    timeDataIn[6] = 25;
+    timeDataIn[7] = 0;
+    timeDataIn[8] = -25;
+    timeDataIn[9] = -50;
+    timeDataIn[10] = -75;
+    timeDataIn[11] = -80;
+    timeDataIn[12] = -60;
+    timeDataIn[13] = -40;
+    timeDataIn[14] = -26;
+    timeDataIn[15] = -17;
+    timeDataIn[16] = -11;
+    timeDataIn[17] = -8;
+    timeDataIn[18] = -5;
+    timeDataIn[19] = -3;
+    timeDataIn[20] = -2;
+    timeDataIn[21] = -1;
+
+
+    timeDataIn[240] = 80;
+    timeDataIn[241] = 80;
+    timeDataIn[242] = 80;
+    timeDataIn[243] = 80;
+    timeDataIn[244] = -80;
+    timeDataIn[245] = -80;
+    timeDataIn[246] = -80;
+    timeDataIn[247] = -80;
+
+    timeDataIn[248] = 80;
+    timeDataIn[249] = 80;
+    timeDataIn[250] = 80;
+    timeDataIn[251] = 80;
+    timeDataIn[252] = -80;
+    timeDataIn[253] = -80;
+    timeDataIn[254] = -80;
+    timeDataIn[255] = -80;
+
+    //Create raw data sinusoid
+    for(int x = len/3;x &lt; 3*len/4;x++){
+      timeDataIn[x] = 80.0 * Math.sin(
+                              2*pi*(x)*1.0/20.0);
+    }//end for loop
+
+    //Compute FFT of the time data and save it in
+    // the output arrays.
+    ForwardRealToComplexFFT01.transform(
+                                     timeDataIn,
+                                     realSpect,
+                                     imagSpect,
+                                     angle,
+                                     magnitude);
+
+    //Compute inverse FFT of spectral data
+    InverseComplexToRealFFT01.
+                                inverseTransform(
+                                     realSpect,
+                                     imagSpect,
+                                     timeOut);
+  }//end constructor
+
+  //-------------------------------------------//
+  //The following six methods are required by the
+  // interface named GraphIntfc01.
+  public int getNmbr(){
+    //Return number of curves to plot.  Must not
+    // exceed 5.
+    return 5;
+  }//end getNmbr
+  //-------------------------------------------//
+  public double f1(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; timeDataIn.length-1){
+      return 0;
+    }else{
+      return timeDataIn[index];
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f2(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; realSpect.length-1){
+      return 0;
+    }else{
+      //scale for convenient viewing
+      return 5*realSpect[index]/len;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f3(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; imagSpect.length-1){
+      return 0;
+    }else{
+      //scale for convenient viewing
+      return 5*imagSpect[index]/len;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f4(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 ||
+                    index &gt; magnitude.length-1){
+      return 0;
+    }else{
+      //scale for convenient viewing
+      return 5*magnitude[index];
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f5(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 ||
+                   index &gt; timeOut.length-1){
+      return 0;
+    }else{
+      //scale for convenient viewing
+      return timeOut[index]/len;
+    }//end else
+  }//end function
+
+}//end sample class Dsp036
+</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<table id="table1021" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1021">
+<row id="tr1042">
+
+
+
+<entry id="th1021">
+<emphasis id="Listing_17" effect="bold">
+
+Listing 17.
+
+</emphasis>
+
+ InverseComplexToRealFFT01.java,
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1021">
+<row id="tr1043">
+<entry id="td1021">
+
+		
+
+<code id="pre1018" display="block">/*File InverseComplexToRealFFT01.java
+Copyright 2004, R.G.Baldwin
+Rev 5/24/04
+
+The static method named inverseTransform performs
+a complex to real Fourier transform using a
+complex-to-complex FFT algorithm.  A specific
+parameter is passed to the FFT algorithm that
+causes this to be an inverse Fourier transform.
+
+See InverseComplexToReal01 for a version that
+does not use an FFT algorithm but uses a DFT
+algorithm instead.
+
+Incoming parameters are:
+  double[] realIn - incoming real data
+  double[] imagIn - incoming imaginary data
+  double[] realOut - outgoing real data
+
+Requires spectral input data extending from zero
+to the sampling frequency.
+
+Assumes real input consists of positive
+frequency points for a symmetric real frequency
+function.  That is, the real input is assumed to
+be symmetric about the folding frequency.  Does
+not test this assumption.
+
+Assumes imaginary input consists of positive
+frequency points for an asymmetric imaginary
+frequency function.  That is, the imaginary input
+is assumed to be asymmetric about  the
+folding frequency.  Does not test this
+assumption.
+
+The assumption of a symmetric real part and an
+asymmetric imaginary part guarantees that the
+imaginary output is all zeros.  Thus, the
+program does not return an imaginary output.
+Does not test the assumption that the imaginary
+is all zeros.
+
+CAUTION: THE INCOMING DATA LENGTH MUST BE A
+POWER OF TWO. OTHERWISE, THIS PROGRAM WILL FAIL
+TO RUN PROPERLY.
+
+Returns a number of points equal to the incoming
+data length.  Those points are uniformly
+distributed beginning at zero.
+************************************************/
+
+public class InverseComplexToRealFFT01{
+
+  public static void inverseTransform(
+                             double[] realIn,
+                             double[] imagIn,
+                             double[] realOut){
+    double pi = Math.PI;//for convenience
+    int dataLen = realIn.length;
+    double[] imagOut = new double[dataLen];
+    //The complexToComplex FFT method does an
+    // in-place transform causing the output
+    // complex data to be stored in the arrays
+    // containing the input complex data.
+    // Therefore, it is necessary to copy the
+    // input data into the output arrays before
+    // passing them to the FFT algorithm.
+    System.arraycopy(realIn,0,realOut,0,dataLen);
+    System.arraycopy(imagIn,0,imagOut,0,dataLen);
+
+    //Perform the spectral analysis.  The results
+    // are stored in realOut and imagOut.  Note
+    // that the -1 value for the first
+    // parameter causes the transform to be an
+    // inverse transform.  A +1 value would cause
+    // it to be a forward transform.
+    complexToComplex(-1,dataLen,realOut,imagOut);
+
+  }//end inverseTransform method
+  //-------------------------------------------//
+
+  //This method computes a complex-to-complex
+  // FFT.  The value of sign must be 1 for a
+  // forward FFT and -1 for an inverse FFT.
+  public static void complexToComplex(
+                                  int sign,
+                                  int len,
+                                  double real[],
+                                  double imag[]){
+    double scale = 1.0;
+    //Reorder the input data into reverse binary
+    // order.
+    int i,j;
+    for (i=j=0; i &lt; len; ++i) {
+      if (j&gt;=i) {
+        double tempr = real[j]*scale;
+        double tempi = imag[j]*scale;
+        real[j] = real[i]*scale;
+        imag[j] = imag[i]*scale;
+        real[i] = tempr;
+        imag[i] = tempi;
+      }//end if
+      int m = len/2;
+      while (m&gt;=1 &amp;&amp; j&gt;=m) {
+        j -= m;
+        m /= 2;
+      }//end while loop
+      j += m;
+    }//end for loop
+
+    //Input data has been reordered.
+    int stage = 0;
+    int maxSpectraForStage,stepSize;
+    //Loop once for each stage in the spectral
+    // recombination process.
+    for(maxSpectraForStage = 1,
+                stepSize = 2*maxSpectraForStage;
+                maxSpectraForStage &lt; len;
+                maxSpectraForStage = stepSize,
+                stepSize = 2*maxSpectraForStage){
+      double deltaAngle =
+                 sign*Math.PI/maxSpectraForStage;
+      //Loop once for each individual spectra
+      for (int spectraCnt = 0;
+                 spectraCnt &lt; maxSpectraForStage;
+                 ++spectraCnt){
+        double angle = spectraCnt*deltaAngle;
+        double realCorrection = Math.cos(angle);
+        double imagCorrection = Math.sin(angle);
+
+        int right = 0;
+        for (int left = spectraCnt;
+                   left &lt; len;left += stepSize){
+          right = left + maxSpectraForStage;
+          double tempReal =
+                    realCorrection*real[right]
+                    - imagCorrection*imag[right];
+          double tempImag =
+                    realCorrection*imag[right]
+                    + imagCorrection*real[right];
+          real[right] = real[left]-tempReal;
+          imag[right] = imag[left]-tempImag;
+          real[left] += tempReal;
+          imag[left] += tempImag;
+        }//end for loop
+      }//end for loop for individual spectra
+      maxSpectraForStage = stepSize;
+    }//end for loop for stages
+  }//end complexToComplex method
+
+}//end class InverseComplexToRealFFT01</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<table id="table1022" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1022">
+<row id="tr1044">
+
+
+
+<entry id="th1022">
+<emphasis id="Listing_18" effect="bold">
+
+Listing 18.
+
+</emphasis>
+
+ Dsp037.java.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1022">
+<row id="tr1045">
+<entry id="td1022">
+
+		
+
+<code id="pre1019" display="block">/* File Dsp037.java
+Copyright 2004, R.G.Baldwin
+Revised 5/24/04
+
+Illustrates filtering in the frequency domain.
+Performs FFT on an impulse.  Eliminates all
+energy between one-sixth and five-sixths of the
+sampling frequency by modifying the real and
+imaginary parts of the FFT output.  Then performs
+inverse FFT to produce the filtered impulse.
+
+Run with Graph03.
+
+Tested using J2SE 1.4.2 under WinXP.
+************************************************/
+import java.util.*;
+
+class Dsp037 implements GraphIntfc01{
+  final double pi = Math.PI;
+
+  int len = 256;
+
+  double[] timeDataIn = new double[len];
+  double[] realSpect = new double[len];
+  double[] imagSpect = new double[len];
+  double[] angle = new double[len];//unused
+  double[] magnitude = new double[len];
+  double[] timeOut = new double[len];
+
+  public Dsp037(){//constructor
+
+    //Create the raw data pulse
+    timeDataIn[32] = 90;
+
+    //Compute FFT of the time data and save it in
+    // the output arrays.
+    ForwardRealToComplexFFT01.transform(
+                                     timeDataIn,
+                                     realSpect,
+                                     imagSpect,
+                                     angle,
+                                     magnitude);
+
+    //Apply the frequency filter eliminating all
+    // energy between one-sixth and five-sixths
+    // of the sampling frequency by modifying the
+    // real and imaginary parts of the spectrum.
+    for(int cnt = len/6;cnt &lt; 5*len/6;cnt++){
+      realSpect[cnt] = 0.0;
+      imagSpect[cnt] = 0.0;
+    }//end for loop
+
+    //Recompute the magnitude based on the
+    // modified real and imaginary spectra.
+    for(int cnt = 0;cnt &lt; len;cnt++){
+      magnitude[cnt] =
+        (Math.sqrt(
+           realSpect[cnt]*realSpect[cnt]
+           + imagSpect[cnt]*imagSpect[cnt])/len);
+    }//end for loop
+
+    //Compute inverse FFT of modified spectral
+    // data.
+    InverseComplexToRealFFT01.inverseTransform(
+                                       realSpect,
+                                       imagSpect,
+                                       timeOut);
+  }//end constructor
+
+  //-------------------------------------------//
+  //The following six methods are required by the
+  // interface named GraphIntfc01.
+  public int getNmbr(){
+    //Return number of curves to plot.  Must not
+    // exceed 5.
+    return 5;
+  }//end getNmbr
+  //-------------------------------------------//
+  public double f1(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; timeDataIn.length-1){
+      return 0;
+    }else{
+      return timeDataIn[index];
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f2(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; realSpect.length-1){
+      return 0;
+    }else{
+      return realSpect[index];
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f3(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; imagSpect.length-1){
+      return 0;
+    }else{
+            return imagSpect[index];
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f4(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 ||
+                    index &gt; magnitude.length-1){
+      return 0;
+    }else{
+      //scale for convenient viewing
+      return len*magnitude[index];
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f5(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 ||
+                   index &gt; timeOut.length-1){
+      return 0;
+    }else{
+      //scale for convenient viewing
+      return 3.0*timeOut[index]/len;
+    }//end else
+  }//end function
+
+}//end sample class Dsp037</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<table id="table1023" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1023">
+<row id="tr1046">
+
+
+
+<entry id="th1023">
+<emphasis id="Listing_19" effect="bold">
+
+Listing 19.
+
+</emphasis>
+
+ Dsp038.java.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1023">
+<row id="tr1047">
+<entry id="td1023">
+
+		
+
+<code id="pre1020" display="block">/* File Dsp038.java
+Copyright 2004, R.G.Baldwin
+Revised 5/24/04
+
+Illustrates filtering in the frequency domain.
+Performs FFT on an impulse.  Modifies the
+complex spectrum.  Then performs inverse FFT
+to produce the filtered impulse.
+
+Run with Graph03.
+
+Tested using J2SE 1.4.2 under WinXP.
+************************************************/
+import java.util.*;
+
+class Dsp038 implements GraphIntfc01{
+  final double pi = Math.PI;
+
+  int len = 256;
+
+  double[] timeDataIn = new double[len];
+  double[] realSpect = new double[len];
+  double[] imagSpect = new double[len];
+  double[] angle = new double[len];//unused
+  double[] magnitude = new double[len];
+  double[] timeOut = new double[len];
+
+  public Dsp038(){//constructor
+
+    //Create the raw data pulse
+    timeDataIn[64] = 90;
+
+    //Compute FFT of the time data and save it in
+    // the output arrays.
+    ForwardRealToComplexFFT01.transform(
+                                     timeDataIn,
+                                     realSpect,
+                                     imagSpect,
+                                     angle,
+                                     magnitude);
+
+    //Apply the frequency filter.
+    for(int cnt = 0;cnt &lt;= len/2;cnt++){
+      if(cnt &lt; 3*len/32){
+        realSpect[cnt] = 0;
+        imagSpect[cnt] = 0;
+      }//end if
+
+      if(cnt &gt; 5*len/32){
+        realSpect[cnt] = 0;
+        imagSpect[cnt] = 0;
+      }//end if
+
+      //Fold complex spectral data
+      if(cnt &gt; 0){
+        realSpect[len - cnt] = realSpect[cnt];
+      }//end if
+      if(cnt &gt; 0){
+        imagSpect[len - cnt] = -imagSpect[cnt];
+      }//end if
+    }//end for loop
+
+    //Recompute the magnitude based on the
+    // modified real and imaginary spectra.
+    for(int cnt = 0;cnt &lt; len;cnt++){
+      magnitude[cnt] =
+        (Math.sqrt(
+           realSpect[cnt]*realSpect[cnt]
+           + imagSpect[cnt]*imagSpect[cnt])/len);
+    }//end for loop
+
+    //Compute inverse FFT of modified spectral
+    // data.
+    InverseComplexToRealFFT01.inverseTransform(
+                                       realSpect,
+                                       imagSpect,
+                                       timeOut);
+  }//end constructor
+
+  //-------------------------------------------//
+  //The following six methods are required by the
+  // interface named GraphIntfc01.
+  public int getNmbr(){
+    //Return number of curves to plot.  Must not
+    // exceed 5.
+    return 5;
+  }//end getNmbr
+  //-------------------------------------------//
+  public double f1(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; timeDataIn.length-1){
+      return 0;
+    }else{
+      return timeDataIn[index];
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f2(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; realSpect.length-1){
+      return 0;
+    }else{
+      return realSpect[index];
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f3(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; imagSpect.length-1){
+      return 0;
+    }else{
+            return imagSpect[index];
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f4(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 ||
+                    index &gt; magnitude.length-1){
+      return 0;
+    }else{
+      //scale for convenient viewing
+      return len*magnitude[index];
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f5(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 ||
+                   index &gt; timeOut.length-1){
+      return 0;
+    }else{
+      //scale for convenient viewing
+      return 3.0*timeOut[index]/len;
+    }//end else
+  }//end function
+
+}//end sample class Dsp038</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+
+	
+
+</section>
+<section id="h11007">
+<title>
+<emphasis id="Miscellaneous" effect="bold">
+
+Miscellaneous
+
+</emphasis>
+
+
+</title>
+
+
+	
+
+<para id="p1130">
+This section contains a variety of miscellaneous information.
+
+</para>
+
+
+
+
+
+	
+
+<note id="note1000" type="">
+
+
+		
+
+
+			
+
+
+				
+
+<emphasis id="strong1086" effect="bold">
+Housekeeping material
+
+</emphasis>
+
+				
+
+<list id="ul1016" list-type="bulleted">
+
+					
+
+<item id="li1082">
+Module name: Java1485-Spectrum Analysis using Java, 
+					Forward and Inverse Transforms, Filtering in the Frequency 
+					Domain
+
+</item>
+
+
+					
+
+<item id="li1083">
+File: Java1485
+
+</item>
+
+
+					
+
+<item id="li1084">
+Published: 11/16/04
+
+</item>
+
+
+
+				
+
+</list>
+
+
+
+
+<para id="p1131">
+Baldwin illustrates and explains forward and inverse Fourier transforms using both DFT and FFT algorithms. He also illustrates and explains the implementation of frequency filtering by modifying the complex spectrum in the frequency domain and transforming the modified complex spectrum back into the time domain. 
+
+</para>
+
+
+
+				
+
+</note>
+
+
+
+
+
+	
+
+<note id="note1001" type="">
+
+
+		
+
+
+			
+
+
+				
+
+<emphasis id="strong1087" effect="bold">
+Disclaimers:
+
+</emphasis>
+<para id="p1132">
+<emphasis id="strong1088" effect="bold">
+Financial
+
+</emphasis>
+: Although the Connexions
+site makes it possible for you to download a PDF file for this
+module at no charge, and also makes it possible for you to
+purchase a pre-printed version of the PDF file, you should be
+aware that some of the HTML elements in this module may not translate well into
+PDF.
+
+</para>
+
+
+
+				
+
+<para id="p1133">
+I also want you to know that, I receive no financial compensation from the Connexions website even if you purchase 
+	the PDF version of the module.
+
+</para>
+
+
+
+				
+
+<para id="p1134">
+In the past, unknown individuals have copied my modules from cnx.org, converted them to Kindle books, and 
+				placed them for sale on Amazon.com showing me as the author. I 
+				neither receive compensation for those sales nor do I know who does 
+				receive compensation. If you purchase such a book, please be 
+				aware that it is a copy of a module that is freely 
+				available on cnx.org and that it was made and published without 
+				my prior knowledge.
+
+</para>
+
+
+
+				
+
+<para id="p1135">
+<emphasis id="strong1089" effect="bold">
+Affiliation
+
+</emphasis>
+: I am a professor of Computer Information 
+	Technology at Austin Community College in Austin, TX.
+	
+
+</para>
+
+
+
+
+</note>
+
+
+
+	
+
+	
+
+
+
+<para id="p1136">
+-end- 
+
+</para>
+
+
+
+
+
+
+
+</section>
+</content>
+
+
+
+
+</document>

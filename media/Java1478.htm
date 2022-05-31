@@ -1,0 +1,1785 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:m="http://schemas.microsoft.com/office/2004/12/omml"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 14">
+<meta name=Originator content="Microsoft Word 14">
+<link rel=File-List href="Java1478_files/filelist.xml">
+<link rel=Edit-Time-Data href="Java1478_files/editdata.mso">
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]-->
+<title>... JAVA and DSP by Richard G Baldwin</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>RBaldwin</o:Author>
+  <o:LastAuthor>RBaldwin</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>1</o:TotalTime>
+  <o:LastPrinted>2014-04-14T20:59:00Z</o:LastPrinted>
+  <o:Created>2014-04-14T20:59:00Z</o:Created>
+  <o:LastSaved>2014-04-14T21:00:00Z</o:LastSaved>
+  <o:Pages>8</o:Pages>
+  <o:Words>4824</o:Words>
+  <o:Characters>27502</o:Characters>
+  <o:Lines>229</o:Lines>
+  <o:Paragraphs>64</o:Paragraphs>
+  <o:CharactersWithSpaces>32262</o:CharactersWithSpaces>
+  <o:Version>14.00</o:Version>
+ </o:DocumentProperties>
+ <o:OfficeDocumentSettings>
+  <o:AllowPNG/>
+ </o:OfficeDocumentSettings>
+</xml><![endif]-->
+<link rel=themeData href="Java1478_files/themedata.thmx">
+<link rel=colorSchemeMapping href="Java1478_files/colorschememapping.xml">
+<!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:TrackMoves>false</w:TrackMoves>
+  <w:TrackFormatting/>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:DoNotPromoteQF/>
+  <w:LidThemeOther>EN-US</w:LidThemeOther>
+  <w:LidThemeAsian>X-NONE</w:LidThemeAsian>
+  <w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SplitPgBreakAndParaMark/>
+  </w:Compatibility>
+  <m:mathPr>
+   <m:mathFont m:val="Cambria Math"/>
+   <m:brkBin m:val="before"/>
+   <m:brkBinSub m:val="&#45;-"/>
+   <m:smallFrac m:val="off"/>
+   <m:dispDef/>
+   <m:lMargin m:val="0"/>
+   <m:rMargin m:val="0"/>
+   <m:defJc m:val="centerGroup"/>
+   <m:wrapIndent m:val="1440"/>
+   <m:intLim m:val="subSup"/>
+   <m:naryLim m:val="undOvr"/>
+  </m:mathPr></w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" DefUnhideWhenUsed="true"
+  DefSemiHidden="true" DefQFormat="false" DefPriority="99"
+  LatentStyleCount="267">
+  <w:LsdException Locked="false" Priority="0" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Normal"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="heading 1"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="heading 2"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 3"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="heading 4"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 5"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 6"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 7"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 8"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 9"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 1"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 2"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 3"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 4"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 5"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 6"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 7"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 8"/>
+  <w:LsdException Locked="false" Priority="39" Name="toc 9"/>
+  <w:LsdException Locked="false" Priority="35" QFormat="true" Name="caption"/>
+  <w:LsdException Locked="false" Priority="10" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Title"/>
+  <w:LsdException Locked="false" Priority="1" Name="Default Paragraph Font"/>
+  <w:LsdException Locked="false" Priority="11" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtitle"/>
+  <w:LsdException Locked="false" Priority="22" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Strong"/>
+  <w:LsdException Locked="false" Priority="20" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Emphasis"/>
+  <w:LsdException Locked="false" Priority="59" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Table Grid"/>
+  <w:LsdException Locked="false" UnhideWhenUsed="false" Name="Placeholder Text"/>
+  <w:LsdException Locked="false" Priority="1" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="No Spacing"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 1"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 1"/>
+  <w:LsdException Locked="false" UnhideWhenUsed="false" Name="Revision"/>
+  <w:LsdException Locked="false" Priority="34" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="List Paragraph"/>
+  <w:LsdException Locked="false" Priority="29" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Quote"/>
+  <w:LsdException Locked="false" Priority="30" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Quote"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 1"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 1"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 1"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 2"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 2"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 2"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 2"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 3"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 3"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 3"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 3"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 4"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 4"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 4"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 4"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 5"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 5"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 5"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 5"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="60" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="61" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light List Accent 6"/>
+  <w:LsdException Locked="false" Priority="62" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Light Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="63" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="64" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Shading 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="65" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="66" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium List 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="67" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="68" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="69" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Medium Grid 3 Accent 6"/>
+  <w:LsdException Locked="false" Priority="70" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Dark List Accent 6"/>
+  <w:LsdException Locked="false" Priority="71" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="72" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful List Accent 6"/>
+  <w:LsdException Locked="false" Priority="73" SemiHidden="false"
+   UnhideWhenUsed="false" Name="Colorful Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="19" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtle Emphasis"/>
+  <w:LsdException Locked="false" Priority="21" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Emphasis"/>
+  <w:LsdException Locked="false" Priority="31" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Subtle Reference"/>
+  <w:LsdException Locked="false" Priority="32" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Intense Reference"/>
+  <w:LsdException Locked="false" Priority="33" SemiHidden="false"
+   UnhideWhenUsed="false" QFormat="true" Name="Book Title"/>
+  <w:LsdException Locked="false" Priority="37" Name="Bibliography"/>
+  <w:LsdException Locked="false" Priority="39" QFormat="true" Name="TOC Heading"/>
+ </w:LatentStyles>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:2;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:2;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:-520081665 -1073717157 41 0 66047 0;}
+@font-face
+	{font-family:Consolas;
+	panose-1:0 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:0;
+	mso-generic-font-family:roman;
+	mso-font-format:other;
+	mso-font-pitch:auto;
+	mso-font-signature:0 0 0 0 0 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman","serif";
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:minor-fareast;}
+h2
+	{mso-style-priority:9;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"Heading 2 Char";
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:2;
+	font-size:18.0pt;
+	font-family:"Times New Roman","serif";
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:minor-fareast;
+	font-weight:bold;}
+h4
+	{mso-style-priority:9;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"Heading 4 Char";
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	mso-outline-level:4;
+	font-size:12.0pt;
+	font-family:"Times New Roman","serif";
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:minor-fareast;
+	font-weight:bold;}
+a:link, span.MsoHyperlink
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	color:#666666;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman","serif";
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:minor-fareast;}
+pre
+	{mso-style-priority:99;
+	mso-style-link:"HTML Preformatted Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt;
+	font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:minor-fareast;}
+tt
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	font-family:"Courier New";
+	mso-ascii-font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:minor-fareast;
+	mso-hansi-font-family:"Courier New";
+	mso-bidi-font-family:"Courier New";}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-link:"Balloon Text Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:8.0pt;
+	font-family:"Tahoma","sans-serif";
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:minor-fareast;}
+span.Heading2Char
+	{mso-style-name:"Heading 2 Char";
+	mso-style-noshow:yes;
+	mso-style-priority:9;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"Heading 2";
+	mso-ansi-font-size:13.0pt;
+	mso-bidi-font-size:13.0pt;
+	font-family:"Cambria","serif";
+	mso-ascii-font-family:Cambria;
+	mso-ascii-theme-font:major-latin;
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:major-fareast;
+	mso-hansi-font-family:Cambria;
+	mso-hansi-theme-font:major-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:major-bidi;
+	color:#4F81BD;
+	mso-themecolor:accent1;
+	font-weight:bold;}
+span.HTMLPreformattedChar
+	{mso-style-name:"HTML Preformatted Char";
+	mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"HTML Preformatted";
+	font-family:"Consolas","serif";
+	mso-ascii-font-family:Consolas;
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:minor-fareast;
+	mso-hansi-font-family:Consolas;}
+span.Heading4Char
+	{mso-style-name:"Heading 4 Char";
+	mso-style-noshow:yes;
+	mso-style-priority:9;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"Heading 4";
+	mso-ansi-font-size:12.0pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Cambria","serif";
+	mso-ascii-font-family:Cambria;
+	mso-ascii-theme-font:major-latin;
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:major-fareast;
+	mso-hansi-font-family:Cambria;
+	mso-hansi-theme-font:major-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:major-bidi;
+	color:#4F81BD;
+	mso-themecolor:accent1;
+	font-weight:bold;
+	font-style:italic;}
+span.BalloonTextChar
+	{mso-style-name:"Balloon Text Char";
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"Balloon Text";
+	mso-ansi-font-size:8.0pt;
+	mso-bidi-font-size:8.0pt;
+	font-family:"Tahoma","sans-serif";
+	mso-ascii-font-family:Tahoma;
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:minor-fareast;
+	mso-hansi-font-family:Tahoma;
+	mso-bidi-font-family:Tahoma;}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	mso-default-props:yes;
+	font-size:10.0pt;
+	mso-ansi-font-size:10.0pt;
+	mso-bidi-font-size:10.0pt;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:381904784;
+	mso-list-template-ids:2011347710;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l0:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l0:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l0:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l0:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l0:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l0:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l0:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l0:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l1
+	{mso-list-id:1299408665;
+	mso-list-template-ids:286178200;}
+@list l1:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l1:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l1:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l1:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l1:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l1:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l1:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l1:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+@list l1:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Wingdings;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman","serif";}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="1026"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body lang=EN-US link=blue vlink="#666666" style='tab-interval:.5in'
+alink="#ff0000">
+
+<div class=WordSection1>
+
+<h2><span style='mso-fareast-font-family:"Times New Roman"'>Fun with Java, How
+and Why Spectral Analysis Works<o:p></o:p></span></h2>
+
+<p class=MsoNormal><i><span style='mso-fareast-font-family:"Times New Roman"'>Baldwin
+explains how the Fourier transform can be used to determine the spectral
+content of a signal in the time domain.</span></i><span style='mso-fareast-font-family:
+"Times New Roman"'> <o:p></o:p></span></p>
+
+<p><b>Published:</b>&nbsp; June 29, 2004 <br>
+<span class=GramE><b>By</b></span><b> <a href="#About%20the%20author">Richard
+G. Baldwin</a></b> </p>
+
+<p>Java Programming, Notes # 1478</p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo1;tab-stops:list .5in'><span style='mso-fareast-font-family:
+     "Times New Roman"'><a href="#Preface">Preface</a><o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo1;tab-stops:list .5in'><span style='mso-fareast-font-family:
+     "Times New Roman"'><a href="#Multiply_Add_Operations">Multiply-Add
+     Operations</a><o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo1;tab-stops:list .5in'><span style='mso-fareast-font-family:
+     "Times New Roman"'><a href="#Preview">Preview</a><o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo1;tab-stops:list .5in'><span style='mso-fareast-font-family:
+     "Times New Roman"'><a href="#The_Fourier_Transform">The Fourier Transform</a><o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo1;tab-stops:list .5in'><span style='mso-fareast-font-family:
+     "Times New Roman"'><a href="#Summary">Summary</a><o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l1 level1 lfo1;tab-stops:list .5in'><span style='mso-fareast-font-family:
+     "Times New Roman"'><a href="#What%27s%20next">What's Next</a><o:p></o:p></span></li>
+</ul>
+
+<div class=MsoNormal align=center style='text-align:center'><span
+style='mso-fareast-font-family:"Times New Roman"'>
+
+<hr size=3 width="100%" align=center>
+
+</span></div>
+
+<h2 align=center style='text-align:center'><a name=Preface></a><span
+style='mso-fareast-font-family:"Times New Roman"'>Preface<o:p></o:p></span></h2>
+
+<p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>Programming
+in Java doesn't have to be dull and boring.&nbsp; In fact, it's possible to
+have a lot of fun while programming in Java.&nbsp; This lesson is one in a
+series that concentrates on having fun while programming in Java. <o:p></o:p></span></p>
+
+<p><b><span style='color:red'>Viewing tip</span></b> </p>
+
+<p>You may find it useful to open another copy of this lesson in a separate
+browser window.&nbsp; That will make it easier for you to scroll back and forth
+among the different figures and listings while you are reading about them. </p>
+
+<p><b><span style='color:red'>Supplementary material</span></b> </p>
+
+<p>I recommend that you also study the other lessons in my extensive collection
+of online Java tutorials.&nbsp; You will find those lessons published at <a
+href="http://softwaredev.earthweb.com/java">Gamelan.com</a>.&nbsp; However, as
+of the date of this writing, Gamelan doesn't maintain a consolidated index of
+my Java tutorial lessons, and sometimes they are difficult to locate
+there.&nbsp; You will find a consolidated index at <a
+href="http://www.dickbaldwin.com">www.DickBaldwin.com</a><span
+style='color:black'>.</span></p>
+
+<p>In addition, you will find some background material on DSP that is important
+to this lesson at <a href="http://www.dickbaldwin.com/tocdsp.htm">http://www.dickbaldwin.com/tocdsp.htm</a>.</p>
+
+<h2 align=center style='text-align:center'><a name="Multiply_Add_Operations"></a><span
+style='mso-fareast-font-family:"Times New Roman";color:black'>Multiply-Add
+Operations</span><span style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></h2>
+
+<p><span style='color:black'>This</span> lesson deals with a topic commonly <span
+class=SpellE>know</span> as Digital Signal Processing, <i>(DSP for short).</i></p>
+
+<p><b><span style='color:red'>Computational requirements for DSP</span></b> </p>
+
+<p><span style='color:black'>The computational requirements for implementing
+DSP in a computer program are usually straightforward.&nbsp; Almost all DSP
+operations consist of multiplying corresponding values contained in two numeric
+series and then calculating the sum of the products.&nbsp; Sometimes, the final
+sum is divided by the total number of values included in the sum.&nbsp; This is
+often referred to as a <i>sum-of-products</i> or <i>multiply-add</i> operation.</span></p>
+
+<blockquote style='margin-top:5.0pt;margin-bottom:5.0pt'>
+
+<p><i>(This is the digital equivalent of integrating the product of two
+continuous functions between two limits.)</i></p>
+
+</blockquote>
+
+<p><b><span style='color:red'>Typical notation</span></b> </p>
+
+<p><span style='color:black'>Such an operation can be indicated by the symbolic
+notation shown in Figure 1 <i>(where the strange looking thing constructed of
+straight lines is the Greek letter sigma).</i></span> <o:p></o:p></p>
+
+<div align=center>
+
+<table class=MsoNormalTable border=1 cellpadding=0 width=600 style='width:300.0pt;
+ mso-cellspacing:1.5pt;background:yellow;mso-yfti-tbllook:1184' cols=1>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><tt><b><span style='font-size:10.0pt'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  N-1</span></b></tt><span style='mso-fareast-font-family:"Times New Roman"'> <br>
+  </span><tt><b><span style='font-size:10.0pt'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  --</span></b></tt><span style='mso-fareast-font-family:"Times New Roman"'> <br>
+  </span><tt><b><span style='font-size:10.0pt'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  \</span></b></tt><span style='mso-fareast-font-family:"Times New Roman"'> <br>
+  </span><tt><b><span style='font-size:10.0pt'>z =(1/N) * / x(n) * y(n)</span></b></tt><span
+  style='mso-fareast-font-family:"Times New Roman"'> <br>
+  </span><tt><b><span style='font-size:10.0pt'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  --</span></b></tt><span style='mso-fareast-font-family:"Times New Roman"'> <br>
+  </span><tt><b><span style='font-size:10.0pt'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  n = 0</span></b></tt><span style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p align=center style='text-align:center'><span style='color:black'>Figure 1<span
+class=GramE>&nbsp; A</span> typical sum-of-products operation</span></p>
+
+<p><b><span style='color:red'>A sum-of-products operation</span></b> </p>
+
+<p><span style='color:black'>This notation means that a new value for <b>z</b>
+is calculated by multiplying the first <b>N</b> corresponding samples from each
+of two numeric series <i>(<span class=GramE><b>x(</b></span><b>n)</b> and <b>y(n)</b>),</i>
+calculating the sum of the products, and dividing the sum by <b>N</b>.</span></p>
+
+<blockquote style='margin-top:5.0pt;margin-bottom:5.0pt'>
+
+<p><i>(In this lesson, I will be dealing primarily with numeric series that represent
+samples from a continuous function taken over time.&nbsp; Therefore, I will
+often refer to the numeric series as a time series.)</i></p>
+
+</blockquote>
+
+<p><b><span style='color:red'>An alternative notation</span></b> </p>
+
+<p><span style='color:black'>The above notation requires about six lines of
+text to construct, and therefore could easily become scrambled during the HTML
+publishing process.&nbsp; I have invented an alternative notation that means
+exactly the same thing, but is less likely to be damaged during the HTML
+publishing process.&nbsp; My new notation is shown in Figure 2.&nbsp; You should
+be able to compare this notation with Figure 1 and correlate the terms in the
+notation to the verbal description of the operation given above.</span> <o:p></o:p></p>
+
+<div align=center>
+
+<table class=MsoNormalTable border=1 cellpadding=0 width=600 style='width:300.0pt;
+ mso-cellspacing:1.5pt;background:yellow;mso-yfti-tbllook:1184' cols=1>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><tt><b><span style='font-size:10.0pt;color:black'>z = </span></b></tt><tt><b><span
+  style='font-size:10.0pt'>(1/N) * <span style='color:black'>S(n=0,N-1)[(x(n) *
+  y(n)]</span></span></b></tt><span style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p align=center style='text-align:center'><span style='color:black'>Figure 2<span
+class=GramE>&nbsp; Alternate</span> notation for a sum-of-products operation</span></p>
+
+<p><span style='color:black'>This is the notation that I will use in this
+lesson</span></p>
+
+<h2 align=center style='text-align:center'><a name=Preview></a><span
+style='mso-fareast-font-family:"Times New Roman";color:black'>Preview</span><span
+style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></h2>
+
+<p class=MsoNormal><b><span style='mso-fareast-font-family:"Times New Roman";
+color:red'>What is a time series?<br>
+<br>
+</span></b><span style='mso-fareast-font-family:"Times New Roman";color:black'>For
+pur</span><span style='mso-fareast-font-family:"Times New Roman"'>poses of this
+lesson, suffice it to say that a time series is a set of sample values taken
+from a continuous function at equal increments of time over a specified time
+interval.&nbsp; For example, if you were to record the temperature in your
+office every minute for six hours, the set of 360 different values that you
+would record could be considered as a time series.<b><span style='color:red'><br>
+<br>
+A new time series is produced</span></b> <o:p></o:p></span></p>
+
+<p>In DSP, we often multiply two time series together on a sample by sample
+basis.&nbsp; W<span style='color:black'>hen I multiply the values in the time
+series <span class=GramE><b>x(</b></span><b>n)</b> by the corresponding values
+in the time series <b>y(n)</b>, that produces a new time series, which I will
+call <b>w(n)</b>.</span> </p>
+
+<p><b><span style='color:red'>Calculation of the mean or average</span></b> </p>
+
+<p><span style='color:black'>If I compute the sum of the individual values in
+the series <span class=GramE><b>w(</b></span><b>n)</b>, and then divide that
+sum by the number of samples, this is nothing more than the calculation of the
+mean or average value of the time series named <b>w(n)</b>.&nbsp; Most DSP
+operations boil down to nothing more complicated than calculating the average
+value of the product of two time series.</span></p>
+
+<p><b><span style='color:red'>Knowing what to multiply, when, and why</span></b></p>
+
+<p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman";
+color:black'>The real trick in DSP is <span class=GramE>knowing</span> what to
+multiply, when to multiply it, and why to multiply it.</span><span
+style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+
+<p><span style='color:black'>Some DSP algorithms are very complex.&nbsp; For
+example, the Fast Fourier Transform algorithm, <i>(FFT),</i> involves nothing
+more than a lot of multiply-add operations under the control of an extremely
+complex algorithm.</span></p>
+
+<p><span style='color:black'>In this lesson, I will concentrate on the Discrete
+Fourier Transform algorithm, <i>(DFT),</i> which is much less complex and
+therefore much easier to understand.</span></p>
+
+<blockquote style='margin-top:5.0pt;margin-bottom:5.0pt'>
+
+<p><i><span style='color:black'>(While the DFT and the FFT produce the same
+results, the DFT typically runs much more slowly than the FFT, which is
+optimized for speed.)</span></i></p>
+
+</blockquote>
+
+<p><b><span style='color:red'>Multiply-add speed is important</span></b> </p>
+
+<p><span style='color:black'>Some DSP processes require extremely large numbers
+of multiply-add operations.&nbsp; In order to perform DSP in real time, the
+equipment used to perform the arithmetic must be extremely fast.&nbsp; That is
+where the special DSP chips, <i>(which are designed to perform multiply-add
+operations at an extremely high rate of speed)</i> earn their keep.</span> </p>
+
+<p><b><span style='color:red'>The net area under the curve</span></b> </p>
+
+<p><span style='color:black'>If you plot a time series as a curve on a graph,
+as shown in Figure 3, the sum of the values that make up the time series is an
+estimate of the net area under the curve.</span></p>
+
+<blockquote style='margin-top:5.0pt;margin-bottom:5.0pt'>
+
+<p class=MsoNormal><i><span style='mso-fareast-font-family:"Times New Roman";
+color:black'>(Assuming that the horizontal axis represents a value of zero, the
+sample values above the axis contribute a positive value to the net area and
+the sample values below the curve contribute a negative value to the net
+area.&nbsp; In the case of Figure 3, I attempted to come up with a set of
+sample values that would produce a net area of zero.&nbsp; In other words, the
+area above the horizontal axis was intended to perfectly balance the area below
+the horizontal axis.)</span></i><span style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+
+</blockquote>
+
+<p align=center style='text-align:center'><span style='mso-no-proof:yes'><img
+border=0 width=290 height=123 id="_x0000_i1035" src=java1478fig03.gif
+alt="Description: M:\Baldwin\AA-School\Connexions\Digital Signal Processing-DSP\3-Fourier Analysis\1-Java1478-Fun with Java, How and Why Spectral Analysis Works\java1478fig03.gif"></span></p>
+
+<p align=center style='text-align:center'><span style='color:black'>Figure 3<span
+class=GramE>&nbsp; Plot</span> of values in a time series</span></p>
+
+<p><b><span style='color:red'>A periodic example</span></b> </p>
+
+<p><span style='color:black'>A periodic time series is one in which a set of
+sample values repeats over time, provided that you record enough samples to
+include one or more periods.&nbsp; Figure 4 shows a plot of a periodic time
+series.&nbsp; You can see that the same set of values repeats as you move from
+left to right on the curve plotted in Figure 4.</span> </p>
+
+<p align=center style='text-align:center'><span style='mso-no-proof:yes'><img
+border=0 width=291 height=123 id="_x0000_i1034" src=java1478fig04.gif
+alt="Description: M:\Baldwin\AA-School\Connexions\Digital Signal Processing-DSP\3-Fourier Analysis\1-Java1478-Fun with Java, How and Why Spectral Analysis Works\java1478fig04.gif"></span></p>
+
+<p align=center style='text-align:center'><span style='color:black'>Figure 4<span
+class=GramE>&nbsp; Area</span> under a periodic curve</span></p>
+
+<p class=MsoNormal><b><span style='mso-fareast-font-family:"Times New Roman";
+color:red'>The sum of two curves</span></b><span style='mso-fareast-font-family:
+"Times New Roman"'> <o:p></o:p></span></p>
+
+<p><span style='color:black'>Periodic curves can often be viewed as the sum of
+two curves.&nbsp; One of the curves is the periodic component having a zero net
+area under the curve when measured across an even number of cycles.&nbsp; The
+other component is a constant bias offset that is added to every value of the
+periodic curve.</span> </p>
+
+<p><span style='color:black'>Each of the solid dark blobs in Figure 4 is a
+sample value.&nbsp; The horizontal line represents a sample value of
+zero.&nbsp; <i>(The empty circle is the sample value half way through the
+sampling interval.&nbsp; The only reason it is different is to mark the <span
+class=SpellE>mid point</span>.)</i></span> </p>
+
+<p><b><span style='color:red'>The net area under the curve</span></b> </p>
+
+<p><span style='color:black'>What is the net area under the curve in Figure
+4?&nbsp; Can you examine the curve and come up with a good estimate.&nbsp; As
+it turns out, the net area under the curve in Figure 4 is very close to zero <i>(at
+least it is as close to zero as I was able to draw it).</i></span> </p>
+
+<p><span style='color:black'>Now take a look at Figure 5.&nbsp; What is the net
+area under the curve in Figure 5?</span> </p>
+
+<p align=center style='text-align:center'><span style='mso-no-proof:yes'><img
+border=0 width=290 height=120 id="_x0000_i1033" src=java1478fig05.gif
+alt="Description: M:\Baldwin\AA-School\Connexions\Digital Signal Processing-DSP\3-Fourier Analysis\1-Java1478-Fun with Java, How and Why Spectral Analysis Works\java1478fig05.gif"></span></p>
+
+<p align=center style='text-align:center'><span style='color:black'>Figure 5<span
+class=GramE>&nbsp; Area</span> under a periodic curve with an offset</span></p>
+
+<p><b><span style='color:red'>Compare Figure 5 to Figure 4</span></b> </p>
+
+<p><span style='color:black'>Compare Figure 5 with Figure 4.&nbsp; Each of
+these curves describes the same periodic shape <i>(although Figure 4 has <span
+class=GramE>a larger</span> peak-to-peak amplitude, meaning simply that every
+value in Figure 4 has been multiplied by the same scale factor).</i></span></p>
+
+<p><span style='color:black'>However, the curve in Figure 5 is riding up on a
+positive bias, while the curve in Figure 4 is centered about the horizontal
+axis.&nbsp; While the net area under the curve in Figure 4 is zero, the net
+area under the curve in Figure 5 is a non-zero positive value.</span> </p>
+
+<p><span style='color:black'>The curve in Figure 5 can be considered to consist
+of the sum of two parts.&nbsp; One part is a straight horizontal line on the
+positive side of the horizontal axis.&nbsp; The other part is the periodic
+curve from Figure 4, added to that positive bias.</span></p>
+
+<blockquote style='margin-top:5.0pt;margin-bottom:5.0pt'>
+
+<p class=MsoNormal><i><span style='mso-fareast-font-family:"Times New Roman";
+color:black'>(The curve in Figure 4 can also be considered to consist of the
+sum of two parts.&nbsp; However, in Figure 4, the bias value is zero.)</span></i><span
+style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+
+</blockquote>
+
+<p><b><span style='color:red'>The net area</span></b> </p>
+
+<p><span style='color:black'>The net area contributed by the periodic part of
+the curve in Figure 5 continues to be zero.&nbsp; In effect, the non-zero net
+area under the curve in Figure 5 is the amount of the positive bias multiplied
+by the number of points.&nbsp; In other words, because I captured an even
+number of cycles of the periodic portion of the curve in my calculation of net
+area, only the bias contributes a non-zero value to the net area under the
+total curve.</span></p>
+
+<p><b><span style='color:red'>Part of a cycle</span></b> </p>
+
+<p><span style='color:black'>Had I failed to capture an even number of cycles
+of the periodic portion of the curve, then the positive lobes might not completely
+cancel the negative lobes, and the net area under the curve would be influenced
+by the periodic portion of the curve in addition to the bias.</span> </p>
+
+<p><b><span style='color:red'>Why is this important?</span></b> </p>
+
+<p><span style='color:black'>These concepts are extremely important in this
+lesson as we learn how to do frequency spectral analysis.</span> </p>
+
+<p><span style='color:black'>As you will see in this lesson, in doing frequency
+spectral analysis, we will form a product between a target time series and a
+sinusoid.&nbsp; The purpose is to measure the power contained in the time
+series at the frequency of the sinusoid.</span> </p>
+
+<p><span style='color:black'>The product of the target time series and the
+sinusoid will produce the sum of a potentially infinite number of periodic
+functions, some of which may be riding on a positive or negative bias.&nbsp; We
+will measure the amount of bias by computing the average value of the product
+time series.&nbsp; The amount of bias will be our estimate of the power
+contained in the target time series at the frequency of the sinusoid.</span>
+&nbsp; </p>
+
+<h2 align=center style='text-align:center'><a name="The_Fourier_Transform"><span
+style='mso-fareast-font-family:"Times New Roman";color:black'>The Fourier
+Transform</span></a><span style='mso-bookmark:The_Fourier_Transform'></span><span
+style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></h2>
+
+<p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>There
+is a mathematical process, known as the Fourier transform, which can be used to
+linearly transform information back and forth between two different
+domains.&nbsp; The information can be represented by sets of complex numbers in
+either or both domains.<o:p></o:p></span></p>
+
+<p>The domains can represent a variety of different things.&nbsp; In DSP, the
+domains are often referred to as the <i>time domain</i> and the <i>frequency
+domain,</i> but that is not a requirement.&nbsp; For example, one of the
+domains could represent the samples that make up the pixels in a photograph and
+the other domain could represent something having to do with the manipulation
+of photographs.</p>
+
+<p>Usually when dealing with the time domain and the frequency domain, the
+values that make up the samples in the time domain are purely real while the
+values that make up the samples in the frequency domain are complex.</p>
+
+<p><b><span style='color:red'>Time domain and frequency domain</span></b> </p>
+
+<p>For some purposes, it is preferable to have your information in the time
+domain.&nbsp; For other purposes, it is preferable to have your information in
+the frequency domain.&nbsp; The Fourier transform allows you to transform your
+information back and forth between these two domains at will. </p>
+
+<p>For example, it is possible to transform information from the time domain
+into the frequency domain, modify that information in the frequency domain, and
+then transform the modified information back into the time domain.&nbsp; This
+is one way to accomplish frequency filtering. </p>
+
+<p><b><span style='color:red'>Example of time domain and frequency domain</span></b>
+</p>
+
+<p>If you were to draw a graph of the voltage impinging on the speaker coils on
+your stereo system over <span class=GramE>time, that</span> would be a time
+series, which is a member of the time domain. </p>
+
+<p>If you were to observe the lights dancing up and down on the front of your
+equalizer while the music is playing, you would be observing the same
+information presented in the frequency domain.&nbsp; Typically the lights on
+the left represent low frequencies or bass while the lights on the right side
+represent high frequencies or treble.&nbsp; Often there is a slider associated
+with each vertical group of lights that allows you to apply filters to emphasize
+certain parts of the frequency spectrum and to de-emphasize other parts of the
+frequency spectrum.</p>
+
+<p><b><span style='color:red'>Forward and inverse transforms</span></b> </p>
+
+<p>Two very similar forms of the Fourier transform exist.&nbsp; The forward
+transform is used to transform information from the time domain into the
+frequency domain.&nbsp; The inverse transform is used to transform information
+from the frequency domain back to the time domain. </p>
+
+<p><b><span style='color:red'>Sampled time series</span></b> </p>
+
+<p>The theoretical Fourier transform is defined using integral calculus as
+applied to continuous functions.&nbsp; As a practical matter, in the digital
+world, we almost never deal with continuous functions.&nbsp; Rather, we deal
+with functions that have been reduced to a series of discrete numbers <i>(or
+samples),</i> which are the result of some discrete measurement system.</p>
+
+<blockquote style='margin-top:5.0pt;margin-bottom:5.0pt'>
+
+<p><i>(As mentioned earlier, recording the temperature in your office once each
+minute for twenty-four hours would produce such a discrete series of numbers.)</i>
+</p>
+
+</blockquote>
+
+<p><b><span style='color:red'>Integration and summation</span></b> </p>
+
+<p>In many cases, the integration operation encountered in integral calculus
+can be approximated in the digital world by a summation operation using
+discrete data.&nbsp; That is the case with the Fourier transform.&nbsp; Thus,
+the summation form of the Fourier transform that is applied to discrete time
+series is known as the Discrete Fourier Transform, or DFT. </p>
+
+<p><b><span style='color:red'>The FFT</span></b> </p>
+
+<p>The DFT is a computationally intense operation.&nbsp; Given certain
+restrictions involving the number of values in the time series and the number
+of frequencies at which the spectral analysis will be performed, there is a
+special algorithm that can result in computational economy.&nbsp; The algorithm
+that is used to realize that economy is commonly referred to as the <i>Fast
+Fourier Transform,</i> or <i>FFT.</i> </p>
+
+<p><b><span style='color:red'>DFT versus FFT</span></b> </p>
+
+<p>The DFT is more general than the FFT, but the FFT is much faster than the
+DFT.&nbsp; It is important to understand that these are simply two different
+algorithms for doing the same thing.&nbsp; Either can be used to produce the
+same results <i>(but as mentioned earlier, the FFT is somewhat more restricted
+as to the number of time-domain and frequency-domain samples).</i> </p>
+
+<p>Because the DFT algorithm is somewhat easier to understand than the FFT
+algorithm, I will concentrate on the DFT algorithm to explain how and why the
+Fourier transform accomplishes what it accomplishes. </p>
+
+<p><b><span style='color:red'>The DFT</span></b> </p>
+
+<p>Using my alternative notation described earlier, the expressions that you
+must evaluate to determine the frequency spectral content of a target time
+series at a frequency F are shown in Figure 6 <i>(note that I didn't bother to
+divide by N).</i> <o:p></o:p></p>
+
+<div align=center>
+
+<table class=MsoNormalTable border=1 cellpadding=0 width=600 style='width:300.0pt;
+ mso-cellspacing:1.5pt;background:yellow;mso-yfti-tbllook:1184' cols=1>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><tt><b><span style='font-size:10.0pt;color:black'>Real(F)
+  = S(n=0,N-1)[x(n)*</span></b></tt><span class=SpellE><tt><b><span
+  style='font-size:10.0pt'>cos</span></b></tt></span><tt><b><span
+  style='font-size:10.0pt'>(2Pi*F*n)<span style='color:black'>]</span></span></b></tt><span
+  style='mso-fareast-font-family:"Times New Roman"'><br>
+  </span><span class=SpellE><tt><b><span style='font-size:10.0pt;color:black'>Imag</span></b></tt></span><tt><b><span
+  style='font-size:10.0pt;color:black'>(F) = S(n=0,N-1)[x(n)*</span></b></tt><tt><b><span
+  style='font-size:10.0pt'>sin(2Pi*F*n)<span style='color:black'>]</span></span></b></tt><b><span
+  style='font-size:10.0pt;font-family:"Courier New"'><br>
+  </span></b><span style='mso-fareast-font-family:"Times New Roman"'><br>
+  </span><span class=SpellE><tt><b><span style='font-size:10.0pt;color:black'>ComplexAmplitude</span></b></tt></span><tt><b><span
+  style='font-size:10.0pt;color:black'>(F) = Real(F) - j*<span class=SpellE>Imag</span>(F)</span></b></tt><b><span
+  style='font-size:10.0pt;font-family:"Courier New"'><br>
+  </span></b><span style='mso-fareast-font-family:"Times New Roman"'><br>
+  </span><tt><b><span style='font-size:10.0pt;color:black'>Power(F) =
+  Real(F)*Real(F) + <span class=SpellE>Imag</span>(F)*<span class=SpellE>Imag</span>(F)</span></b></tt><span
+  style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  </td>
+ </tr>
+</table>
+
+</div>
+
+<p align=center style='text-align:center'><span style='color:black'>Figure 6<span
+class=GramE>&nbsp; Forward</span> Fourier transform</span></p>
+
+<p><b><span style='color:red'>What does this really mean?</span></b></p>
+
+<p>Before you panic, let me explain what this means in layman's terms.&nbsp;
+Given a time series, <span class=GramE><b>x(</b></span><b>n)</b>, you can
+determine if that time series contains a cosine component or a sine component
+at a given frequency, <b>F</b>, by doing the following: </p>
+
+<ul type=disc>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l0 level1 lfo2;tab-stops:list .5in'><span style='mso-fareast-font-family:
+     "Times New Roman"'>Create one new time series, <span class=SpellE><span
+     class=GramE><b>cos</b></span></span><span class=GramE><b>(</b></span><b>n)</b>,
+     which is a cosine function with the frequency <b>F</b>.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l0 level1 lfo2;tab-stops:list .5in'><span style='mso-fareast-font-family:
+     "Times New Roman"'>Create another new time series, <span class=GramE><b>sin(</b></span><b>n)</b>,
+     which is a sine function with the frequency <b>F</b>.&nbsp; <i>(The
+     methods needed to create the cosine and sine time series are available in
+     the Math class in the standard Java library.)</i><o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l0 level1 lfo2;tab-stops:list .5in'><span style='mso-fareast-font-family:
+     "Times New Roman"'>Multiply <span class=GramE><b>x(</b></span><b>n)</b> by
+     <span class=SpellE><b>cos</b></span><b>(n)</b> on a sample by sample basis
+     and compute the sum of the products.&nbsp; Save this value, calling it <span
+     class=GramE><b>Real(</b></span><b>F)</b>.&nbsp; This is an estimate of the
+     amplitude, if any, of the cosine component with the matching frequency
+     contained in the time series <span class=GramE><b>x(</b></span><b>n)</b>.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l0 level1 lfo2;tab-stops:list .5in'><span style='mso-fareast-font-family:
+     "Times New Roman"'>Multiply <span class=GramE><b>x(</b></span><b>n)</b> by
+     <b>sin(n)</b> on a sample by sample basis and compute the sum of the
+     products.&nbsp; Save this value, calling it <span class=SpellE><span
+     class=GramE><b>Imag</b></span></span><span class=GramE><b>(</b></span><b>F)</b>.&nbsp;
+     This is an estimate of the amplitude, if any, of the sine component with
+     the matching frequency contained in the time series <span class=GramE><b>x(</b></span><b>n)</b>.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l0 level1 lfo2;tab-stops:list .5in'><span style='mso-fareast-font-family:
+     "Times New Roman"'>Consider the values for <span class=GramE><b>Real(</b></span><b>F)</b>
+     and <span class=SpellE><b>Imag</b></span><b>(F)</b> to be the real and
+     imaginary parts of a complex number.<o:p></o:p></span></li>
+ <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
+     mso-list:l0 level1 lfo2;tab-stops:list .5in'><span style='mso-fareast-font-family:
+     "Times New Roman"'>Consider the sum of the squares of the real and
+     imaginary parts to represent the power at that frequency in the time
+     series.<o:p></o:p></span></li>
+</ul>
+
+<p class=MsoNormal><b><span style='mso-fareast-font-family:"Times New Roman";
+color:red'>It's that simple</span></b><span style='mso-fareast-font-family:
+"Times New Roman"'><o:p></o:p></span></p>
+
+<p>That's all there is to it.&nbsp; For each frequency of interest, you can use
+this process to compute a complex number, <span class=GramE><b>Real(</b></span><b>F)
+- <span class=SpellE>jImag</span>(F)</b>, which represents the component of
+that frequency in the target time series.</p>
+
+<blockquote style='margin-top:5.0pt;margin-bottom:5.0pt'>
+
+<p><i>(The mathematicians in the audience probably prefer to use the symbol <b>i</b>
+instead of the symbol <b>j</b> to represent the imaginary part.&nbsp; The use
+of <b>j</b> for this purpose comes from my electrical engineering background.)</i></p>
+
+</blockquote>
+
+<p>Similarly, you can compute the sum of the squares of the real and imaginary
+parts and consider that to be a measure of the power at that frequency in the
+time series.</p>
+
+<blockquote style='margin-top:5.0pt;margin-bottom:5.0pt'>
+
+<p><i>(This is the value that you would likely see being displayed by one of
+the dancing vertical bars on the front of the equalizer on your stereo system.)</i></p>
+
+</blockquote>
+
+<p>Normally we are interested in more than one frequency, so we would repeat
+the above procedure once for each frequency of interest.</p>
+
+<blockquote style='margin-top:5.0pt;margin-bottom:5.0pt'>
+
+<p><i>(This would produce the set of values that you would likely see being displayed
+by all of the dancing vertical bars on the <span class=SpellE>font</span> of
+the equalizer on your stereo system.)</i></p>
+
+</blockquote>
+
+<p><b><span style='color:red'>Why does this work?</span></b> </p>
+
+<p>This works because of the three trigonometric identities shown in Figure 7. <o:p></o:p></p>
+
+<table class=MsoNormalTable border=1 cellpadding=0 width=600 style='width:300.0pt;
+ mso-cellspacing:1.5pt;background:yellow;mso-yfti-tbllook:1184' cols=1>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+  <td style='padding:.75pt .75pt .75pt .75pt'><pre><tt><b>1. <span class=GramE>sin(</span>a)*sin(b)=(1/2)*(<span
+  class=SpellE>cos</span>(a-b)-<span class=SpellE>cos</span>(<span
+  class=SpellE>a+b</span>))</b></tt><br>
+  <tt><b>2. <span class=SpellE><span class=GramE>cos</span></span><span
+  class=GramE>(</span>a)*<span class=SpellE>cos</span>(b)=(1/2)*(<span
+  class=SpellE>cos</span>(a-b)+<span class=SpellE>cos</span>(<span
+  class=SpellE>a+b</span>))</b></tt><br>
+  <tt><b>3. sin(a)*<span class=SpellE>cos</span>(b)=(1/2)*(sin(<span
+  class=SpellE>a+b</span>)+sin(a-b))</b></tt><br>
+  <br>
+  <b>Figure 7</b></pre></td>
+ </tr>
+</table>
+
+<p>Although these identities apply to the products of sine and cosine values
+for single angles <b>a</b> and <b>b</b>, it is a simple matter to extend them
+to represent the products of time series consisting of sine and cosine
+functions.&nbsp; Such an extension is shown in Figure 8.</p>
+
+<p><b><span style='color:red'>Products of sine and cosine functions</span></b></p>
+
+<p>In each of the three cases shown in Figure 8, the function <span
+class=GramE><b>f(</b></span><b>n)</b> is a time series produced by multiplying
+two other time series, which are either sine functions or cosine functions.<o:p></o:p></p>
+
+<table class=MsoNormalTable border=1 cellpadding=0 width=400 style='width:300.0pt;
+ mso-cellspacing:1.5pt;background:yellow;mso-yfti-tbllook:1184' cols=1>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p><tt><b><span style='font-size:10.0pt'>1. f(n) = sin(a*n)*sin(b*n)</span></b></tt>
+  <br>
+  <tt><b><span style='font-size:10.0pt'>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; =
+  (1/2)*(<span class=SpellE>cos</span>((a-b)*n)-<span class=SpellE>cos</span>((<span
+  class=SpellE>a+b</span>)*n))</span></b></tt> </p>
+  <p><tt><b><span style='font-size:10.0pt'>2. f(n) = <span class=SpellE>cos</span>(a*n)*<span
+  class=SpellE>cos</span>(b*n)</span></b></tt> <br>
+  <tt><b><span style='font-size:10.0pt'>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;=
+  (1/2)*(<span class=SpellE>cos</span>((a-b)*n)+<span class=SpellE>cos</span>((<span
+  class=SpellE>a+b</span>)*n))</span></b></tt> </p>
+  <p><tt><b><span style='font-size:10.0pt'>3. f(n) = sin(a*n)*<span
+  class=SpellE>cos</span>(b*n)</span></b></tt> <br>
+  <tt><b><span style='font-size:10.0pt'>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;=
+  (1/2)*(sin((<span class=SpellE>a+b</span>)*n)+sin((a-b)*n))</span></b></tt> </p>
+  <pre><b>Figure 8</b></pre></td>
+ </tr>
+</table>
+
+<p class=MsoNormal><b><span style='mso-fareast-font-family:"Times New Roman";
+color:red'>Rewrite and simplify</span></b><span style='mso-fareast-font-family:
+"Times New Roman"'> <o:p></o:p></span></p>
+
+<p>Figure 9 rewrites and simplifies these three functions for the special case
+where <b>a=b</b>, taking into account the fact that <span class=SpellE><span
+class=GramE><b>cos</b></span></span><span class=GramE><b>(</b></span><b>0) =1</b>
+and <b>sin(0) = 0</b>. <o:p></o:p></p>
+
+<table class=MsoNormalTable border=1 cellpadding=0 width=600 style='width:300.0pt;
+ mso-cellspacing:1.5pt;background:yellow;mso-yfti-tbllook:1184' cols=1>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p class=MsoNormal><tt><b><span style='font-size:10.0pt'>1. <span
+  class=GramE>f(</span>n) = sin(a*n)*sin(a*n) = (1/2)-<span class=SpellE>cos</span>(2*a*n)/2</span></b></tt><span
+  style='mso-fareast-font-family:"Times New Roman"'><br>
+  </span><tt><b><span style='font-size:10.0pt'>2. <span class=GramE>f(</span>n)
+  = <span class=SpellE>cos</span>(a*n)*<span class=SpellE>cos</span>(a*n) =
+  (1/2)+<span class=SpellE>cos</span>(2*a*n)/2</span></b></tt><span
+  style='mso-fareast-font-family:"Times New Roman"'><br>
+  </span><tt><b><span style='font-size:10.0pt'>3. f(n) = sin(a*n)*<span
+  class=SpellE>cos</span>(a*n) = sin(2*a*n)/2 </span></b></tt><span
+  style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+  <pre><b>Figure 9</b></pre></td>
+ </tr>
+</table>
+
+<p><b><span style='color:red'>What can we deduce from these identities?</span></b>
+</p>
+
+<p>First you need to recall that the average of the values describing any true
+sinusoid is zero when the average is computed over an even number of cycles of
+the sinusoid.</p>
+
+<blockquote style='margin-top:5.0pt;margin-bottom:5.0pt'>
+
+<p><i>(A true sinusoid does not have a bias to prevent it from being centered
+on the horizontal axis.)</i> </p>
+
+</blockquote>
+
+<p>If a time series consists of the sum of two true sinusoids, then the average
+of the values describing that time series will be zero if the average is
+computed over an even number of cycles of both sinusoids, and very close to
+zero if the average is computed over a period that is not an even number of
+cycles for either or both sinusoids.</p>
+
+<blockquote style='margin-top:5.0pt;margin-bottom:5.0pt'>
+
+<p><i>(The average will approach zero as the length of data over which the
+average is computed increases.)</i> </p>
+
+</blockquote>
+
+<p><b><span style='color:red'>Product of two sine functions having the same
+frequency</span></b></p>
+
+<p>Let's apply this knowledge to the three cases shown above for <b>a=b</b>.&nbsp;
+Consider the time series for case 1 in Figure 9.&nbsp; This case is the product
+of two sine functions having the same frequency.&nbsp; The result of
+multiplying the two sine functions is shown graphically in Figure 10.</p>
+
+<p align=center style='text-align:center'><span style='mso-no-proof:yes'><img
+border=0 width=256 height=233 id="_x0000_i1032" src=java1478fig10.gif
+alt="Description: Plot of sin(x) and sin(x)*sin(x)"></span></p>
+
+<p align=center style='text-align:center'>Figure 10<span class=GramE>&nbsp;
+Plot</span> of sin(x) and sin(x)*sin(x)</p>
+
+<p>The red curve in Figure 10 shows the function <b>sin(x)</b>, and the black
+curve shows the function produced by multiplying <b>sin(x)</b> by <b>sin(x)</b>.</p>
+
+<p><b><span style='color:red'>The sum of the product function is not zero</span></b></p>
+
+<p>If you sum the values of the black curve over an even number of cycles, the
+sum will not be zero.&nbsp; Rather, it will be a positive, non-zero value. </p>
+
+<p>Now refer back to <span class=SpellE><span class=GramE><b>Imag</b></span></span><span
+class=GramE><b>(</b></span><b>F)</b> in Figure 6.&nbsp; The imaginary part is
+computed by multiplying the time series by a sine function and computing the
+sum of the products.&nbsp; If that time series contains a sine component with
+the same frequency as the sine function, that component will contribute a
+non-zero value to the sum of products.&nbsp; Thus, the imaginary part of the
+transform at that frequency will not be zero. <br>
+<br>
+<b><span style='color:red'>Product of two cosine functions having the same
+frequency</span></b></p>
+
+<p>Now consider the time series for case 2 in Figure 9.&nbsp; This case is the
+product of two cosine functions having the same frequency.&nbsp; The result of
+multiplying two cosine functions having the same frequency is shown graphically
+in Figure 11.</p>
+
+<p align=center style='text-align:center'><span style='mso-no-proof:yes'><img
+border=0 width=292 height=229 id="_x0000_i1031" src=java1478fig11.gif
+alt="Description: Plot of cos(x) and cos(x)*cos(x)"></span></p>
+
+<p align=center style='text-align:center'>Figure 11<span class=GramE>&nbsp;
+Plot</span> of <span class=SpellE>cos</span>(x) and <span class=SpellE>cos</span>(x)*<span
+class=SpellE>cos</span>(x)</p>
+
+<p>The red curve in Figure 11 shows the function <span class=SpellE><b>cos</b></span><b>(x)</b>,
+and the black curve shows the function produced by multiplying <span
+class=SpellE><b>cos</b></span><b>(x)</b> by <span class=SpellE><b>cos</b></span><b>(x)</b>.</p>
+
+<p><b><span style='color:red'>Again the sum of products is not zero</span></b></p>
+
+<p>If you sum the values of the black curve in Figure 11 over an even number of
+cycles, the sum will not be zero.&nbsp; Rather, it will be a positive, non-zero
+value. </p>
+
+<p>Now refer back to the expression for <span class=GramE><b>Real(</b></span><b>F)</b>
+in Figure 6.&nbsp; The real part of the transform is computed by multiplying
+the time series by a cosine function having a particular frequency and
+computing the sum of products.&nbsp; If that time series contains a cosine
+component with the same frequency as the cosine function, that component will
+contribute a non-zero value to the sum of products.&nbsp; Thus, the real part
+of the transform at that frequency will not be zero.<br>
+<br>
+<b><span style='color:red'>Product of a sine function and a cosine function</span></b></p>
+
+<p>Now consider the time series for case 3 in Figure 9, which is the product of
+a sine function and a cosine function having the same frequency.&nbsp; The
+result of computing this product is shown graphically in Figure 12 </p>
+
+<p align=center style='text-align:center'><span style='mso-no-proof:yes'><img
+border=0 width=312 height=230 id="_x0000_i1030" src=java1478fig12.gif
+alt="Description: Plot of sin(x), cos(x), and sin(x)*cos(x)"></span><br>
+. <br>
+Figure 12<span class=GramE>&nbsp; Plot</span> of sin(x), <span class=SpellE>cos</span>(x),
+and sin(x)*<span class=SpellE>cos</span>(x)</p>
+
+<p>The red curve in Figure 12 shows the function <span class=SpellE><b>cos</b></span><b>(x)</b>,
+and the green curve shows the function <b>sin(x)</b>.&nbsp; The black curve
+shows the function produced by multiplying <b>sin(x)</b> by <span class=SpellE><b>cos</b></span><b>(x)</b>.<br>
+<br>
+<b><span style='color:red'>The sum of the products will be zero</span></b></p>
+
+<p>If you sum the values of the black curve over an even number of cycles, the
+sum will be zero. </p>
+
+<p>Therefore, referring back to Figure 6, we see that the <span class=GramE><b>Real(</b></span><b>F)</b>
+computation measures only the cosine component in the time series at a
+particular frequency, and the <span class=SpellE><b>Imag</b></span><b>(F)</b>
+computation measures only the sine component in the time series having the same
+frequency.&nbsp; </p>
+
+<p>The <span class=GramE><b>Real(</b></span><b>F)</b> computation in Figure 6
+does not produce a non-zero output due to a cosine component in the time series
+having the same frequency.&nbsp; The <span class=SpellE><span class=GramE><b>Imag</b></span></span><span
+class=GramE><b>(</b></span><b>F)</b> computation in Figure 6 does not produce a
+non-zero output due to a sine component in the time series having the same
+frequency. </p>
+
+<p>Thus, at a particular frequency, the existence of a cosine component in the
+target time series produces the <i>real</i> output, and the existence of a sine
+component in the target time series produces the <i>imaginary</i> output.</p>
+
+<p><b><span style='color:red'>Neither sine nor cosine</span></b></p>
+
+<p>In reality, the sinusoidal components that make up a time series will not
+usually be sine functions or cosine functions.&nbsp; Rather, they will be
+sinusoidal components having the same shape as a sine or cosine, but not having
+the same value at zero as either a sine function or a cosine function.&nbsp;
+However, it can be shown that a general sinusoidal function can always be
+represented by the sum of a sine function and a cosine function having
+different amplitudes.</p>
+
+<blockquote style='margin-top:5.0pt;margin-bottom:5.0pt'>
+
+<p><i>(A proof of the above statement is beyond the scope of this lesson.&nbsp;
+You will simply have to accept on faith that a general time series can be
+represented as the sum of a potentially infinite number of sine functions and
+cosine functions of different frequencies and different amplitudes.&nbsp; It is
+these cosine and sine functions that constitute the real and imaginary
+components of the complex frequency spectrum.)</i></p>
+
+</blockquote>
+
+<p class=MsoNormal><b><span style='mso-fareast-font-family:"Times New Roman";
+color:red'>What about non-matching frequency components?</span></b><span
+style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+
+<p>Now we know what happens when the frequency of the <b>sin</b> and <span
+class=SpellE><b>cos</b></span> terms in Figure 6 match the frequency of sine
+and cosine components in the target time series.&nbsp; Another important
+question is, what do sine and cosine components in the target time series with
+frequencies different from the <span class=SpellE><b>cos</b></span> and <b>sin</b>
+terms in Figure 6 contribute to the output? </p>
+
+<p>The answer is not very much.&nbsp; Referring once more to the functional
+forms produced by multiplying sine and cosine functions <i>(repeated in Figure
+13 for convenience), </i>we see that for any values of <b>a</b> and <b>b</b>,
+where <b>a</b> is not equal to <b>b</b>, the function produced by multiplying
+two sinusoids will be the sum of two other sinusoids.&nbsp; The sum of the
+values for any sinusoid computed over an even number of cycles of the sinusoid
+will always be zero, and these sinusoids are no exception to that rule.&nbsp; <o:p></o:p></p>
+
+<table class=MsoNormalTable border=1 cellpadding=0 width=400 style='width:300.0pt;
+ mso-cellspacing:1.5pt;background:yellow;mso-yfti-tbllook:1184' cols=1>
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes'>
+  <td style='padding:.75pt .75pt .75pt .75pt'>
+  <p><tt><b><span style='font-size:10.0pt'>1. f(n) = sin(a*n)*sin(b*n)</span></b></tt>
+  <br>
+  <tt><b><span style='font-size:10.0pt'>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; =
+  (1/2)*(<span class=SpellE>cos</span>((a-b)*n)-<span class=SpellE>cos</span>((<span
+  class=SpellE>a+b</span>)*n))</span></b></tt> </p>
+  <p><tt><b><span style='font-size:10.0pt'>2. f(n) = <span class=SpellE>cos</span>(a*n)*<span
+  class=SpellE>cos</span>(b*n)</span></b></tt> <br>
+  <tt><b><span style='font-size:10.0pt'>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; =
+  (1/2)*(<span class=SpellE>cos</span>((a-b)*n)+<span class=SpellE>cos</span>((<span
+  class=SpellE>a+b</span>)*n))</span></b></tt> </p>
+  <p><tt><b><span style='font-size:10.0pt'>3. f(n) = sin(a*n)*<span
+  class=SpellE>cos</span>(b*n)</span></b></tt> <br>
+  <tt><b><span style='font-size:10.0pt'>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;
+  =(1/2)*(sin((<span class=SpellE>a+b</span>)*n)+sin((a-b)*n))</span></b></tt> </p>
+  <pre><b>Figure 13</b></pre></td>
+ </tr>
+</table>
+
+<p><b><span style='color:red'>Sum and difference frequencies</span></b></p>
+
+<p>For any pair of arbitrary values for <span class=GramE><b>a</b> and</span> <b>b</b>,
+the frequencies of the sinusoids in the resulting functions will be given by <span
+class=SpellE><b>a+b</b></span> and <b>a-b</b>.</p>
+
+<blockquote style='margin-top:5.0pt;margin-bottom:5.0pt'>
+
+<p class=MsoNormal><i><span style='mso-fareast-font-family:"Times New Roman"'>(These
+are often referred to as the sum and difference frequencies. &nbsp;Note that as
+<span class=GramE><b>a</b></span> approaches <b>b</b>, the difference frequency
+approaches zero.&nbsp; This is what produces the constant values of 1/2 in
+Figure 9 and the positive bias on the black curve in Figures 10 and 11.)</span></i><span
+style='mso-fareast-font-family:"Times New Roman"'><o:p></o:p></span></p>
+
+</blockquote>
+
+<p><b><span style='color:red'>A form of measurement error</span></b></p>
+
+<p>As a practical matter, if those resulting sum and difference frequencies are
+not multiples of one another, it will not be possible to perform the summation
+over an even number of cycles of both sinusoids.&nbsp; Therefore, one or the
+other, or perhaps both, will contribute a small amount to the sum of products
+due to including a partial cycle in the summation.&nbsp; This is a form of
+measurement error that occurs when performing frequency spectrum analysis using
+Fourier transform methods.</p>
+
+<blockquote style='margin-top:5.0pt;margin-bottom:5.0pt'>
+
+<p><span class=GramE><i>(The percentage contribution of this error to the
+average value decreases as the number of cycles included in the average
+increases.)</i></span></p>
+
+</blockquote>
+
+<p><b><span style='color:red'>Product of two sine functions at different
+frequencies</span></b></p>
+
+<p>Consider the product of two sine functions at different frequencies as shown
+in Figure 14.&nbsp; This is a plot of the function produced by multiplying <span
+class=GramE><b>sin(</b></span><b>1.8x)</b> by <b>sin(2.2x)</b>. </p>
+
+<p align=center style='text-align:center'><span style='mso-no-proof:yes'><img
+border=0 width=372 height=238 id="_x0000_i1029" src=java1478fig14.gif
+alt="Description: Plot of sin(1.8x)*sin(2.2x)"></span></p>
+
+<p align=center style='text-align:center'>Figure 14<span class=GramE>&nbsp;
+Plot</span> of sin(1.8x)*sin(2.2x)</p>
+
+<p>The high frequency component shown in Figure 14 is the component attributable
+to <span class=SpellE><b>a+b</b></span>.&nbsp; The long sweeping low frequency
+component is the component attributable to <b>a-b</b>. </p>
+
+<p><b><span style='color:red'>The sum of the product function</span></b></p>
+
+<p>Judging from the graph in Figure 14, performing a summation of the product
+function from -7 to +7 would include almost exactly nine cycles of the high
+frequency component.&nbsp; Thus, the high frequency component would contribute
+very little, if anything, to the summation.</p>
+
+<p>However, the summation would include less than one complete cycle of the low
+frequency component.&nbsp; Therefore, the low frequency component would
+contribute some output to the summation in the form of a measurement error.</p>
+
+<p>Similar results occur when multiplying a cosine function by a cosine
+function having a different frequency, or when multiplying a cosine function by
+a sine function having a different frequency.&nbsp; Graphical results for these
+two cases are shown in Figures 15 and 16. </p>
+
+<p align=center style='text-align:center'><span style='mso-no-proof:yes'><img
+border=0 width=365 height=239 id="_x0000_i1028" src=java1478fig15.gif
+alt="Description: Plot of cos(1.8x)*cos(2.2x)"></span></p>
+
+<p align=center style='text-align:center'>Figure 15<span class=GramE>&nbsp;
+Plot</span> of <span class=SpellE>cos</span>(1.8x)*<span class=SpellE>cos</span>(2.2x)
+</p>
+
+<p align=center style='text-align:center'><span style='mso-no-proof:yes'><img
+border=0 width=366 height=223 id="_x0000_i1027" src=java1478fig16.gif
+alt="Description: Plot of sin(1.8x)*cos(2.2x)"></span></p>
+
+<p align=center style='text-align:center'>Figure 16<span class=GramE>&nbsp;
+Plot</span> of sin(1.8x)*<span class=SpellE>cos</span>(2.2x)</p>
+
+<p>Once again, unless the summation interval includes an exact number of
+samples of both the sum frequency and the difference frequency, one or both of
+the sinusoids contained in the product function would contribute a measurement
+error to the result.</p>
+
+<h2 align=center style='text-align:center'><a name=Summary></a><span
+style='mso-fareast-font-family:"Times New Roman"'>Summary<o:p></o:p></span></h2>
+
+<p>In this lesson, I have provided a quasi-theoretical basis for frequency
+spectrum analysis.</p>
+
+<p>A pure theoretical basis for frequency spectrum analysis involves some
+rather complicated mathematics and is somewhat difficult to understand.&nbsp;
+However, from a practical viewpoint, it is not too difficult to understand how
+the complex mathematics <span class=GramE>produce</span> the results that they
+produce.</p>
+
+<p>Hopefully the quasi-theoretical explanations provided in this lesson will
+help you to understand what makes spectrum analysis work.</p>
+
+<h2 align=center style='text-align:center'><a name="What's_next"></a><span
+style='mso-fareast-font-family:"Times New Roman"'>What's Next?<o:p></o:p></span></h2>
+
+<p class=MsoNormal><span style='mso-fareast-font-family:"Times New Roman"'>The
+next lesson in this series will reduce much of what I have discussed in this
+lesson to practice.&nbsp; I will present and explain a program that implements
+a DFT algorithm for performing frequency spectrum analysis.&nbsp; In addition,
+I will present the results of several interesting experiments in frequency
+spectrum analysis using that algorithm.<o:p></o:p></span></p>
+
+<p>A subsequent lesson will explain some of the signal processing concepts that
+made it possible for the inventors of the FFT algorithm to design a
+computational algorithm that is much faster than the DFT algorithm.&nbsp; As is
+often the case, however, the FFT algorithm trades off speed for generality.</p>
+
+<div class=MsoNormal align=center style='text-align:center'><span
+style='mso-fareast-font-family:"Times New Roman"'>
+
+<hr size=3 width="100%" align=center>
+
+</span></div>
+
+<p><span class=GramE>Copyright 2004, Richard G. Baldwin.</span>&nbsp;
+Reproduction in whole or in part in any form or medium without express written
+permission from Richard Baldwin is prohibited. </p>
+
+<h4><span style='mso-fareast-font-family:"Times New Roman"'>About the author<o:p></o:p></span></h4>
+
+<p><b><a href="mailto:baldwin@DickBaldwin.com">Richard Baldwin</a></b><i> is a
+college professor (at Austin Community College in Austin, Texas) and private
+consultant whose primary focus is a combination of Java, C#, and XML. In
+addition to the many platform and/or language independent benefits of Java and
+C# applications, he believes that a combination of Java, C#, and XML will
+become the primary driving force in the delivery of structured information on
+the Web.</i> </p>
+
+<p><i>Richard has participated in numerous consulting projects, and he
+frequently provides onsite training at the high-tech companies located in and
+around Austin, Texas.&nbsp; He is the author of Baldwin's Programming <a
+href="http://www.DickBaldwin.com">Tutorials</a>, which has gained a worldwide
+following among experienced and aspiring programmers. He has also published
+articles in <span class=SpellE>JavaPro</span> magazine.</i> </p>
+
+<p><i>Richard holds an MSEE degree from Southern Methodist University and has
+many years of experience in the application of computer technology to
+real-world problems.</i> </p>
+
+<p><i><a href="mailto:baldwin@DickBaldwin.com">baldwin@DickBaldwin.com</a></i> </p>
+
+<p>-<span class=GramE>end</span>- </p>
+
+<p>&nbsp;</p>
+
+<p class=MsoNormal style='margin-bottom:12.0pt'><span style='mso-fareast-font-family:
+"Times New Roman"'><br>
+<br style='mso-special-character:line-break'>
+<![if !supportLineBreakNewLine]><br style='mso-special-character:line-break'>
+<![endif]><o:p></o:p></span></p>
+
+</div>
+
+</body>
+
+</html>

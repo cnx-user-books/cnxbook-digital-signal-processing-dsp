@@ -1,0 +1,4610 @@
+<document xmlns="http://cnx.rice.edu/cnxml"> 
+<title>Java1478-Fun with Java, How and Why Spectral Analysis Works</title>
+<metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m49794</md:content-id>
+  <md:title>Java1478-Fun with Java, How and Why Spectral Analysis Works</md:title>
+  <md:abstract>Baldwin explains how the Fourier transform can be used to determine the spectral content of a signal in the time domain.</md:abstract>
+  <md:uuid>9fdb2951-7fca-47a1-83fc-d3d3d15d6ff1</md:uuid>
+</metadata>
+
+<content>
+
+
+
+
+
+
+<quote id="blockquote1000" display="block">
+
+
+
+<para id="p1000">
+Revised: Fri Oct 16 23:16:39 CDT 2015
+
+</para>
+
+
+
+
+
+<para id="p1001">
+This page is included in the following books:
+
+</para>
+
+
+
+
+<list id="ul1000" list-type="bulleted">
+
+	
+
+<item id="li1000">
+<link id="a1000" url="http://cnx.org/contents/98d253c0-8044-4e22-a707-7b8d819bc8a7">
+
+
+        Digital Signal Processing - DSP
+
+</link>
+
+ 
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+</quote>
+
+
+
+
+
+
+
+
+
+
+
+<section id="h11000">
+<title>
+<emphasis id="Table_of_contents" effect="bold">
+
+Table of contents
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+
+<list id="ul1001" list-type="bulleted">
+<item id="li1001">
+<link id="a1001" target-id="Table_of_contents">
+
+Table of contents
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1002">
+<link id="a1002" target-id="Preface">
+
+Preface
+
+</link>
+
+
+
+
+<list id="ul1002" list-type="bulleted">
+<item id="li1003">
+<link id="a1003" target-id="Viewing_tip">
+
+Viewing tip
+
+</link>
+
+
+
+
+<list id="ul1003" list-type="bulleted">
+<item id="li1004">
+<link id="a1004" target-id="Figures">
+
+Figures
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1005">
+<link id="a1005" target-id="Multiply_add_operations">
+
+Multiply-add operations
+
+</link>
+
+
+
+
+<list id="ul1004" list-type="bulleted">
+<item id="li1006">
+<link id="a1006" target-id="Computational_requirements_for_DSP">
+
+Computational requirements for DSP
+
+</link>
+
+
+
+
+<list id="ul1005" list-type="bulleted">
+<item id="li1007">
+<link id="a1007" target-id="Typical_notation">
+
+Typical notation
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1008">
+<link id="a1008" target-id="A_sum-of-products_operation">
+
+A sum-of-products operation
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1009">
+<link id="a1009" target-id="An_alternative_notation">
+
+An alternative notation
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1010">
+<link id="a1010" target-id="Preview0">
+
+Preview
+
+</link>
+
+
+
+
+<list id="ul1006" list-type="bulleted">
+<item id="li1011">
+<link id="a1011" target-id="What_is_a_time_series">
+
+What is a time series?
+
+</link>
+
+
+
+
+<list id="ul1007" list-type="bulleted">
+<item id="li1012">
+<link id="a1012" target-id="A_new_time_series_is_produced">
+
+A new time series is produced
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1013">
+<link id="a1013" target-id="Calculation_of_the_mean_or_average">
+
+Calculation of the mean or average
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1014">
+<link id="a1014" target-id="The_Fourier_transform">
+
+The Fourier transform
+
+</link>
+
+
+
+
+<list id="ul1008" list-type="bulleted">
+<item id="li1015">
+<link id="a1015" target-id="Time_domain_and_frequency_domain_">
+
+Time domain and frequency domain
+
+</link>
+
+
+
+
+<list id="ul1009" list-type="bulleted">
+<item id="li1016">
+<link id="a1016" target-id="Example_of_time_domain_and_frequency_domain_">
+
+Example of time domain and frequency domain 
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1017">
+<link id="a1017" target-id="Forward_and_inverse_transforms">
+
+Forward and inverse transforms
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1018">
+<link id="a1018" target-id="Sampled_time_series">
+
+Sampled time series
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1019">
+<link id="a1019" target-id="Integration_and_summation_">
+
+Integration and summation 
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1020">
+<link id="a1020" target-id="The_FFT_algorithms">
+
+The FFT algorithms
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1021">
+<link id="a1021" target-id="DFT_versus_FFT">
+
+DFT versus FFT
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1022">
+<link id="a1022" target-id="The_DFT_algorithm">
+
+The DFT algorithm
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1023">
+<link id="a1023" target-id="Why_does_this_work">
+
+Why does this work?
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1024">
+<link id="a1024" target-id="Products_of_sine_and_cosine_functions">
+
+Products of sine and cosine functions
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1025">
+<link id="a1025" target-id="Product_of_two_sine_functions_having_the_same_frequency_">
+
+Product of two sine functions having the same frequency 
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1026">
+<link id="a1026" target-id="Product_of_two_cosine_functions_having_the_same_frequency_">
+
+Product of two cosine functions having the same frequency 
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1027">
+<link id="a1027" target-id="Product_of_a_sine_function_and_a_cosine_function_">
+
+Product of a sine function and a cosine function 
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1028">
+<link id="a1028" target-id="Neither_sine_nor_cosine">
+
+Neither sine nor cosine
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1029">
+<link id="a1029" target-id="What_about_non-matching_frequency_components">
+
+What about non-matching frequency components?
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1030">
+<link id="a1030" target-id="Sum_and_difference_frequencies">
+
+Sum and difference frequencies
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1031">
+<link id="a1031" target-id="A_form_of_measurement_error">
+
+A form of measurement error
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1032">
+<link id="a1032" target-id="Product_of_two_sine_functions_at_different_frequencies">
+
+Product of two sine functions at different frequencies
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1033">
+<link id="a1033" target-id="Summary">
+
+Summary
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1034">
+<link id="a1034" target-id="Whats_next">
+
+What's next?
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1035">
+<link id="a1035" target-id="Miscellaneous">
+
+Miscellaneous
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+
+	
+	
+
+</section>
+<section id="h11001">
+<title>
+<emphasis id="Preface" effect="bold">
+
+Preface
+
+</emphasis>
+
+
+</title>
+
+
+	
+	
+
+<para id="p1002">
+Programming in Java doesn't have to be dull and boring. In fact, it's 
+	possible to have a lot of fun while programming in Java. This module is one 
+	in a series that concentrates on having fun while programming in Java. 
+
+</para>
+
+
+
+	
+	
+
+<section id="h21000">
+<title>
+<emphasis id="Viewing_tip" effect="bold">
+
+Viewing tip
+
+</emphasis>
+
+
+</title>
+
+
+	
+
+<para id="p1003">
+I recommend that you open another copy of this module in a separate 
+browser window and use the following links to easily find and view the Figures 
+	while you are reading about them.
+
+</para>
+
+
+
+	
+
+<section id="h31000">
+<title>
+<emphasis id="Figures" effect="bold">
+
+Figures
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<list id="ul1010" list-type="bulleted">
+
+
+
+<item id="li1036">
+<link id="a1036" target-id="Figure_1">
+
+Figure 1.
+
+</link>
+
+
+ A typical sum-of-products operation.
+
+</item>
+
+
+
+
+<item id="li1037">
+<link id="a1037" target-id="Figure_2">
+
+Figure 2.
+
+</link>
+
+
+ Alternative notation for a sum-of-products operation.
+
+</item>
+
+
+
+
+<item id="li1038">
+<link id="a1038" target-id="Figure_3">
+
+Figure 3.
+
+</link>
+
+
+ Plot of values in a time series.
+
+</item>
+
+
+
+
+<item id="li1039">
+<link id="a1039" target-id="Figure_4">
+
+Figure 4.
+
+</link>
+
+
+ Area under a periodic curve.
+
+</item>
+
+
+
+
+<item id="li1040">
+<link id="a1040" target-id="Figure_5">
+
+Figure 5.
+
+</link>
+
+
+ Area under a periodic curve with an offset.
+
+</item>
+
+
+
+
+<item id="li1041">
+<link id="a1041" target-id="Figure_6">
+
+Figure 6.
+
+</link>
+
+
+ Forward Fourier transform.
+
+</item>
+
+
+
+
+<item id="li1042">
+<link id="a1042" target-id="Figure_7">
+
+Figure 7.
+
+</link>
+
+
+ Three trigonometric identities.
+
+</item>
+
+
+
+
+<item id="li1043">
+<link id="a1043" target-id="Figure_8">
+
+Figure 8.
+
+</link>
+
+
+ Products of sine and cosine functions.
+
+</item>
+
+
+
+
+<item id="li1044">
+<link id="a1044" target-id="Figure_9">
+
+Figure 9.
+
+</link>
+
+
+ Rewrite and simplify.
+
+</item>
+
+
+
+
+<item id="li1045">
+<link id="a1045" target-id="Figure_10">
+
+Figure 10.
+
+</link>
+
+
+ Plot of sin(x) and sin(x)*sin(x).
+
+</item>
+
+
+
+
+<item id="li1046">
+<link id="a1046" target-id="Figure_11">
+
+Figure 11.
+
+</link>
+
+
+ Plot of cos(x) and cos(x)*cos(x).
+
+</item>
+
+
+
+
+<item id="li1047">
+<link id="a1047" target-id="Figure_12">
+
+Figure 12.
+
+</link>
+
+
+ Plot of sin(x), cos(x), and sin(x)*cos(x).
+
+</item>
+
+
+
+
+<item id="li1048">
+<link id="a1048" target-id="Figure_13">
+
+Figure 13.
+
+</link>
+
+
+ Products of sine and cosine functions.
+
+</item>
+
+
+
+
+<item id="li1049">
+<link id="a1049" target-id="Figure_14">
+
+Figure 14.
+
+</link>
+
+
+ Plot of sin(1.8x)*sin(2.2x).
+
+</item>
+
+
+
+
+<item id="li1050">
+<link id="a1050" target-id="Figure_15">
+
+Figure 15.
+
+</link>
+
+
+ Plot of cos(1.8x)*cos(2.2x).
+
+</item>
+
+
+
+
+<item id="li1051">
+<link id="a1051" target-id="Figure_16">
+
+Figure 16.
+
+</link>
+
+
+ Plot of sin(1.8x)*cos(2.2x).
+
+</item>
+
+
+
+
+</list>
+
+
+
+	
+
+</section>
+</section>
+</section>
+<section id="h11002">
+<title>
+<emphasis id="Multiply_add_operations" effect="bold">
+
+Multiply-add operations
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1004">
+This module deals with a topic commonly know as Digital Signal Processing,
+
+<emphasis id="em1000" effect="italics">
+ 
+(DSP for short)
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<section id="h21001">
+<title>
+<emphasis id="Computational_requirements_for_DSP" effect="bold">
+
+Computational requirements for DSP
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1005">
+The computational requirements for implementing DSP in a computer program are 
+usually straightforward. Almost all DSP operations consist of multiplying 
+corresponding values contained in two numeric series and then calculating the 
+sum of the products. Sometimes, the final sum is divided by the total number of 
+values included in the sum to produce an average. This is often referred to as a 
+
+
+<emphasis id="em1001" effect="italics">
+sum-of-products
+
+</emphasis>
+ or 
+
+
+<emphasis id="em1002" effect="italics">
+multiply-add operation
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1001" display="block">
+
+	
+
+<para id="p1006">
+<emphasis id="em1003" effect="italics">
+(This is the digital equivalent of integrating the product of two 
+	continuous functions between specified limits.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<section id="h31001">
+<title>
+<emphasis id="Typical_notation" effect="bold">
+
+Typical notation
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1007">
+Such an operation can be indicated by the symbolic notation shown in 
+
+<link id="a1052" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ 
+
+
+<emphasis id="em1004" effect="italics">
+(where the strange looking thing constructed of straight lines is the Greek 
+letter sigma)
+
+</emphasis>
+. 
+
+</para>
+
+
+
+
+
+<table id="table1000" summary="This is a table." pgwide="630">
+<tgroup cols="1">
+
+
+<thead id="thead1000">
+<row id="tr1000">
+<entry id="th1000">
+
+
+
+<emphasis id="Figure_1" effect="bold">
+
+Figure 1.
+
+</emphasis>
+
+ A typical sum-of-products operation.
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1000">
+<row id="tr1001">
+<entry id="td1000">
+
+		
+
+<code id="pre1000" display="block">           N-1 
+           __ 
+           \ 
+z =(1/N) * / x(n) * y(n) 
+           -- 
+           n = 0</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+</section>
+<section id="h31002">
+<title>
+<emphasis id="A_sum-of-products_operation" effect="bold">
+
+A sum-of-products operation
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1008">
+This notation means that a new value for z is calculated by multiplying the 
+first N corresponding samples from each of two numeric series (x(n) and y(n)), 
+calculating the sum of the products, and dividing the sum by N.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1002" display="block">
+
+	
+
+<para id="p1009">
+<emphasis id="em1005" effect="italics">
+(In this module, I will be dealing primarily with numeric series that 
+	represent samples from a continuous function taken over time. Therefore, I 
+	will often refer to the numeric series as a time series.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h31003">
+<title>
+<emphasis id="An_alternative_notation" effect="bold">
+
+An alternative notation
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1010">
+The above notation requires about six lines of text to construct, and 
+therefore could easily become scrambled during the HTML publishing process. I 
+have invented an alternative notation that means exactly the same thing, but is 
+less likely to be damaged during the publishing process. My new notation is 
+shown in 
+
+<link id="a1053" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+. You should be able to compare this notation with 
+
+<link id="a1054" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ and 
+correlate the terms in the notation to the verbal description of the operation 
+given above. 
+
+</para>
+
+
+
+
+
+
+<table id="table1001" summary="This is a table." pgwide="630">
+<tgroup cols="1">
+
+
+<thead id="thead1001">
+<row id="tr1002">
+<entry id="th1001">
+
+
+
+<emphasis id="Figure_2" effect="bold">
+
+Figure 2.
+
+</emphasis>
+
+ Alternative notation for a sum-of-products operation.
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1001">
+<row id="tr1003">
+<entry id="td1001">
+
+		
+
+<code id="pre1001" display="block">z = (1/N) * S(n=0,N-1)[(x(n) * y(n)] </code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1011">
+This is the notation that I will use in this module.
+
+</para>
+
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h11003">
+<title>
+<emphasis id="Preview0" effect="bold">
+
+Preview
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<section id="h21002">
+<title>
+<emphasis id="What_is_a_time_series" effect="bold">
+
+What is a time series?
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1012">
+I discussed the concept of a 
+
+<emphasis id="em1006" effect="italics">
+time series
+
+</emphasis>
+ in some detail in my module titled
+
+
+<link id="a1055" url="http://cnx.org/contents/0d7ff757-3804-403b-8288-35d9cf8d08df/Dsp00104-Sampled-Time-Series">
+
+Dsp00104-Sampled Time Series
+
+</link>
+
+. For purposes of this module, suffice it to say that a time series is a set 
+of sample values taken from a continuous function at equal increments of time 
+over a specified time interval. For example, if you were to record the 
+temperature in your office every minute for six hours, the set of 360 different 
+values that you would record could be considered as a time series.
+
+</para>
+
+
+
+
+
+<section id="h31004">
+<title>
+<emphasis id="A_new_time_series_is_produced" effect="bold">
+
+A new time series is produced
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1013">
+In DSP, we often multiply two time series together on a sample by 
+sample basis. When I multiply the values in the time series x(n) by the 
+corresponding values in the time series y(n), that produces a new time series, 
+which I will call w(n). 
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31005">
+<title>
+<emphasis id="Calculation_of_the_mean_or_average" effect="bold">
+
+Calculation of the mean or average
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1014">
+If I compute the sum of the individual values in the series w(n), and then 
+divide that sum by the number of samples, this is nothing more than the 
+calculation of the mean or average value of the time series named w(n). Most DSP 
+operations boil down to nothing more complicated than calculating the average 
+value of the product of two time series.
+
+</para>
+
+
+
+
+
+<section id="h41000">
+<title>
+Knowing what to multiply, when, and why
+
+</title>
+
+
+
+
+<para id="p1015">
+The real trick in DSP is knowing what to multiply, when to multiply it, and 
+why to multiply it.
+
+</para>
+
+
+
+
+
+<para id="p1016">
+Some DSP algorithms are very complex. For example, the 
+
+<emphasis id="em1007" effect="italics">
+Fast Fourier Transform
+
+</emphasis>
+
+
+
+<emphasis id="em1008" effect="italics">
+(FFT)
+
+</emphasis>
+ algorithm, involves nothing more than a lot of multiply-add operations 
+under the control of an extremely complex and efficient control structure.
+
+</para>
+
+
+
+
+
+<para id="p1017">
+In this module, I will concentrate on the 
+
+<emphasis id="em1009" effect="italics">
+Discrete Fourier Transform (DFT)
+
+</emphasis>
+ algorithm, which is much less complex and therefore much easier to 
+understand.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1003" display="block">
+
+	
+
+<para id="p1018">
+<emphasis id="em1010" effect="italics">
+(While the DFT and the FFT produce the same results, the DFT typically 
+	runs much more slowly than the FFT, which is optimized for speed.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41001">
+<title>
+Multiply-add speed is important 
+
+</title>
+
+
+
+
+<para id="p1019">
+Some DSP processes require extremely large numbers of multiply-add 
+operations. In order to perform DSP in real time, the equipment used to perform 
+the arithmetic must be extremely fast. That is where the special DSP chips, 
+
+
+<emphasis id="em1011" effect="italics">
+(which are designed to perform multiply-add operations at an extremely high rate 
+of speed)
+
+</emphasis>
+ earn their keep. 
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41002">
+<title>
+The net area under the curve 
+
+</title>
+
+
+
+
+<para id="p1020">
+If you plot a time series as a curve on a graph, as shown in 
+
+<link id="a1056" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+, the 
+sum of the values that make up the time series is an estimate of the net area 
+under the curve.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1004" display="block">
+
+	
+
+<emphasis id="em1012" effect="italics">
+(Assuming that the horizontal axis represents a value of zero, the sample 
+	values above the axis contribute a positive value to the net area and the 
+	sample values below the curve contribute a negative value to the net area. 
+	In the case of 
+
+<link id="a1057" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+, I attempted to come up with a set of sample values 
+	that would produce a net area of zero. In other words, the area above the 
+	horizontal axis was intended to perfectly balance the area below the 
+	horizontal axis.)
+
+</emphasis>
+</quote>
+
+
+
+
+
+<table id="table1002" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1002">
+<row id="tr1004">
+<entry id="th1002">
+
+
+
+<emphasis id="Figure_3" effect="bold">
+
+Figure 3.
+
+</emphasis>
+
+ Plot of values in a time series.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1002">
+<row id="tr1005">
+<entry id="td1002">
+
+
+
+
+<media id="media1000" alt="missing image" display="block">
+<image id="img1000" mime-type="image/gif" src="../../media/java1478fig03.gif" width="290" height="123"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+</section>
+<section id="h41003">
+<title>
+A periodic example 
+
+</title>
+
+
+
+
+<para id="p1021">
+A periodic time series is one in which a set of sample values repeats over 
+time, provided that you record enough samples to include one or more periods. 
+
+
+<link id="a1058" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ shows a plot of a periodic time series. You can see that the same set 
+of values repeats as you move from left to right on the curve plotted in 
+
+
+<link id="a1059" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+<table id="table1003" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1003">
+<row id="tr1006">
+<entry id="th1003">
+
+
+
+<emphasis id="Figure_4" effect="bold">
+
+Figure 4.
+
+</emphasis>
+
+ Area under a periodic curve.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1003">
+<row id="tr1007">
+<entry id="td1003">
+
+
+
+
+<media id="media1001" alt="missing image" display="block">
+<image id="img1001" mime-type="image/gif" src="../../media/java1478fig04.gif" width="291" height="123"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+</section>
+<section id="h41004">
+<title>
+The sum of two curves 
+
+</title>
+
+
+
+
+<para id="p1022">
+Periodic curves can often be viewed as the sum of two curves. One of the 
+curves is the periodic component having a zero net area under the curve when 
+measured across an even number of cycles. The other component is a constant bias 
+offset that is added to every value of the periodic curve. 
+
+</para>
+
+
+
+
+
+<para id="p1023">
+Each of the solid dark blobs in 
+
+<link id="a1060" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ is a sample value. The horizontal 
+line represents a sample value of zero. 
+
+<emphasis id="em1013" effect="italics">
+(The empty circle is the sample 
+value half way through the sampling interval. The only reason it is different is 
+to mark the mid point.)
+
+</emphasis>
+ 
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41005">
+<title>
+The net area under the curve 
+
+</title>
+
+
+
+
+<para id="p1024">
+What is the net area under the curve in 
+
+<link id="a1061" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+? Can you examine the curve 
+and come up with a good estimate. As it turns out, the net area under the curve 
+in 
+
+<link id="a1062" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ is very close to zero 
+
+<emphasis id="em1014" effect="italics">
+(at least it is as close to zero as I was 
+able to draw it)
+
+</emphasis>
+. 
+
+</para>
+
+
+
+
+
+<para id="p1025">
+Now take a look at 
+
+<link id="a1063" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+. What is the net area under the curve in 
+
+
+<link id="a1064" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+?
+
+</para>
+
+
+
+
+
+
+<table id="table1004" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1004">
+<row id="tr1008">
+<entry id="th1004">
+
+
+
+<emphasis id="Figure_5" effect="bold">
+
+Figure 5.
+
+</emphasis>
+
+ Area under a periodic curve with an offset.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1004">
+<row id="tr1009">
+<entry id="td1004">
+
+
+
+
+<media id="media1002" alt="missing image" display="block">
+<image id="img1002" mime-type="image/gif" src="../../media/java1478fig05.gif" width="290" height="120"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+</section>
+<section id="h41006">
+<title>
+Compare 
+
+<link id="a1065" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ to 
+
+<link id="a1066" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ 
+
+</title>
+
+
+
+
+<para id="p1026">
+Each of these curves describes the same periodic shape 
+
+<emphasis id="em1015" effect="italics">
+(although 
+
+<link id="a1067" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ 
+has a larger peak-to-peak amplitude, meaning simply that every value in 
+
+<link id="a1068" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ 
+has been multiplied by the same scale factor)
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<para id="p1027">
+However, the curve in 
+
+<link id="a1069" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ is riding up on a positive bias, while the 
+curve in 
+
+<link id="a1070" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ is centered about the horizontal axis. While the net area 
+under the curve in 
+
+<link id="a1071" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ is near zero, the net area under the curve in 
+
+
+<link id="a1072" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ is a non-zero positive value. 
+
+</para>
+
+
+
+
+
+<para id="p1028">
+The curve in 
+
+<link id="a1073" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ can be considered to consist of the sum of two parts. 
+One part is a straight horizontal line on the positive side of the horizontal 
+axis. The other part is the periodic curve from 
+
+<link id="a1074" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+, added to that positive 
+bias.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1005" display="block">
+
+	
+
+<emphasis id="em1016" effect="italics">
+(The curve in 
+
+<link id="a1075" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ can also be considered to consist of the sum of 
+	two parts. However, in 
+
+<link id="a1076" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+, the bias value is zero.) 
+
+</emphasis>
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41007">
+<title>
+The net area 
+
+</title>
+
+
+
+
+<para id="p1029">
+The net area contributed by the periodic part of the curve in 
+
+<link id="a1077" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ 
+continues to be zero. In effect, the non-zero net area under the curve in 
+
+
+<link id="a1078" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ is the amount of the positive bias multiplied by the number of points. In 
+other words, because I captured an even number of cycles of the periodic portion 
+of the curve in my calculation of net area, only the bias contributes a non-zero 
+value to the net area under the total curve.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41008">
+<title>
+Part of a cycle 
+
+</title>
+
+
+
+
+<para id="p1030">
+Had I failed to capture an even number of cycles of the periodic portion of 
+the curve, then the positive lobes might not completely cancel the negative 
+lobes, and the net area under the curve would be influenced by the periodic 
+portion of the curve in addition to the bias. 
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41009">
+<title>
+Why is this important? 
+
+</title>
+
+
+
+
+<para id="p1031">
+These concepts are extremely important in this module as we learn how to do 
+frequency spectral analysis. 
+
+</para>
+
+
+
+
+
+<para id="p1032">
+As you will see in this module, in doing frequency spectral analysis, we will 
+form a product between a target time series and a sinusoid. The purpose is to 
+measure the power contained in the time series at the frequency of the sinusoid. 
+
+</para>
+
+
+
+
+
+<para id="p1033">
+The product of the target time series and the sinusoid will produce the sum 
+of a potentially infinite number of periodic functions, some of which may be 
+riding on a positive or negative bias. We will measure the amount of bias by 
+computing the average value of the product time series. The amount of bias will 
+be our estimate of the power contained in the target time series at the 
+frequency of the sinusoid. 
+
+</para>
+
+
+
+	
+
+</section>
+</section>
+</section>
+</section>
+<section id="h11004">
+<title>
+<emphasis id="The_Fourier_transform" effect="bold">
+
+The Fourier transform
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1034">
+There is a mathematical process, known as the Fourier transform, which can be 
+used to linearly transform information back and forth between two different 
+domains. The information can be represented by sets of complex numbers in either 
+or both domains.
+
+</para>
+
+
+
+
+
+<para id="p1035">
+The domains can represent a variety of different things. In DSP, the domains 
+are often referred to as the 
+
+<emphasis id="em1017" effect="italics">
+time domain
+
+</emphasis>
+ and the 
+
+<emphasis id="em1018" effect="italics">
+frequency domain
+
+</emphasis>
+, 
+but that is not a requirement. For example, one of the domains could represent 
+the samples that make up the pixels in a photograph and the other domain could 
+represent something having to do with the manipulation of photographs.
+
+</para>
+
+
+
+
+
+<para id="p1036">
+Usually when dealing with the time domain and the frequency domain, the 
+values that make up the samples in the time domain are purely real while the 
+values that make up the samples in the frequency domain are complex containing 
+both real and imaginary parts.
+
+</para>
+
+
+
+
+
+<section id="h21003">
+<title>
+<emphasis id="Time_domain_and_frequency_domain_" effect="bold">
+
+Time domain and frequency domain
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1037">
+For some purposes, it is preferable to have your information in the time 
+domain. For other purposes, it is preferable to have your information in the 
+frequency domain. The Fourier transform allows you to transform your information 
+back and forth between these two domains at will. 
+
+</para>
+
+
+
+
+
+<para id="p1038">
+For example, it is possible to transform information from the time domain 
+into the frequency domain, modify that information in the frequency domain, and 
+then transform the modified information back into the time domain. This is one 
+way to accomplish frequency filtering. 
+
+</para>
+
+
+
+
+
+<section id="h31006">
+<title>
+<emphasis id="Example_of_time_domain_and_frequency_domain_" effect="bold">
+
+Example of time domain and frequency domain 
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1039">
+If you were to draw a graph of the voltage impinging on the speaker coils on 
+your stereo system over time, that would be a time series, which is a member of 
+the time domain. 
+
+</para>
+
+
+
+
+
+<para id="p1040">
+If you were to observe the lights dancing up and down on the front of your 
+equalizer while the music is playing, you would be observing the same 
+information presented in the frequency domain. Typically the lights on the left 
+represent low frequencies or bass while the lights on the right side represent 
+high frequencies or treble. Often there is a slider associated with each 
+vertical group of lights that allows you to apply filters to emphasize certain 
+parts of the frequency spectrum and to de-emphasize other parts of the frequency 
+spectrum.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31007">
+<title>
+<emphasis id="Forward_and_inverse_transforms" effect="bold">
+
+Forward and inverse transforms
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1041">
+There are two very similar forms of the Fourier transform. The forward 
+transform is typically used to transform information from the time domain into 
+the frequency domain. The inverse transform is typically used to transform 
+information from the frequency domain back into the time domain. 
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31008">
+<title>
+<emphasis id="Sampled_time_series" effect="bold">
+
+Sampled time series
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1042">
+The theoretical Fourier transform is defined using integral calculus as 
+applied to continuous functions. As a practical matter, in the digital world, we 
+almost never deal with continuous functions. Rather, we deal with functions that 
+have been reduced to a series of discrete numbers (or samples), which are the 
+result of some discrete measurement system.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1006" display="block">
+
+	
+
+<para id="p1043">
+<emphasis id="em1019" effect="italics">
+(As mentioned earlier, recording the temperature in your office once 
+	each minute for twenty-four hours would produce such a discrete series of 
+	numbers.) 
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h31009">
+<title>
+<emphasis id="Integration_and_summation_" effect="bold">
+
+Integration and summation 
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1044">
+In many cases, the integration operation encountered in integral calculus can 
+be 
+
+<emphasis id="em1020" effect="italics">
+approximated
+
+</emphasis>
+ in the digital world by a summation operation using 
+discrete data. That is the case with the Fourier transform. Thus, the 
+
+<emphasis id="em1021" effect="italics">
+
+(simple)
+
+</emphasis>
+ summation form of the Fourier transform that is applied to a 
+discrete time series is known as the 
+
+<emphasis id="strong1000" effect="bold">
+Discrete Fourier Transform
+
+</emphasis>
+, 
+or 
+
+<emphasis id="strong1001" effect="bold">
+DFT
+
+</emphasis>
+. 
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31010">
+<title>
+<emphasis id="The_FFT_algorithms" effect="bold">
+
+The FFT algorithms
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1045">
+The DFT is a computationally intense operation. Given certain restrictions 
+involving the number of values in the time series and the number of frequencies 
+at which the spectral analysis will be performed, there is are special 
+algorithm that can result in computational economy in performing the transform. 
+The algorithms that are used to realize that economy are commonly referred to as 
+
+<emphasis id="strong1002" effect="bold">
+Fast Fourier Transform
+
+</emphasis>
+ or 
+
+<emphasis id="strong1003" effect="bold">
+FFT
+
+</emphasis>
+ algorithms.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31011">
+<title>
+<emphasis id="DFT_versus_FFT" effect="bold">
+
+DFT versus FFT
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1046">
+The DFT is more general than the FFT, but the FFT is much faster than the 
+DFT. It is important to understand that these are simply two different 
+algorithms for doing the same thing. Either can be used to produce the same 
+results 
+
+<emphasis id="em1022" effect="italics">
+(but as mentioned earlier, the FFT is somewhat more restricted as to the 
+number of time-domain and frequency-domain samples)
+
+</emphasis>
+. 
+
+</para>
+
+
+
+
+
+<para id="p1047">
+Because the DFT algorithm is somewhat easier to understand than the FFT 
+algorithm, and also more general, I will concentrate on the DFT algorithm to explain how and why the 
+Fourier transform accomplishes what it accomplishes. 
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31012">
+<title>
+<emphasis id="The_DFT_algorithm" effect="bold">
+
+The DFT algorithm
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1048">
+Using my alternative notation described earlier in 
+
+<link id="a1079" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+, the expressions that you 
+must evaluate to determine the frequency spectral content of a target time 
+series at a frequency F are shown in 
+
+<link id="a1080" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+ 
+
+<emphasis id="em1023" effect="italics">
+(note that I didn't bother to 
+divide by N which is fairly common practice)
+
+</emphasis>
+. 
+
+</para>
+
+
+
+
+
+
+<table id="table1005" summary="This is a table." pgwide="630">
+<tgroup cols="1">
+
+
+<thead id="thead1005">
+<row id="tr1010">
+<entry id="th1005">
+
+
+
+<emphasis id="Figure_6" effect="bold">
+
+Figure 6.
+
+</emphasis>
+
+ Forward Fourier transform.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1005">
+<row id="tr1011">
+<entry id="td1005">
+
+		
+
+<code id="pre1002" display="block">Real(F) = S(n=0,N-1)[x(n)*cos(2Pi*F*n)]
+Imag(F) = S(n=0,N-1)[x(n)*sin(2Pi*F*n)]
+
+ComplexAmplitude(F) = Real(F) - j*Imag(F)
+
+Power(F) = Real(F)*Real(F) + Imag(F)*Imag(F)</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h41010">
+<title>
+What does this really mean? 
+
+</title>
+
+
+
+
+<para id="p1049">
+Before you panic, let me explain what this means in layman's terms. Given a 
+time series, x(n), you can determine if that time series contains a cosine 
+component or a sine component at a given frequency, F, by doing the following:
+
+
+</para>
+
+
+
+
+
+<list id="ul1011" list-type="bulleted">
+
+	
+
+<item id="li1052">
+Create one new time series, cos(n), which is a cosine function with the 
+	frequency F.
+
+</item>
+
+
+	
+
+<item id="li1053">
+Create another new time series, sin(n), which is a sine function with 
+	the frequency F. 
+
+<emphasis id="em1024" effect="italics">
+(The methods needed to create the cosine and sine time 
+	series are available in the 
+
+<emphasis id="strong1004" effect="bold">
+Math
+
+</emphasis>
+ class in the standard Java library.)
+
+</emphasis>
+</item>
+
+
+	
+
+<item id="li1054">
+Multiply x(n) by cos(n) and compute the sum of the products. Save this 
+	value, calling it Real(F). This is an estimate of the amplitude, if any, of 
+	the cosine component with the matching frequency contained in the time 
+	series x(n).
+
+</item>
+
+
+	
+
+<item id="li1055">
+Multiply x(n) by sin(n) and compute the sum of the products. Save this 
+	value, calling it Imag(F). This is an estimate of the amplitude, if any, of 
+	the sine component with the matching frequency contained in the time series 
+	x(n).
+
+</item>
+
+
+	
+
+<item id="li1056">
+Consider the values for Real(F) and Imag(F) to be the real and imaginary 
+	parts of a complex number.
+
+</item>
+
+
+	
+
+<item id="li1057">
+Consider the sum of the squares of the real and imaginary parts to 
+	represent the power at that frequency in the time series. 
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+</section>
+<section id="h41011">
+<title>
+It's that simple
+
+</title>
+
+
+
+
+<para id="p1050">
+That's all there is to it. For each frequency of interest, 
+you can use this process to compute a complex number, Real(F) - jImag(F), which 
+represents the component of that frequency in the target time series.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1007" display="block">
+
+	
+
+<para id="p1051">
+<emphasis id="em1025" effect="italics">
+(The mathematicians in the audience probably prefer to use the symbol i 
+	instead of the symbol j to represent the imaginary part. The use of j for 
+	this purpose comes from my electrical engineering background.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1052">
+Similarly, you can compute the sum of the squares of the real and imaginary 
+parts and consider that to be a measure of the power at that frequency in the 
+time series.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1008" display="block">
+
+	
+
+<para id="p1053">
+<emphasis id="em1026" effect="italics">
+(This is typically the value that you would see being displayed by one of 
+	the dancing vertical bars on the front of the equalizer on your stereo 
+	system.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1054">
+Normally we are interested in more than one frequency, so we would repeat the 
+above procedure once for each frequency of interest.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1009" display="block">
+
+	
+
+<para id="p1055">
+<emphasis id="em1027" effect="italics">
+(This would produce the set of values that you would likely see being 
+	displayed by all of the dancing vertical bars on the font of the equalizer 
+	on your stereo system.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+</section>
+<section id="h31013">
+<title>
+<emphasis id="Why_does_this_work" effect="bold">
+
+Why does this work?
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1056">
+This works because of the three trigonometric identities shown in 
+
+<link id="a1081" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+.
+
+
+</para>
+
+
+
+
+
+
+<table id="table1006" summary="This is a table." pgwide="630">
+<tgroup cols="1">
+
+
+<thead id="thead1006">
+<row id="tr1012">
+<entry id="th1006">
+
+
+
+<emphasis id="Figure_7" effect="bold">
+
+Figure 7.
+
+</emphasis>
+
+ Three trigonometric identities.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1006">
+<row id="tr1013">
+<entry id="td1006">
+
+		
+
+<code id="pre1003" display="block">1. sin(a)*sin(b)=(1/2)*(cos(a-b)-cos(a+b))
+2. cos(a)*cos(b)=(1/2)*(cos(a-b)+cos(a+b))
+3. sin(a)*cos(b)=(1/2)*(sin(a+b)+sin(a-b))</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1057">
+Although these identities apply to the products of sine and cosine values for 
+single angles 
+
+<emphasis id="strong1005" effect="bold">
+a
+
+</emphasis>
+ and 
+
+<emphasis id="strong1006" effect="bold">
+b
+
+</emphasis>
+, it is a simple matter 
+to extend them to represent the products of time series consisting of sine and 
+cosine functions. Such an extension is shown in 
+
+<link id="a1082" target-id="Figure_8">
+
+ Figure 8
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31014">
+<title>
+<emphasis id="Products_of_sine_and_cosine_functions" effect="bold">
+
+Products of sine and cosine functions
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1058">
+In each of the three cases shown in 
+
+<link id="a1083" target-id="Figure_8">
+
+ Figure 8
+
+</link>
+
+, the function f(n) is a time 
+series produced by multiplying two other time series, which are either sine 
+functions or cosine functions. 
+
+</para>
+
+
+
+
+
+<table id="table1007" summary="This is a table." pgwide="630">
+<tgroup cols="1">
+
+
+<thead id="thead1007">
+<row id="tr1014">
+<entry id="th1007">
+
+
+
+<emphasis id="Figure_8" effect="bold">
+
+Figure 8.
+
+</emphasis>
+
+ Products of sine and cosine functions.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1007">
+<row id="tr1015">
+<entry id="td1007">
+
+		
+
+<code id="pre1004" display="block">
+1. f(n) = sin(a*n)*sin(b*n) = 
+          (1/2)*(cos((a-b)*n)-cos((a+b)*n))
+2. f(n) = cos(a*n)*cos(b*n) = 
+          (1/2)*(cos((a-b)*n)+cos((a+b)*n))
+3. f(n) = sin(a*n)*cos(b*n) = 
+          (1/2)*(sin((a+b)*n)+sin((a-b)*n))</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41012">
+<title>
+Rewrite and simplify
+
+</title>
+
+
+
+
+<para id="p1059">
+<link id="a1084" target-id="Figure_9">
+
+ Figure 9
+
+</link>
+
+ rewrites and simplifies these three functions for the special 
+case where 
+
+<emphasis id="strong1007" effect="bold">
+a=b
+
+</emphasis>
+, taking into account the fact that cos(0) =1 and sin(0) = 0. 
+
+</para>
+
+
+
+
+
+<table id="table1008" summary="This is a table." pgwide="630">
+<tgroup cols="1">
+
+
+<thead id="thead1008">
+<row id="tr1016">
+<entry id="th1008">
+
+
+
+<emphasis id="Figure_9" effect="bold">
+
+Figure 9.
+
+</emphasis>
+
+ Rewrite and simplify.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1008">
+<row id="tr1017">
+<entry id="td1008">
+
+		
+
+<code id="pre1005" display="block">1. f(n) = sin(a*n)*sin(a*n) = (1/2)-cos(2*a*n)/2
+2. f(n) = cos(a*n)*cos(a*n) = (1/2)+cos(2*a*n)/2
+3. f(n) = sin(a*n)*cos(a*n) = sin(2*a*n)/2</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+</section>
+<section id="h41013">
+<title>
+What can we learn from these identities? 
+
+</title>
+
+
+
+
+<para id="p1060">
+First you need to recall that the average of the values describing any true 
+sinusoid is zero when the average is computed over an even number of cycles of 
+the sinusoid.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1010" display="block">
+
+	
+
+<para id="p1061">
+<emphasis id="em1028" effect="italics">
+(A true sinusoid does not have a bias to prevent it from being 
+	centered on the horizontal axis.) 
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1062">
+If a time series consists of the sum of two true sinusoids, then the average 
+of the values describing that time series will be zero if the average is 
+computed over an even number of cycles of both sinusoids, and very close to zero 
+if the average is computed over a period that is not an even number of cycles 
+for either or both sinusoids.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1011" display="block">
+
+	
+
+<para id="p1063">
+<emphasis id="em1029" effect="italics">
+(The average will approach zero as the length of data over which the 
+	average is computed increases.) 
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+</section>
+<section id="h31015">
+<title>
+<emphasis id="Product_of_two_sine_functions_having_the_same_frequency_" effect="bold">
+
+Product of two sine functions having the same frequency 
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1064">
+Let's apply this knowledge to the three cases shown above for 
+
+<emphasis id="strong1008" effect="bold">
+a=b
+
+</emphasis>
+. 
+Consider the time series for case 1 in 
+
+<link id="a1085" target-id="Figure_9">
+
+ Figure 9
+
+</link>
+
+. This case is the product of two 
+sine functions having the same frequency. The result of multiplying the two sine 
+functions is shown graphically in 
+
+<link id="a1086" target-id="Figure_10">
+
+ Figure 10
+
+</link>
+
+. 
+
+</para>
+
+
+
+
+
+
+<table id="table1009" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1009">
+<row id="tr1018">
+<entry id="th1009">
+
+
+
+<emphasis id="Figure_10" effect="bold">
+
+Figure 10.
+
+</emphasis>
+
+ Plot of sin(x) and sin(x)*sin(x).
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1009">
+<row id="tr1019">
+<entry id="td1009">
+
+
+
+
+<media id="media1003" alt="Plot of sin(x) and sin(x)*sin(x)" display="block">
+<image id="img1003" mime-type="image/gif" src="../../media/java1478fig10.gif" width="256" height="233"/>
+</media>
+
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<para id="p1065">
+The red curve in 
+
+<link id="a1087" target-id="Figure_10">
+
+ Figure 10
+
+</link>
+
+ shows the function sin(x), and the black curve 
+shows the function produced by multiplying sin(x) by sin(x). 
+
+</para>
+
+
+
+
+
+<section id="h41014">
+<title>
+The sum of the product function is not zero 
+
+</title>
+
+
+
+
+<para id="p1066">
+If you sum the values of the black curve over an even number of cycles, the 
+sum will not be zero. Rather, it will be a positive, non-zero value. 
+
+</para>
+
+
+
+
+
+<para id="p1067">
+Now refer back to Imag(F) in 
+
+<link id="a1088" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+. The imaginary part is computed by 
+multiplying the time series by a sine function and computing the sum of the 
+products. If that time series contains a sine component with the same frequency 
+as the sine function, that component will contribute a non-zero value to the sum 
+of products. Thus, the imaginary part of the transform at that frequency will 
+not be zero. 
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31016">
+<title>
+<emphasis id="Product_of_two_cosine_functions_having_the_same_frequency_" effect="bold">
+
+Product of two cosine functions having the same frequency 
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1068">
+Now consider the time series for case 2 in 
+
+<link id="a1089" target-id="Figure_9">
+
+ Figure 9
+
+</link>
+
+. This case is the product 
+of two cosine functions having the same frequency. The result of multiplying two 
+cosine functions having the same frequency is shown graphically in 
+
+<link id="a1090" target-id="Figure_11">
+
+ Figure 11
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+<table id="table1010" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1010">
+<row id="tr1020">
+<entry id="th1010">
+
+
+
+<emphasis id="Figure_11" effect="bold">
+
+Figure 11.
+
+</emphasis>
+
+ Plot of cos(x) and cos(x)*cos(x).
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1010">
+<row id="tr1021">
+<entry id="td1010">
+
+
+
+
+<media id="media1004" alt="Plot of cos(x) and cos(x)*cos(x)" display="block">
+<image id="img1004" mime-type="image/gif" src="../../media/java1478fig11.gif" width="292" height="229"/>
+</media>
+
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<para id="p1069">
+The red curve in 
+
+<link id="a1091" target-id="Figure_11">
+
+ Figure 11
+
+</link>
+
+ shows the function cos(x), and the black curve 
+shows the function produced by multiplying cos(x) by cos(x). 
+
+</para>
+
+
+
+
+
+<section id="h41015">
+<title>
+Again the sum of products is not zero 
+
+</title>
+
+
+
+
+<para id="p1070">
+If you sum the values of the black curve in 
+
+<link id="a1092" target-id="Figure_11">
+
+ Figure 11
+
+</link>
+
+ over an even number of 
+cycles, the sum will not be zero. Rather, it will be a positive, non-zero value.
+
+
+</para>
+
+
+
+
+
+<para id="p1071">
+Now refer back to the expression for Real(F) in 
+
+<link id="a1093" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+. The real part of 
+the transform is computed by multiplying the time series by a cosine function 
+having a particular frequency and computing the sum of products. If that time 
+series contains a cosine component with the same frequency as the cosine 
+function, that component will contribute a non-zero value to the sum of 
+products. Thus, the real part of the transform at that frequency will not be 
+zero. 
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31017">
+<title>
+<emphasis id="Product_of_a_sine_function_and_a_cosine_function_" effect="bold">
+
+Product of a sine function and a cosine function 
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1072">
+Now consider the time series for case 3 in 
+
+<link id="a1094" target-id="Figure_9">
+
+ Figure 9
+
+</link>
+
+, which is the product of 
+a sine function and a cosine function having the same frequency. The result of 
+computing this product is shown graphically in 
+
+<link id="a1095" target-id="Figure_12">
+
+ Figure 12
+
+</link>
+
+ 
+
+</para>
+
+
+
+
+
+
+<table id="table1011" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1011">
+<row id="tr1022">
+<entry id="th1011">
+
+
+
+<emphasis id="Figure_12" effect="bold">
+
+Figure 12.
+
+</emphasis>
+
+ Plot of sin(x), cos(x), and sin(x)*cos(x).
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1011">
+<row id="tr1023">
+<entry id="td1011">
+
+
+
+
+<media id="media1005" alt="Plot of sin(x), cos(x), and sin(x)*cos(x)" display="block">
+<image id="img1005" mime-type="image/gif" src="../../media/java1478fig12.gif" width="312" height="230"/>
+</media>
+
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<para id="p1073">
+The red curve in 
+
+<link id="a1096" target-id="Figure_12">
+
+ Figure 12
+
+</link>
+
+ shows the function cos(x), and the green curve 
+shows the function sin(x). The black curve shows the function produced by 
+multiplying sin(x) by cos(x). 
+
+</para>
+
+
+
+
+
+<section id="h41016">
+<title>
+The sum of the products will be zero 
+
+</title>
+
+
+
+
+<para id="p1074">
+If you sum the values of the black curve over an even number of cycles, the 
+sum will be zero. 
+
+</para>
+
+
+
+
+
+<para id="p1075">
+Therefore, referring back to 
+
+<link id="a1097" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+, we see that 
+
+</para>
+
+
+
+
+
+<list id="ul1012" list-type="bulleted">
+
+	
+
+<item id="li1058">
+the Real(F) computation measures only the cosine component in the time 
+	series at a particular frequency, and 
+
+</item>
+
+
+	
+
+<item id="li1059">
+the Imag(F) computation measures only the sine component in the time 
+	series having the same frequency. 
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1076">
+The Real(F) computation in 
+
+<link id="a1098" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+ does not produce a non-zero output due to 
+a sine component in the time series having the same frequency. The Imag(F) 
+computation in 
+
+<link id="a1099" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+ does not produce a non-zero output due to a cosine 
+component in the time series having the same frequency. 
+
+</para>
+
+
+
+
+
+<para id="p1077">
+Thus, at a particular frequency, the existence of a cosine component in the 
+target time series produces the real output, and the existence of a sine 
+component in the target time series produces the imaginary output.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31018">
+<title>
+<emphasis id="Neither_sine_nor_cosine" effect="bold">
+
+Neither sine nor cosine
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1078">
+In reality, the sinusoidal components that make up a time series will not 
+usually be sine functions or cosine functions. Rather, they will be sinusoidal 
+components having the same shape as a sine or cosine, but not having the same 
+value at zero as either a sine function or a cosine function. However, it can be 
+shown that a general sinusoidal function can always be represented by the sum of 
+a sine function and a cosine function having different amplitudes and the same 
+frequency.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1012" display="block">
+
+	
+
+<emphasis id="em1030" effect="italics">
+(A proof of the above statement is beyond the scope of this module. You 
+	will simply have to accept on faith that a general time series can be 
+	represented as the sum of a potentially infinite number of sine functions 
+	and cosine functions of different frequencies and different amplitudes. It 
+	is these cosine and sine functions that constitute the real and imaginary 
+	components of the complex frequency spectrum.)
+
+</emphasis>
+</quote>
+
+
+
+
+</section>
+<section id="h31019">
+<title>
+<emphasis id="What_about_non-matching_frequency_components" effect="bold">
+
+What about non-matching frequency components?
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1079">
+Now we know what happens when the frequency of the sin and cos terms in 
+
+
+<link id="a1100" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+ match the frequency of sine and cosine components in the target time 
+series. Another important question is, what do sine and cosine components in the 
+target time series with frequencies different from the cos and sin terms in 
+
+
+<link id="a1101" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+ contribute to the output? 
+
+</para>
+
+
+
+
+
+<para id="p1080">
+The answer is not very much. Referring once more to the functional forms 
+produced by multiplying sine and cosine functions 
+
+<emphasis id="em1031" effect="italics">
+(repeated in 
+
+<link id="a1102" target-id="Figure_13">
+
+ Figure 13
+
+</link>
+
+ for 
+convenience)
+
+</emphasis>
+, we see that for any values of 
+
+<emphasis id="strong1009" effect="bold">
+a
+
+</emphasis>
+ and 
+
+<emphasis id="strong1010" effect="bold">
+b
+
+</emphasis>
+, where 
+
+
+<emphasis id="strong1011" effect="bold">
+a
+
+</emphasis>
+ is not equal to 
+
+<emphasis id="strong1012" effect="bold">
+b
+
+</emphasis>
+, 
+the function produced by multiplying two sinusoids will be the sum of two other 
+sinusoids. The sum of the values for any sinusoid computed over an even number 
+of cycles of the sinusoid will always be zero, and these sinusoids are no 
+exception to that rule. 
+
+</para>
+
+
+
+
+
+
+<table id="table1012" summary="This is a table." pgwide="630">
+<tgroup cols="1">
+
+
+<thead id="thead1012">
+<row id="tr1024">
+<entry id="th1012">
+
+
+
+<emphasis id="Figure_13" effect="bold">
+
+Figure 13.
+
+</emphasis>
+
+ Products of sine and cosine functions.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1012">
+<row id="tr1025">
+<entry id="td1012">
+
+		
+
+<code id="pre1006" display="block">1. f(n) = sin(a*n)*sin(b*n) = 
+	  (1/2)*(cos((a-b)*n)-cos((a+b)*n))
+2. f(n) = cos(a*n)*cos(b*n) = 
+	  (1/2)*(cos((a-b)*n)+cos((a+b)*n))
+3. f(n) = sin(a*n)*cos(b*n)
+	  =(1/2)*(sin((a+b)*n)+sin((a-b)*n))</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+</section>
+<section id="h31020">
+<title>
+<emphasis id="Sum_and_difference_frequencies" effect="bold">
+
+Sum and difference frequencies
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1081">
+For any pair of arbitrary values for 
+
+<emphasis id="strong1013" effect="bold">
+a
+
+</emphasis>
+ and 
+
+<emphasis id="strong1014" effect="bold">
+b
+
+</emphasis>
+, 
+the frequencies of the sinusoids in the resulting functions will be given by
+
+
+<emphasis id="strong1015" effect="bold">
+a+b
+
+</emphasis>
+ and 
+
+<emphasis id="strong1016" effect="bold">
+a-b
+
+</emphasis>
+. 
+
+</para>
+
+
+
+
+
+<quote id="blockquote1013" display="block">
+
+	
+
+<emphasis id="em1032" effect="italics">
+(These are often referred to as the sum and difference frequencies. Note 
+	that as 
+
+<emphasis id="strong1017" effect="bold">
+a
+
+</emphasis>
+ approaches 
+
+<emphasis id="strong1018" effect="bold">
+b
+
+</emphasis>
+, the difference 
+	frequency approaches zero. This is what produces the constant values of 1/2 
+	in Figure 9 and the positive bias on the black curve in Figures 10 and 11.)
+	
+
+</emphasis>
+
+
+
+</quote>
+
+
+
+
+
+</section>
+<section id="h31021">
+<title>
+<emphasis id="A_form_of_measurement_error" effect="bold">
+
+A form of measurement error
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1082">
+As a practical matter, if those resulting sum and difference frequencies are 
+not multiples of one another, it will not be possible to perform the summation 
+over an even number of cycles of both sinusoids. Therefore, one or the other, or 
+perhaps both, will contribute a small amount to the sum of products due to 
+including a partial cycle in the summation. This is a form of measurement error 
+that occurs when performing frequency spectrum analysis using Fourier transform 
+methods.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1014" display="block">
+
+	
+
+<para id="p1083">
+<emphasis id="em1033" effect="italics">
+(The percentage contribution of this error to the average value decreases 
+	as the number of cycles included in the average increases.) 
+
+</emphasis>
+ 
+
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h31022">
+<title>
+<emphasis id="Product_of_two_sine_functions_at_different_frequencies" effect="bold">
+
+Product of two sine functions at different frequencies
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1084">
+Consider the product of two sine functions at different frequencies as shown 
+in 
+
+<link id="a1103" target-id="Figure_14">
+
+ Figure 14
+
+</link>
+
+. This is a plot of the function produced by multiplying sin(1.8x) 
+by sin(2.2x). 
+
+</para>
+
+
+
+
+
+
+<table id="table1013" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1013">
+<row id="tr1026">
+<entry id="th1013">
+
+
+
+<emphasis id="Figure_14" effect="bold">
+
+Figure 14.
+
+</emphasis>
+
+ Plot of sin(1.8x)*sin(2.2x).
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1013">
+<row id="tr1027">
+<entry id="td1013">
+
+
+
+
+<media id="media1006" alt="Plot of sin(1.8x)*sin(2.2x)" display="block">
+<image id="img1006" mime-type="image/gif" src="../../media/java1478fig14.gif" width="372" height="238"/>
+</media>
+
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<para id="p1085">
+The high frequency component shown in 
+
+<link id="a1104" target-id="Figure_14">
+
+ Figure 14
+
+</link>
+
+ is the component attributable 
+to 
+
+<emphasis id="strong1019" effect="bold">
+a+b
+
+</emphasis>
+. The long sweeping low frequency component is the 
+component attributable to 
+
+<emphasis id="strong1020" effect="bold">
+a-b
+
+</emphasis>
+. 
+
+</para>
+
+
+
+
+
+<section id="h41017">
+<title>
+The sum of the product function 
+
+</title>
+
+
+
+
+<para id="p1086">
+Judging from the graph in 
+
+<link id="a1105" target-id="Figure_14">
+
+ Figure 14
+
+</link>
+
+, performing a summation of the product 
+function from -7 to +7 would include almost exactly nine cycles of the high 
+frequency component. Thus, the high frequency component would contribute very 
+little, if anything, to the summation. 
+
+</para>
+
+
+
+
+
+<para id="p1087">
+However, the summation would include less than one complete cycle of the low 
+frequency component. Therefore, the low frequency component would contribute 
+some output to the summation in the form of a measurement error. 
+
+</para>
+
+
+
+
+
+<para id="p1088">
+Similar results occur when multiplying a cosine function by a cosine function 
+having a different frequency, or when multiplying a cosine function by a sine 
+function having a different frequency. Graphical results for these two cases are 
+shown in 
+
+<link id="a1106" target-id="Figure_15">
+
+ Figure 15
+
+</link>
+
+ and 
+
+<link id="a1107" target-id="Figure_16">
+
+ Figure 16
+
+</link>
+
+. 
+
+</para>
+
+
+
+
+
+
+<table id="table1014" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1014">
+<row id="tr1028">
+<entry id="th1014">
+
+
+
+<emphasis id="Figure_15" effect="bold">
+
+Figure 15.
+
+</emphasis>
+
+ Plot of cos(1.8x)*cos(2.2x).
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1014">
+<row id="tr1029">
+<entry id="td1014">
+
+
+
+
+<media id="media1007" alt="Plot of cos(1.8x)*cos(2.2x)" display="block">
+<image id="img1007" mime-type="image/gif" src="../../media/java1478fig15.gif" width="365" height="239"/>
+</media>
+
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<table id="table1015" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1015">
+<row id="tr1030">
+<entry id="th1015">
+
+
+
+<emphasis id="Figure_16" effect="bold">
+
+Figure 16.
+
+</emphasis>
+
+ Plot of sin(1.8x)*cos(2.2x).
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1015">
+<row id="tr1031">
+<entry id="td1015">
+
+
+
+
+<media id="media1008" alt="Plot of sin(1.8x)*cos(2.2x)" display="block">
+<image id="img1008" mime-type="image/gif" src="../../media/java1478fig16.gif" width="366" height="223"/>
+</media>
+
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<para id="p1089">
+Once again, unless the summation interval includes an exact number of samples 
+of both the sum frequency and the difference frequency, one of both of the 
+sinusoids contained in the product function will contribute a measurement error 
+to the result.
+
+</para>
+
+
+
+	
+
+
+</section>
+</section>
+</section>
+</section>
+<section id="h11005">
+<title>
+<emphasis id="Summary" effect="bold">
+
+Summary
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1090">
+In this module, I have provided a quasi-theoretical basis for frequency 
+spectrum analysis. 
+
+</para>
+
+
+
+
+
+<para id="p1091">
+A pure theoretical basis for frequency spectrum analysis involves some rather 
+complicated mathematics and is somewhat difficult to understand. However, from a 
+practical viewpoint, it is not too difficult to understand how the complex 
+mathematics produce the results that they produce.
+
+</para>
+
+
+
+
+
+<para id="p1092">
+Hopefully the quasi-theoretical explanations provided in this module will 
+help you to understand what makes spectrum analysis work.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h11006">
+<title>
+<emphasis id="Whats_next" effect="bold">
+
+What's next?
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1093">
+The next module in this series will reduce much of what I have discussed in 
+this module to practice. I will present and explain a program that implements a 
+DFT algorithm for performing frequency spectrum analysis. In addition, I will 
+present the results of several interesting experiments in frequency spectrum 
+analysis using that algorithm.
+
+</para>
+
+
+
+
+
+<para id="p1094">
+A subsequent module will explain some of the signal processing concepts that 
+made it possible for the inventors of the FFT algorithm to design a 
+computational algorithm that is much faster than the DFT algorithm. As is often 
+the case, however, the FFT algorithm trades off speed for generality.
+
+</para>
+
+
+
+
+
+	
+
+</section>
+<section id="h11007">
+<title>
+<emphasis id="Miscellaneous" effect="bold">
+
+Miscellaneous
+
+</emphasis>
+
+
+</title>
+
+
+	
+
+<para id="p1095">
+This section contains a variety of miscellaneous information.
+
+</para>
+
+
+
+
+
+	
+
+<note id="note1000" type="">
+
+
+		
+
+
+			
+
+
+				
+
+<emphasis id="strong1021" effect="bold">
+Housekeeping material
+
+</emphasis>
+
+				
+
+<list id="ul1013" list-type="bulleted">
+
+					
+
+<item id="li1060">
+Module name: Java1478-Fun with Java, How and Why 
+					Spectral Analysis Works
+
+</item>
+
+
+					
+
+<item id="li1061">
+File: Java1478.htm
+
+</item>
+
+
+					
+
+<item id="li1062">
+Published: 06/29/04
+
+</item>
+
+
+
+				
+
+</list>
+
+
+
+
+<para id="p1096">
+Baldwin explains how the Fourier transform can be used to determine the spectral content of a signal in the time domain. 
+
+</para>
+
+
+
+				
+
+</note>
+
+
+
+
+
+	
+
+<note id="note1001" type="">
+
+
+		
+
+
+			
+
+
+				
+
+<emphasis id="strong1022" effect="bold">
+Disclaimers:
+
+</emphasis>
+<para id="p1097">
+<emphasis id="strong1023" effect="bold">
+Financial
+
+</emphasis>
+: Although the Connexions
+site makes it possible for you to download a PDF file for this
+module at no charge, and also makes it possible for you to
+purchase a pre-printed version of the PDF file, you should be
+aware that some of the HTML elements in this module may not translate well into
+PDF.
+
+</para>
+
+
+
+				
+
+<para id="p1098">
+I also want you to know that, I receive no financial compensation from the Connexions website even if you purchase 
+	the PDF version of the module.
+
+</para>
+
+
+
+				
+
+<para id="p1099">
+In the past, unknown individuals have copied my modules from cnx.org, converted them to Kindle books, and 
+				placed them for sale on Amazon.com showing me as the author. I 
+				neither receive compensation for those sales nor do I know who does 
+				receive compensation. If you purchase such a book, please be 
+				aware that it is a copy of a module that is freely 
+				available on cnx.org and that it was made and published without 
+				my prior knowledge.
+
+</para>
+
+
+
+				
+
+<para id="p1100">
+<emphasis id="strong1024" effect="bold">
+Affiliation
+
+</emphasis>
+: I am a professor of Computer Information 
+	Technology at Austin Community College in Austin, TX.
+	
+
+</para>
+
+
+
+
+</note>
+
+
+
+	
+
+
+<para id="p1101">
+-end- 
+
+</para>
+
+
+
+
+
+
+
+</section>
+</content>
+
+
+
+
+</document>

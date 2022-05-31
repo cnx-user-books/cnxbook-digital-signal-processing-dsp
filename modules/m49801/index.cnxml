@@ -1,0 +1,7351 @@
+<document xmlns="http://cnx.rice.edu/cnxml"> 
+<title>Java1486-Fun with Java, Understanding the Fast Fourier Transform (FFT) Algorithm</title>
+<metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m49801</md:content-id>
+  <md:title>Java1486-Fun with Java, Understanding the Fast Fourier Transform (FFT) Algorithm</md:title>
+  <md:abstract>Baldwin explains the underlying signal processing concepts that make the Fast Fourier Transform (FFT) algorithm possible.</md:abstract>
+  <md:uuid>3f1897b9-3841-440b-bdf2-ddac318df6b8</md:uuid>
+</metadata>
+
+<content>
+
+
+
+
+
+
+<quote id="blockquote1000" display="block">
+
+
+
+<para id="p1000">
+Revised: Mon Oct 19 13:36:25 CDT 2015
+
+</para>
+
+
+
+This page is included in the following book: 
+
+<link id="a1000" url="http://cnx.org/contents/98d253c0-8044-4e22-a707-7b8d819bc8a7">
+
+
+        Digital Signal Processing - DSP
+
+</link>
+
+
+
+
+</quote>
+
+
+
+
+
+
+
+
+
+
+
+<section id="h11000">
+<title>
+<emphasis id="Table_of_contents" effect="bold">
+
+Table of contents
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+
+<list id="ul1000" list-type="bulleted">
+<item id="li1000">
+<link id="a1001" target-id="Table_of_contents">
+
+Table of contents
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1001">
+<link id="a1002" target-id="Preface">
+
+Preface
+
+</link>
+
+
+
+
+<list id="ul1001" list-type="bulleted">
+<item id="li1002">
+<link id="a1003" target-id="Viewing_tip">
+
+Viewing tip
+
+</link>
+
+
+
+
+<list id="ul1002" list-type="bulleted">
+<item id="li1003">
+<link id="a1004" target-id="Figures">
+
+Figures
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1004">
+<link id="a1005" target-id="Listings">
+
+Listings
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1005">
+<link id="a1006" target-id="General_discussion">
+
+General discussion
+
+</link>
+
+
+
+
+<list id="ul1003" list-type="bulleted">
+<item id="li1006">
+<link id="a1007" target-id="A_general-purpose_transform">
+
+A general-purpose transform
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1007">
+<link id="a1008" target-id="Transforming_from_space_domain_to_wave_number_domain">
+
+Transforming from space domain to wave number domain
+
+</link>
+
+
+
+
+<list id="ul1004" list-type="bulleted">
+<item id="li1008">
+<link id="a1009" target-id="Two-dimensional_Fourier_transforms">
+
+Two-dimensional Fourier transforms
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1009">
+<link id="a1010" target-id="Wave-number_response_to_seismic_waves">
+
+Wave-number response to seismic waves
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1010">
+<link id="a1011" target-id="A_general_purpose_mathematical_transform">
+
+A general purpose mathematical transform
+
+</link>
+
+
+
+
+<list id="ul1005" list-type="bulleted">
+<item id="li1011">
+<link id="a1012" target-id="Fourier_transform_images">
+
+Fourier transform images
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1012">
+<link id="a1013" target-id="Will_discuss_underlying_concepts">
+
+Will discuss underlying concepts
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1013">
+<link id="a1014" target-id="A_linear_transform">
+
+A linear transform
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1014">
+<link id="a1015" target-id="Output_display_of_the_FFT_applet">
+
+Output display of the FFT applet
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1015">
+<link id="a1016" target-id="Back_to_the_concept_of_the_linear_transform">
+
+Back to the concept of the linear transform
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1016">
+<link id="a1017" target-id="A_mirror-image_pulse">
+
+A mirror-image pulse
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1017">
+<link id="a1018" target-id="Now_add_the_two_input_series">
+
+Now add the two input series
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1018">
+<link id="a1019" target-id="Single_sample_real_pulse_with_a_delay">
+
+Single sample real pulse (impulse) with a delay
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1019">
+<link id="a1020" target-id="Equations_to_describe_the_real_and_imaginary_parts_of_the_transform">
+
+
+Equations to describe the real and imaginary parts of the transform
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1020">
+<link id="a1021" target-id="A_sample_program">
+
+A sample program
+
+</link>
+
+
+
+
+<list id="ul1006" list-type="bulleted">
+<item id="li1021">
+<link id="a1022" target-id="Separate_processes_in_an_FFT_algorithm">
+
+Separate processes in an FFT algorithm
+
+</link>
+
+
+
+
+<list id="ul1007" list-type="bulleted">
+<item id="li1022">
+<link id="a1023" target-id="How_the_processes_are_implemented">
+
+How the processes are implemented
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1023">
+<link id="a1024" target-id="Three_cases_are_examined">
+
+Three cases are examined
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1024">
+<link id="a1025" target-id="The_program_named_Fft02">
+
+The program named Fft02
+
+</link>
+
+
+
+
+<list id="ul1008" list-type="bulleted">
+<item id="li1025">
+<link id="a1026" target-id="Instantiate_a_Transform_object">
+
+Instantiate a Transform object
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1026">
+<link id="a1027" target-id="The_class_named_Transform">
+
+The class named Transform
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1027">
+<link id="a1028" target-id="Performing_the_transform">
+
+Performing the transform
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1028">
+<link id="a1029" target-id="The_correctAndRecombine_method">
+
+The correctAndRecombine method
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1029">
+<link id="a1030" target-id="Back_to_the_main_method">
+
+Back to the main method
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1030">
+<link id="a1031" target-id="The_graphic_form_of_Case_A">
+
+The graphic form of Case A
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1031">
+<link id="a1032" target-id="The_numeric_output_for_Case_A">
+
+The numeric output for Case A
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1032">
+<link id="a1033" target-id="Case_B_code">
+
+Case B code
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1033">
+<link id="a1034" target-id="Case_B_in_graphical_form">
+
+Case B in graphical form
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1034">
+<link id="a1035" target-id="Case_B_output_in_numeric_form">
+
+Case B output in numeric form
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1035">
+<link id="a1036" target-id="Case_C_code">
+
+Case C code
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1036">
+<link id="a1037" target-id="The_graphic_form_of_Case_C">
+
+The graphic form of Case C
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1037">
+<link id="a1038" target-id="Case_C_output_in_numeric_form">
+
+Case C output in numeric form
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1038">
+<link id="a1039" target-id="The_display_method">
+
+The display method
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1039">
+<link id="a1040" target-id="Run_the_program">
+
+Run the program
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1040">
+<link id="a1041" target-id="Summary">
+
+Summary
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1041">
+<link id="a1042" target-id="Complete_program_listings">
+
+Complete program listings
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1042">
+<link id="a1043" target-id="Miscellaneous">
+
+Miscellaneous
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+
+
+
+
+
+</section>
+<section id="h11001">
+<title>
+<emphasis id="Preface" effect="bold">
+
+Preface
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1001">
+Programming in Java doesn't have to be dull and boring. In fact, it's 
+	possible to have a lot of fun while programming in Java. This module was 
+	taken from a series that concentrates on having fun while programming in 
+	Java.
+
+</para>
+
+
+
+
+
+<section id="h21000">
+<title>
+<emphasis id="Viewing_tip" effect="bold">
+
+Viewing tip
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1002">
+I recommend that you open another copy of this module in a separate 
+browser window and use the following links to easily find and view the Figures 
+and Listings while you are reading about them.
+
+</para>
+
+
+
+
+
+<section id="h31000">
+<title>
+<emphasis id="Figures" effect="bold">
+
+Figures
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+
+<list id="ul1009" list-type="bulleted">
+
+
+
+<item id="li1043">
+<link id="a1044" target-id="Figure_1">
+
+Figure 1.
+
+</link>
+
+
+ Transform of pulse with negative slope.
+
+</item>
+
+
+
+
+<item id="li1044">
+<link id="a1045" target-id="Figure_2">
+
+Figure 2.
+
+</link>
+
+
+ Transform of pulse with positive slope.
+
+</item>
+
+
+
+
+<item id="li1045">
+<link id="a1046" target-id="Figure_3">
+
+Figure 3.
+
+</link>
+
+
+ Transform of the sum of two pulses.
+
+</item>
+
+
+
+
+<item id="li1046">
+<link id="a1047" target-id="Figure_4">
+
+Figure 4.
+
+</link>
+
+
+ Transform of an impulse with no shift.
+
+</item>
+
+
+
+
+<item id="li1047">
+<link id="a1048" target-id="Figure_5">
+
+Figure 5.
+
+</link>
+
+
+ Transform of an impulse with a shift equal to one sample interval and a negative value.
+
+</item>
+
+
+
+
+<item id="li1048">
+<link id="a1049" target-id="Figure_6">
+
+Figure 6.
+
+</link>
+
+
+ Transform of an impulse with a shift equal to two sample intervals and a positive value.
+
+</item>
+
+
+
+
+<item id="li1049">
+<link id="a1050" target-id="Figure_7">
+
+Figure 7.
+
+</link>
+
+
+ Transform of an impulse with a shift equal to four sample intervals and a positive value.
+
+</item>
+
+
+
+
+<item id="li1050">
+<link id="a1051" target-id="Figure_8">
+
+Figure 8.
+
+</link>
+
+
+ Transform of a complex impulse with a shift equal to two sample intervals.
+
+</item>
+
+
+
+
+<item id="li1051">
+<link id="a1052" target-id="Figure_9">
+
+Figure 9.
+
+</link>
+
+
+ Case A. Transform of a real sample with two non-zero values.
+
+</item>
+
+
+
+
+<item id="li1052">
+<link id="a1053" target-id="Figure_10">
+
+Figure 10.
+
+</link>
+
+
+ The numeric output for Case A.
+
+</item>
+
+
+
+
+<item id="li1053">
+<link id="a1054" target-id="Figure_11">
+
+Figure 11.
+
+</link>
+
+
+ Case B in graphical form.
+
+</item>
+
+
+
+
+<item id="li1054">
+<link id="a1055" target-id="Figure_12">
+
+Figure 12.
+
+</link>
+
+
+ Case B output in numeric form.
+
+</item>
+
+
+
+
+<item id="li1055">
+<link id="a1056" target-id="Figure_13">
+
+Figure 13.
+
+</link>
+
+
+ The graphic form of Case C.
+
+</item>
+
+
+
+
+<item id="li1056">
+<link id="a1057" target-id="Figure_14">
+
+Figure 14.
+
+</link>
+
+
+ Case C output in numeric form.
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+
+
+
+</section>
+<section id="h31001">
+<title>
+<emphasis id="Listings" effect="bold">
+
+Listings
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+
+<list id="ul1010" list-type="bulleted">
+
+
+
+<item id="li1057">
+<link id="a1058" target-id="Listing_1">
+
+Listing 1.
+
+</link>
+
+
+ Beginning of the program named Fft02?
+
+</item>
+
+
+
+
+<item id="li1058">
+<link id="a1059" target-id="Listing_2">
+
+Listing 2.
+
+</link>
+
+
+ The class named Transform.
+
+</item>
+
+
+
+
+<item id="li1059">
+<link id="a1060" target-id="Listing_3">
+
+Listing 3.
+
+</link>
+
+
+ Performing the transform.
+
+</item>
+
+
+
+
+<item id="li1060">
+<link id="a1061" target-id="Listing_4">
+
+Listing 4.
+
+</link>
+
+
+ The correctAndRecombine method.
+
+</item>
+
+
+
+
+<item id="li1061">
+<link id="a1062" target-id="Listing_5">
+
+Listing 5.
+
+</link>
+
+
+ The remainder of the main method.
+
+</item>
+
+
+
+
+<item id="li1062">
+<link id="a1063" target-id="Listing_6">
+
+Listing 6.
+
+</link>
+
+
+ Case B code.
+
+</item>
+
+
+
+
+<item id="li1063">
+<link id="a1064" target-id="Listing_7">
+
+Listing 7.
+
+</link>
+
+
+ Case C code.
+
+</item>
+
+
+
+
+<item id="li1064">
+<link id="a1065" target-id="Listing_8">
+
+Listing 8.
+
+</link>
+
+
+ The display method.
+
+</item>
+
+
+
+
+<item id="li1065">
+<link id="a1066" target-id="Listing_9">
+
+Listing 9.
+
+</link>
+
+
+ Fft02.java.
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h11002">
+<title>
+<emphasis id="General_discussion" effect="bold">
+
+General discussion
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1003">
+The purpose of this module is to help you to understand how the 
+	Fast Fourier Transform (FFT) algorithm works. In order to understand the 
+	FFT, you must first understand the Discrete Fourier Transform (DFT). I 
+	explained how the DFT works in an earlier module titled
+	
+
+<link id="a1067" url="http://cnx.org/contents/9fdb2951-7fca-47a1-83fc-d3d3d15d6ff1/Java1478-Fun-with-Java-How-and">
+
+Fun with Java, How and Why Spectral Analysis Works
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1004">
+There are several different FFT algorithms in common use. In addition, 
+	there are many sites on the web where you can find explanations of the 
+	mechanics of FFT algorithm. I won't replicate those explanations. Rather, I 
+	will explain the underlying concepts that make the FFT possible and 
+	illustrate those concepts using a simple program. Hopefully, once you 
+	understand the underlying concepts, one or more of the explanations of the 
+	mechanics that you find on other sites will make sense to you.
+
+</para>
+
+
+
+
+
+<section id="h21001">
+<title>
+<emphasis id="A_general-purpose_transform" effect="bold">
+
+A general-purpose transform
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1005">
+The Fourier transform is most commonly associated with its use in 
+	transforming time-domain data into frequency-domain data. However, it is 
+	important to understand that there is nothing inherent in the Fourier 
+	transform regarding either the time domain or the frequency domain. Rather, 
+	the Fourier transform is a general-purpose transform that is used to 
+	transform a set of complex data in one domain into a different set of 
+	complex data in another domain. It is purely happenstance that it happens to 
+	be so valuable in describing the relationship between the time domain and 
+	the frequency domain.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h21002">
+<title>
+<emphasis id="Transforming_from_space_domain_to_wave_number_domain" effect="bold">
+
+Transforming from space domain to wave number domain
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1006">
+For example, my first job after earning a BSEE degree in 1962 was in the 
+	Seismic Research Department of Texas Instruments. That is where I had my 
+	first encounter with Digital Signal Processing 
+
+<emphasis id="em1000" effect="italics">
+(DSP)
+
+</emphasis>
+. In that job, I did a lot of 
+	work with Fourier transforms involving the time domain and the frequency 
+	domain. I also did a lot of work with Fourier transforms involving the space 
+	domain and the wave-number domain.
+
+</para>
+
+
+
+
+
+<para id="p1007">
+Wave number is the name given to the reciprocal of wavelength for 
+	compression and shear waves propagating through a medium such as an iron 
+	bar, earth, water, or air, and also for electromagnetic waves such as radio 
+	and radar propagating through space.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1001" display="block">
+
+	
+
+<para id="p1008">
+<emphasis id="em1001" effect="italics">
+(Those familiar with the subject will know that while compression 
+		waves will propagate through water and air, those media won't support 
+		shear waves.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<section id="h31002">
+<title>
+<emphasis id="Two-dimensional_Fourier_transforms" effect="bold">
+
+Two-dimensional Fourier transforms
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1009">
+For example, one of the things that we did was to compute two-dimensional 
+	Fourier transforms on diagrams representing weighted points in 
+	two-dimensional space. We would transform the weighted points in the space 
+	domain into points in the wave-number domain.
+
+</para>
+
+
+
+
+
+<para id="p1010">
+The weighted points in the space domain represented the locations and 
+	amplifications of seismometers in a two-dimensional array on the surface of 
+	the earth. Each seismometer was amplified by a different gain factor and 
+	polarity. The amplified outputs of the seismometers were added together in 
+	various and complex ways intended to enhance signals and suppress noise.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31003">
+<title>
+<emphasis id="Wave-number_response_to_seismic_waves" effect="bold">
+
+Wave-number response to seismic waves
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1011">
+In this case, the wave number was the reciprocal of the wave length of 
+	seismic waves propagating across the array. By plotting the results of the 
+	transformation in the wave-number domain, we could estimate which seismic 
+	waves would be enhanced and which seismic waves would be suppressed by the 
+	processing being applied to the seismometer outputs.
+
+</para>
+
+
+
+
+
+<para id="p1012">
+We could also perform experiments on the computer where we caused the 
+	weights to vary with frequency, thus, allowing us to design and place 
+	digital filters on the seismometers to optimize the response of the array to 
+	earthquake signals while suppressing seismic noise associated with nearby 
+	cities and other sources of seismic noise.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h21003">
+<title>
+<emphasis id="A_general_purpose_mathematical_transform" effect="bold">
+
+A general purpose mathematical transform
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1013">
+I mention all of this simply to illustrate the general nature of the 
+	Fourier transform. Once again, the Fourier transform is simply a 
+	mathematical process that can be used to transform a set of complex values 
+	in one domain into a set of complex values in a different domain.
+
+</para>
+
+
+
+
+
+<para id="p1014">
+Before getting into the details of this discussion, I want to refer you 
+	to a couple of excellent references on the FFT. Of course, you can find many 
+	more by performing a 
+
+<link id="a1068" url="http://www.google.com">
+
+Google
+
+</link>
+
+ search for 
+	the keyword FFT.
+
+</para>
+
+
+
+
+
+<section id="h31004">
+<title>
+<emphasis id="Fourier_transform_images" effect="bold">
+
+Fourier transform images
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1015">
+Many of the images that you will see in this module were produced using 
+	an applet named 
+
+<emphasis id="strong1000" effect="bold">
+FftLab
+
+</emphasis>
+ that I originally downloaded from a 
+	website named sepwww.stanford.edu/oldsep/hale/FftLab.html. 
+
+<emphasis id="em1002" effect="italics">
+(As of 
+	October 2015, that website no longer exists. However, you can now download 
+	the applet from 	
+
+
+<link id="a1069" url="http://sepwww.stanford.edu/data/media/public/oldsep/hale/FftLab.java">
+
+http://sepwww.stanford.edu/data/media/public/oldsep/hale/FftLab.java
+
+</link>
+
+. 
+	Also, as of October 2015, you can learn more about the applet's author, Dave 
+	Hale 
+
+<link id="a1070" url="http://inside.mines.edu/~dhale/other/AboutDave.html">
+
+here
+
+</link>
+
+.)
+
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1016">
+In order to use the applet to create the illustrations for this document, I changed the name 
+	of the applet class to cause it to fit into my file-naming scheme. I also 
+	made a couple of minor modifications to the code to force the applet's output to fit into this 
+	narrow publication format. Otherwise, I used the applet in its original 
+	form. This applet is extremely useful in performing FFT experiments very 
+	quickly and easily. I strongly recommend that you become familiar with it.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1002" display="block">
+
+	As an alternative to downloading the applet from the web page 
+	given above, click 
+
+<link id="a1071" url="FftApplet01.zip">
+
+here
+
+</link>
+
+ to download a zip file 
+	containing the modified source code for the applet along with a Windows 
+	batch file that will compile and execute the applet. 
+
+<emphasis id="em1003" effect="italics">
+((Assuming that you 
+	have the Java Development Kit (JDK) and Oracle's 
+
+<emphasis id="strong1001" effect="bold">
+appletviewer
+
+</emphasis>
+ 
+	program installed on your computer, you should be able to simply extract the 
+	contents of the zip file into an empty folder and double-click on the batch 
+	file to run the applet.)
+
+</emphasis>
+</quote>
+
+
+
+
+</section>
+<section id="h31005">
+<title>
+<emphasis id="Will_discuss_underlying_concepts" effect="bold">
+
+Will discuss underlying concepts
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1017">
+As mentioned earlier, the FFT algorithm is very complicated. I won't 
+	discuss the mechanics of the algorithm in this module. Rather, I will 
+	explain the underlying concepts that make the FFT algorithm possible.
+
+</para>
+
+
+
+
+
+<para id="p1018">
+Hopefully after reading my explanation of the basic concepts, you will be 
+	able to understand the explanation of the mechanics of the algorithm 
+	provided by others.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31006">
+<title>
+<emphasis id="A_linear_transform" effect="bold">
+
+A linear transform
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1019">
+The FFT algorithm is an algorithm that takes advantage of several 
+	reasonably well-know facts along with some less well-known facts.
+
+</para>
+
+
+
+
+
+<para id="p1020">
+One of those facts is that the Fourier transform is a linear transform. 
+	By this, I mean that the transform of the sum of two or more input series is 
+	equal to the sum of the transforms of the individual input series. I will 
+	attempt to illustrate this in 
+
+<link id="a1072" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+, 
+
+<link id="a1073" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+, and 
+
+<link id="a1074" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31007">
+<title>
+<emphasis id="Output_display_of_the_FFT_applet" effect="bold">
+
+Output display of the FFT applet
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1021">
+A sample of the output produced by the FFT applet is shown in 
+
+<link id="a1075" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<table id="table1000" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1000">
+
+		
+
+<row id="tr1000">
+
+			
+
+<entry id="th1000">
+<emphasis id="Figure_1" effect="bold">
+
+Figure 1.
+
+</emphasis>
+
+ Transform of pulse with negative slope.
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1000">
+
+		
+
+<row id="tr1001">
+
+			
+
+<entry id="td1000">
+
+			
+
+<media id="media1000" alt="missing image" display="block">
+<image id="img1000" mime-type="image/jpeg" src="../../media/java1486aa.jpg" width="409" height="470"/>
+</media>
+
+
+			
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1022">
+An examination of 
+
+<link id="a1076" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ shows that the display produced by the applet 
+	contains two sections. One section is labeled f(x) and the other section is 
+	labeled F(k).
+
+</para>
+
+
+
+
+
+<para id="p1023">
+This is an interactive applet with the ability to transform the complex 
+	samples represented by f(x) into complex samples represented by F(k). 
+	Alternatively, the applet can be used to transform complex samples 
+	represented by F(k) into complex samples represented by f(x).
+
+</para>
+
+
+
+
+
+<section id="h41000">
+<title>
+<emphasis id="Real_and_imaginary_sections" effect="bold">
+
+Real and imaginary sections
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1024">
+Each section contains two boxes, one labeled Real and the other labeled 
+	Imaginary. One box contains a visual representation of a set of real samples 
+	and the other box contains a visual representation of a set of imaginary 
+	samples.
+
+</para>
+
+
+
+
+
+<para id="p1025">
+With one exception, each sample is represented by a black circle. In each 
+	box, one of the samples is represented by an empty circle. The empty circle 
+	represents an index value of zero. Samples to the right of the sample with 
+	the empty circle are samples at positive indices, and samples to the left of 
+	the sample with the empty circle are samples at negative indices.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41001">
+<title>
+<emphasis id="A_complex_sample" effect="bold">
+
+A complex sample
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1026">
+A pair of values, one taken from the Real box and one taken from the 
+	Imaginary box, represents a complex sample. 
+
+</para>
+
+
+
+
+
+<para id="p1027">
+Any of the circles can be interactively moved up or down with the mouse. 
+	The value of each sample is represented by the distance of the corresponding 
+	circle from the horizontal line.
+
+</para>
+
+
+
+
+
+<para id="p1028">
+When a change is made to the value of any sample belonging to either f(x) 
+	for F(k), the transformation is recomputed and the display of the other 
+	function is modified accordingly. If you modify the value of a sample in 
+	f(x), the values in F(k) are automatically modified to show the Fourier 
+	transform of f(x). If you modify the value of a sample in F(k), the values 
+	in f(x) are automatically modified to show the inverse Fourier transform of 
+	F(k).
+
+</para>
+
+
+
+
+
+<para id="p1029">
+This is an extremely powerful interactive tool.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41002">
+<title>
+<emphasis id="Powers_of_two" effect="bold">
+
+Powers of two
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1030">
+Many and perhaps most FFT algorithms require the input series to contain 
+	a number of complex samples that is a power of two such as 2, 4, 8, 16, 32, 
+	etc. Most FFT algorithms also produce the same number of complex samples in 
+	the output as are provided in the input. The FFT algorithm used in this 
+	applet is no exception to those rules.
+
+</para>
+
+
+
+
+
+<para id="p1031">
+A pull-down list at the bottom of the applet lets the user specify 16, 
+	32, or 64 complex samples for both the input and the output. All of the 
+	examples in this module use 16 complex samples for input and output.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41003">
+<title>
+<emphasis id="Location_of_the_origin" effect="bold">
+
+Location of the origin
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1032">
+The applet also provides a check box that allows the user to cause the 
+	origin 
+
+<emphasis id="em1004" effect="italics">
+(the empty circle at index value zero)
+
+</emphasis>
+ to either be centered 
+	or placed at the left end. The display in 
+
+<link id="a1077" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ has the origin centered. 
+	Other displays that I will use later have the origin at the left end.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41004">
+<title>
+<emphasis id="Other_applet_controls" effect="bold">
+
+Other applet controls
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1033">
+The other pull-down list and the button at the bottom of the applet 
+	provide other control features that don't need to be discussed here. I 
+	strongly urge you to download this applet and experiment with it. The 
+	results can be very enlightening.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31008">
+<title>
+<emphasis id="Back_to_the_concept_of_the_linear_transform" effect="bold">
+
+Back to the concept of the linear transform
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1034">
+Having discussed the features of the interactive FFT tool that I used to 
+	produce many of the images in this module, it is time to get back to the 
+	discussion of the Fourier transform as a linear transform. The fact that the 
+	Fourier transform is a linear transform is illustrated in 
+
+<link id="a1078" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+, 
+	
+
+<link id="a1079" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+, and 
+
+<link id="a1080" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1035">
+In these three figures, the input series is shown in the real area in the 
+	upper left. For simplification, the values of the imaginary part of the 
+	input series shown in the upper right are all zero.
+
+</para>
+
+
+
+
+
+<para id="p1036">
+Also, for simplification, the zero origin is shown in the center by the 
+	value with the empty circle.
+
+</para>
+
+
+
+
+
+<para id="p1037">
+The real and imaginary parts of the transform output are shown in the 
+	bottom of each figure.
+
+</para>
+
+
+
+
+
+<para id="p1038">
+<link id="a1081" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ shows an input series consisting of a pulse that starts with a 
+	high value at the origin and extends down and to the right for five samples, 
+	ending in a large negative value.
+
+</para>
+
+
+
+
+
+<para id="p1039">
+This input series produces a rather complicated transform output series, 
+	as can be seen in the bottom two boxes in 
+
+<link id="a1082" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+. I will come back to a 
+	discussion of the transform output later.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31009">
+<title>
+<emphasis id="A_mirror-image_pulse" effect="bold">
+
+A mirror-image pulse
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1040">
+<link id="a1083" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ shown an input series consisting of a pulse that begins with a 
+	large negative value four samples to the left of the origin and extends up 
+	and to the right ending with a large positive value at the origin. The input 
+	series in 
+
+<link id="a1084" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ is the mirror image of the input series in 
+
+<link id="a1085" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ 
+	relative to the origin.
+
+</para>
+
+
+
+
+
+<table id="table1001" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1001">
+
+		
+
+<row id="tr1002">
+
+			
+
+<entry id="th1001">
+<emphasis id="Figure_2" effect="bold">
+
+Figure 2.
+
+</emphasis>
+
+ Transform of pulse with positive slope.
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1001">
+
+		
+
+<row id="tr1003">
+
+			
+
+<entry id="td1001">
+
+			
+
+<media id="media1001" alt="missing image" display="block">
+<image id="img1001" mime-type="image/jpeg" src="../../media/java1486ab.jpg" width="409" height="470"/>
+</media>
+
+
+			
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41005">
+<title>
+<emphasis id="The_transform_output" effect="bold">
+
+The transform output
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1041">
+Once again, the output from the transform of the input series is shown in 
+	the bottom two boxes of 
+
+<link id="a1086" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1042">
+A comparison of the real part of each of the transforms for 
+
+<link id="a1087" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ and 
+	
+
+<link id="a1088" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ shows that the real parts are the same, at least insofar as I was 
+	able to control the input by interactively adjusting the locations of the 
+	circles using the mouse.
+
+</para>
+
+
+
+
+
+<para id="p1043">
+A comparison of the imaginary part of each of the transforms shows that 
+	the imaginary parts are the same except for the algebraic sign of each of 
+	the values in the imaginary part. The algebraic sign of each of the values 
+	in 
+
+<link id="a1089" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ is the reverse of the algebraic sign of each of the values in 
+	
+
+<link id="a1090" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31010">
+<title>
+<emphasis id="Now_add_the_two_input_series" effect="bold">
+
+Now add the two input series
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1044">
+To demonstrate that the Fourier transform is a linear transform, I will 
+	create a new input series that is the sum of the input series from 
+
+<link id="a1091" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ 
+	and 
+
+<link id="a1092" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+. I will show that the transform of the sum is the sum of the 
+	transforms. This is shown in 
+
+<link id="a1093" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<table id="table1002" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1002">
+
+		
+
+<row id="tr1004">
+
+			
+
+<entry id="th1002">
+<emphasis id="Figure_3" effect="bold">
+
+Figure 3.
+
+</emphasis>
+
+ Transform of the sum of two pulses.
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1002">
+
+		
+
+<row id="tr1005">
+
+			
+
+<entry id="td1002">
+
+			
+
+<media id="media1002" alt="missing image" display="block">
+<image id="img1002" mime-type="image/jpeg" src="../../media/java1486ac.jpg" width="409" height="470"/>
+</media>
+
+
+			
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41006">
+<title>
+<emphasis id="The_transform_of_the_sum_equals_the_sum_of_the_transforms" effect="bold">
+
+The transform of the sum equals the sum of the transforms
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1045">
+<link id="a1094" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+ shows an input series that is the sum of the individual input 
+	series from 
+
+<link id="a1095" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ and 
+
+<link id="a1096" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+. This produces a pulse that is symmetric 
+	around the origin indicated by the value with the empty circle.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41007">
+<title>
+<emphasis id="Normalized_output" effect="bold">
+
+Normalized output
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1046">
+Note that the display of the transform values produced by this applet is 
+	normalized so as to keep them in a reasonable range for plotting. As a 
+	result, absolute values don't have much meaning. Only relative values have 
+	meaning.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41008">
+<title>
+<emphasis id="The_real_part_is_the_same" effect="bold">
+
+The real part is the same
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1047">
+The real part of the transform of the input series in 
+
+<link id="a1097" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+ has the 
+	same shape as the real parts of the transforms of the input series in 
+	
+
+<link id="a1098" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ and 
+
+<link id="a1099" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+. This is what would be produced by adding the real parts of 
+	the transforms of the pulses in 
+
+<link id="a1100" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ and 
+
+<link id="a1101" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+, and then normalizing 
+	the result.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41009">
+<title>
+<emphasis id="The_imaginary_part_sums_to_zero" effect="bold">
+
+The imaginary part sums to zero
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1048">
+The imaginary part of the transform of the input series in 
+
+<link id="a1102" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+ is 
+	zero at all sample values. This is what would be produced by adding the 
+	imaginary parts of the transforms of the input series in 
+
+<link id="a1103" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ and 
+	
+
+<link id="a1104" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1003" display="block">
+
+	
+
+<para id="p1049">
+<emphasis id="em1005" effect="italics">
+(Recall that the values in the imaginary parts of the two earlier 
+		transforms had the same magnitude but opposite signs).
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1050">
+Thus, 
+
+<link id="a1105" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+, 
+
+<link id="a1106" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+, and 
+
+<link id="a1107" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+ demonstrate that the transform of 
+	the sum of two or more input series is equal to the sum of the transforms of 
+	the individual input series. The Fourier transform is a linear transform.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31011">
+<title>
+<emphasis id="Single_sample_real_pulse_with_a_delay" effect="bold">
+
+Single sample real pulse (impulse) with a delay
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1051">
+The real part of the transform of a single real sample with a shift 
+	relative to the origin has the shape of a cosine curve with a period that is 
+	proportional to the reciprocal of the shift. Negative sample values produce 
+	cosine curves with negative amplitudes.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1004" display="block">
+<emphasis id="em1006" effect="italics">
+A pulse of this type is often referred to an impulse.
+
+</emphasis>
+</quote>
+
+
+
+
+<para id="p1052">
+The imaginary part of the transform of an impulse with a shift 
+	relative to the origin has the shape of a sine curve with a period that is 
+	proportional to the reciprocal of the shift. Negative sample values produce 
+	sine curves with negative amplitudes.
+
+</para>
+
+
+
+
+
+<para id="p1053">
+The magnitude of the transform is the square root of the sum of the 
+	squares of the real and imaginary parts at each output sample point. For the 
+	case of a single input sample with a shift, that magnitude is constant for 
+	all output sample points and is proportional to the absolute value of the 
+	sample.
+
+</para>
+
+
+
+
+
+<para id="p1054">
+The above facts are illustrated in 
+
+<link id="a1108" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+, 
+
+<link id="a1109" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+, 
+
+<link id="a1110" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+, and 
+	
+
+<link id="a1111" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<table id="table1003" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1003">
+
+		
+
+<row id="tr1006">
+
+			
+
+<entry id="th1003">
+<emphasis id="Figure_4" effect="bold">
+
+Figure 4.
+
+</emphasis>
+
+ Transform of an impulse with no shift.
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1003">
+
+		
+
+<row id="tr1007">
+
+			
+
+<entry id="td1003">
+
+			
+
+<media id="media1003" alt="missing image" display="block">
+<image id="img1003" mime-type="image/jpeg" src="../../media/java1486ad.jpg" width="409" height="470"/>
+</media>
+
+
+			
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41010">
+<title>
+<emphasis id="A_shift_of_zero" effect="bold">
+
+A shift of zero
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1055">
+<link id="a1112" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ shows the transform of an impulse with a shift of zero relative to 
+the origin.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1005" display="block">
+
+	
+
+<para id="p1056">
+<emphasis id="em1007" effect="italics">
+(Note that in this series of figures, the origin was moved from the 
+	center to the left end. Once again, the sample with the empty circle 
+	represents the origin.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1057">
+Although it isn't obvious, the real part of the transform in 
+
+<link id="a1113" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ has the 
+shape of a cosine curve with a period that is the reciprocal of the shift. 
+Because the shift is zero, the period of the cosine curve is infinite, producing 
+real values that are constant at all output sample values.
+
+</para>
+
+
+
+
+
+<para id="p1058">
+Similarly, the imaginary part of the transform in 
+
+<link id="a1114" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ has a shape that 
+is a sine curve with an infinite period. Thus, it is zero at all output sample 
+values.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41011">
+<title>
+<emphasis id="A_shift_of_one_sample_interval" effect="bold">
+
+A shift of one sample interval
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1059">
+<link id="a1115" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ shows the transform of an impulse with a negative value and a shift 
+of one sample interval relative to the origin.
+
+</para>
+
+
+
+
+
+<table id="table1004" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1004">
+
+		
+
+<row id="tr1008">
+
+			
+
+<entry id="th1004">
+<emphasis id="Figure_5" effect="bold">
+
+Figure 5.
+
+</emphasis>
+
+ Transform of an impulse with a shift equal to one sample interval and a negative value.
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1004">
+
+		
+
+<row id="tr1009">
+
+			
+
+<entry id="td1004">
+
+			
+
+<media id="media1004" alt="missing image" display="block">
+<image id="img1004" mime-type="image/jpeg" src="../../media/java1486ae.jpg" width="409" height="470"/>
+</media>
+
+
+			
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+</section>
+<section id="h41012">
+<title>
+<emphasis id="A_cosine_curve_and_a_sine_curve" effect="bold">
+
+A cosine curve and a sine curve
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1060">
+The shape of the real part of the transform output is an upside down cosine 
+curve. It is upside down because it has a negative amplitude. This is caused by 
+the fact that the input sample has a negative value.
+
+</para>
+
+
+
+
+
+<para id="p1061">
+The shape of the imaginary part of the transform is an upside down sine 
+curve.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41013">
+<title>
+<emphasis id="Number_of_output_samples_equals_number_of_input_samples" effect="bold">
+
+Number of output samples equals number of input samples
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1062">
+This transform program computes real and imaginary values from zero to an 
+output index that is one output sample interval less than the sampling 
+frequency. The number of output values is equal to the number of samples in the 
+input series. This is very typical of FFT algorithms.
+
+</para>
+
+
+
+
+
+<para id="p1063">
+In this case, I set the applet up to accept sixteen input samples and to 
+produce sixteen output samples.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41014">
+<title>
+<emphasis id="Representing_time_and_frequency" effect="bold">
+
+Representing time and frequency
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1064">
+For the moment, lets think in terms of time and frequency. Assume that the 
+input series f(x) is a time series and the output series F(k) is a frequency 
+spectrum.
+
+</para>
+
+
+
+
+
+<para id="p1065">
+To make the arithmetic easy, let's assume that the sampling interval for the 
+input time series in the upper left box of 
+
+<link id="a1116" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ is one second. This gives a 
+sampling frequency of one sample per second, and a total elapsed time of sixteen 
+seconds.
+
+</para>
+
+
+
+
+
+<para id="p1066">
+The sine and cosine curves in 
+
+<link id="a1117" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ each go through one complete period 
+between a frequency of zero and the sampling frequency, which one sample per 
+second. Thus, the period of the sine and cosine curves along the frequency axis 
+is one sample per second. This is the reciprocal of the time shift of one sample 
+interval at a sampling frequency of one sample per second.
+
+</para>
+
+
+
+
+
+<para id="p1067">
+Stated differently, the number of periods of the sine and cosine curves in 
+the real and imaginary parts of the transform between a frequency of zero and a 
+frequency equal to the sampling frequency is equal to the shift in sample 
+intervals. A shift of one sample interval produces sine and cosine curves having 
+one period in the frequency range from zero to the sampling frequency. A shift 
+of two sample intervals produces sine and cosine curves having two periods in 
+the frequency range from zero to the sampling frequency, etc. This is 
+illustrated by 
+
+<link id="a1118" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41015">
+<title>
+<emphasis id="A_shift_of_two_sample_intervals" effect="bold">
+
+A shift of two sample intervals
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1068">
+<link id="a1119" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+ shows the transform of an impulse with a shift equal to two sample 
+intervals and a positive value.
+
+</para>
+
+
+
+
+
+<table id="table1005" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1005">
+
+		
+
+<row id="tr1010">
+
+			
+
+<entry id="th1005">
+<emphasis id="Figure_6" effect="bold">
+
+Figure 6.
+
+</emphasis>
+
+ Transform of an impulse with a shift equal to two sample intervals and a positive value.
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1005">
+
+		
+
+<row id="tr1011">
+
+			
+
+<entry id="td1005">
+
+			
+
+<media id="media1005" alt="missing image" display="block">
+<image id="img1005" mime-type="image/jpeg" src="../../media/java1486af.jpg" width="409" height="470"/>
+</media>
+
+
+			
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1069">
+The real part of the transform has the shape of a cosine curve with two 
+complete periods between zero and an output index equal to the sampling 
+frequency.
+
+</para>
+
+
+
+
+
+<para id="p1070">
+The imaginary part of the transform has the shape of a sine curve with two 
+complete periods within the same output interval. This agrees with the 
+conclusions stated in the previous section.
+
+</para>
+
+
+
+
+
+
+</section>
+<section id="h41016">
+<title>
+<emphasis id="A_shift_of_four_sample_intervals" effect="bold">
+
+A shift of four sample intervals
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+<para id="p1071">
+Finally, 
+
+<link id="a1120" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+ shows the transform of an impulse with a shift equal to 
+four sample intervals.
+
+</para>
+
+
+
+
+
+<table id="table1006" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1006">
+
+		
+
+<row id="tr1012">
+
+			
+
+<entry id="th1006">
+<emphasis id="Figure_7" effect="bold">
+
+Figure 7.
+
+</emphasis>
+
+ Transform of an impulse with a shift equal to four sample intervals and a positive value.
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1006">
+
+		
+
+<row id="tr1013">
+
+			
+
+<entry id="td1006">
+
+			
+
+<media id="media1006" alt="missing image" display="block">
+<image id="img1006" mime-type="image/jpeg" src="../../media/java1486ag.jpg" width="409" height="470"/>
+</media>
+
+
+			
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1072">
+The cosine and sine curves that represent the real and imaginary parts of the 
+transform each have four complete periods between zero and an output index equal 
+to the sampling frequency.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1006" display="block">
+
+	
+
+<emphasis id="em1008" effect="italics">
+In this case the cosine and sine curves are very sparsely sampled.
+
+</emphasis>
+</quote>
+
+
+
+
+</section>
+</section>
+<section id="h31012">
+<title>
+
+
+
+<emphasis id="Equations_to_describe_the_real_and_imaginary_parts_of_the_transform" effect="bold">
+
+
+Equations to describe the real and imaginary parts of the transform
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1073">
+The main point is:
+
+</para>
+
+
+
+
+
+<quote id="blockquote1007" display="block">
+<emphasis id="strong1002" effect="bold">
+If you know the value of a single real sample and you 
+know its position in the series relative to the origin, you can write equations 
+that describe the real and imaginary parts of the transform of that single 
+sample without any requirement to actually perform a Fourier transform.
+
+</emphasis>
+ 
+
+
+</quote>
+
+
+
+
+<para id="p1074">
+Those equations are simple sine and cosine equations as a function of the 
+units of the output domain. This is an important concept that contributes 
+greatly to the implementation of the FFT algorithm.
+
+</para>
+
+
+
+
+
+<section id="h41017">
+<title>
+<emphasis id="Transformation_of_a_complex_series" effect="bold">
+
+Transformation of a complex series
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+<para id="p1075">
+The FFT algorithm is an algorithm that transforms a series of complex values 
+in one domain into a series of complex values in another domain. The images in 
+the figures discussed so far indicate a transformation of a complex function 
+given by f(x) into another complex function given by F(k). There is nothing in 
+these images to indicate anything about time and frequency.
+
+</para>
+
+
+
+
+
+<para id="p1076">
+If the complex part of the input series f(x) is not zero, things get somewhat 
+more complicated. For example, the real and imaginary parts of the transform of 
+an impulse having both real and imaginary parts are not necessarily 
+cosine and sine curves. This is illustrated in 
+
+<link id="a1121" target-id="Figure_8">
+
+ Figure 8
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<table id="table1007" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1007">
+
+		
+
+<row id="tr1014">
+
+			
+
+<entry id="th1007">
+<emphasis id="Figure_8" effect="bold">
+
+Figure 8.
+
+</emphasis>
+
+ Transform of a complex impulse with a shift equal to two sample intervals.
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1007">
+
+		
+
+<row id="tr1015">
+
+			
+
+<entry id="td1007">
+
+			
+
+<media id="media1007" alt="missing image" display="block">
+<image id="img1007" mime-type="image/jpeg" src="../../media/java1486ah.jpg" width="409" height="470"/>
+</media>
+
+
+			
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1077">
+<link id="a1122" target-id="Figure_8">
+
+ Figure 8
+
+</link>
+
+ shows the results of transforming an impulse having both real and 
+imaginary parts and a shift of two sample intervals.
+
+</para>
+
+
+
+
+
+<para id="p1078">
+Although both the real and imaginary parts of the transformed result have the 
+shape of a sinusoid, neither is a cosine curve and neither is a sine curve. Both 
+of the curves are sinusoidal curves that have been shifted along the horizontal 
+output axis moving their peaks and zero crossings away from the origin.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41018">
+<title>
+<emphasis id="Linearity_still_applies" effect="bold">
+
+Linearity still applies
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1079">
+Because the Fourier transform is a linear transform, you can transform the 
+real and imaginary parts of the input separately and add the two resulting 
+transforms. The sum of the two transforms represents the transform of the entire 
+input series including both real and imaginary parts. The program that I will 
+discuss later takes advantage of this fact. Once again, the main point is:
+
+</para>
+
+
+
+
+
+<quote id="blockquote1008" display="block">
+
+	
+
+<emphasis id="strong1003" effect="bold">
+Even for a complex input series, if you know the values of the real 
+	and imaginary parts of a sample and you know the value of the shift 
+	associated with that sample, you can write equations that describe the real 
+	part and the imaginary part of the transform results.
+
+</emphasis>
+</quote>
+
+
+
+
+</section>
+<section id="h41019">
+<title>
+
+
+
+<emphasis id="Can_produce_the_transform_of_a_time_series_by_the_adding_transforms_of_the_individual_samples" effect="bold">
+
+Can produce the transform of a time series by the adding transforms of the 
+individual samples
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1080">
+That brings us to the crux of the matter. 
+
+	Given an input series consisting of a set of sequential samples taken at 
+	uniform sampling intervals, we know how to write equations for the real and 
+	imaginary parts that would be produced by performing a Fourier transform on 
+	each of those samples individually.
+
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41020">
+<title>
+<emphasis id="The_input_series_is_the_sum_of_the_individual_samples" effect="bold">
+
+The input series is the sum of the individual samples
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1081">
+We know that we can consider the input series to consist of the sum of the 
+individual samples, each having a specified value and a different shift. We know 
+that the Fourier transform is a linear transform. Therefore, the Fourier 
+transform of an input series is the sum of the transforms of the individual 
+samples.
+
+</para>
+
+
+
+
+
+<para id="p1082">
+If we are clever enough, we can use these facts to develop a computational 
+algorithm that can compute the Fourier transform of a time series much faster 
+than can be obtained using a brute force DFT algorithm. Fortunately, some very 
+clever people have already developed that algorithm. It goes by the name of the 
+Fast Fourier Transform, or FFT algorithm.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41021">
+<title>
+<emphasis id="Steps_in_the_FFT_algorithm" effect="bold">
+
+Steps in the FFT algorithm
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1083">
+In truth, there are several different forms of the FFT algorithm, and the 
+mechanics of each may be slightly different. At least one, and probably many of 
+the algorithms operate by performing the following steps:
+
+</para>
+
+
+
+
+
+<list id="ul1011" list-type="bulleted">
+
+	
+
+<item id="li1066">
+Decompose an N-point complex series into N individual complex series, 
+	each consisting of a single complex sample. The order of the decomposition 
+	in an FFT algorithm is rather complicated. It is this order of 
+	decomposition, and the order of the subsequent recombination of transform 
+	results that causes the FFT algorithm to be so fast. It is also that order 
+	that makes the algorithm somewhat difficult to understand. Note that the 
+	program that I will discuss later 
+
+<emphasis id="strong1004" effect="bold">
+does not 
+
+</emphasis>
+implement that special order of 
+	decomposition and recombination. 
+
+</item>
+
+
+	
+
+<item id="li1067">
+Calculate the transform of each of the N complex series, each consisting 
+	of a single complex sample. This treats each complex sample as if it is 
+	located at the origin of a complex series. This step is trivial. The real 
+	part of the transform of a single complex sample located at the origin of 
+	the series is a complex constant whose values are proportional to the real 
+	and imaginary values that make up the complex sample. Since the complex 
+	input series consists of only one complex sample, there is only one complex 
+	value in the complex transform. 
+
+</item>
+
+
+	
+
+<item id="li1068">
+Correct each of the N transform results to reflect the original position 
+	of the complex sample in the input series. This involves the application of 
+	sine and cosine curves to the real and imaginary parts of the transform. 
+	This step is usually combined with the recombination step that follows. 
+
+</item>
+
+
+	
+
+<item id="li1069">
+Recombine the N transform results into a single transform result that 
+	represents the transform of the original complex series. This is a very 
+	complicated operation in a real FFT algorithm. It must reverse the order of 
+	decomposition in the first step described earlier. As mentioned earlier, it 
+	is the order of the decomposition and subsequent recombination that 
+	minimizes the arithmetic operations required and gives the FFT its 
+	tremendous speed. The program that I will discuss later 
+
+<emphasis id="strong1005" effect="bold">
+does not
+
+</emphasis>
+ implement 
+	the special order of decomposition and recombination used in an actual FFT 
+	algorithm.
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+</section>
+</section>
+</section>
+</section>
+<section id="h11003">
+<title>
+<emphasis id="A_sample_program" effect="bold">
+
+A sample program
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1084">
+I want to emphasize at the outset that this program DOES NOT implement an FFT 
+algorithm. Rather, this program illustrates the underlying signal processing 
+concepts that make the FFT possible in a form that is more easily understood 
+than is normally the case with an actual FFT algorithm. 
+
+</para>
+
+
+
+
+
+
+<section id="h21004">
+<title>
+<emphasis id="Separate_processes_in_an_FFT_algorithm" effect="bold">
+
+Separate processes in an FFT algorithm
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1085">
+In summary, a typical FFT algorithm performs the following processes:
+
+</para>
+
+
+
+
+
+<list id="ul1012" list-type="bulleted">
+
+	
+
+<item id="li1070">
+Decompose an N-point complex series into N individual complex series, 
+	each consisting of a single complex sample.
+
+</item>
+
+
+	
+
+<item id="li1071">
+Recognize that the complex transform of a single complex sample is equal 
+	to the value of the complex sample. 
+
+</item>
+
+
+	
+
+<item id="li1072">
+Correct the transform for each complex sample to reflect the original 
+	position of the complex sample in the input series. 
+
+</item>
+
+
+	
+
+<item id="li1073">
+Recombine the N transform results into a single transform result that 
+	represents the transform of the original complex series.
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1086">
+This program performs each of the processes listed above. However, it does 
+not perform those processes in the special order used by an FFT algorithm that 
+causes the FFT algorithm to be able to perform those processes at very high 
+speed.
+
+</para>
+
+
+
+
+
+<section id="h31013">
+<title>
+<emphasis id="How_the_processes_are_implemented" effect="bold">
+
+How the processes are implemented
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1087">
+The decomposition process in this program takes the complex samples in the 
+order that they appear in the input complex series. The transform of each 
+complex sample is simply the sample itself. This is the result that would be 
+obtained by actually computing the transform of the complex sample if the sample 
+were the first sample in the series. 
+
+</para>
+
+
+
+
+
+<para id="p1088">
+The transform result for each complex 
+sample 
+
+<emphasis id="em1009" effect="italics">
+(the sample itself)
+
+</emphasis>
+ is then corrected for position by applying sine and 
+cosine curves to reflect the actual position of the complex sample within the 
+original complex series.
+
+</para>
+
+
+
+
+
+<para id="p1089">
+In order to accomplish the recombination of the 
+corrected transform results, the real and imaginary parts of the corrected 
+transform are added to accumulators. These accumulators are used to accumulate 
+the corrected real and imaginary parts from the corrected transforms for all of 
+the individual complex samples.
+
+</para>
+
+
+
+
+
+<para id="p1090">
+Once the real and imaginary parts have been 
+accumulated for all of the complex samples, the real part of the accumulator 
+represents the real part of the transform of the original complex series. The 
+imaginary part of the accumulator represents the imaginary part of the transform 
+of the original complex series. However, an actual transform was never performed 
+on the original complex series.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31014">
+<title>
+<emphasis id="Three_cases_are_examined" effect="bold">
+
+Three cases are examined
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+<para id="p1091">
+This program creates three separate complex 
+series, applies the processes listed above to each of those series, and displays 
+the results on the screen.
+
+</para>
+
+
+
+
+
+<para id="p1092">
+No attempt is made to manage the decomposition and the subsequent 
+recombination in the manner of a true FFT algorithm. Therefore, this program is 
+designed to illustrate the processes involved, and is not designed to provide 
+the speed of a true FFT algorithm. 
+
+</para>
+
+
+
+
+
+<para id="p1093">
+This program was tested using JDK 1.8 under Windows 7.
+
+</para>
+
+
+
+
+
+<para id="p1094">
+Will discuss in fragments
+
+</para>
+
+
+
+
+
+<para id="p1095">
+As is my usual approach, I will discuss and explain this program in 
+fragments. A complete listing of the program is provided in 
+
+<link id="a1123" target-id="Listing_9">
+
+ Listing 9
+
+</link>
+
+ near the 
+end of the module.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h21005">
+<title>
+<emphasis id="The_program_named_Fft02" effect="bold">
+
+The program named Fft02
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1096">
+The program begins in 
+
+<link id="a1124" target-id="Listing_1">
+
+ Listing 1
+
+</link>
+
+, which shows the beginning of the controlling 
+class named Fft02 and the beginning of the 
+
+<emphasis id="strong1006" effect="bold">
+main
+
+</emphasis>
+ method.
+
+</para>
+
+
+
+
+
+<table id="table1008" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1008">
+
+		
+
+<row id="tr1016">
+
+
+
+<entry id="th1008">
+<emphasis id="Listing_1" effect="bold">
+
+Listing 1.
+
+</emphasis>
+
+ Beginning of the program named Fft02?
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1008">
+
+		
+
+<row id="tr1017">
+
+			
+
+<entry id="td1008">
+
+			
+
+<code id="pre1000" display="block">class Fft02{
+
+  public static void main(String[] args){
+           Transform transform = new Transform();</code>
+
+
+			
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h31015">
+<title>
+<emphasis id="Instantiate_a_Transform_object" effect="bold">
+
+Instantiate a Transform object
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1097">
+The first statement in the 
+
+<emphasis id="strong1007" effect="bold">
+main
+
+</emphasis>
+ method instantiates an object of the 
+
+
+<emphasis id="strong1008" effect="bold">
+Transform
+
+</emphasis>
+ class. This object implements the processes used in an FFT, but 
+
+
+<emphasis id="strong1009" effect="bold">
+does 
+not
+
+</emphasis>
+ implement those processes in the special order required by an FFT algorithm.
+
+</para>
+
+
+
+
+
+<para id="p1098">
+The purpose of an object of the 
+
+<emphasis id="strong1010" effect="bold">
+Transform
+
+</emphasis>
+ class is to illustrate the 
+processes commonly used in an FFT in a manner that is more easily understood 
+than is often the case with an actual FFT algorithm.
+
+</para>
+
+
+
+
+
+<para id="p1099">
+I will put the 
+
+<emphasis id="strong1011" effect="bold">
+main
+
+</emphasis>
+ method on the back burner for the moment and explain the 
+class named 
+
+<emphasis id="strong1012" effect="bold">
+Transform
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31016">
+<title>
+<emphasis id="The_class_named_Transform" effect="bold">
+
+The class named Transform
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1100">
+<link id="a1125" target-id="Listing_2">
+
+ Listing 2
+
+</link>
+
+ presents the beginning of the class named 
+
+<emphasis id="strong1013" effect="bold">
+Transform
+
+</emphasis>
+. 
+
+<link id="a1126" target-id="Listing_2">
+
+ Listing 2
+
+</link>
+
+ also 
+presents the beginning of an instance method of that class named 
+
+<emphasis id="strong1014" effect="bold">
+doIt
+
+</emphasis>
+. The 
+
+
+<emphasis id="strong1015" effect="bold">
+doIt
+
+</emphasis>
+ 
+method computes and returns the complex transform
+
+<emphasis id="em1010" effect="italics">
+ (via output parameters)
+
+</emphasis>
+ of an 
+incoming complex series.
+
+</para>
+
+
+
+
+
+<table id="table1009" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1009">
+
+		
+
+<row id="tr1018">
+
+			
+
+<entry id="th1009">
+<emphasis id="Listing_2" effect="bold">
+
+Listing 2.
+
+</emphasis>
+
+ The class named Transform.
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1009">
+
+		
+
+<row id="tr1019">
+
+			
+
+<entry id="td1009">
+
+			
+
+<code id="pre1001" display="block">class Transform{
+
+  void doIt(double[] realIn,
+            double[] imagIn,
+            double scale,
+            double[] realOut,
+            double[] imagOut){</code>
+
+
+			
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41022">
+<title>
+<emphasis id="The_method_parameters" effect="bold">
+
+The method parameters
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1101">
+The 
+
+<emphasis id="strong1016" effect="bold">
+doIt
+
+</emphasis>
+ method receives five incoming parameters. The first 
+two parameters are references to two array objects of type 
+
+<emphasis id="strong1017" effect="bold">
+double
+
+</emphasis>
+ 
+containing the real and imaginary parts of the input series.
+
+</para>
+
+
+
+
+
+<para id="p1102">
+The third parameter is a scale factor that is applied to the transform output 
+in an attempt to keep the values in a range suitable for plotting if desired.
+
+</para>
+
+
+
+
+
+<para id="p1103">
+The last two parameters are references to array objects of type 
+
+<emphasis id="strong1018" effect="bold">
+
+double
+
+</emphasis>
+. The results of performing the transform are used to populate 
+these two arrays. This is the mechanism by which the object returns the 
+transform results to the calling program. It is assumed that all of the elements 
+in these two array objects contain values of zero upon entry to the 
+
+<emphasis id="strong1019" effect="bold">
+doIt
+
+</emphasis>
+ 
+method.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31017">
+<title>
+<emphasis id="Performing_the_transform" effect="bold">
+
+Performing the transform
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1104">
+The body of the 
+
+<emphasis id="strong1020" effect="bold">
+doIt
+
+</emphasis>
+ method is presented in 
+
+<link id="a1127" target-id="Listing_3">
+
+ Listing 3
+
+</link>
+
+. The 
+code in 
+
+<link id="a1128" target-id="Listing_3">
+
+ Listing 3
+
+</link>
+
+ iterates on the input arrays, passing each complex sample 
+contained in those two arrays to a method named 
+
+<emphasis id="strong1021" effect="bold">
+correctAndRecombine
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<table id="table1010" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1010">
+
+		
+
+<row id="tr1020">
+
+			
+
+<entry id="th1010">
+<emphasis id="Listing_3" effect="bold">
+
+Listing 3.
+
+</emphasis>
+
+ Performing the transform.
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1010">
+
+		
+
+<row id="tr1021">
+
+			
+
+<entry id="td1010">
+
+			
+
+<code id="pre1002" display="block">    for(int cnt = 0;cnt &lt; realIn.length;cnt++){
+      correctAndRecombine(realIn[cnt],
+                         imagIn[cnt],
+                         cnt,
+                         realIn.length,
+                         scale,
+                         realOut,
+                         imagOut);
+    }//end for loop
+  }//end doIt</code>
+
+
+			
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41023">
+<title>
+<emphasis id="The_transforms_of_the_complex_input_samples" effect="bold">
+
+The transforms of the complex input samples
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1105">
+Each complex value in the incoming arrays represents both a complex sample 
+and the transform of that complex sample under the assumption that the complex 
+sample appears at the origin of the input series.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41024">
+<title>
+<emphasis id="Correct_for_actual_position_and_recombine" effect="bold">
+
+Correct for actual position and recombine
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1106">
+The method named 
+
+<emphasis id="strong1022" effect="bold">
+correctAndRecombine
+
+</emphasis>
+ corrects the transform 
+result for each of the complex samples in the series so as to reflect the actual 
+position of the complex sample in the original input series.
+
+</para>
+
+
+
+
+
+<para id="p1107">
+Then the method named 
+
+<emphasis id="strong1023" effect="bold">
+correctAndRecombine
+
+</emphasis>
+ adds the corrected 
+transform result into a pair of accumulators, one for the real part and one for 
+the imaginary part. This accomplishes the recombination of the corrected 
+transforms of the input samples in order to produce the transform of the entire 
+original complex input series.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31018">
+<title>
+<emphasis id="The_correctAndRecombine_method" effect="bold">
+
+The correctAndRecombine method
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1108">
+The 
+
+<emphasis id="strong1024" effect="bold">
+correctAndRecombine
+
+</emphasis>
+ method is shown in 
+
+<link id="a1129" target-id="Listing_4">
+
+ Listing 4
+
+</link>
+
+. 
+
+
+<link id="a1130" target-id="Listing_4">
+
+ Listing 4
+
+</link>
+
+ also signals the end of the 
+
+<emphasis id="strong1025" effect="bold">
+Transform
+
+</emphasis>
+ class.
+
+</para>
+
+
+
+
+
+<table id="table1011" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1011">
+
+		
+
+<row id="tr1022">
+
+			
+
+<entry id="th1011">
+<emphasis id="Listing_4" effect="bold">
+
+Listing 4.
+
+</emphasis>
+
+ The correctAndRecombine method.
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1011">
+
+		
+
+<row id="tr1023">
+
+			
+
+<entry id="td1011">
+
+			
+
+<code id="pre1003" display="block">  void correctAndRecombine(double realSample,
+                           double imagSample,
+                           int position,
+                           int length,
+                           double scale,
+                           double[] realOut,
+                           double[] imagOut){
+
+    //Calculate the complex transform values for
+    // each sample in the complex output series.
+    for(int cnt = 0; cnt &lt; length; cnt++){
+      double angle =
+               (2.0*Math.PI*cnt/length)*position;
+
+      //Calculate output based on real input
+      realOut[cnt] +=
+                realSample*Math.cos(angle)/scale;
+      imagOut[cnt] +=
+                realSample*Math.sin(angle)/scale;
+
+      //Calculate output based on imag input
+      realOut[cnt] -=
+                imagSample*Math.sin(angle)/scale;
+      imagOut[cnt] +=
+                imagSample*Math.cos(angle)/scale;
+    }//end for loop
+  }//end correctAndRecombine
+
+}//end class transform</code>
+
+
+			
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1109">
+This method accepts an incoming complex sample value and the position in the 
+series associated with that sample. The method corrects the real and imaginary 
+transform values for that complex sample to reflect the specified position in 
+the input series.
+
+</para>
+
+
+
+
+
+<para id="p1110">
+After correcting the transform values for the sample on the basis of 
+position, the method updates the corresponding real and imaginary values 
+contained in array objects that are used to accumulate the real and imaginary 
+values for all of the samples.
+
+</para>
+
+
+
+
+
+<para id="p1111">
+References to the array objects are received as input parameters. Outgoing 
+results are scaled by an incoming parameter in an attempt to cause the output 
+values to fall within a reasonable range in case someone wants to plot them.
+
+</para>
+
+
+
+
+
+<para id="p1112">
+The incoming parameter named length specifies the number of output samples 
+that are to be produced.
+
+</para>
+
+
+
+
+
+<para id="p1113">
+Hopefully this explanation will make it possible for you to understand the 
+code in 
+
+<link id="a1131" target-id="Listing_4">
+
+ Listing 4
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1114">
+Note in particular the use of the 
+
+<emphasis id="strong1026" effect="bold">
+Math.cos
+
+</emphasis>
+ and 
+
+<emphasis id="strong1027" effect="bold">
+
+Math.sin
+
+</emphasis>
+ methods to apply the cosine and sine curves in the correction 
+of the transforms of the individual complex samples. This is used to produce 
+results similar to those shown in 
+
+<link id="a1132" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ through 
+
+<link id="a1133" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1009" display="block">
+
+	
+
+<emphasis id="em1011" effect="italics">
+A real FFT program would probably compute the cosine and sine values 
+	only once, put them in a table and extract them from the table when needed.
+
+</emphasis>
+</quote>
+
+
+
+
+<para id="p1115">
+Note the use of the 
+
+<emphasis id="strong1028" effect="bold">
+position
+
+</emphasis>
+ and 
+
+<emphasis id="strong1029" effect="bold">
+length
+
+</emphasis>
+ 
+parameters in the computation of the angle that is passed as an argument to the
+
+
+<emphasis id="strong1030" effect="bold">
+Math.cos
+
+</emphasis>
+ and 
+
+<emphasis id="strong1031" effect="bold">
+Math.sin
+
+</emphasis>
+ methods.
+
+</para>
+
+
+
+
+
+<para id="p1116">
+Also note how the correction is made separately on the real and imaginary 
+parts of the input. This produces results similar to those shown in 
+
+<link id="a1134" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+ 
+after those results are added in the accumulators.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31019">
+<title>
+<emphasis id="Back_to_the_main_method" effect="bold">
+
+Back to the main method
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1117">
+Returning now to the 
+
+<emphasis id="strong1032" effect="bold">
+main
+
+</emphasis>
+ method, the code in 
+
+<link id="a1135" target-id="Listing_5">
+
+ Listing 5
+
+</link>
+
+ prepares the input 
+data and the output arrays for the first case that we will look at. This case is 
+labeled as Case A.
+
+</para>
+
+
+
+
+
+<table id="table1012" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1012">
+
+		
+
+<row id="tr1024">
+
+			
+
+<entry id="th1012">
+<emphasis id="Listing_5" effect="bold">
+
+Listing 5.
+
+</emphasis>
+
+ The remainder of the main method.
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1012">
+
+		
+
+<row id="tr1025">
+
+			
+
+<entry id="td1012">
+
+			
+
+<code id="pre1004" display="block">    System.out.println("Case A");
+    double[] realInA =
+               {0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1};
+    double[] imagInA =
+               {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+
+    double[] realOutA = new double[16];
+    double[] imagOutA = new double[16];
+
+    //Perform the transform and display the
+    // transformed results for the original
+    // complex series.
+    transform.doIt(realInA,imagInA,2.0,realOutA,
+                                       imagOutA);
+    display(realOutA,imagOutA);</code>
+
+
+			
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1118">
+Note that for Case A, the input complex series contains non-zero values only 
+in the real part. Also, most of the values in the real part are zero.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31020">
+<title>
+<emphasis id="The_graphic_form_of_Case_A" effect="bold">
+
+The graphic form of Case A
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1119">
+Case A is shown in graphic form in 
+
+<link id="a1136" target-id="Figure_9">
+
+ Figure 9
+
+</link>
+
+. As you can see, the input series 
+consists of two non-zero values in the real part. All the values in the 
+imaginary part are zero.
+
+</para>
+
+
+
+
+
+
+<table id="table1013" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1013">
+
+		
+
+<row id="tr1026">
+
+			
+
+<entry id="th1013">
+<emphasis id="Figure_9" effect="bold">
+
+Figure 9.
+
+</emphasis>
+
+ Case A. Transform of a real sample with two non-zero values.
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1013">
+
+		
+
+<row id="tr1027">
+
+			
+
+<entry id="td1013">
+
+			
+
+<media id="media1008" alt="missing image" display="block">
+<image id="img1008" mime-type="image/jpeg" src="../../media/java1486ai.jpg" width="409" height="470"/>
+</media>
+
+
+			
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1120">
+The real part of the transform of the complex input series looks like one 
+cycle of a cosine curve. All of the values in the imaginary part of the 
+transform result are zero.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31021">
+<title>
+<emphasis id="The_numeric_output_for_Case_A" effect="bold">
+
+The numeric output for Case A
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1121">
+As you saw in 
+
+<link id="a1137" target-id="Listing_5">
+
+ Listing 5
+
+</link>
+
+, the code in the main method calls a method named 
+
+
+<emphasis id="strong1033" effect="bold">
+display
+
+</emphasis>
+ to display the complex transform output in numeric form on the screen. 
+The output produced by 
+
+<link id="a1138" target-id="Listing_5">
+
+ Listing 5
+
+</link>
+
+ is shown in 
+
+<link id="a1139" target-id="Figure_10">
+
+ Figure 10
+
+</link>
+
+. 
+
+<emphasis id="em1012" effect="italics">
+(Note that I 
+manually inserted line breaks to force the material to fit in this narrow 
+publication format.)
+
+</emphasis>
+</para>
+
+
+
+
+
+
+<table id="table1014" summary="This is a table." pgwide="630">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1014">
+
+		
+
+<row id="tr1028">
+
+			
+
+<entry id="th1014">
+<emphasis id="Figure_10" effect="bold">
+
+Figure 10.
+
+</emphasis>
+
+ The numeric output for Case A.
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1014">
+
+		
+
+<row id="tr1029">
+
+			
+
+<entry id="td1014">
+
+			
+
+<code id="pre1005" display="block">Case A
+Real:
+1.0 0.923 0.707 0.382 0.0 -0.382 -0.707 -0.923
+-1.0 -0.923 -0.707 -0.382 0.0 0.382 0.707 0.923
+imag:
+0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 
+0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0</code>
+
+
+			
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1122">
+If you plot the real and imaginary values in 
+
+<link id="a1140" target-id="Figure_10">
+
+ Figure 10
+
+</link>
+
+, you will see that 
+they match the transform output shown in graphic form in 
+
+<link id="a1141" target-id="Figure_9">
+
+ Figure 9
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31022">
+<title>
+<emphasis id="Case_B_code" effect="bold">
+
+Case B code
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1123">
+The code from the 
+
+<emphasis id="strong1034" effect="bold">
+main
+
+</emphasis>
+ method for Case B is shown in 
+
+<link id="a1142" target-id="Listing_6">
+
+ Listing 6
+
+</link>
+
+. Note that the 
+input complex series contains non-zero values in both the real and imaginary 
+parts.
+
+</para>
+
+
+
+
+
+<table id="table1015" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1015">
+
+		
+
+<row id="tr1030">
+
+			
+
+<entry id="th1015">
+<emphasis id="Listing_6" effect="bold">
+
+Listing 6.
+
+</emphasis>
+
+ Case B code.
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1015">
+
+		
+
+<row id="tr1031">
+
+			
+
+<entry id="td1015">
+
+			
+
+<code id="pre1006" display="block">    System.out.println("\nCase B");
+    double[] realInB =
+               {0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1};
+    double[] imagInB =
+             {0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,-1};
+
+    double[] realOutB = new double[16];
+    double[] imagOutB = new double[16];
+
+    transform.doIt(realInB,imagInB,2.0,realOutB,
+                                       imagOutB);
+    display(realOutB,imagOutB);</code>
+
+
+			
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+</section>
+<section id="h31023">
+<title>
+<emphasis id="Case_B_in_graphical_form" effect="bold">
+
+Case B in graphical form
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1124">
+Case B is shown in graphical form in 
+
+<link id="a1143" target-id="Figure_11">
+
+ Figure 11
+
+</link>
+
+. 
+
+</para>
+
+
+
+
+
+
+<table id="table1016" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1016">
+
+		
+
+<row id="tr1032">
+
+			
+
+<entry id="th1016">
+<emphasis id="Figure_11" effect="bold">
+
+Figure 11.
+
+</emphasis>
+
+ Case B in graphical form.
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1016">
+
+		
+
+<row id="tr1033">
+
+			
+
+<entry id="td1016">
+
+			
+
+<media id="media1009" alt="missing image" display="block">
+<image id="img1009" mime-type="image/jpeg" src="../../media/java1486ak.jpg" width="409" height="470"/>
+</media>
+
+
+			
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+</section>
+<section id="h31024">
+<title>
+<emphasis id="Case_B_output_in_numeric_form" effect="bold">
+
+Case B output in numeric form
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1125">
+The output from the code in 
+
+<link id="a1144" target-id="Listing_6">
+
+ Listing 6
+
+</link>
+
+ is shown in 
+
+<link id="a1145" target-id="Figure_12">
+
+ Figure 12
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+<table id="table1017" summary="This is a table." pgwide="630">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1017">
+
+		
+
+<row id="tr1034">
+
+			
+
+<entry id="th1017">
+<emphasis id="Figure_12" effect="bold">
+
+Figure 12.
+
+</emphasis>
+
+ Case B output in numeric form.
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1017">
+
+		
+
+<row id="tr1035">
+
+			
+
+<entry id="td1017">
+
+			
+
+<code id="pre1007" display="block">Case B
+Real:
+1.0 0.923 0.707 0.382 0.0 -0.382 -0.707 -0.923
+-0.999 -0.923 -0.707 -0.382 0.0 0.382 0.707 0.923
+imag:
+-1.0 -0.923 -0.707 -0.382 0.0 0.382 0.707 0.923
+1.0 0.923 0.707 0.382 0.0 -0.382 -0.707 -0.923</code>
+
+
+			
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1126">
+If you plot the values for the real and imaginary parts from 
+
+<link id="a1146" target-id="Figure_12">
+
+ Figure 12
+
+</link>
+
+, you 
+will see that they match the real and imaginary output shown in 
+
+<link id="a1147" target-id="Figure_11">
+
+ Figure 11
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31025">
+<title>
+<emphasis id="Case_C_code" effect="bold">
+
+Case C code
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1127">
+The code extracted from the 
+
+<emphasis id="strong1035" effect="bold">
+main
+
+</emphasis>
+ method for Case C is shown in 
+
+<link id="a1148" target-id="Listing_7">
+
+ Listing 7
+
+</link>
+
+. 
+
+</para>
+
+
+
+
+
+<table id="table1018" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1018">
+
+		
+
+<row id="tr1036">
+
+			
+
+<entry id="th1018">
+<emphasis id="Listing_7" effect="bold">
+
+Listing 7.
+
+</emphasis>
+
+ Case C code.
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1018">
+
+		
+
+<row id="tr1037">
+
+			
+
+<entry id="td1018">
+
+			
+
+<code id="pre1008" display="block">    System.out.println("\nCase C");
+    double[] realInC =
+      {1.0,0.923,0.707,0.382,0.0,-0.382,-0.707,
+          -0.923,-1.0,-0.923,-0.707,-0.382,0.0,
+           0.382,0.707,0.923};
+    double[] imagInC =
+      {0.0,-0.382,-0.707,-0.923,-1.0,-0.923,
+           -0.707,-0.382,0.0,0.382,0.707,0.923,
+            1.0,0.923,0.707,0.382};
+
+    double[] realOutC = new double[16];
+    double[] imagOutC = new double[16];
+
+    transform.doIt(realInC,imagInC,16.0,realOutC,
+                                       imagOutC);
+    display(realOutC,imagOutC);</code>
+
+
+			
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1128">
+The complex input series for Case C is a little more complicated than that 
+for either of the previous two cases. Note in particular that the input complex 
+series contains non-zero values in both the real and imaginary parts. In 
+addition, very few of the values in the complex series have a value of zero. 
+
+</para>
+
+
+
+
+
+<quote id="blockquote1010" display="block">
+
+	
+
+<para id="p1129">
+<emphasis id="em1013" effect="italics">
+(The values of the complex samples actually describe a cosine curve 
+	and a negative sine curve as shown in 
+
+<link id="a1149" target-id="Figure_13">
+
+ Figure 13
+
+</link>
+
+.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h31026">
+<title>
+<emphasis id="The_graphic_form_of_Case_C" effect="bold">
+
+The graphic form of Case C
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1130">
+Case C is shown in graphic form in 
+
+<link id="a1150" target-id="Figure_13">
+
+ Figure 13
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+<table id="table1019" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1019">
+
+		
+
+<row id="tr1038">
+
+			
+
+<entry id="th1019">
+<emphasis id="Figure_13" effect="bold">
+
+Figure 13.
+
+</emphasis>
+
+ The graphic form of Case C.
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1019">
+
+		
+
+<row id="tr1039">
+
+			
+
+<entry id="td1019">
+
+			
+
+<media id="media1010" alt="missing image" display="block">
+<image id="img1010" mime-type="image/jpeg" src="../../media/java1486am.jpg" width="409" height="470"/>
+</media>
+
+
+			
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1131">
+The Fourier transform is reversible
+
+</para>
+
+
+
+
+
+<para id="p1132">
+One of the interesting things to note about 
+
+<link id="a1151" target-id="Figure_13">
+
+ Figure 13
+
+</link>
+
+ is the similarity of 
+
+
+<link id="a1152" target-id="Figure_13">
+
+ Figure 13
+
+</link>
+
+ and 
+
+<link id="a1153" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+. These two figures illustrate the reversible nature of 
+the Fourier transform.
+
+</para>
+
+
+
+
+
+<para id="p1133">
+If I had used a positive input real value instead of a negative input real 
+value in 
+
+<link id="a1154" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+, the input of 
+
+<link id="a1155" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ would look exactly like the output in 
+
+
+<link id="a1156" target-id="Figure_13">
+
+ Figure 13
+
+</link>
+
+, and the output of 
+
+<link id="a1157" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ would look exactly like the input of 
+
+
+<link id="a1158" target-id="Figure_13">
+
+ Figure 13
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1011" display="block">
+
+	
+
+<emphasis id="em1014" effect="italics">
+With that as a hint, you should now be able to figure out how I used a 
+	mouse and drew the perfect sine and cosine curves in 
+
+<link id="a1159" target-id="Figure_13">
+
+ Figure 13
+
+</link>
+
+. In fact, I 
+	didn't draw them at all. Rather, I used my mouse and drew the output, and 
+	the applet gave me the corresponding input automatically.
+
+</emphasis>
+</quote>
+
+
+
+
+</section>
+<section id="h31027">
+<title>
+<emphasis id="Case_C_output_in_numeric_form" effect="bold">
+
+Case C output in numeric form
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1134">
+The output produced by the code in 
+
+<link id="a1160" target-id="Listing_7">
+
+ Listing 7
+
+</link>
+
+ is shown in 
+
+<link id="a1161" target-id="Figure_14">
+
+ Figure 14
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+<table id="table1020" summary="This is a table." pgwide="630">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1020">
+
+		
+
+<row id="tr1040">
+
+			
+
+<entry id="th1020">
+<emphasis id="Figure_14" effect="bold">
+
+Figure 14.
+
+</emphasis>
+
+ Case C output in numeric form.
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1020">
+
+		
+
+<row id="tr1041">
+
+			
+
+<entry id="td1020">
+
+			
+
+<code id="pre1009" display="block">Case C
+Real:
+0.0 0.999 0.0 0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+imag:
+0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0</code>
+
+
+			
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1135">
+If you plot the real and imaginary input values from 
+
+<link id="a1162" target-id="Listing_7">
+
+ Listing 7
+
+</link>
+
+, you will see 
+that they match the input values in 
+
+<link id="a1163" target-id="Figure_13">
+
+ Figure 13
+
+</link>
+
+. If you plot the real and 
+imaginary output values in 
+
+<link id="a1164" target-id="Figure_14">
+
+ Figure 14
+
+</link>
+
+, you will see that they match the output 
+values shown in 
+
+<link id="a1165" target-id="Figure_13">
+
+ Figure 13
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1136">
+<link id="a1166" target-id="Listing_7">
+
+ Listing 7
+
+</link>
+
+ signals the end of the 
+
+<emphasis id="strong1036" effect="bold">
+main
+
+</emphasis>
+ method.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31028">
+<title>
+<emphasis id="The_display_method" effect="bold">
+
+The display method
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1137">
+<link id="a1167" target-id="Listing_8">
+
+ Listing 8
+
+</link>
+
+ shows the code for a simple method named 
+
+<emphasis id="strong1037" effect="bold">
+display
+
+</emphasis>
+. The purpose of 
+the 
+
+<emphasis id="strong1038" effect="bold">
+display
+
+</emphasis>
+ method is to display a real series and an imaginary series, each 
+contained in an incoming array object of type 
+
+<emphasis id="strong1039" effect="bold">
+double
+
+</emphasis>
+. The 
+
+
+<emphasis id="strong1040" effect="bold">
+double
+
+</emphasis>
+ values are 
+truncated to no more than four digits before displaying them. Then they are 
+displayed on a single line.
+
+</para>
+
+
+
+
+
+<table id="table1021" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1021">
+
+		
+
+<row id="tr1042">
+
+			
+
+<entry id="th1021">
+<emphasis id="Listing_8" effect="bold">
+
+Listing 8.
+
+</emphasis>
+
+ The display method.
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1021">
+
+		
+
+<row id="tr1043">
+
+			
+
+<entry id="td1021">
+
+			
+
+<code id="pre1010" display="block">  static void display(double[] real,
+                      double[] imag){
+    System.out.println("Real: ");
+    for(int cnt=0;cnt &lt; real.length;cnt++){
+      System.out.print(((int)(1000.0*real[cnt]))
+                                 /1000.0 + " ");
+    }//end for loop
+    System.out.println();
+
+    System.out.println("imag: ");
+    for(int cnt=0;cnt &lt; imag.length;cnt++){
+      System.out.print(((int)(1000.0*imag[cnt]))
+                                 /1000.0 + " ");
+    }//end for loop
+    System.out.println();
+  }//end display
+
+}//end class Fft02</code>
+
+
+			
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1138">
+<link id="a1168" target-id="Listing_8">
+
+ Listing 8
+
+</link>
+
+ also signals the end of the controlling class named 
+
+<emphasis id="strong1041" effect="bold">
+Fft02
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h11004">
+<title>
+<emphasis id="Run_the_program" effect="bold">
+
+Run the program
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1139">
+I encourage you to copy and compile the program that you will find in 
+
+
+<link id="a1169" target-id="Listing_9">
+
+ Listing 9
+
+</link>
+
+. Experiment with different complex input series.
+
+</para>
+
+
+
+
+
+<para id="p1140">
+I also encourage you to download the applet from
+
+
+<link id="a1170" url="http://sepwww.stanford.edu/data/media/public/oldsep/hale/FftLab.java">
+
+
+http://sepwww.stanford.edu/data/media/public/oldsep/hale/FftLab.java
+
+</link>
+
+ or from
+
+
+<link id="a1171" url="FftApplet01.zip">
+
+here
+
+</link>
+
+ and experiment with it as well. Compare the 
+numeric output produced by this program with the graphic output produced by the 
+applet.
+
+</para>
+
+
+
+
+
+<para id="p1141">
+Finally, I encourage you to examine the source code for the applet. 
+Concentrate on that portion of the source code that performs the FFT. Hopefully, 
+what you have learned in this module will make it easier for you to understand 
+the source code for the FFT.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h11005">
+<title>
+<emphasis id="Summary" effect="bold">
+
+Summary
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1142">
+In this module, I have explained some of the underlying signal processing 
+concepts that make the FFT possible. I illustrated those concepts in a program 
+designed specifically to be as simple as possible while still illustrating the 
+concepts.
+
+</para>
+
+
+
+
+
+<para id="p1143">
+Now that you understand those concepts, you should be able to better 
+understand explanations of the mechanics of the FFT algorithm that appear on 
+various websites.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h11006">
+<title>
+<emphasis id="Complete_program_listings" effect="bold">
+
+Complete program listings
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1144">
+A complete listing of the program is provided in 
+
+<link id="a1172" target-id="Listing_9">
+
+ Listing 9
+
+</link>
+
+ below.
+
+</para>
+
+
+
+
+
+<table id="table1022" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1022">
+
+		
+
+<row id="tr1044">
+
+			
+
+<entry id="th1022">
+<emphasis id="Listing_9" effect="bold">
+
+Listing 9.
+
+</emphasis>
+
+ Fft02.java.
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1022">
+
+		
+
+<row id="tr1045">
+
+			
+
+<entry id="td1022">
+
+			
+
+<code id="pre1011" display="block">/*File Fft02.java Copyright 2004, R.G.Baldwin
+Rev 4/30/04
+
+This program DOES NOT implement an FFT algorithm.
+Rather, this program illustrates the underlying
+FFT concepts in a form that is much more easily
+understood than is normally the case with an
+actual FFT algorithm.  The steps in the
+implementation of a typical FFT algorithm are as
+follows:
+
+1. Decompose an N-point complex series into N
+individual complex values, each consisting of a
+single complex sample.  The order of the
+decomposition in an FFT algorithm is rather
+complicated.  It is this order of decomposition,
+and the order of the subsequent recombination of
+transform results that causes the FFT to be so
+fast.  It is also that order that makes the
+algorithm somewhat difficult to understand. This
+program does not implement that order of
+decomposition and recombination.
+
+2. Calculate the transform of each of the N
+complex samples, treating each as if it were
+located at the beginning of the complex series.
+This step is trivial.  The real part of the
+transform of a single complex sample located at
+the beginning of the series is a complex constant
+whose values are proportional to the real and
+imaginary values that make up the complex sample.
+
+3. Correct each of the N transform results to
+reflect the actual position of the complex sample
+in the series.  This involves the application of
+sine and cosine curves to the real and imaginary
+parts of the transform. This step is usually
+combined with the recombination step that
+follows.
+
+4. Recombine the N transform results into a
+single transform result that represents the
+transform of the original complex series.  This
+is a very complicated operation in a real FFT
+algorithm.  It must reverse the order of
+decomposition in the first step described
+earlier.  As mentioned earlier, it is the order
+of the decomposition and subsequent recombination
+that minimizes the arithmetic operations required
+and gives the FFT its tremendous speed.  This
+program does not implement the special order of
+decomposition and recombination used in an actual
+FFT algorithm.
+
+This program creates three separate complex
+series, applies the processes listed above to
+each of those series, and displays the results on
+the screen.  No attempt is made to manage the
+decomposition and the subsequent recombination in
+the manner of a true FFT algorithm.  Therefore,
+this program is designed to illustrate the
+processes involved, and is not designed to
+provide the speed of a true FFT algorithm.
+
+The decomposition process in this program takes
+the complex samples in the order that they appear
+in the input complex series.
+
+The transform of each complex sample is simply
+the sample itself.  This is the result that would
+be obtained by actually computing the transform
+of the complex sample if the sample were the
+first sample in the series.
+
+The transform result for each complex sample is
+then corrected by applying sine and cosine curves
+to reflect the actual position of the complex
+sample within the complex series.
+
+The real and imaginary parts of the corrected
+transform results are then added to accumulators
+that are used to accumulate the corrected real
+and imaginary parts from the corrected
+transforms for all of the individual complex
+samples.
+
+Once the real and imaginary parts have been
+accumulated for all of the complex samples, the
+real part of the accumulator represents the real
+part of the transform of the original complex
+series.  The imaginary part of the accumulator
+represents the imaginary part of the transform of
+the original complex series.
+
+Tested using SDK 1.4.2 under WinXP
+************************************************/
+
+
+class Fft02{
+
+  public static void main(String[] args){
+
+    //Instantiate an object that will implement
+    // the processes used in an FFT, but not in
+    // the order required by an FFT algorithm.
+    Transform transform = new Transform();
+
+    //Prepare the input data and the output
+    // arrays for Case A.  Note that for this
+    // case, the input complex series contains
+    // non-zero values only in the real part.
+    // Also, most of the values in the real part
+    // are zero.
+    System.out.println("Case A");
+    double[] realInA =
+               {0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1};
+    double[] imagInA =
+               {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+
+    double[] realOutA = new double[16];
+    double[] imagOutA = new double[16];
+
+    //Perform the transform and display the
+    // transformed results for the original
+    // complex series.
+    transform.doIt(realInA,imagInA,2.0,realOutA,
+                                       imagOutA);
+    display(realOutA,imagOutA);
+
+
+    //Process and display the results for Case B.
+    // Note that the input complex series
+    // contains non-zero values in both the real
+    // and imaginary parts.  However, most of the
+    // values in the real and imaginary parts are
+    // zero.
+    System.out.println("\nCase B");
+    double[] realInB =
+               {0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1};
+    double[] imagInB =
+             {0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,-1};
+
+    double[] realOutB = new double[16];
+    double[] imagOutB = new double[16];
+
+    transform.doIt(realInB,imagInB,2.0,realOutB,
+                                       imagOutB);
+    display(realOutB,imagOutB);
+
+
+    //Process and display the results for Case C.
+    // Note that the input complex series
+    // contains non-zero values in both the real
+    // and imaginary parts.  In addition, very
+    // few of the values in the complex series
+    // have a value of zero.  (The values of the
+    // complex samples actually describe a cosine
+    // curve and a sine curve.)
+    System.out.println("\nCase C");
+    double[] realInC =
+      {1.0,0.923,0.707,0.382,0.0,-0.382,-0.707,
+          -0.923,-1.0,-0.923,-0.707,-0.382,0.0,
+           0.382,0.707,0.923};
+    double[] imagInC =
+      {0.0,-0.382,-0.707,-0.923,-1.0,-0.923,
+           -0.707,-0.382,0.0,0.382,0.707,0.923,
+            1.0,0.923,0.707,0.382};
+
+    double[] realOutC = new double[16];
+    double[] imagOutC = new double[16];
+
+    transform.doIt(realInC,imagInC,16.0,realOutC,
+                                       imagOutC);
+    display(realOutC,imagOutC);
+
+  }//end main
+  //===========================================//
+
+  //The purpose of this method is to display
+  // a real series and an imaginary series,
+  // each contained in an incoming array object
+  // of type double.  The double values are
+  // truncated to no more than four digits
+  // before displaying them.  Then they are
+  // displayed on a single line.
+  static void display(double[] real,
+                      double[] imag){
+    System.out.println("Real: ");
+    for(int cnt=0;cnt &lt; real.length;cnt++){
+      System.out.print(((int)(1000.0*real[cnt]))
+                                 /1000.0 + " ");
+    }//end for loop
+    System.out.println();
+
+    System.out.println("imag: ");
+    for(int cnt=0;cnt &lt; imag.length;cnt++){
+      System.out.print(((int)(1000.0*imag[cnt]))
+                                 /1000.0 + " ");
+    }//end for loop
+    System.out.println();
+  }//end display
+
+}//end class Fft02
+//=============================================//
+
+//This class applies the processes normally used
+// in an FFT algorithm.  However, this class does
+// not apply those processes in the special order
+// required of an FFT algorithm.  It is that
+// special order that minimizes the arithmetic
+// requirements of an FFT algorithm and causes it
+// to be very fast.  The purpose of an object of
+// this class is to illustrate the processes in a
+// more easily understood fashion that is often
+// the case with an actual FFT algorithm.
+class Transform{
+
+  void doIt(double[] realIn,double[] imagIn,
+            double scale,double[] realOut,
+            double[] imagOut){
+    //Each complex value in the incoming arrays
+    // represents both a complex sample and the
+    // transform of that complex sample under the
+    // assumption that the complex sample appears
+    // at the beginning of the series.
+    //Correct the transform result for each of
+    // the complex samples in the series to
+    // reflect the actual position of the complex
+    // sample in the series.  Add the corrected
+    // transform result into accumulators in
+    // order to produce the transform of the
+    // original complex series.
+    for(int cnt = 0;cnt &lt; realIn.length;cnt++){
+      correctAndRecombine(realIn[cnt],
+                          imagIn[cnt],
+                          cnt,
+                          realIn.length,
+                          scale,
+                          realOut,
+                          imagOut);
+    }//end for loop
+  }//end doIt
+
+  //===========================================//
+
+  //This method accepts an incoming complex
+  // sample value and the position in the series
+  // associated with that sample. The method
+  // calculates the real and imaginary transform
+  // values associated with that complex sample
+  // when it is located at the specified
+  // position.  Then it updates the corresponding
+  // real and imaginary values contained in array
+  // objects used to accumulate the real and
+  // imaginary values for all of the samples.
+  // References to the array objects are received
+  // as input parameters. Outgoing results are
+  // scaled by an incoming parameter in an
+  // attempt to cause the output values to fall
+  // within a reasonable range in case someone
+  // wants to plot them.
+  void correctAndRecombine(
+            double realSample,double imagSample,
+            int position,int length,double scale,
+            double[] realOut,double[] imagOut){
+    //Calculate the complex transform values for
+    // each sample in the complex output series.
+    for(int cnt = 0; cnt &lt; length; cnt++){
+      double angle =
+               (2.0*Math.PI*cnt/length)*position;
+      //Calculate output based on real input
+      realOut[cnt] +=
+                realSample*Math.cos(angle)/scale;
+      imagOut[cnt] +=
+                realSample*Math.sin(angle)/scale;
+
+      //Calculate output based on imag input
+      realOut[cnt] -=
+                imagSample*Math.sin(angle)/scale;
+      imagOut[cnt] +=
+                imagSample*Math.cos(angle)/scale;
+    }//end for loop
+  }//end correctAndRecombine
+
+}//end class transform</code>
+
+
+			
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+</section>
+<section id="h11007">
+<title>
+<emphasis id="Miscellaneous" effect="bold">
+
+Miscellaneous
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1145">
+This section contains a variety of miscellaneous information.
+
+</para>
+
+
+
+
+
+	
+
+<note id="note1000" type="">
+
+
+		
+
+
+			
+
+
+				
+
+<emphasis id="strong1042" effect="bold">
+Housekeeping material
+
+</emphasis>
+
+				
+
+<list id="ul1013" list-type="bulleted">
+
+					
+
+<item id="li1074">
+Module name: Java1486-Fun with Java, Understanding the 
+					Fast Fourier Transform (FFT) Algorithm
+
+</item>
+
+
+					
+
+<item id="li1075">
+File: Java1486.htm
+
+</item>
+
+
+					
+
+<item id="li1076">
+Published: 01/04/05
+
+</item>
+
+
+				
+
+</list>
+
+
+				
+
+<para id="p1146">
+Baldwin explains the underlying signal processing concepts that make the Fast Fourier Transform (FFT) algorithm possible.
+
+</para>
+
+
+
+				
+
+</note>
+
+			
+
+
+		
+
+
+
+
+
+
+
+
+	
+
+<note id="note1001" type="">
+
+
+		
+
+
+			
+
+
+				
+
+<emphasis id="strong1043" effect="bold">
+Disclaimers:
+
+</emphasis>
+<para id="p1147">
+<emphasis id="strong1044" effect="bold">
+Financial
+
+</emphasis>
+: Although the Connexions
+site makes it possible for you to download a PDF file for this
+module at no charge, and also makes it possible for you to
+purchase a pre-printed version of the PDF file, you should be
+aware that some of the HTML elements in this module may not translate well into
+PDF.
+
+</para>
+
+
+
+				
+
+<para id="p1148">
+I also want you to know that, I receive no financial compensation from the Connexions website even if you purchase 
+	the PDF version of the module.
+
+</para>
+
+
+
+				
+
+<para id="p1149">
+In the past, unknown individuals have copied my modules from cnx.org, converted them to Kindle books, and 
+				placed them for sale on Amazon.com showing me as the author. I 
+				neither receive compensation for those sales nor do I know who does 
+				receive compensation. If you purchase such a book, please be 
+				aware that it is a copy of a module that is freely 
+				available on cnx.org and that it was made and published without 
+				my prior knowledge.
+
+</para>
+
+
+
+				
+
+<para id="p1150">
+<emphasis id="strong1045" effect="bold">
+Affiliation
+
+</emphasis>
+: I am a professor of Computer Information 
+	Technology at Austin Community College in Austin, TX.
+	
+
+</para>
+
+
+
+				
+
+</note>
+
+			
+
+
+		
+
+
+
+
+
+
+
+
+
+<para id="p1151">
+-end- 
+
+</para>
+
+
+
+
+
+
+
+</section>
+</content>
+
+
+
+
+</document>

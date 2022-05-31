@@ -1,0 +1,11969 @@
+<document xmlns="http://cnx.rice.edu/cnxml"> 
+<title>Java1489-Plotting 3D Surfaces using Java</title>
+<metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m49803</md:content-id>
+  <md:title>Java1489-Plotting 3D Surfaces using Java</md:title>
+  <md:abstract>Learn how to write a Java class that uses color to plot 3D surfaces in six different formats and a wide range of sizes.  The class is extremely easy to use.  You can incorporate the 3D plotting capability into your own programs by inserting a single statement into your programs.</md:abstract>
+  <md:uuid>ea4ac046-e5a6-4503-b6e4-6c2d23b65d57</md:uuid>
+</metadata>
+
+<content>
+
+
+
+
+
+
+<quote id="blockquote1000" display="block">
+
+
+
+<para id="p1000">
+Revised: Fri Oct 16 23:14:43 CDT 2015
+
+</para>
+
+
+
+
+
+<para id="p1001">
+This page is included in the following books:
+
+</para>
+
+
+
+
+<list id="ul1000" list-type="bulleted">
+
+	
+
+<item id="li1000">
+<link id="a1000" url="http://cnx.org/contents/98d253c0-8044-4e22-a707-7b8d819bc8a7">
+
+
+        Digital Signal Processing - DSP
+
+</link>
+
+ 
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+</quote>
+
+
+
+
+
+
+
+
+
+
+
+<section id="h11000">
+<title>
+<emphasis id="Table_of_contents" effect="bold">
+
+Table of contents
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<list id="ul1001" list-type="bulleted">
+
+	
+
+<item id="li1001">
+<link id="a1001" target-id="Preface">
+
+Preface
+
+</link>
+
+
+	
+
+<list id="ul1002" list-type="bulleted">
+
+		
+
+<item id="li1002">
+<link id="a1002" target-id="Viewing_tip">
+
+Viewing tip
+
+</link>
+
+
+<list id="ul1003" list-type="bulleted">
+
+			
+
+<item id="li1003">
+<link id="a1003" target-id="Figures">
+
+Figures
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1004">
+<link id="a1004" target-id="Listings">
+
+Listings
+
+</link>
+
+
+</item>
+
+
+		
+
+</list>
+
+
+		
+
+</item>
+
+
+	
+
+</list>
+
+
+	
+
+</item>
+
+
+	
+
+<item id="li1005">
+<link id="a1005" target-id="General_Discussion">
+
+General Discussion
+
+</link>
+
+
+<list id="ul1004" list-type="bulleted">
+
+		
+
+<item id="li1006">
+<link id="a1006" target-id="Displaying_3D_data_can_be_fairly_difficult">
+
+Displaying 3D data can be fairly difficult
+
+</link>
+
+
+</item>
+
+
+		
+
+<item id="li1007">
+<link id="a1007" target-id="Different_approaches_are_available">
+
+Different approaches are available
+
+</link>
+
+
+</item>
+
+
+		
+
+<item id="li1008">
+<link id="a1008" target-id="A_3D_plotting_program">
+
+A 3D plotting program
+
+</link>
+
+
+<list id="ul1005" list-type="bulleted">
+
+			
+
+<item id="li1009">
+<link id="a1009" target-id="Grayscale_plot">
+
+Grayscale plot
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1010">
+<link id="a1010" target-id="Color_Shift_plot">
+
+Color Shift plot
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1011">
+<link id="a1011" target-id="Color_Contour_Plot">
+
+Color Contour plot
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1012">
+<link id="a1012" target-id="A_logarithmic_conversion">
+
+A logarithmic conversion
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1013">
+<link id="a1013" target-id="Extremely_easy_to_use">
+
+Extremely easy to use
+
+</link>
+
+
+</item>
+
+
+		
+
+</list>
+
+
+		
+
+</item>
+
+
+	
+
+</list>
+
+
+	
+
+</item>
+
+
+
+	
+
+<item id="li1014">
+<link id="a1014" target-id="Preview">
+
+Preview
+
+</link>
+
+
+<list id="ul1006" list-type="bulleted">
+
+		
+
+<item id="li1015">
+<link id="a1015" target-id="Constructor">
+
+Constructor
+
+</link>
+
+
+<list id="ul1007" list-type="bulleted">
+
+			
+
+<item id="li1016">
+<link id="a1016" target-id="Parameters">
+
+Parameters
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1017">
+<link id="a1017" target-id="A_calibration_scale">
+
+A calibration scale
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1018">
+<link id="a1018" target-id="Normalization">
+
+Normalization
+
+</link>
+
+
+</item>
+
+
+		
+
+</list>
+
+
+		
+
+</item>
+
+
+		
+
+<item id="li1019">
+<link id="a1019" target-id="The_main_method">
+
+The main method
+
+</link>
+
+
+<list id="ul1008" list-type="bulleted">
+
+			
+
+<item id="li1020">
+<link id="a1020" target-id="A_3D_parabola">
+
+A 3D parabola
+
+</link>
+
+
+</item>
+
+
+		
+
+</list>
+
+
+		
+
+</item>
+
+
+	
+
+</list>
+
+
+	
+
+</item>
+
+
+
+	
+
+<item id="li1021">
+<link id="a1021" target-id="The_program_named_ImgMod29">
+
+The program named ImgMod29
+
+</link>
+
+
+<list id="ul1009" list-type="bulleted">
+
+		
+
+<item id="li1022">
+<link id="a1022" target-id="themainmethod">
+
+The main method
+
+</link>
+
+
+<list id="ul1010" list-type="bulleted">
+
+			
+
+<item id="li1023">
+<link id="a1023" target-id="Local_variables">
+
+Local variables
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1024">
+<link id="a1024" target-id="A_3D_parabolic_surface">
+
+A 3D parabolic surface
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1025">
+<link id="a1025" target-id="Display_six_surface_images">
+
+Display six surface images
+
+</link>
+
+
+</item>
+
+
+		
+
+</list>
+
+
+		
+
+</item>
+
+
+		
+
+<item id="li1026">
+<link id="a1026" target-id="The_ImgMod29_class">
+
+The ImgMod29 class
+
+</link>
+
+
+		
+
+<list id="ul1011" list-type="bulleted">
+
+			
+
+<item id="li1027">
+<link id="a1027" target-id="Establish_display_format_for_log_conversion">
+
+Establish display format for log conversion
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1028">
+<link id="a1028" target-id="Copy_the_input_elevation_data">
+
+Copy the input elevation data
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1029">
+<link id="a1029" target-id="Convert_to_log_data_if_required">
+
+Convert to log data if required
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1030">
+<link id="a1030" target-id="Normalize_the_surface_elevation_data">
+
+Normalize the surface elevation data
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1031">
+<link id="a1031" target-id="The_method_named_scaleTheSurfaceData">
+
+The method named scaleTheSurfaceData
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1032">
+<link id="a1032" target-id="Create_an_appropriate_pair_of_Canvas_objects">
+
+Create an appropriate pair of Canvas objects
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1033">
+<link id="a1033" target-id="Add_the_Canvas_objects_to_the_Frame">
+
+Add the Canvas objects to the Frame
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1034">
+<link id="a1034" target-id="Register_an_anonymous_WindowListener_object">
+
+Register an anonymous WindowListener object
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1035">
+<link id="a1035" target-id="Six_different_inner_classes">
+
+Six different inner classes
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1036">
+<link id="a1036" target-id="The_getCenter_method">
+
+The getCenter method
+
+</link>
+
+
+</item>
+
+
+		
+
+</list>
+
+
+		
+
+</item>
+
+
+		
+
+<item id="li1037">
+<link id="a1037" target-id="Grayscale_plot_format">
+
+Grayscale plot format
+
+</link>
+
+
+<list id="ul1012" list-type="bulleted">
+
+		    
+
+<item id="li1038">
+<link id="a1038" target-id="The_constructor">
+
+The constructor
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1039">
+<link id="a1039" target-id="Overridden_paint_method_for_CanvasType0surface_class">
+
+Overridden paint method for CanvasType0surface class
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1040">
+<link id="a1040" target-id="Instantiate_a_Color_object">
+
+Instantiate a Color object
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1041">
+<link id="a1041" target-id="Set_colors_and_draw_squares">
+
+Set colors and draw squares
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1042">
+<link id="a1042" target-id="Draw_the_optional_red_axes">
+
+Draw the optional red axes
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1043">
+<link id="a1043" target-id="Beginning_of_the_class_named_CanvasType0scale">
+
+Beginning of the class named CanvasType0scale
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1044">
+<link id="a1044" target-id="The_overridden_paint_method">
+
+The overridden paint method
+
+</link>
+
+
+</item>
+
+
+		
+
+</list>
+
+
+		
+
+</item>
+
+
+		
+
+<item id="li1045">
+<link id="a1045" target-id="Color_Shift_plot_format">
+
+Color Shift plot format
+
+</link>
+
+
+<list id="ul1013" list-type="bulleted">
+
+			
+
+<item id="li1046">
+<link id="a1046" target-id="Beginning_of_the_class_named_CanvasType1surface">
+
+Beginning of the class named CanvasType1surface
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1047">
+<link id="a1047" target-id="Overridden_paint">
+
+Overridden paint method
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1048">
+<link id="a1048" target-id="Set_white_and_black_for_max_and_min_values">
+
+Set white and black for max and min values
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1049">
+<link id="a1049" target-id="Elevations_other_than_the_extreme_ends">
+
+Elevations other than the extreme ends
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1050">
+<link id="a1050" target-id="Processing_the_other_three_ranges">
+
+Processing the other three ranges
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1051">
+<link id="a1051" target-id="The_class_named_CanvasType1scale">
+
+The class named CanvasType1scale
+
+</link>
+
+
+</item>
+
+
+		
+
+</list>
+
+
+		
+
+</item>
+
+
+		
+
+<item id="li1052">
+<link id="a1052" target-id="Color_Contour_plot_format">
+
+Color Contour plot format
+
+</link>
+
+
+<list id="ul1014" list-type="bulleted">
+
+		    
+
+<item id="li1053">
+<link id="a1053" target-id="The_color_palette">
+
+The color palette
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1054">
+<link id="a1054" target-id="The_CanvasType2surface_class">
+
+The CanvasType2surface class
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1055">
+<link id="a1055" target-id="Set_the_color_value">
+
+Set the color value
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1056">
+<link id="a1056" target-id="The_class_named_CanvasType2scale">
+
+The class named CanvasType2scale
+
+</link>
+
+
+</item>
+
+
+		
+
+</list>
+
+
+		
+
+</item>
+
+
+	
+
+</list>
+
+
+	
+
+</item>
+
+
+
+	
+
+<item id="li1057">
+<link id="a1057" target-id="Run_the_program">
+
+Run the program
+
+</link>
+
+
+</item>
+
+
+	
+
+<item id="li1058">
+<link id="a1058" target-id="Summary">
+
+Summary
+
+</link>
+
+
+</item>
+
+
+
+	
+
+<item id="li1059">
+<link id="a1059" target-id="Complete_program_listings">
+
+Complete program listing
+
+</link>
+
+
+</item>
+
+
+
+	
+
+<item id="li1060">
+<link id="a1060" target-id="Miscellaneous">
+
+Miscellaneous
+
+</link>
+
+
+</item>
+
+
+
+
+
+</list>
+
+
+	
+	
+
+</section>
+<section id="h11001">
+<title>
+<emphasis id="Preface" effect="bold">
+
+Preface
+
+</emphasis>
+
+
+</title>
+
+
+	
+	
+
+<para id="p1002">
+In one of my earlier modules titled
+	
+
+<link id="a1061" url="http://cnx.org/contents/b5a14d3a-c54c-4239-b414-bae75d1e8cda/Java1468-Plotting-Engineering-">
+
+Plotting 
+	Engineering and Scientific Data using Java
+
+</link>
+
+, I published a generalized 2D 
+	plotting program that makes it easy to cause other programs to display their 
+	outputs in 2D
+	
+
+<link id="a1062" url="http://mathworld.wolfram.com/CartesianCoordinates.html">
+
+Cartesian 
+	coordinates
+
+</link>
+
+. I have used that plotting program in numerous modules since 
+	I originally published it several years ago. Hopefully, some of my readers 
+	have been using it as well.
+
+</para>
+
+
+
+
+
+<para id="p1003">
+In this module, I will present and explain a 3D surface plotting program that 
+is also very easy to use.
+
+</para>
+
+
+
+
+
+<para id="p1004">
+Numerous Java graphics libraries are available from various locations on the 
+web. Some are of high quality, and some are not. Unfortunately, many of those 
+libraries have a rather substantial learning curve.
+
+</para>
+
+
+
+
+
+<para id="p1005">
+<emphasis id="strong1000" effect="bold">
+<emphasis id="em1000" effect="italics">
+The purpose of this program
+
+</emphasis>
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1006">
+It is not the purpose of the class that I will provide in this module to 
+compete with those graphics libraries. Rather, this class is intended to make it 
+possible for an experienced Java programmer to incorporate 3D surface plotting 
+capability into a Java program with a learning curve of three minutes or less.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1001" display="block">
+
+	
+
+<para id="p1007">
+<emphasis id="em1001" effect="italics">
+(If you are an experienced Java programmer, you can start your 
+	three-minute learning-curve clock right now. If you are not an experienced 
+	Java programmer, it may take a little longer but should still be easy. If 
+	you need to work on your Java programming skills, see 
+	
+
+<link id="a1063" url="http://cnx.org/contents/fb64661c-5b3f-4ea8-97c6-e48df112438a">
+
+Object-Oriented Programming (OOP) with Java
+
+</link>
+
+.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1008">
+<emphasis id="strong1001" effect="bold">
+<emphasis id="em1002" effect="italics">
+How do you use the class?
+
+</emphasis>
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1009">
+All that's necessary to use this class to plot your own 3D surfaces is to 
+copy and compile the source code in 
+
+<link id="a1064" target-id="Listing_29">
+
+Listing 29
+
+</link>
+
+ near the end of this module. Then 
+include a statement similar to the following in your program:
+
+</para>
+
+
+
+
+
+<code id="pre1000" display="block">new ImgMod29(data,blockSize,true,0);</code>
+
+
+
+
+<para id="p1010">
+<emphasis id="strong1002" effect="bold">
+<emphasis id="em1003" effect="italics">
+The 3D surface data to be plotted
+
+</emphasis>
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1011">
+The parameter named 
+
+<emphasis id="strong1003" effect="bold">
+data
+
+</emphasis>
+ in the above statement is a 
+reference to a 2D array of type 
+
+<emphasis id="strong1004" effect="bold">
+double
+
+</emphasis>
+ that contains the 
+sampled elevation values of the surface to be plotted.
+
+</para>
+
+
+
+
+
+<para id="p1012">
+<emphasis id="strong1005" effect="bold">
+<emphasis id="em1004" effect="italics">
+The granularity of the plot
+
+</emphasis>
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1013">
+The second parameter named 
+
+<emphasis id="strong1006" effect="bold">
+blockSize
+
+</emphasis>
+ specifies the size of 
+one side of a square array of colored pixels in the final plot that will 
+represent each elevation point on your 3D surface. Set this to 0 if you are 
+unsure as to what size square you need.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1002" display="block">
+
+	
+
+<para id="p1014">
+<emphasis id="em1005" effect="italics">
+(If you look very carefully, you may be able to see a small white square at the center of the middle image in 
+	
+
+<link id="a1065" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+. This is a nine-pixel square produced by a 
+
+</emphasis>
+<emphasis id="strong1007" effect="bold">
+<emphasis id="em1006" effect="italics">
+blockSize
+
+</emphasis>
+</emphasis>
+<emphasis id="em1007" effect="italics">
+ value of 3.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1015">
+<emphasis id="strong1008" effect="bold">
+<emphasis id="em1008" effect="italics">
+The optional axes
+
+</emphasis>
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1016">
+The third parameter specifies whether or not you want to have optional axes 
+drawn on the plot. 
+
+<emphasis id="em1009" effect="italics">
+(See 
+
+<link id="a1066" target-id="Figure_3">
+
+Figure 3
+
+</link>
+
+ for 
+examples of plots with and without the axes.)
+
+</emphasis>
+ A parameter value of true causes 
+the axes to be drawn. A value of false causes the axes to be omitted.
+
+</para>
+
+
+
+
+
+<para id="p1017">
+<emphasis id="strong1009" effect="bold">
+<emphasis id="em1010" effect="italics">
+The plotting format
+
+</emphasis>
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1018">
+The fourth parameter is an integer that specifies the plotting format as 
+follows:
+
+</para>
+
+
+
+
+
+<list id="ul1015" list-type="bulleted">
+
+	
+
+<item id="li1061">
+0 - Grayscale (linear, top-left image in
+	
+
+<link id="a1067" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+)
+
+</item>
+
+
+	
+
+<item id="li1062">
+1 - Color Shift (linear, top-center image in
+	
+
+<link id="a1068" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+)
+
+</item>
+
+
+	
+
+<item id="li1063">
+2 - Color Contour (linear, top-right image in
+	
+
+<link id="a1069" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+)
+
+</item>
+
+
+	
+
+<item id="li1064">
+3 - Grayscale with logarithmic data conversion (bottom-left image in
+	
+
+<link id="a1070" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+)
+
+</item>
+
+
+	
+
+<item id="li1065">
+4 - Color Shift with logarithmic data conversion (bottom-center image in
+	
+
+<link id="a1071" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+)
+
+</item>
+
+
+	
+
+<item id="li1066">
+5 - Color Contour with logarithmic data conversion (bottom-right image 
+	in 
+
+<link id="a1072" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+)
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1019">
+If you are unsure as to which format would 
+be best for your application, just start with a value of 0. Then try all six formats to see which one works 
+best for you.
+
+</para>
+
+
+
+
+
+<para id="p1020">
+<emphasis id="strong1010" effect="bold">
+<emphasis id="em1011" effect="italics">
+Extremely simple to use
+
+</emphasis>
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1021">
+The class couldn't be simpler to use.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1003" display="block">
+
+	
+
+<para id="p1022">
+<emphasis id="em1012" effect="italics">
+(Your three-minute learning curve has expired. You now know how to use 
+	the class to incorporate 3D surface plotting in your Java programs.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1023">
+<emphasis id="strong1011" effect="bold">
+<emphasis id="em1013" effect="italics">
+Will use in subsequent modules
+
+</emphasis>
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1024">
+This 3D plotting class will be used in numerous future modules involving such 
+complex topics as the use of the 2D Fourier Transform to process images.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1004" display="block">
+<emphasis id="strong1012" effect="bold">
+<emphasis id="em1014" effect="italics">
+If you arrived at this page seeking a free Java program for plotting your 3D 
+surfaces, you are in luck. Just copy the source code for the class in 
+
+<link id="a1073" target-id="Listing_29">
+
+Listing 29
+
+</link>
+
+ 
+and feel free to use it as described above.
+
+</emphasis>
+</emphasis>
+</quote>
+
+
+
+
+<para id="p1025">
+On the other hand, if you would like to learn how the class does what it 
+does, and perhaps use your programming skills to improve it, keep reading. 
+Hopefully, once you have finished the module, you will have learned quite a lot 
+about plotting 3D surfaces using color in Java.
+
+</para>
+
+
+
+	
+	
+
+<section id="h21000">
+<title>
+<emphasis id="Viewing_tip" effect="bold">
+
+Viewing tip
+
+</emphasis>
+
+
+</title>
+
+
+	
+
+<para id="p1026">
+I recommend that you open another copy of this module in a separate 
+browser window and use the following links to easily find and view the Figures 
+and Listings while you are reading about them.
+
+</para>
+
+
+
+	
+
+<section id="h31000">
+<title>
+<emphasis id="Figures" effect="bold">
+
+Figures
+
+</emphasis>
+
+
+</title>
+
+
+	
+
+<list id="ul1016" list-type="bulleted">
+
+		
+
+<item id="li1067">
+<link id="a1074" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+. 3D views of a wave-number spectrum. 
+
+</item>
+
+
+		
+
+<item id="li1068">
+<link id="a1075" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+. Sample output with logarithmic flattening. 
+
+</item>
+
+
+		
+
+<item id="li1069">
+<link id="a1076" target-id="Figure_3">
+
+Figure 3
+
+</link>
+
+. Program output in self-test mode.
+
+</item>
+
+
+
+	
+
+</list>
+
+
+	
+
+</section>
+<section id="h31001">
+<title>
+<emphasis id="Listings" effect="bold">
+
+Listings
+
+</emphasis>
+
+
+</title>
+
+
+	
+
+<list id="ul1017" list-type="bulleted">
+
+		
+
+<item id="li1070">
+<link id="a1077" target-id="Listing_1">
+
+Listing 1
+
+</link>
+
+. Beginning of the main method. 
+
+</item>
+
+
+		
+
+<item id="li1071">
+<link id="a1078" target-id="Listing_2">
+
+Listing 2
+
+</link>
+
+. A 3D parabolic surface,
+
+</item>
+
+
+		
+
+<item id="li1072">
+<link id="a1079" target-id="Listing_3">
+
+Listing 3
+
+</link>
+
+. Display six surface images.
+
+</item>
+
+
+		
+
+<item id="li1073">
+<link id="a1080" target-id="Listing_4">
+
+Listing 4
+
+</link>
+
+. Beginning of the ImgMod29 class. 
+
+</item>
+
+
+		
+
+<item id="li1074">
+<link id="a1081" target-id="Listing_5">
+
+Listing 5
+
+</link>
+
+. Establish display format for log conversion. 
+
+</item>
+
+
+		
+
+<item id="li1075">
+<link id="a1082" target-id="Listing_6">
+
+Listing 6
+
+</link>
+
+. Copy the input elevation data.
+
+</item>
+
+
+		
+
+<item id="li1076">
+<link id="a1083" target-id="Listing_7">
+
+Listing 7
+
+</link>
+
+. Convert to log data if required
+
+</item>
+
+
+		
+
+<item id="li1077">
+<link id="a1084" target-id="Listing_8">
+
+Listing 8
+
+</link>
+
+. Normalize the surface elevation data. 
+
+</item>
+
+
+		
+
+<item id="li1078">
+<link id="a1085" target-id="Listing_9">
+
+Listing 9
+
+</link>
+
+. The method named scaleTheSurfaceData.
+
+</item>
+
+
+		
+
+<item id="li1079">
+<link id="a1086" target-id="Listing_10">
+
+Listing 10
+
+</link>
+
+. Create an appropriate pair of Canvas objects. 
+
+</item>
+
+
+		
+
+<item id="li1080">
+<link id="a1087" target-id="Listing_11">
+
+Listing 11
+
+</link>
+
+. Add the Canvas objects to the Frame. 
+
+</item>
+
+
+		
+
+<item id="li1081">
+<link id="a1088" target-id="Listing_12">
+
+Listing 12
+
+</link>
+
+. Register an anonymous WindowListener object.
+
+</item>
+
+
+		
+
+<item id="li1082">
+<link id="a1089" target-id="Listing_13">
+
+Listing 13
+
+</link>
+
+. The method named getCenter. 
+
+</item>
+
+
+		
+
+<item id="li1083">
+<link id="a1090" target-id="Listing_14">
+
+Listing 14
+
+</link>
+
+. Beginning of the class named CanvasType0surface.
+
+</item>
+
+
+		
+
+<item id="li1084">
+<link id="a1091" target-id="Listing_15">
+
+Listing 15
+
+</link>
+
+. Beginning of overridden paint method. 
+
+</item>
+
+
+		
+
+<item id="li1085">
+<link id="a1092" target-id="Listing_16">
+
+Listing 16
+
+</link>
+
+. Instantiate a Color object.
+
+</item>
+
+
+		
+
+<item id="li1086">
+<link id="a1093" target-id="Listing_17">
+
+Listing 17
+
+</link>
+
+. Set colors and draw squares.
+
+</item>
+
+
+		
+
+<item id="li1087">
+<link id="a1094" target-id="Listing_18">
+
+Listing 18
+
+</link>
+
+. Draw the optional red axes.
+
+</item>
+
+
+		
+
+<item id="li1088">
+<link id="a1095" target-id="Listing_19">
+
+Listing 19
+
+</link>
+
+. Beginning of the class named CanvasType0scale .
+
+</item>
+
+
+		
+
+<item id="li1089">
+<link id="a1096" target-id="Listing_20">
+
+Listing 20
+
+</link>
+
+. The overridden paint method.
+
+</item>
+
+
+		
+
+<item id="li1090">
+<link id="a1097" target-id="Listing_21">
+
+Listing 21
+
+</link>
+
+. Beginning of the class named CanvasType1surface.
+
+</item>
+
+
+		
+
+<item id="li1091">
+<link id="a1098" target-id="Listing_22">
+
+Listing 22
+
+</link>
+
+. Beginning of the overridden paint method. 
+
+</item>
+
+
+		
+
+<item id="li1092">
+<link id="a1099" target-id="Listing_23">
+
+Listing 23
+
+</link>
+
+. Set white and black for max and min values. 
+
+</item>
+
+
+		
+
+<item id="li1093">
+<link id="a1100" target-id="Listing_24">
+
+Listing 24
+
+</link>
+
+. Process elevations from 1 to 63 inclusive. 
+
+</item>
+
+
+		
+
+<item id="li1094">
+<link id="a1101" target-id="Listing_25">
+
+Listing 25
+
+</link>
+
+. Processing the other three ranges. 
+
+</item>
+
+
+		
+
+<item id="li1095">
+<link id="a1102" target-id="Listing_26">
+
+Listing 26
+
+</link>
+
+. The method named getColorPalette. 
+
+</item>
+
+
+		
+
+<item id="li1096">
+<link id="a1103" target-id="Listing_27">
+
+Listing 27
+
+</link>
+
+. Beginning of overridden paint method. 
+
+</item>
+
+
+		
+
+<item id="li1097">
+<link id="a1104" target-id="Listing_28">
+
+Listing 28
+
+</link>
+
+. Set the color value. 
+
+</item>
+
+
+		
+
+<item id="li1098">
+<link id="a1105" target-id="Listing_29">
+
+Listing 29
+
+</link>
+
+. Source code for ImgMod29.java.
+
+</item>
+
+
+
+	
+
+</list>
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h11002">
+<title>
+<emphasis id="General_Discussion" effect="bold">
+
+General Discussion
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<section id="h21001">
+<title>
+<emphasis id="Displaying_3D_data_can_be_fairly_difficult" effect="bold">
+
+Displaying 3D data can be fairly difficult
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1027">
+One of the more difficult aspects of engineering and scientific computing is 
+displaying three-dimensional 
+
+<emphasis id="em1015" effect="italics">
+(3D)
+
+</emphasis>
+ surfaces in ways that are meaningful 
+to persons who need to view and to analyze those surfaces. The basic problem is 
+that it is necessary to display the 3D surface on a 2D media, such as a computer 
+screen. 
+
+</para>
+
+
+
+
+
+<quote id="blockquote1005" display="block">
+<emphasis id="em1016" effect="italics">
+(At least that was true before the advent of 3D printers. However, 
+as of October 2015, a 3D printer is not readily available for routine use by most people.)
+
+</emphasis>
+ 
+
+
+</quote>
+
+
+
+
+<para id="p1028">
+Therefore, some compromise is always required.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h21002">
+<title>
+<emphasis id="Different_approaches_are_available" effect="bold">
+
+Different approaches are available
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1029">
+Various 
+
+<link id="a1106" url="http://www.epic.noaa.gov/java/sgt/">
+
+approaches
+
+</link>
+
+ have been 
+devised for accomplishing this objective including:
+
+</para>
+
+
+
+
+
+<list id="ul1018" list-type="bulleted">
+
+
+	
+
+<item id="li1099">
+<link id="a1107" url="http://rsb.info.nih.gov/ij/plugins/surface-plot-3d.html">
+
+
+	Grayscale plots
+
+</link>
+
+
+</item>
+
+
+	
+	
+
+<item id="li1100">
+Color Shift plots
+
+</item>
+
+
+	
+	
+
+<item id="li1101">
+Color Contour plots
+
+</item>
+
+
+	
+	
+
+<item id="li1102">
+Using light and shadows to render the surface in ways that simulate a 
+	photograph
+
+</item>
+
+
+	
+	
+
+<item id="li1103">
+<link id="a1108" url="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/clabel.html">
+
+
+	Labeled Numeric Contour plots
+
+</link>
+
+
+</item>
+
+
+	
+	
+
+<item id="li1104">
+<link id="a1109" url="http://www.msmacrosystem.nl/3Dsurf/3d_surf.html">
+
+Isometric 
+	Drawings
+
+</link>
+
+
+</item>
+
+
+
+
+
+</list>
+
+
+
+
+</section>
+<section id="h21003">
+<title>
+<emphasis id="A_3D_plotting_program" effect="bold">
+
+A 3D plotting program
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1030">
+I will provide and explain a program in this module that makes it very easy 
+to display a 3D surface as a Grayscale plot, a Color Shift plot, or a Color 
+Contour plot. The program supports six different plotting formats. Three of 
+those plotting formats are illustrated in 
+
+<link id="a1110" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1006" display="block">
+
+	
+
+<para id="p1031">
+<emphasis id="em1017" effect="italics">
+(The images shown in 
+
+<link id="a1111" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+ are different views of the wave-number 
+	spectrum resulting from performing a 2D Fourier Transform on a box in the 
+	space domain. The use of 2D Fourier Transforms will be the main topic of a 
+	future module.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<table id="table1000" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1000">
+
+		
+
+<row id="tr1000">
+
+			
+
+<entry id="th1000">
+<emphasis id="Figure_1" effect="bold">
+
+Figure 1.
+
+</emphasis>
+
+ 3D views of a wave-number 
+			spectrum. 
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1000">
+
+	
+
+<row id="tr1001">
+
+		
+
+<entry id="td1000">
+
+		
+
+<media id="media1000" alt="Missing Figure." display="block">
+<image id="img1000" mime-type="image/jpeg" src="../../media/1489-1.jpg" width="508" height="215"/>
+</media>
+
+
+		
+
+</entry>
+
+	
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1032">
+<link id="a1112" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+ shows the same 3D surface plotted using three different plotting 
+formats. Going from left to right, 
+
+<link id="a1113" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+ shows:
+
+</para>
+
+
+
+
+
+<list id="ul1019" list-type="bulleted">
+
+	
+
+<item id="li1105">
+Grayscale plot
+
+</item>
+
+
+	
+
+<item id="li1106">
+Color Shift plot
+
+</item>
+
+
+	
+
+<item id="li1107">
+Color Contour plot
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<section id="h31002">
+<title>
+<emphasis id="Grayscale_plot" effect="bold">
+
+Grayscale plot
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1033">
+The plot on the left in 
+
+<link id="a1114" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+ is the old standby method in which the 
+elevation of each point on the surface is represented by a shade of gray with 
+the highest elevation being white and the lowest elevation being black.
+
+</para>
+
+
+
+
+
+<section id="h41000">
+<title>
+A calibration scale
+
+</title>
+
+
+
+
+<para id="p1034">
+Each of the images in 
+
+<link id="a1115" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+ shows a calibration scale immediately below 
+the image of the surface. The calibration scale shows the color or shade of gray 
+used to represent each elevation on the surface. The color or shade of the lowest 
+elevation is shown on the left of the scale and the color or shade of the 
+highest elevation is shown on the right.
+
+</para>
+
+
+
+
+
+<para id="p1035">
+For example, the scale on the Grayscale image shows a smooth gradient from 
+black to white going from left to right. The shade of gray shown at the midpoint 
+on the calibration scale represents the elevation that is halfway between the 
+lowest elevation and the highest elevation.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31003">
+<title>
+<emphasis id="Color_Shift_plot" effect="bold">
+
+Color Shift plot
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1036">
+The image in the center in 
+
+<link id="a1116" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+ shows the same surface plotted using a 
+smooth gradient from blue at the low end through aqua, green, and yellow to red 
+at the high end. In addition, this plotting format sets the lowest elevation to 
+black and the highest elevation to white so that these two elevations are 
+obvious in the plot.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1007" display="block">
+
+	
+
+<para id="p1037">
+<emphasis id="em1018" effect="italics">
+(The highest elevation was indicated by a small white square at the 
+	center in the original program output, and the lowest elevations were 
+	indicated by the black areas near the corners. However, the small white 
+	square seems to have faded away in the published version of this plot.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<section id="h41001">
+<title>
+More information is conveyed
+
+</title>
+
+
+
+
+<para id="p1038">
+This plotting format can convey a great deal more information to a human 
+observer than the Grayscale plotting format. This is because the human eye can 
+discern more different colors than it can discern different shades of gray.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1008" display="block">
+
+	
+
+<para id="p1039">
+<emphasis id="em1019" effect="italics">
+(Many years ago, when I was in the SONAR business, the general rule 
+	of thumb was that a typical human can discern only about seven shades of 
+	gray from black to white inclusive. Obviously a typical human can discern 
+	more than seven different colors.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41002">
+<title>
+The lowest elevations are obvious in the Color Shift plot
+
+</title>
+
+
+
+
+<para id="p1040">
+By using black to indicate the lowest elevation, 
+
+<emphasis id="em1020" effect="italics">
+(in addition to using 
+shades of blue to indicate low elevations)
+
+</emphasis>
+, it is easy to determine the 
+exact locations of the lowest elevations in the Color Shift plot in the center 
+of 
+
+<link id="a1117" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+. On the other hand, the locations of the lowest elevations are not 
+discernable in the Grayscale plot at the left 
+
+<link id="a1118" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41003">
+<title>
+Four minor peaks are obvious in the Color Shift plot
+
+</title>
+
+
+
+
+<para id="p1041">
+Also, it is obvious from the Color Shift plot that the surface has four minor 
+peaks at the edges of the plot. Although the Grayscale plot has a slight hint of 
+those minor peaks, they are certainly not obvious.
+
+</para>
+
+
+
+
+
+<para id="p1042">
+By comparing the color at the top of the minor peaks to the color scale below 
+the Color Shift surface, it is possible to estimate that the elevation of the 
+minor peaks is probably somewhere between twenty-five and fifty percent of the 
+elevation of the main central peak. It is clearly impossible to glean that kind 
+of information from the Grayscale plot of the same surface.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41004">
+<title>
+The highest elevation is obvious in the Color Shift plot
+
+</title>
+
+
+
+
+<para id="p1043">
+Although no longer true in this reproduction of the original computer output, 
+by using white to indicate the highest elevation 
+
+<emphasis id="em1021" effect="italics">
+(in addition to using 
+shades of red to indicate high elevations)
+
+</emphasis>
+, it is easy to determine the 
+exact location of the highest elevation in the Color Shift plot. As explained 
+earlier, the highest elevation was indicated by a small white square, which was 
+on the cross hairs at the center of the original plot.
+
+</para>
+
+
+
+
+
+<para id="p1044">
+While the highest elevation is pretty well indicated in the Grayscale plot 
+also, if the central peak were not symmetric in all four quadrants, there might 
+be some uncertainty as to the exact location of the highest elevation.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41005">
+<title>
+Quantitative estimates are possible
+
+</title>
+
+
+
+
+<para id="p1045">
+In addition to providing a good overview of the shape of the 3D surface, the 
+Color Shift plot also makes it possible to estimate the elevations of points on 
+the surface in a quantitative way. For example, in addition to black and white, 
+the yellow and aqua colors are fairly easy to identify on the surface plot and 
+are also fairly easy to identify on the calibration scale. In addition, the 
+yellow and aqua bands on the calibration scale are fairly narrow. By measuring 
+the locations of these colors on the calibration scale, the elevations of the 
+yellow and aqua areas on the surface plot can be estimated with reasonable 
+accuracy.
+
+</para>
+
+
+
+
+
+<para id="p1046">
+The ranges of the surface elevations colored red, green, and blue can also be 
+estimated but with less certainty.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1009" display="block">
+
+	
+
+<para id="p1047">
+<emphasis id="em1022" effect="italics">
+(Because the green portion of the calibration scale is about twice as 
+	wide as the red and blue portions, the level of uncertainty when using the 
+	green calibration data to estimate the elevation of a point on the surface 
+	is about twice the level of uncertainty when using the red or blue 
+	calibration data to estimate the elevation of a point on the surface.)
+
+</emphasis>
+
+	
+
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+</section>
+<section id="h31004">
+<title>
+<emphasis id="Color_Contour_Plot" effect="bold">
+
+Color Contour plot
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1048">
+The rightmost image in 
+
+<link id="a1119" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+, which is a Color Contour plot, improves on 
+the ability to provide good quantitative estimates of surface elevations.
+
+</para>
+
+
+
+
+
+<para id="p1049">
+If you need to read elevations off the surface plot to a high level of 
+accuracy, the best approach is probably to use a 
+
+<link id="a1120" url="http://www.mathworks.com/access/helpdesk/help/techdoc/ref/clabel.html">
+
+
+Labeled Numeric Contour plot
+
+</link>
+
+.. However, such plots are relatively difficult 
+to create. Also, because of the need for the labels to be large enough to read, 
+the space required to display such a plot can sometimes be excessive.
+
+</para>
+
+
+
+
+
+<para id="p1050">
+The Color Contour plot is a reasonable compromise between a Labeled Numeric 
+Contour plot and a Color Shift plot. This plotting format provides more accuracy 
+in estimating surface elevations than the Color Shift plot, but doesn't require 
+any more space to display.
+
+</para>
+
+
+
+
+
+<section id="h41006">
+<title>
+Similar to a contour map
+
+</title>
+
+
+
+
+<para id="p1051">
+The Color Contour plot at the right in 
+
+<link id="a1121" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+ is similar to a contour map 
+without labels on the contours. Each color traces out a constant elevation on 
+the surface. The elevation indicated by a given color on the 3D surface can be 
+determined by the position of that color in the calibration scale at the bottom 
+of the image.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1010" display="block">
+
+	
+
+<para id="p1052">
+<emphasis id="em1023" effect="italics">
+(This program quantizes the range from the lowest to the highest 
+	elevation into 23 levels. Therefore, the accuracy of an elevation estimate 
+	is good to only about one 23rd of that total range. However, it would be an 
+	easy matter to increase the number of quantization levels used in this 
+	program, thereby improving the accuracy of elevation estimates.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1053">
+For example, the blue contour that surrounds the central peak traces out the 
+shape of an elevation that is about three levels up from the lowest elevation 
+
+
+<emphasis id="em1024" effect="italics">
+(as seen on the calibration scale)
+
+</emphasis>
+. The red contour that surrounds the central 
+peak traces out the shape of an elevation that is about five levels down from 
+the highest elevation. The aqua at the center of each of four minor peaks 
+establishes their peak elevation to be about thirty-five percent of the 
+elevation of the central peak 
+
+<emphasis id="em1025" effect="italics">
+(based on the position of aqua in the calibration 
+scale)
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41007">
+<title>
+More minor peaks
+
+</title>
+
+
+
+
+<para id="p1054">
+This plotting format also exposes four more minor peaks at the corners of the 
+plot. The light gray color indicates that the level of these peaks is about two 
+levels up from the lowest elevation. These four peaks are barely visible in the 
+Color Shift plot in the center, and their elevation is clearly not quantifiable 
+in that plotting format. They are not visible at all in the Grayscale plot on 
+the left end of 
+
+<link id="a1122" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41008">
+<title>
+The design of this program
+
+</title>
+
+
+
+
+<para id="p1055">
+There are numerous options available when designing a Color Contour Plotting 
+program. As mentioned above, the Color Contour plotting format in this program 
+subdivides the surface into 23 elevation levels including the lowest and the 
+highest levels. Then it represents each elevation level with a different color 
+or shade of gray. This causes a lot of quantitative information to become 
+available that isn't available with either of the other two formats.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1011" display="block">
+
+	
+
+<para id="p1056">
+<emphasis id="em1026" effect="italics">
+(There is nothing unique about 23 elevation levels and 23 colors. It 
+	would be very easy to use many more levels and many more colors. The biggest 
+	difficulty when designing the Color Contour format is identifying a large 
+	number of colors that are clearly identifiable both on the calibration scale 
+	and on the surface plot. This raises the question as to how many unique 
+	colors a human can discern. Theoretically, a computer program such as this 
+	can generate more than sixteen million different colors. Obviously, a human 
+	cannot discern sixteen million unique colors.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41009">
+<title>
+Good quantitative elevation information is available
+
+</title>
+
+
+
+
+<para id="p1057">
+To determine the elevation associated with a particular color, all you need 
+to do is to locate that color on the calibration scale and determine its 
+position relative to the colors at the ends. That will tell you the elevation 
+associated with that color relative to the highest elevation and the lowest 
+elevation. For example, the color at the exact center of the calibration scale 
+represents an elevation that is half way between the lowest elevation and the 
+highest elevation.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1012" display="block">
+
+	
+
+<para id="p1058">
+<emphasis id="em1027" effect="italics">
+(With this program, there are no absolute elevations. Rather, the 
+	calibration scale indicates each elevation level as a percentage of the 
+	difference between the lowest and the highest elevations.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41010">
+<title>
+The elevations of the minor peaks
+
+</title>
+
+
+
+
+<para id="p1059">
+Once again, this image shows that the elevations of the four minor peaks on 
+the edges match the color aqua on the calibration scale. Judging from the 
+position of the color aqua on the calibration scale, the elevation of each of 
+the four minor peaks is about thirty-five percent of the elevation of the major 
+peak in the center.
+
+</para>
+
+
+
+
+
+<para id="p1060">
+This information is clearly not available from the Grayscale plot. It is also 
+not available with this degree of accuracy from the Color Shift plot.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1013" display="block">
+
+	
+
+<para id="p1061">
+<emphasis id="em1028" effect="italics">
+(All that we can tell from the Color Shift plot is that the minor peaks 
+	are some shade of green, which represents a rather large range of possible 
+	elevations.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41011">
+<title>
+The lowest elevations
+
+</title>
+
+
+
+
+<para id="p1062">
+The Color Shift plot does a better job of identifying the locations of the 
+lowest elevations than does the Color Contour plot. This is because the color 
+black was dedicated to that purpose in the Color Shift plot, but was used to 
+represent a range of elevations in the Color Contour plot.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1014" display="block">
+
+	
+
+<para id="p1063">
+<emphasis id="em1029" effect="italics">
+(The color black could also be dedicated to identifying the lowest 
+	elevation in the design of the Color Contour plot, in which case, both 
+	schemes would be equal in this regard.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1064">
+As we learned earlier, the lowest elevation occurs at four different points 
+on the surface, and those points are near the corners.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41012">
+<title>
+The elevation of the valleys
+
+</title>
+
+
+
+
+<para id="p1065">
+Both plots show that while the valleys between the central and minor peaks 
+are very deep, they aren't quite as deep as the lowest elevation. They are blue 
+in the Color Shift plot and gray in the Color Contour plot. Because the gray 
+color represents a somewhat smaller elevation range in the Color Contour plot 
+than the blue represents in the Color Shift plot, the elevation of the valley is 
+defined more accurately in the Color Contour plot.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31005">
+<title>
+<emphasis id="A_logarithmic_conversion" effect="bold">
+
+A logarithmic conversion
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1066">
+Sometimes when plotting data, it is useful to plot the logarithm of the data 
+values instead of the raw values.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1015" display="block">
+
+	
+
+<para id="p1067">
+<emphasis id="em1030" effect="italics">
+(For many years, engineers have plotted data on graph paper referred to 
+	either as semi-log paper or log-log paper. Each type of graph paper has 
+	advantages and disadvantages relative to the other type and also has 
+	advantages and disadvantages relative to linear graph paper. This program 
+	provides a capability that is analogous to the use of semi-log paper but in 
+	a 3D sense.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<section id="h41013">
+<title>
+Flattens the plot
+
+</title>
+
+
+
+
+<para id="p1068">
+The use of semi-log paper has the effect of flattening the plot in the 2D 
+case, or flattening the surface in the 3D case. The semi-log approach tends to 
+pull the structure of the low-level values up so that they can be better 
+observed. The logarithm of the low elevations is closer to the maximum elevation 
+than is the raw value of the low elevations.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41014">
+<title>
+More sample output
+
+</title>
+
+
+
+
+<para id="p1069">
+The three images in the top row of 
+
+<link id="a1123" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+ are reproductions of the three 
+images in 
+
+<link id="a1124" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+. They were included in 
+
+<link id="a1125" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+ for comparison with the 
+bottom three images in 
+
+<link id="a1126" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<table id="table1001" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1001">
+
+		
+
+<row id="tr1002">
+
+			
+
+<entry id="th1001">
+<emphasis id="Figure_2" effect="bold">
+
+Figure 2
+
+</emphasis>
+
+. Sample output with logarithmic 
+			flattening. 
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1001">
+
+	
+
+<row id="tr1003">
+
+		
+
+<entry id="td1001">
+
+		
+
+<media id="media1001" alt="Missing Figure." display="block">
+<image id="img1001" mime-type="image/jpeg" src="../../media/1489-2.jpg" width="506" height="429"/>
+</media>
+
+
+		
+
+</entry>
+
+	
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1070">
+The bottom three images in 
+
+<link id="a1127" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+ were produced in exactly the same way as 
+the top three images except that prior to creating the image the elevation 
+values for the surface were converted to the log base 10 of the raw elevation 
+values.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41015">
+<title>
+Six different formats
+
+</title>
+
+
+
+
+<para id="p1071">
+Thus, 
+
+<link id="a1128" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+ shows the same 3D surface plotted using six different plotting 
+formats. Going from left to right and top to bottom, the six images illustrate:
+
+</para>
+
+
+
+
+
+<list id="ul1020" list-type="bulleted">
+
+	
+
+<item id="li1108">
+Grayscale (linear)
+
+</item>
+
+
+	
+
+<item id="li1109">
+Color Shift (linear)
+
+</item>
+
+
+	
+
+<item id="li1110">
+Color Contour (linear)
+
+</item>
+
+
+	
+
+<item id="li1111">
+Grayscale with logarithmic data flattening
+
+</item>
+
+
+	
+
+<item id="li1112">
+Color Shift with logarithmic data flattening
+
+</item>
+
+
+	
+
+<item id="li1113">
+Color Contour with logarithmic data flattening
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+</section>
+<section id="h41016">
+<title>
+Isolates the location of the minima
+
+</title>
+
+
+
+
+<para id="p1072">
+The significance of the logarithmic conversion can be seen by comparing the 
+two images on the right side of 
+
+<link id="a1129" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+. When the raw elevation values were 
+quantized into 23 levels, quite a few of the elevation values were quantized 
+into the minimum value as indicated by the black areas in the top image.
+
+</para>
+
+
+
+
+
+<para id="p1073">
+However, after converting the elevation values to logarithmic values, only 
+four points quantized to the minimum value as indicated by the four small black 
+squares in the bottom right image. Thus, the top image on the right shows the 
+general area of the lowest elevations on the surface whereas the bottom image on 
+the right clearly identifies the exact location of each of the four lowest 
+elevations.
+
+</para>
+
+
+
+
+
+<para id="p1074">
+A similar discussion holds regarding the two middle plots in 
+
+<link id="a1130" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+. The 
+log version on the bottom identifies the location of the minima more closely 
+than does the linear plot at the top.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41017">
+<title>
+The log of the surface is flatter
+
+</title>
+
+
+
+
+<para id="p1075">
+You can also see from the bottom right image of 
+
+<link id="a1131" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+ that the central 
+peak of the log of the surface is much broader than the central peak for the raw 
+surface at the top right. This is indicated by the width of the white and yellow 
+areas in the log version as compared to the white and yellow areas in the raw 
+version.
+
+</para>
+
+
+
+
+
+<para id="p1076">
+In addition, the elevations of the log data for the minor peaks at the four 
+sides are almost as high as the elevation of the central peak, as indicated by 
+the orange or yellow color at the top of the minor peaks.
+
+</para>
+
+
+
+
+
+<para id="p1077">
+The elevations of the tops of the four minor peaks at the corners are perhaps 
+seventy-five percent of the elevation of the central peak as indicated by the 
+pinkish color of those minor peaks in the log version.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1016" display="block">
+
+	
+
+<emphasis id="em1031" effect="italics">
+(Recall that the elevation of the minor peaks at the corners is only 
+	about two levels up from the lowest elevation in the raw surface data.)
+
+</emphasis>
+</quote>
+
+
+
+
+<para id="p1078">
+All of this flattening was caused by converting the raw surface elevations to 
+the log of the surface elevations before producing the surface plot.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41018">
+<title>
+Multiple plotting formats are useful
+
+</title>
+
+
+
+
+<para id="p1079">
+A plotting format that works best for one surface doesn't necessarily work 
+best for all surfaces. Therefore, it is useful for the program to be able to 
+plot the same surface using different plotting formats.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31006">
+<title>
+<emphasis id="Extremely_easy_to_use" effect="bold">
+
+Extremely easy to use
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1080">
+One of the main objectives in the development of this class was to make it 
+very easy to use. No fancy programming is required to use the class and produce 
+the plots. All that is required is to instantiate an object of the class named
+
+
+<emphasis id="strong1013" effect="bold">
+ImgMod29
+
+</emphasis>
+, passing an array of data to be plotted along with a 
+few other parameters to the constructor. Basically the parameters 
+
+<emphasis id="em1032" effect="italics">
+(in 
+addition to the data array)
+
+</emphasis>
+ specify:
+
+</para>
+
+
+
+
+
+<list id="ul1021" list-type="bulleted">
+
+	
+
+<item id="li1114">
+Which of the three main formats to use, Grayscale, Color Shift, or Color 
+	Contour.
+
+</item>
+
+
+	
+
+<item id="li1115">
+Whether or not to convert to logarithmic values before plotting.
+
+</item>
+
+
+	
+
+<item id="li1116">
+Whether or not to draw the red axes shown in 
+
+<link id="a1132" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+ and 
+
+<link id="a1133" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+.
+
+</item>
+
+
+	
+
+<item id="li1117">
+How many pixels in the final output should be used to represent a single 
+	point on the surface. 
+
+<emphasis id="em1033" effect="italics">
+(For example, the plots in 
+
+<link id="a1134" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+ and 
+
+<link id="a1135" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+ 
+	use a square of nine pixels to represent each point on the 3D surface.)
+
+</emphasis>
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1081">
+When an object of the class 
+
+<emphasis id="strong1014" effect="bold">
+ImgMod29
+
+</emphasis>
+ is instantiated, 
+everything else happens automatically and the plot is displayed on the computer 
+screen as illustrated by any one of the images in 
+
+<link id="a1136" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+ or 
+
+<link id="a1137" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<section id="h41019">
+<title>
+Multiple plots
+
+</title>
+
+
+
+
+<para id="p1082">
+If multiple plots in different formats are needed for a given set of data, 
+all that is required is to instantiate multiple objects of the class named
+
+
+<emphasis id="strong1015" effect="bold">
+ImgMod29
+
+</emphasis>
+ passing the same data array with different parameters 
+to the constructor for each plot. Be aware, however, that all of the plots will 
+be produced in a stack in the upper left corner of the screen. You must 
+physically move the plots on the top in order to be able to view the plots lower 
+down in the stack.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+</section>
+</section>
+<section id="h11003">
+<title>
+<emphasis id="Preview" effect="bold">
+
+Preview
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1083">
+The purpose of the program that I will present and explain in this module is 
+to display a 3D surface using color (or shades of gray) to represent the 
+elevation of each point on a 3D surface.
+
+</para>
+
+
+
+
+
+<section id="h21004">
+<title>
+<emphasis id="Constructor" effect="bold">
+
+Constructor
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1084">
+The constructor for this class receives a 3D surface defined as a rectangular 
+2D array of values of type 
+
+<emphasis id="strong1016" effect="bold">
+double
+
+</emphasis>
+. Each 
+
+<emphasis id="strong1017" effect="bold">
+double
+
+</emphasis>
+ 
+value represents a sample point on the 3D surface. The surface values may be 
+positive, negative, or both.
+
+</para>
+
+
+
+
+
+<para id="p1085">
+When an object of the class is constructed, it plots the 3D surface using one 
+of six possible formats representing the elevation of each point on the surface 
+with a color or a shade of gray. 
+
+</para>
+
+
+
+
+
+<section id="h31007">
+<title>
+<emphasis id="Parameters" effect="bold">
+
+Parameters
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1086">
+The constructor requires four parameters:
+
+</para>
+
+
+
+
+
+<list id="ul1022" list-type="bulleted">
+
+	
+
+<item id="li1118">
+double[][] dataIn
+
+</item>
+
+
+	
+
+<item id="li1119">
+int blockSize
+
+</item>
+
+
+	
+
+<item id="li1120">
+boolean axis
+
+</item>
+
+
+	
+
+<item id="li1121">
+int display
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1087">
+The purpose of each parameter is as follows:
+
+</para>
+
+
+
+
+
+<section id="h41020">
+<title>
+dataIn
+
+</title>
+
+
+
+
+<para id="p1088">
+The parameter named 
+
+<emphasis id="strong1018" effect="bold">
+dataIn
+
+</emphasis>
+ is a reference to the 2D array of 
+type 
+
+<emphasis id="strong1019" effect="bold">
+double
+
+</emphasis>
+ containing the data that describes the 3D surface.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41021">
+<title>
+blockSize
+
+</title>
+
+
+
+
+<para id="p1089">
+The value of the parameter named 
+
+<emphasis id="strong1020" effect="bold">
+blockSize
+
+</emphasis>
+ defines the size 
+of a colored square in the final display that represents a single input surface 
+elevation value. For example, if 
+
+<emphasis id="strong1021" effect="bold">
+blockSize
+
+</emphasis>
+ is 1, each input 
+surface value is represented by a single pixel in the display. If 
+
+<emphasis id="strong1022" effect="bold">
+
+blockSize
+
+</emphasis>
+ is 5, each input surface value is represented by a colored 
+square having 5 pixels on each side 
+
+<emphasis id="em1034" effect="italics">
+(25 pixels in a square)
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<para id="p1090">
+The test code in the 
+
+<emphasis id="strong1023" effect="bold">
+main
+
+</emphasis>
+ method displays a surface having 
+59 values along the horizontal axis and 59 values along the vertical axis. Each 
+elevation value on the surface is represented in the final display by a colored 
+square that is 2 pixels on each side.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41022">
+<title>
+axis
+
+</title>
+
+
+
+
+<para id="p1091">
+The parameter named 
+
+<emphasis id="strong1024" effect="bold">
+axis
+
+</emphasis>
+ specifies whether optional red axes 
+will be drawn on the display with the origin at the center as shown in 
+
+<link id="a1138" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41023">
+<title>
+display
+
+</title>
+
+
+
+
+<para id="p1092">
+The parameter named display specifies one of six possible display formats. 
+The value of display must be between 0 and 5 inclusive. 
+
+</para>
+
+
+
+
+
+<para id="p1093">
+Values of 0, 1, and 2 specify the following formats:
+
+</para>
+
+
+
+
+
+<section id="h51000">
+<title>
+display = 0
+
+</title>
+
+
+
+
+<para id="p1094">
+This value for the display parameter specifies a Grayscale plot with a smooth 
+gradient from black at the minimum to white at the maximum.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h51001">
+<title>
+display = 1
+
+</title>
+
+
+
+
+<para id="p1095">
+This value for the display parameter specifies a Color Shift plot with a 
+smooth gradient from blue at the low end through aqua, green, and yellow to red 
+at the high end. The minimum elevation is colored black. The maximum elevation 
+is colored white.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h51002">
+<title>
+display = 2
+
+</title>
+
+
+
+
+<para id="p1096">
+This value for the display parameter specifies a Color Contour plot. The 
+surface is subdivided into 23 levels and each of the 23 levels is represented by 
+one of the following colors in order from lowest to highest elevation:
+
+</para>
+
+
+
+
+
+<list id="ul1023" list-type="bulleted">
+
+	
+
+<item id="li1122">
+Color.BLACK
+
+</item>
+
+
+	
+
+<item id="li1123">
+Color.GRAY 
+
+</item>
+
+
+	
+
+<item id="li1124">
+Color.LIGHT_GRAY
+
+</item>
+
+
+	
+
+<item id="li1125">
+Color.BLUE 
+
+</item>
+
+
+	
+
+<item id="li1126">
+new Color(100,100,255) 
+
+</item>
+
+
+	
+
+<item id="li1127">
+new Color(140,140,255) 
+
+</item>
+
+
+	
+
+<item id="li1128">
+new Color(175,175,255) 
+
+</item>
+
+
+	
+
+<item id="li1129">
+Color.CYAN 
+
+</item>
+
+
+	
+
+<item id="li1130">
+new Color(140,255,255) 
+
+</item>
+
+
+	
+
+<item id="li1131">
+Color.GREEN 
+
+</item>
+
+
+	
+
+<item id="li1132">
+new Color(140,255,140) 
+
+</item>
+
+
+	
+
+<item id="li1133">
+new Color(200,255,200) 
+
+</item>
+
+
+	
+
+<item id="li1134">
+Color.PINK 
+
+</item>
+
+
+	
+
+<item id="li1135">
+new Color(255,140,255) 
+
+</item>
+
+
+	
+
+<item id="li1136">
+Color.MAGENTA 
+
+</item>
+
+
+	
+
+<item id="li1137">
+new Color(255,0,140) 
+
+</item>
+
+
+	
+
+<item id="li1138">
+Color.RED 
+
+</item>
+
+
+	
+
+<item id="li1139">
+new Color(255,100,0) 
+
+</item>
+
+
+	
+
+<item id="li1140">
+Color.ORANGE 
+
+</item>
+
+
+	
+
+<item id="li1141">
+new Color(255,225,0) 
+
+</item>
+
+
+	
+
+<item id="li1142">
+Color.YELLOW 
+
+</item>
+
+
+	
+
+<item id="li1143">
+new Color(255,255,150) 
+
+</item>
+
+
+	
+
+<item id="li1144">
+Color.WHITE
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1097">
+Note that some of the colors in the above list refer to named color constants 
+in the 
+
+<emphasis id="strong1025" effect="bold">
+Color
+
+</emphasis>
+ class. Others refer to new 
+
+<emphasis id="strong1026" effect="bold">
+Color
+
+</emphasis>
+ objects constructed by mixing the 
+specified levels of red, green, and blue.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h51003">
+<title>
+display = 3, 4, and 5
+
+</title>
+
+
+
+
+<para id="p1098">
+These values for the display parameter specify that the surface is to be 
+plotted in the same format as for display values 1, 2, and 3, except that the 
+surface elevation values are rectified 
+
+<emphasis id="em1035" effect="italics">
+(made positive)
+
+</emphasis>
+ and converted to log base 
+10 before being represented by a color and plotted.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h31008">
+<title>
+<emphasis id="A_calibration_scale" effect="bold">
+
+A calibration scale
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1099">
+When the surface is plotted, a horizontal calibration scale is plotted 
+immediately below the surface plot showing the colors used in the surface plot. 
+The colors begin with the color for the lowest elevation at the left and 
+progress to the color for the highest elevation at the right.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31009">
+<title>
+<emphasis id="Normalization" effect="bold">
+
+Normalization
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1100">
+Regardless of whether the surface elevation values are converted to log 
+values or not, the surface values are normalized to cause them to extend from 0 
+to 255 before converting the elevation values to color and plotting them. The 
+lowest elevation ends up with a value of 0. The highest elevation ends up with a 
+value of 255.
+
+</para>
+
+
+
+
+
+<section id="h41024">
+<title>
+For display value of 0 or 3
+
+</title>
+
+
+
+
+<para id="p1101">
+This is a Grayscale plot or a log Grayscale plot as shown at the left side of 
+
+
+<link id="a1139" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+. The highest normalized elevation with a value of 255 is painted white. 
+The lowest normalized elevation with a value of 0 is painted black. The surface 
+is represented using shades of gray.
+
+</para>
+
+
+
+
+
+<para id="p1102">
+The shade changes from black to white in a uniform gradient as the normalized 
+surface elevation values progress from 0 to 255.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41025">
+<title>
+For display value of 1 or 4
+
+</title>
+
+
+
+
+<para id="p1103">
+This is a Color Shift plot or log Color Shift plot as shown in the center of 
+
+
+<link id="a1140" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+. The lowest normalized elevation is painted black and the highest 
+normalized elevation is painted white. 
+
+<emphasis id="em1036" effect="italics">
+(Black and white overwrite blue and red 
+for these two elevation values.)
+
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1104">
+The color changes from blue through aqua, green, and yellow to red in a 
+smooth gradient as the normalized surface values progress from 1 to 254. (Values 
+of 0 and 255 would be pure blue and pure red if they were not painted black and 
+white.)
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41026">
+<title>
+For a display value of 2 or 5
+
+</title>
+
+
+
+
+<para id="p1105">
+This is a Color Contour plot or log Color Contour plot as shown at the right 
+side of 
+
+<link id="a1141" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+. The highest normalized elevation with a value of 255 is 
+painted white. The lowest normalized elevation with a value of 0 is painted 
+black.
+
+</para>
+
+
+
+
+
+<para id="p1106">
+The surface is represented using a combination of unique shades of gray and 
+unique colors as the normalized surface elevation values progress from 0 to 255. 
+This is not a gradient display. Rather, the colors in this display change 
+abruptly from one color to the next.
+
+</para>
+
+
+
+
+
+<para id="p1107">
+This display format is similar to a contour map where each distinct color 
+traces out a constant elevation level on the normalized surface being plotted.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h21005">
+<title>
+<emphasis id="The_main_method" effect="bold">
+
+The main method
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1108">
+Although the class is intended to be used by other programs to display 
+surfaces produced by those programs, the class has a 
+
+<emphasis id="strong1027" effect="bold">
+main
+
+</emphasis>
+ method making it 
+possible to run it in a stand-alone mode for testing.
+
+</para>
+
+
+
+
+
+<para id="p1109">
+When the class is run as a stand-alone program, it produces and displays six 
+individual surfaces with the lowest point in the upper left corner and the 
+highest point in the lower right corner. The six images produced by executing 
+the 
+
+<emphasis id="strong1028" effect="bold">
+main
+
+</emphasis>
+ method are shown in 
+
+<link id="a1142" target-id="Figure_3">
+
+Figure 3
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<table id="table1002" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+	
+
+<thead id="thead1002">
+
+		
+
+<row id="tr1004">
+
+			
+
+<entry id="th1002">
+<emphasis id="Figure_3" effect="bold">
+
+Figure 3
+
+</emphasis>
+
+. Program output in self-test 
+			mode. 
+
+</entry>
+
+		
+
+</row>
+
+	
+
+</thead>
+
+
+	
+
+<tbody id="tbody1002">
+
+	
+
+<row id="tr1005">
+
+		
+
+<entry id="td1002">
+
+		
+
+<media id="media1002" alt="Missing Figure." display="block">
+<image id="img1002" mime-type="image/jpeg" src="../../media/1489-3.jpg" width="509" height="434"/>
+</media>
+
+
+		
+
+</entry>
+
+	
+
+</row>
+
+	
+
+</tbody>
+
+
+
+
+</tgroup>
+</table>
+
+
+
+
+<quote id="blockquote1017" display="block">
+<emphasis id="em1037" effect="italics">
+(Remember, all six output images are displayed on top of one 
+another in the upper-left corner of the screen. You must manually move them to 
+see all six images.)
+
+</emphasis>
+</quote>
+
+
+
+
+<section id="h31010">
+<title>
+<emphasis id="A_3D_parabola" effect="bold">
+
+A 3D parabola
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1110">
+The 
+
+<emphasis id="strong1029" effect="bold">
+main
+
+</emphasis>
+ method creates and displays a surface consisting of 
+a 3D parabola. You can think of the surface as representing a one-quarter 
+section of a bowl, or perhaps a satellite dish with the center of the dish in 
+the upper left corner of the image. The top three images in 
+
+<link id="a1143" target-id="Figure_3">
+
+Figure 3
+
+</link>
+
+ are the 
+images produced from the raw surface. The bottom three images are the images 
+produced by the log of the surface, 
+
+<emphasis id="em1038" effect="italics">
+(which is no longer a 3D parabola)
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<section id="h41027">
+<title>
+The calibration scale
+
+</title>
+
+
+
+
+<para id="p1111">
+The calibration scale is displayed immediately below the image of each 
+surface.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41028">
+<title>
+The images are stacked
+
+</title>
+
+
+
+
+<para id="p1112">
+When the program is executed, the six surfaces are stacked in the upper left 
+corner of the screen. 
+
+<emphasis id="em1039" effect="italics">
+(You must physically move the images on the top to see 
+the images on the bottom.)
+
+</emphasis>
+ The stacking order of the surfaces from bottom 
+to top is based on the values of the display parameter in the order 0, 1, 2, 3, 
+4, 5.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41029">
+<title>
+With and without axes
+
+</title>
+
+
+
+
+<para id="p1113">
+Some of the surfaces show axes and some do not. This is controlled by the 
+value of the constructor parameter named 
+
+<emphasis id="strong1030" effect="bold">
+axis
+
+</emphasis>
+. A true value for
+
+
+<emphasis id="strong1031" effect="bold">
+axis
+
+</emphasis>
+ causes the axes to be drawn.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41030">
+<title>
+A window listener
+
+</title>
+
+
+
+
+<para id="p1114">
+The constructor defines an anonymous inner class 
+
+<emphasis id="strong1032" effect="bold">
+WindowListener
+
+</emphasis>
+ 
+on the 
+
+<emphasis id="strong1033" effect="bold">
+close
+
+</emphasis>
+ button on the 
+
+<emphasis id="strong1034" effect="bold">
+Frame
+
+</emphasis>
+ 
+
+<emphasis id="em1040" effect="italics">
+(the X in the upper right 
+hand corner of the 
+
+<emphasis id="strong1035" effect="bold">
+Frame
+
+</emphasis>
+)
+
+</emphasis>
+. Clicking the 
+
+<emphasis id="strong1036" effect="bold">
+close
+
+</emphasis>
+ button will terminate the 
+program that uses an object of this class.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41031">
+<title>
+Testing
+
+</title>
+
+
+
+
+<para id="p1115">
+The program was tested using J2SE 8.0 and Win 7. Because the program uses 
+Java features that were introduced in J2SE 5.0, it may not compile successfully 
+with earlier versions of Java.
+
+</para>
+
+
+
+	
+
+</section>
+</section>
+</section>
+</section>
+<section id="h11004">
+<title>
+<emphasis id="The_program_named_ImgMod29" effect="bold">
+
+The program named ImgMod29
+
+</emphasis>
+
+
+</title>
+
+
+	
+	
+
+<para id="p1116">
+The program named 
+
+<emphasis id="strong1037" effect="bold">
+ImgMod29
+
+</emphasis>
+ is rather long, so as usual I will break it 
+	down and discuss it in fragments. You can view a complete listing of the 
+	program in 
+
+<link id="a1144" target-id="Listing_29">
+
+Listing 29
+
+</link>
+
+ near the end of the module.
+
+</para>
+
+
+
+
+
+<section id="h21006">
+<title>
+<emphasis id="themainmethod" effect="bold">
+
+The main method
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1117">
+The program consists of a top-level class named 
+
+<emphasis id="strong1038" effect="bold">
+ImgMod29
+
+</emphasis>
+, 
+plus several inner classes. The class includes a 
+
+<emphasis id="strong1039" effect="bold">
+main
+
+</emphasis>
+ method 
+that is use for self-testing the class. To put things in context, I will begin 
+my discussion with the 
+
+<emphasis id="strong1040" effect="bold">
+main
+
+</emphasis>
+ method.
+
+</para>
+
+
+
+
+
+<para id="p1118">
+The main method begins in 
+
+<link id="a1145" target-id="Listing_1">
+
+Listing 1
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<table id="table1003" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1003">
+<row id="tr1006">
+
+
+
+<entry id="th1003">
+<emphasis id="Listing_1" effect="bold">
+
+Listing 1.
+
+</emphasis>
+
+ Beginning of the main method.
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1003">
+<row id="tr1007">
+<entry id="td1003">
+
+		
+
+<code id="pre1001" display="block">  public static void main(String[] args){
+    int numberRows = 59;
+    int numberCols = 59;
+    double[][] data = 
+              new double[numberRows][numberCols];
+    int blockSize = 2;</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h31011">
+<title>
+<emphasis id="Local_variables" effect="bold">
+
+Local variables
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<section id="h41032">
+<title>
+The array for the surface elevation data
+
+</title>
+
+
+
+
+<para id="p1119">
+<link id="a1146" target-id="Listing_1">
+
+Listing 1
+
+</link>
+
+ declares a 2D array of type 
+
+<emphasis id="strong1041" effect="bold">
+double
+
+</emphasis>
+ to contain the 
+3D surface elevation data values. This is a square array consisting of 59 
+elevation values on each side. 
+
+<emphasis id="em1041" effect="italics">
+(However, there is no requirement for the 
+surface to be square.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</section>
+<section id="h41033">
+<title>
+The blockSize parameter
+
+</title>
+
+
+
+
+<para id="p1120">
+<link id="a1147" target-id="Listing_1">
+
+Listing 1
+
+</link>
+
+ also defines a value of 2 for the 
+
+<emphasis id="strong1042" effect="bold">
+blockSize
+
+</emphasis>
+ 
+parameter. This variable will be passed to the constructor for the 
+
+<emphasis id="strong1043" effect="bold">
+
+ImgMod29
+
+</emphasis>
+ class, causing each elevation value to be plotted as a small 
+square of four pixels, two pixels on each side of the square.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1018" display="block">
+
+	
+
+<para id="p1121">
+<emphasis id="em1042" effect="italics">
+(The overall size of the display can be controlled by controlling the 
+	size of the array containing the surface elevation values and also 
+	controlling the value of 
+
+<emphasis id="strong1044" effect="bold">
+blockSize
+
+</emphasis>
+.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+</section>
+<section id="h31012">
+<title>
+<emphasis id="A_3D_parabolic_surface" effect="bold">
+
+A 3D parabolic surface
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1122">
+The array of surface elevation data is populated by the code in 
+
+<link id="a1148" target-id="Listing_2">
+
+Listing 2
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<table id="table1004" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1004">
+<row id="tr1008">
+
+
+
+<entry id="th1004">
+<emphasis id="Listing_2" effect="bold">
+
+Listing 2.
+
+</emphasis>
+
+ A 3D parabolic surface,
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1004">
+<row id="tr1009">
+<entry id="td1004">
+
+		
+
+<code id="pre1002" display="block">    for(int row = 0;row &lt; numberRows;row++){
+      for(int col = 0;col &lt; numberCols;col++){
+        int xSquare = col * col;
+        int ySquare = row * row;
+        data[row][col] = xSquare + ySquare;
+      }//end col loop
+    }//end row loop</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1123">
+I will allow you to evaluate this code on your own. It creates a 3D surface 
+with the lowest elevation at the upper left corner and the highest elevation at 
+the lower right corner. The surface is a one-quarter section of a 3D parabola, 
+as shown in 
+
+<link id="a1149" target-id="Figure_3">
+
+Figure 3
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31013">
+<title>
+<emphasis id="Display_six_surface_images" effect="bold">
+
+Display six surface images
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1124">
+<link id="a1150" target-id="Listing_3">
+
+Listing 3
+
+</link>
+
+ shows the code that causes the 3D surface elevation data to be 
+displayed as six independent images 
+
+<emphasis id="em1043" effect="italics">
+(each statement in 
+
+<link id="a1151" target-id="Listing_3">
+
+Listing 3
+
+</link>
+
+ produces 
+one output image)
+
+</emphasis>
+. 
+
+</para>
+
+
+
+
+
+<quote id="blockquote1019" display="block">
+<emphasis id="strong1045" effect="bold">
+<emphasis id="em1044" effect="italics">
+IMPORTANT: this is the same code that 
+would be used by other programs to incorporate this 3D surface plotting 
+capability into those programs.
+
+</emphasis>
+</emphasis>
+</quote>
+
+
+
+
+<table id="table1005" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1005">
+<row id="tr1010">
+
+
+
+<entry id="th1005">
+<emphasis id="Listing_3" effect="bold">
+
+Listing 3.
+
+</emphasis>
+
+ Display six surface images.
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1005">
+<row id="tr1011">
+<entry id="td1005">
+
+		
+
+<code id="pre1003" display="block">    new ImgMod29(data,blockSize,true,0);
+    new ImgMod29(data,blockSize,false,1);    
+    new ImgMod29(data,blockSize,true,2);
+    new ImgMod29(data,blockSize,true,3);
+    new ImgMod29(data,blockSize,false,4);    
+    new ImgMod29(data,blockSize,true,5);</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41034">
+<title>
+Just instantiate an object
+
+</title>
+
+
+
+
+<para id="p1125">
+All that is necessary for another program to incorporate this class to 
+display a 3D surface is to instantiate an object of the class named 
+
+<emphasis id="strong1046" effect="bold">
+
+ImgMod29
+
+</emphasis>
+ passing four parameters to the constructor.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41035">
+<title>
+The parameters
+
+</title>
+
+
+
+
+<para id="p1126">
+The first parameter is a reference to the 2D array of type 
+
+<emphasis id="strong1047" effect="bold">
+double
+
+</emphasis>
+ 
+containing the surface elevation values.
+
+</para>
+
+
+
+
+
+<para id="p1127">
+The second parameter is the 
+
+<emphasis id="strong1048" effect="bold">
+blockSize
+
+</emphasis>
+. This 
+
+<emphasis id="strong1049" effect="bold">
+int
+
+</emphasis>
+ 
+value specifies the size of one side of a square of pixels, 
+
+<emphasis id="em1045" effect="italics">
+(all of the same 
+color)
+
+</emphasis>
+ that will be used to represent each surface elevation value in the 
+final display. As mentioned earlier, this value was set to 2 in the sample 
+displays produced by the 
+
+<emphasis id="strong1050" effect="bold">
+main
+
+</emphasis>
+ method. However, it could have 
+been any reasonable value such as 5, 10, or 15 for example.
+
+</para>
+
+
+
+
+
+<para id="p1128">
+The third parameter is true if you want the red axes to be drawn and is false 
+otherwise 
+
+<emphasis id="em1046" effect="italics">
+(as shown in 
+
+<link id="a1152" target-id="Figure_3">
+
+Figure 3
+
+</link>
+
+)
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<para id="p1129">
+The fourth parameter is an integer value between 0 and 5 inclusive, which 
+specifies the plotting format as follows:
+
+</para>
+
+
+
+
+
+<list id="ul1024" list-type="bulleted">
+
+	
+
+<item id="li1145">
+0 - Grayscale (linear)
+
+</item>
+
+
+	
+
+<item id="li1146">
+1 - Color Shift (linear)
+
+</item>
+
+
+	
+
+<item id="li1147">
+2 - Color Contour (linear)
+
+</item>
+
+
+	
+
+<item id="li1148">
+3 - Grayscale with logarithmic data conversion before plotting
+
+</item>
+
+
+	
+
+<item id="li1149">
+4 - Color Shift with logarithmic data conversion before plotting
+
+</item>
+
+
+	
+
+<item id="li1150">
+5 - Color Contour with logarithmic data conversion before plotting
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+</section>
+<section id="h41036">
+<title>
+Instantiate six separate objects
+
+</title>
+
+
+
+
+<para id="p1130">
+<link id="a1153" target-id="Listing_3">
+
+Listing 3
+
+</link>
+
+ instantiates six such objects to display the same 3D surface, one 
+for each plotting format as shown in 
+
+<link id="a1154" target-id="Figure_3">
+
+Figure 3
+
+</link>
+
+. Some of the objects display the 
+axes and others do not. All use a blockSize value of 2.
+
+</para>
+
+
+
+
+
+<para id="p1131">
+Each display object appears in the upper-left corner of the screen. Thus, 
+when two or more such objects are instantiated, they appear as a stack. It is 
+necessary to physically move those on top of the stack to see those further 
+down.
+
+</para>
+
+
+
+
+
+<para id="p1132">
+<link id="a1155" target-id="Listing_3">
+
+Listing 3
+
+</link>
+
+ signals the end of the main method.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h21007">
+<title>
+<emphasis id="The_ImgMod29_class" effect="bold">
+
+The ImgMod29 class
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1133">
+<link id="a1156" target-id="Listing_4">
+
+Listing 4
+
+</link>
+
+ shows the beginning of the class named 
+
+<emphasis id="strong1051" effect="bold">
+ImgMod29
+
+</emphasis>
+ 
+and the beginning of the constructor for the class.
+
+</para>
+
+
+
+
+
+<table id="table1006" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1006">
+<row id="tr1012">
+
+
+
+<entry id="th1006">
+<emphasis id="Listing_4" effect="bold">
+
+Listing 4.
+
+</emphasis>
+
+ Beginning of the ImgMod29 class.
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1006">
+<row id="tr1013">
+<entry id="td1006">
+
+		
+
+<code id="pre1004" display="block">class ImgMod29 extends Frame{
+  int dataWidth;
+  int dataHeight;
+  int blockSize;
+  boolean axis;
+  double[][] data;
+
+
+  ImgMod29(double[][] dataIn,int blockSize,
+           boolean axis,int display){
+    //Get and save several important values
+    this.blockSize = blockSize;
+    this.axis = axis;
+    dataHeight = dataIn.length;
+    dataWidth = dataIn[0].length;
+    boolean logPlot = false;
+    int displayType = display;</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1134">
+The meaning and purpose of each of the constructor parameters was explained 
+earlier, so I won't repeat that explanation here. The code in 
+
+<link id="a1157" target-id="Listing_4">
+
+Listing 4
+
+</link>
+
+ is 
+straightforward and should not require further explanation.
+
+</para>
+
+
+
+
+
+<section id="h31014">
+<title>
+<emphasis id="Establish_display_format_for_log_conversion" effect="bold">
+
+Establish display 
+format for log conversion
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1135">
+The code in 
+
+<link id="a1158" target-id="Listing_5">
+
+Listing 5
+
+</link>
+
+ uses the incoming value of the 
+
+<emphasis id="strong1052" effect="bold">
+display
+
+</emphasis>
+ 
+parameter to establish the display format if the value of 
+
+<emphasis id="strong1053" effect="bold">
+display
+
+</emphasis>
+ 
+is 3, 4, or 5.
+
+</para>
+
+
+
+
+
+<table id="table1007" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1007">
+<row id="tr1014">
+
+
+
+<entry id="th1007">
+<emphasis id="Listing_5" effect="bold">
+
+Listing 5.
+
+</emphasis>
+
+ Establish display format for log conversion.
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1007">
+<row id="tr1015">
+<entry id="td1007">
+
+		
+
+<code id="pre1005" display="block">    if(display == 3){
+      displayType = 0;
+      logPlot = true;
+    }else if(display == 4){
+      displayType = 1;
+      logPlot = true;
+    }else if(display == 5){
+      displayType = 2;
+      logPlot = true;
+    }else if((display &gt; 5) || (display &lt; 0)){
+      System.out.println(
+         "DisplayType input error, terminating");
+      System.exit(0);
+    }//end if</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1136">
+The default display format is one of the three basic types 
+
+<emphasis id="strong1054" effect="bold">
+<emphasis id="em1047" effect="italics">
+
+without log conversion
+
+</emphasis>
+</emphasis>
+ of the surface elevation data. 
+
+<emphasis id="em1048" effect="italics">
+(The 
+value of 
+
+<emphasis id="strong1055" effect="bold">
+logPlot
+
+</emphasis>
+ 
+is set to false in 
+
+<link id="a1159" target-id="Listing_4">
+
+Listing 4
+
+</link>
+
+.)
+
+</emphasis>
+ If the incoming parameter value is 3, 4, or 
+5, the code in 
+
+<link id="a1160" target-id="Listing_5">
+
+Listing 5
+
+</link>
+
+ establishes the display format as one of the three 
+basic types 
+
+<emphasis id="strong1056" effect="bold">
+<emphasis id="em1049" effect="italics">
+with log conversion
+
+</emphasis>
+</emphasis>
+ of the surface 
+elevation data prior to plotting.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1020" display="block">
+
+	
+
+<para id="p1137">
+<emphasis id="em1050" effect="italics">
+(Note that the code in 
+
+<link id="a1161" target-id="Listing_5">
+
+Listing 5
+
+</link>
+
+ sets the value of the variable named 	
+
+<emphasis id="strong1057" effect="bold">
+logPlot
+
+</emphasis>
+  to true. The value stored in this variable will be 
+	used later to determine if log conversion of the elevation data is 
+	required.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<section id="h41037">
+<title>
+The three basic types
+
+</title>
+
+
+
+
+<para id="p1138">
+The three basic types are:
+
+</para>
+
+
+
+
+
+<list id="ul1025" list-type="bulleted">
+
+	
+
+<item id="li1151">
+displayType = 0, Grayscale plot
+
+</item>
+
+
+	
+
+<item id="li1152">
+displayType = 1, Color Shift plot
+
+</item>
+
+
+	
+
+<item id="li1153">
+displayType = 2, Color Contour plot
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1139">
+These three basic types without log data conversion are shown from left to 
+right in 
+
+<link id="a1162" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+. The three basic types are shown with log conversion from left 
+to right in the bottom rows of 
+
+<link id="a1163" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+ and 
+
+<link id="a1164" target-id="Figure_3">
+
+Figure 3
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31015">
+<title>
+<emphasis id="Copy_the_input_elevation_data" effect="bold">
+
+Copy the input elevation data
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1140">
+<link id="a1165" target-id="Listing_6">
+
+Listing 6
+
+</link>
+
+ makes a working copy of the input data to avoid damaging the 
+original data. This is done to protect the data belonging to the program that 
+instantiates an object of the class 
+
+<emphasis id="strong1058" effect="bold">
+ImgMod29
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<table id="table1008" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1008">
+<row id="tr1016">
+
+
+
+<entry id="th1008">
+<emphasis id="Listing_6" effect="bold">
+
+Listing 6.
+
+</emphasis>
+
+ Copy the input elevation data.
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1008">
+<row id="tr1017">
+<entry id="td1008">
+
+		
+
+<code id="pre1006" display="block">    data = new double[dataHeight][dataWidth];
+    for(int row = 0;row &lt; dataHeight;row++){
+      for(int col = 0;col &lt; dataWidth;col++){
+        data[row][col] = dataIn[row][col];
+      }//end loop on col
+    }//end loop on row</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+</section>
+<section id="h31016">
+<title>
+<emphasis id="Convert_to_log_data_if_required" effect="bold">
+
+Convert to log data if required
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1141">
+The code in 
+
+<link id="a1166" target-id="Listing_7">
+
+Listing 7
+
+</link>
+
+ uses the 
+
+<emphasis id="strong1059" effect="bold">
+log10
+
+</emphasis>
+ method of the 
+
+<emphasis id="strong1060" effect="bold">
+
+Math
+
+</emphasis>
+ class to perform a log conversion of the surface elevation data if 
+the value of 
+
+<emphasis id="strong1061" effect="bold">
+logPlot
+
+</emphasis>
+ is true.
+
+</para>
+
+
+
+
+
+<table id="table1009" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1009">
+<row id="tr1018">
+
+
+
+<entry id="th1009">
+<emphasis id="Listing_7" effect="bold">
+
+Listing 7.
+
+</emphasis>
+
+ Convert to log data if required
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1009">
+<row id="tr1019">
+<entry id="td1009">
+
+		
+
+<code id="pre1007" display="block">    if(logPlot){//Convert to log base 10.
+      for(int row = 0;row &lt; dataHeight;row++){
+        for(int col = 0;col &lt; dataWidth;col++){
+          //Change the sign on negative values
+          // before converting to log values.
+          if(data[row][col] &lt; 0){
+            data[row][col] = -data[row][col];
+          }//end if
+          if(data[row][col] &gt; 0){
+            //Convert value to log base 10. Log
+            // of 0 is undefined. Just leave it
+            // at 0.
+            data[row][col] = 
+                      Math.log10(data[row][col]);
+          }//end if
+        }//end col loop
+      }//end row loop
+    }//end if on logPlot</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41038">
+<title>
+New to J2SE 5.0
+
+</title>
+
+
+
+
+<para id="p1142">
+According to Oracle's documentation, the 
+
+<emphasis id="strong1062" effect="bold">
+log10
+
+</emphasis>
+ method became 
+part of Java with the release of J2SE 5.0. Therefore, this code is not 
+compatible with earlier versions of Java.
+
+</para>
+
+
+
+
+
+<para id="p1143">
+Here are a couple of restrictions taken from Oracle's documentation that 
+apply to the use of the method named 
+
+<emphasis id="strong1063" effect="bold">
+log10
+
+</emphasis>
+:
+
+</para>
+
+
+
+
+
+<list id="ul1026" list-type="bulleted">
+
+	
+
+<item id="li1154">
+If the argument is NaN or less than zero, then the result is NaN. 
+
+</item>
+
+
+	
+
+<item id="li1155">
+If the argument is positive zero or negative zero, then the result is 
+	negative infinity. 
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1144">
+Because of the first restriction, the code in 
+
+<link id="a1167" target-id="Listing_7">
+
+Listing 7
+
+</link>
+
+ converts all negative 
+values into positive values before performing the conversion. Because of the 
+second restriction, no attempt is made to compute the log of elevation values of 
+zero.
+
+</para>
+
+
+
+
+
+<para id="p1145">
+Otherwise, the code in 
+
+<link id="a1168" target-id="Listing_7">
+
+Listing 7
+
+</link>
+
+ is straightforward and should not require 
+further explanation.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31017">
+<title>
+<emphasis id="Normalize_the_surface_elevation_data" effect="bold">
+
+Normalize the surface 
+elevation data
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1146">
+After converting the elevation data to log form, 
+
+<emphasis id="em1051" effect="italics">
+(or not converting as the 
+case may be)
+
+</emphasis>
+, the code in 
+
+<link id="a1169" target-id="Listing_8">
+
+Listing 8
+
+</link>
+
+ calls the method named 
+
+<emphasis id="strong1064" effect="bold">
+scaleTheSurfaceData
+
+</emphasis>
+ 
+to normalize the elevation data by squeezing it into the integer range between 0 
+and 255 inclusive. When this method returns, the lowest elevation has a value of 
+0 and the highest elevation has a value of 255.
+
+</para>
+
+
+
+
+
+<table id="table1010" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1010">
+<row id="tr1020">
+
+
+
+<entry id="th1010">
+<emphasis id="Listing_8" effect="bold">
+
+Listing 8.
+
+</emphasis>
+
+ Normalize the surface 
+elevation data.
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1010">
+<row id="tr1021">
+<entry id="td1010">
+
+		
+
+<code id="pre1008" display="block">    scaleTheSurfaceData();</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1147">
+The elevation data is normalized to this range to make it easier later to 
+form relationships between the elevation values and allowable color values.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1021" display="block">
+
+	
+
+<para id="p1148">
+<emphasis id="em1052" effect="italics">
+(Recall that allowable color values range from 0 to 255.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h31018">
+<title>
+<emphasis id="The_method_named_scaleTheSurfaceData" effect="bold">
+
+The method named scaleTheSurfaceData
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1149">
+At this point, we will take a side trip and examine the method named 
+
+<emphasis id="strong1065" effect="bold">
+
+scaleTheSurfaceData
+
+</emphasis>
+, which is shown in its entirety in 
+
+<link id="a1170" target-id="Listing_9">
+
+Listing 9
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<table id="table1011" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1011">
+<row id="tr1022">
+
+
+
+<entry id="th1011">
+<emphasis id="Listing_9" effect="bold">
+
+Listing 9.
+
+</emphasis>
+
+ The method named scaleTheSurfaceData.
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1011">
+<row id="tr1023">
+<entry id="td1011">
+
+		
+
+<code id="pre1009" display="block">  double min;
+  double max;
+  //This method is used to scale the surface data
+  // to force it to fit in the range from 0 to
+  // 255.
+  void scaleTheSurfaceData(){
+    //Find the minimum surface value.
+    min = Double.MAX_VALUE;
+    for(int row = 0;row &lt; dataHeight;row++){
+      for(int col = 0;col &lt; dataWidth;col++){
+        if(data[row][col] &lt; min)
+          min = data[row][col];
+      }//end col loop
+    }//end row loop
+
+    //Shift all values up or down to force new
+    // minimum value to be 0.
+    for(int row = 0;row &lt; dataHeight;row++){
+      for(int col = 0;col &lt; dataWidth;col++){
+        data[row][col] = data[row][col] - min;
+      }//end col loop
+    }//end row loop
+      
+    //Now get the maximum value of the shifted
+    // surface values
+    max = -Double.MAX_VALUE;
+    for(int row = 0;row &lt; dataHeight;row++){
+      for(int col = 0;col &lt; dataWidth;col++){
+        if(data[row][col] &gt; max)
+          max = data[row][col];
+      }//end col loop
+    }//end row loop
+
+    //Now scale all values to cause the new
+    // maximum value to be 255.
+    for(int row = 0;row &lt; dataHeight;row++){
+      for(int col = 0;col &lt; dataWidth;col++){
+        data[row][col] = 
+                      data[row][col] * 255/max;
+      }//end col loop
+    }//end row loop
+  }//end scaleTheSurfaceData</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1150">
+While this method is rather long, it is completely straightforward and 
+shouldn't require further explanation.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31019">
+<title>
+<emphasis id="Create_an_appropriate_pair_of_Canvas_objects" effect="bold">
+
+Create an appropriate pair of Canvas objects
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1151">
+Return now to the discussion of the constructor for the 
+
+<emphasis id="strong1066" effect="bold">
+ImgMod29
+
+</emphasis>
+ 
+class.
+
+</para>
+
+
+
+
+
+<para id="p1152">
+The code in 
+
+<link id="a1171" target-id="Listing_10">
+
+Listing 10
+
+</link>
+
+ uses the value of 
+
+<emphasis id="strong1067" effect="bold">
+displayType
+
+</emphasis>
+ to make a decision and 
+to instantiate a pair of objects from two of six different inner classes, each 
+of which extends the class named 
+
+<emphasis id="strong1068" effect="bold">
+Canvas
+
+</emphasis>
+. One of the objects in the pair is used 
+to display the 3D surface according to a specified format. The other object in 
+the pair is used to display the calibration strip below the surface display.
+
+</para>
+
+
+
+
+
+<table id="table1012" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1012">
+<row id="tr1024">
+
+
+
+<entry id="th1012">
+<emphasis id="Listing_10" effect="bold">
+
+Listing 10.
+
+</emphasis>
+
+ Create an appropriate pair of Canvas objects.
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1012">
+<row id="tr1025">
+<entry id="td1012">
+
+		
+
+<code id="pre1010" display="block">    Canvas surface = null;
+    Canvas scale = null;
+    
+    //Establish the format based on the value of
+    // the parameter named display.
+    if(displayType == 0){
+      //Create a type 0 Canvas object to draw the
+      // surface on.  This is a Grayscale plot
+      // display.
+      surface = new CanvasType0surface();
+      //Create a Canvas object to draw the scale
+      // on for the Grayscale plot.
+      scale = new CanvasType0scale();
+    }else if(displayType == 1){
+      //Color Shift plot
+      surface = new CanvasType1surface();
+      scale = new CanvasType1scale();
+    }else if(displayType == 2){
+      //Color Contour plot.
+      surface = new CanvasType2surface();
+      scale = new CanvasType2scale();
+    }//end if-else on display type</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1153">
+The code in 
+
+<link id="a1172" target-id="Listing_10">
+
+Listing 10
+
+</link>
+
+ is straightforward and shouldn't require further 
+explanation.
+
+</para>
+
+
+
+
+
+<section id="h41039">
+<title>
+The interesting code
+
+</title>
+
+
+
+
+<para id="p1154">
+The interesting code is contained in the overridden 
+
+<emphasis id="strong1069" effect="bold">
+paint
+
+</emphasis>
+ 
+method belonging to each of the six inner classes from which the pair of objects 
+is instantiated. I will explain those overridden paint methods later.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31020">
+<title>
+<emphasis id="Add_the_Canvas_objects_to_the_Frame" effect="bold">
+
+Add the Canvas objects to the 
+Frame
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1155">
+The default layout manager for a 
+
+<emphasis id="strong1070" effect="bold">
+Frame
+
+</emphasis>
+ object is 
+
+<emphasis id="strong1071" effect="bold">
+
+BorderLayout
+
+</emphasis>
+. 
+The code in 
+
+<link id="a1173" target-id="Listing_11">
+
+Listing 11
+
+</link>
+
+ adds one of the above-instantiated objects to the center 
+location of the 
+
+<emphasis id="strong1072" effect="bold">
+Frame
+
+</emphasis>
+, and adds the other object to the 
+
+<emphasis id="strong1073" effect="bold">
+
+South
+
+</emphasis>
+ location of the 
+
+<emphasis id="strong1074" effect="bold">
+Frame
+
+</emphasis>
+. This produces the format 
+with the surface plot above the calibration scale as shown by any of the images 
+in 
+
+<link id="a1174" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+ through 
+
+<link id="a1175" target-id="Figure_3">
+
+Figure 3
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<table id="table1013" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1013">
+<row id="tr1026">
+
+
+
+<entry id="th1013">
+<emphasis id="Listing_11" effect="bold">
+
+Listing 11.
+
+</emphasis>
+
+ Add the Canvas objects to the Frame.
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1013">
+<row id="tr1027">
+<entry id="td1013">
+
+		
+
+<code id="pre1011" display="block">    //Add the plotted surface to center of the
+    // Frame
+    add(BorderLayout.CENTER,surface);
+    //Add the scale to bottom of Frame
+    add(BorderLayout.SOUTH,scale);
+    //Cause the size of the Frame to be just
+    // right to contain the two Canvas objects.
+    pack();
+
+    //Set Frame cosmetics and make it visible.
+    setTitle("Copyright 2005 R.G.Baldwin");
+    setVisible(true);</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41040">
+<title>
+Call the pack method and set the title
+
+</title>
+
+
+
+
+<para id="p1156">
+After adding the two objects to the 
+
+<emphasis id="strong1075" effect="bold">
+Frame
+
+</emphasis>
+, 
+
+<link id="a1176" target-id="Listing_11">
+
+Listing 11
+
+</link>
+
+ calls 
+the 
+
+<emphasis id="strong1076" effect="bold">
+pack
+
+</emphasis>
+ method on the 
+
+<emphasis id="strong1077" effect="bold">
+Frame
+
+</emphasis>
+ to cause the size 
+of the 
+
+<emphasis id="strong1078" effect="bold">
+Frame
+
+</emphasis>
+ to close in around the two objects.
+
+</para>
+
+
+
+
+
+<para id="p1157">
+Finally, 
+
+<link id="a1177" target-id="Listing_11">
+
+Listing 11
+
+</link>
+
+ sets the title on the 
+
+<emphasis id="strong1079" effect="bold">
+Frame
+
+</emphasis>
+ and makes 
+the s visible.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31021">
+<title>
+<emphasis id="Register_an_anonymous_WindowListener_object" effect="bold">
+
+Register an anonymous 
+WindowListener object
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1158">
+<link id="a1178" target-id="Listing_12">
+
+Listing 12
+
+</link>
+
+ registers an anonymous 
+
+<emphasis id="strong1080" effect="bold">
+WindowListener
+
+</emphasis>
+ object on 
+the 
+
+<emphasis id="strong1081" effect="bold">
+Frame
+
+</emphasis>
+ to cause the program to terminate whenever the user clicks the 
+X-button in the upper right corner of the 
+
+<emphasis id="strong1082" effect="bold">
+Frame
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<table id="table1014" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1014">
+<row id="tr1028">
+
+
+
+<entry id="th1014">
+<emphasis id="Listing_12" effect="bold">
+
+Listing 12.
+
+</emphasis>
+
+ Register an anonymous WindowListener object.
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1014">
+<row id="tr1029">
+<entry id="td1014">
+
+		
+
+<code id="pre1012" display="block">    addWindowListener(new WindowAdapter(){
+        public void windowClosing(WindowEvent e){
+          System.exit(0);
+        }//end windowClosing
+      }//end class definition
+    );//end addWindowListener
+    
+  }//end constructor</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1159">
+If you are unfamiliar with the use of anonymous inner classes, you can learn 
+about such topics in my other publications.
+
+</para>
+
+
+
+
+
+<para id="p1160">
+<link id="a1179" target-id="Listing_12">
+
+Listing 12
+
+</link>
+
+ also signals the end of the constructor for the class named
+
+
+<emphasis id="strong1083" effect="bold">
+ImgMod29
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31022">
+<title>
+<emphasis id="Six_different_inner_classes" effect="bold">
+
+Six different inner classes
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1161">
+We have finally gotten to the fun part of the program. This is the part where 
+we write the code that determines how the surface elevations and the calibration 
+scale values are displayed. This part of the program consists of six different 
+inner classes.
+
+</para>
+
+
+
+
+
+<para id="p1162">
+The fact that the classes are inner classes makes it possible for methods in 
+the class to access instance variables and methods of the containing object of 
+type 
+
+<emphasis id="strong1084" effect="bold">
+ImgMod29
+
+</emphasis>
+. This makes the programming somewhat easier than 
+would be the case if they were all top-level classes.
+
+</para>
+
+
+
+
+
+<section id="h41041">
+<title>
+Subclasses of the Canvas class
+
+</title>
+
+
+
+
+<para id="p1163">
+Each of the six inner classes is a subclass of the class named 
+
+<emphasis id="strong1085" effect="bold">
+Canvas
+
+</emphasis>
+ 
+and each of the classes overrides the 
+
+<emphasis id="strong1086" effect="bold">
+paint
+
+</emphasis>
+ method. The code in 
+the overridden 
+
+<emphasis id="strong1087" effect="bold">
+paint
+
+</emphasis>
+ methods for the classes that display the 
+3D surfaces 
+
+</para>
+
+
+
+
+
+<list id="ul1027" list-type="bulleted">
+
+	
+
+<item id="li1156">
+access the surface elevation data,
+
+</item>
+
+
+	
+
+<item id="li1157">
+convert that data into colors and,
+
+</item>
+
+
+	
+
+<item id="li1158">
+display those colors in the correct locations on the screen. 
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1164">
+The names and behaviors of three of those three classes are:
+
+</para>
+
+
+
+
+
+<list id="ul1028" list-type="bulleted">
+
+	
+
+<item id="li1159">
+CanvasType0surface - Displays a Grayscale plot
+
+</item>
+
+
+	
+
+<item id="li1160">
+CanvasType1surface - Displays a Color Shift plot
+
+</item>
+
+
+	
+
+<item id="li1161">
+CanvasType2surface - Displays a Color Contour plot
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1165">
+Associated directly with the three above classes are three other inner 
+classes that are used to display the calibration scale immediately below the 
+plot of the 3D surface. The names and behaviors of those three classes are:
+
+</para>
+
+
+
+
+
+<list id="ul1029" list-type="bulleted">
+
+	
+
+<item id="li1162">
+CanvasType0scale - Displays a Grayscale calibration scale
+
+</item>
+
+
+	
+
+<item id="li1163">
+CanvasType1scale - Displays a Color Shift calibration scale
+
+</item>
+
+
+	
+
+<item id="li1164">
+CanvasType2scale - Displays a Color Contour calibration scale
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+</section>
+</section>
+<section id="h31023">
+<title>
+<emphasis id="The_getCenter_method" effect="bold">
+
+The getCenter method
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1166">
+Before getting into the details of these inner classes, however, I will 
+present and briefly discuss a method named 
+
+<emphasis id="strong1088" effect="bold">
+getCenter
+
+</emphasis>
+, which is 
+called by the constructor for each of the surface plotting classes.
+
+</para>
+
+
+
+
+
+<para id="p1167">
+The 
+
+<emphasis id="strong1089" effect="bold">
+getCenter
+
+</emphasis>
+ method is used to find the horizontal and 
+vertical center of the surface. These values are used to position the optional 
+red axes that may be drawn on the surface. This method is shown in its entirety 
+in 
+
+<link id="a1180" target-id="Listing_13">
+
+Listing 13
+
+</link>
+
+. 
+
+</para>
+
+
+
+
+
+<table id="table1015" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1015">
+<row id="tr1030">
+
+
+
+<entry id="th1015">
+<emphasis id="Listing_13" effect="bold">
+
+Listing 13.
+
+</emphasis>
+
+ The method named getCenter.
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1015">
+<row id="tr1031">
+<entry id="td1015">
+
+		
+
+<code id="pre1013" display="block">  int horizCenter;
+  int vertCenter;
+
+  void getCenter(){
+    if(dataWidth%2 == 0){//even
+      horizCenter = 
+           dataWidth * blockSize/2 + blockSize/2;
+    }else{//odd
+      horizCenter = dataWidth * blockSize/2;
+    }//end else
+    
+    if(dataHeight%2 == 0){//even
+      vertCenter = 
+          dataHeight * blockSize/2 + blockSize/2;
+    }else{//odd
+      vertCenter = dataHeight * blockSize/2;
+    }//end else
+  }//end getCenter</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41042">
+<title>
+Even or odd is very important
+
+</title>
+
+
+
+
+<para id="p1168">
+Note that the returned values depend on whether the dimensions of the surface 
+are even or odd.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1022" display="block">
+
+	
+
+<para id="p1169">
+<emphasis id="em1053" effect="italics">
+(For example, the center of a string of five blocks of pixels is the 
+	third block whereas the center of a string of six blocks of pixels is half 
+	way between the third and fourth blocks.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1170">
+Now that you know about the difference between even and odd surface 
+dimensions, the code in 
+
+<link id="a1181" target-id="Listing_13">
+
+Listing 13
+
+</link>
+
+ should be straightforward and should not 
+require further discussion.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h21008">
+<title>
+<emphasis id="Grayscale_plot_format" effect="bold">
+
+Grayscale plot format
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1171">
+<link id="a1182" target-id="Listing_14">
+
+Listing 14
+
+</link>
+
+ shows the beginning of the class named 
+
+<emphasis id="strong1090" effect="bold">
+CanvasType0surface
+
+</emphasis>
+ 
+and also shows the entire constructor for that class.
+
+</para>
+
+
+
+
+
+<para id="p1172">
+An object of this class is used to paint a 
+
+<emphasis id="strong1091" effect="bold">
+Grayscale
+
+</emphasis>
+ plot of 
+a 3D surface ranging from black at the lowest elevation to white at the highest 
+elevation. The various shades of gray vary in a smooth gradient between the two 
+extremes. The leftmost image in 
+
+<link id="a1183" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+ is an example of the type of plot 
+produced by an object of this class.
+
+</para>
+
+
+
+
+
+<table id="table1016" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1016">
+<row id="tr1032">
+
+
+
+<entry id="th1016">
+<emphasis id="Listing_14" effect="bold">
+
+Listing 14.
+
+</emphasis>
+
+ Beginning of the class named 
+CanvasType0surface.
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1016">
+<row id="tr1033">
+<entry id="td1016">
+
+		
+
+<code id="pre1014" display="block">  class CanvasType0surface extends Canvas{
+    CanvasType0surface(){//constructor
+      setSize(dataWidth * blockSize,
+              dataHeight * blockSize);
+      getCenter();
+    }//end constructor</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h31024">
+<title>
+<emphasis id="The_constructor" effect="bold">
+
+The constructor
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1173">
+The constructor for the class is straightforward. It accesses instance 
+variables of the outer enclosing object to set the size of the canvas on the 
+basis of the size of the surface and the size of the square of pixels that will 
+be used to represent each elevation value on the surface. 
+
+</para>
+
+
+
+
+
+<para id="p1174">
+The constructor also calls the 
+
+<emphasis id="strong1092" effect="bold">
+getCenter
+
+</emphasis>
+ method to get the 
+coordinates of the center of the surface in order to be able to draw the 
+optional red axes in the correct position later.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31025">
+<title>
+<emphasis id="Overridden_paint_method_for_CanvasType0surface_class" effect="bold">
+
+Overridden 
+paint method for CanvasType0surface class
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1175">
+The real work is done by the overridden 
+
+<emphasis id="strong1093" effect="bold">
+paint
+
+</emphasis>
+ method, which 
+begins in 
+
+<link id="a1184" target-id="Listing_15">
+
+Listing 15
+
+</link>
+
+. Of the three classes used to plot the 3D surface, this is 
+the simplest.
+
+</para>
+
+
+
+
+
+<table id="table1017" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1017">
+<row id="tr1034">
+
+
+
+<entry id="th1017">
+<emphasis id="Listing_15" effect="bold">
+
+Listing 15.
+
+</emphasis>
+
+ Beginning of overridden paint method.
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1017">
+<row id="tr1035">
+<entry id="td1017">
+
+		
+
+<code id="pre1015" display="block">    public void paint(Graphics g){
+      Color color = null;
+      for(int row = 0;row &lt; dataHeight;row++){
+        for(int col = 0;col &lt; dataWidth;col++){
+          //Add in red, green, and blue in
+          // proportion to the value of the
+          // surface height.
+          int red = (int)data[row][col];
+          int green = red;
+          int blue = red;</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41043">
+<title>
+Purpose of overridden paint method
+
+</title>
+
+
+
+
+<para id="p1176">
+The purpose of this overridden 
+
+<emphasis id="strong1094" effect="bold">
+paint
+
+</emphasis>
+ method is to convert 
+the elevation value of each point on the 3D surface into an appropriate shade of 
+gray, and to paint a square of pixels on the screen at that elevation value's 
+location where every pixel in the square is the same shade of gray.
+
+</para>
+
+
+
+
+
+<para id="p1177">
+In order to produce a gray pixel in a 24-bit color system, you need to set 
+the color values for red, green, and blue to the same value. If all three color 
+values are zero, the pixel color is black. If all three color values are 255, 
+the pixel color is white. If all three color values fall somewhere in between 
+zero and 255, the pixel color will be some shade of gray.
+
+</para>
+
+
+
+
+
+<para id="p1178">
+Recall that the elevation values were earlier normalized to fall in the range 
+from zero to 255. The code in 
+
+<link id="a1185" target-id="Listing_15">
+
+Listing 15
+
+</link>
+
+ uses a nested 
+
+<emphasis id="strong1095" effect="bold">
+for
+
+</emphasis>
+ loop 
+to access every elevation value in the array that describes the 3D surface. Then 
+it sets the red, green, and blue color values to the normalized surface value 
+for each point on the 3D surface.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31026">
+<title>
+<emphasis id="Instantiate_a_Color_object" effect="bold">
+
+Instantiate a Color object
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1179">
+Continuing inside the nested 
+
+<emphasis id="strong1096" effect="bold">
+for
+
+</emphasis>
+ loops, the code in 
+
+<link id="a1186" target-id="Listing_16">
+
+Listing 16
+
+</link>
+
+ instantiates a 
+new object of type 
+
+<emphasis id="strong1097" effect="bold">
+Color
+
+</emphasis>
+ based on the current red, green, and blue color values.
+
+</para>
+
+
+
+
+
+<table id="table1018" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1018">
+<row id="tr1036">
+
+
+
+<entry id="th1018">
+<emphasis id="Listing_16" effect="bold">
+
+Listing 16.
+
+</emphasis>
+
+ Instantiate a Color object.
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1018">
+<row id="tr1037">
+<entry id="td1018">
+
+		
+
+<code id="pre1016" display="block">          color = new Color(red,green,blue);</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+</section>
+<section id="h31027">
+<title>
+<emphasis id="Set_colors_and_draw_squares" effect="bold">
+
+Set colors and draw squares
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1180">
+The code in 
+
+<link id="a1187" target-id="Listing_17">
+
+Listing 17
+
+</link>
+
+ calls the 
+
+<emphasis id="strong1098" effect="bold">
+setColor
+
+</emphasis>
+ method of the
+
+
+<emphasis id="strong1099" effect="bold">
+Graphics
+
+</emphasis>
+ class to set the current drawing color to the color 
+described by the 
+
+<emphasis id="strong1100" effect="bold">
+Color
+
+</emphasis>
+ object referred to by the reference 
+variable named 
+
+<emphasis id="strong1101" effect="bold">
+color
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<table id="table1019" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1019">
+<row id="tr1038">
+
+
+
+<entry id="th1019">
+<emphasis id="Listing_17" effect="bold">
+
+Listing 17.
+
+</emphasis>
+
+ Set colors and draw squares.
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1019">
+<row id="tr1039">
+<entry id="td1019">
+
+		
+
+<code id="pre1017" display="block">          //Set the color value.
+          g.setColor(color);
+          //Draw a square of the specified size
+          //in the specified color at the
+          // specified location.
+          g.fillRect(col * blockSize,
+                     row * blockSize,
+                     blockSize,
+                     blockSize);
+        }//end col loop
+      }//end row loop</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41044">
+<title>
+Paint a colored square
+
+</title>
+
+
+
+
+<para id="p1181">
+Finally the code in 
+
+<link id="a1188" target-id="Listing_17">
+
+Listing 17
+
+</link>
+
+ calls the 
+
+<emphasis id="strong1102" effect="bold">
+fillRect
+
+</emphasis>
+ method of 
+the 
+
+<emphasis id="strong1103" effect="bold">
+Graphics
+
+</emphasis>
+ class to paint a square of pixels of the specified 
+size at the specified location in the specified color.
+
+</para>
+
+
+
+
+
+<para id="p1182">
+This process is repeated for every elevation point on the 3D surface data, 
+producing an output similar to the leftmost image in 
+
+<link id="a1189" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1183">
+<link id="a1190" target-id="Listing_17">
+
+Listing 17
+
+</link>
+
+ signals the end of the nested 
+
+<emphasis id="strong1104" effect="bold">
+for
+
+</emphasis>
+ loops. When the 
+code in 
+
+<link id="a1191" target-id="Listing_17">
+
+Listing 17
+
+</link>
+
+ finishes execution, the 3D surface has been plotted, but it 
+does not yet contain the optional red axes.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31028">
+<title>
+<emphasis id="Draw_the_optional_red_axes" effect="bold">
+
+Draw the optional red axes
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1184">
+<link id="a1192" target-id="Listing_18">
+
+Listing 18
+
+</link>
+
+ tests to see if the value of the axis parameter is true. If so, it 
+uses the information obtained earlier from the 
+
+<emphasis id="strong1105" effect="bold">
+getCenter
+
+</emphasis>
+ method, along with the 
+
+
+<emphasis id="strong1106" effect="bold">
+setColor
+
+</emphasis>
+ and 
+
+<emphasis id="strong1107" effect="bold">
+drawLine
+
+</emphasis>
+ methods of the 
+
+<emphasis id="strong1108" effect="bold">
+Graphics
+
+</emphasis>
+ class to draw the optional red 
+axes shown in the images in 
+
+<link id="a1193" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+. These axes always intersect at the center 
+of the image.
+
+</para>
+
+
+
+
+
+<table id="table1020" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1020">
+<row id="tr1040">
+
+
+
+<entry id="th1020">
+<emphasis id="Listing_18" effect="bold">
+
+Listing 18.
+
+</emphasis>
+
+ Draw the optional red axes.
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1020">
+<row id="tr1041">
+<entry id="td1020">
+
+		
+
+<code id="pre1018" display="block">      if(axis){
+        g.setColor(Color.RED);
+        g.drawLine(0,vertCenter,2*horizCenter,
+                                     vertCenter);
+        g.drawLine(horizCenter,0,horizCenter,
+                                   2*vertCenter);
+      }//end if
+    }//end paint
+  }//end inner class CanvasType0surface</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1185">
+<link id="a1194" target-id="Listing_18">
+
+Listing 18
+
+</link>
+
+ also signals the end of the overridden 
+
+<emphasis id="strong1109" effect="bold">
+paint
+
+</emphasis>
+ 
+method and the end of the inner class named 
+
+<emphasis id="strong1110" effect="bold">
+CanvasType0Surface
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31029">
+<title>
+<emphasis id="Beginning_of_the_class_named_CanvasType0scale" effect="bold">
+
+Beginning of the 
+class named CanvasType0scale
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1186">
+An object of the class named 
+
+<emphasis id="strong1111" effect="bold">
+CanvasType0scale
+
+</emphasis>
+ is used to 
+plot the calibration scale that is displayed immediately below the surface plot 
+for the 
+
+<emphasis id="strong1112" effect="bold">
+Grayscale
+
+</emphasis>
+ plot format. The beginning of this class and 
+the constructor for this class are shown in 
+
+<link id="a1195" target-id="Listing_19">
+
+Listing 19
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<table id="table1021" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1021">
+<row id="tr1042">
+
+
+
+<entry id="th1021">
+<emphasis id="Listing_19" effect="bold">
+
+Listing 19.
+
+</emphasis>
+
+ Beginning of the class named 
+CanvasType0scale .
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1021">
+<row id="tr1043">
+<entry id="td1021">
+
+		
+
+<code id="pre1019" display="block">  class CanvasType0scale extends Canvas{
+    //Set the physical height of the scale strip
+    // in pixels.
+    int scaleHeight = 6 * blockSize;
+    
+    CanvasType0scale(){//constructor
+      //Set the size of the Canvas based on the
+      // width of the surface and the size of the
+      // square used to represent each value on
+      // the surface.
+      setSize(dataWidth * blockSize,scaleHeight);
+    }//end constructor</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41045">
+<title>
+How it works
+
+</title>
+
+
+
+
+<para id="p1187">
+Basically this class 
+
+<emphasis id="em1054" effect="italics">
+(as well as the other two classes that create 
+calibration scales)
+
+</emphasis>
+ operates by constructing an artificial surface, 
+
+<emphasis id="em1055" effect="italics">
+
+(which is like a long thin board)
+
+</emphasis>
+, positioned such that one end has an 
+elevation of 0 and the other end has an elevation of 255. The length of this 
+long thin surface is equal to the width of the surface plot for the Grayscale 
+plot format.
+
+</para>
+
+
+
+
+
+<para id="p1188">
+The same Grayscale color algorithm is applied to this artificial surface that 
+is applied to the real surface. The result is a linear representation of the 
+colors produced by the color algorithm from the lowest elevation at 0 to the 
+highest elevation at 255. This result is displayed immediately below the real 
+surface with the lowest elevation at the left end and the highest elevation at 
+the right end. An example is shown in the leftmost image in 
+
+<link id="a1196" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1189">
+The code in 
+
+<link id="a1197" target-id="Listing_19">
+
+Listing 19
+
+</link>
+
+ establishes the size of the calibration scale surface.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31030">
+<title>
+<emphasis id="The_overridden_paint_method" effect="bold">
+
+The overridden paint method
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1190">
+<link id="a1198" target-id="Listing_20">
+
+Listing 20
+
+</link>
+
+ shows the overridden 
+
+<emphasis id="strong1113" effect="bold">
+paint
+
+</emphasis>
+ method that is used to plot the 
+calibration scale for the Grayscale plot format.
+
+</para>
+
+
+
+
+
+<table id="table1022" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1022">
+<row id="tr1044">
+
+
+
+<entry id="th1022">
+<emphasis id="Listing_20" effect="bold">
+
+Listing 20.
+
+</emphasis>
+
+ The overridden paint method.
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1022">
+<row id="tr1045">
+<entry id="td1022">
+
+		
+
+<code id="pre1020" display="block">    public void paint(Graphics g){
+      //Vary from white to black going from 255
+      // to 0.
+      Color color = null;
+      //Don't draw in top row. Leave it blank to
+      // separate the scale strip from the 
+      // drawing of the surface above it.
+      for(int row = 1;row &lt; scaleHeight;row++){
+        for(int col = 0;col &lt; dataWidth;col++){
+          
+          //Compute the value of the scale
+          // surface.
+          int scaleValue = 255 * col/
+                                 (dataWidth - 1);
+
+          //See the class named 
+          // CanvasType0surface for explanatory
+          // comments regarding the following
+          // color algorithm.          
+          int red = scaleValue;
+          int green = red;
+          int blue = red;
+          color = new Color(red,green,blue);
+          g.setColor(color);
+          g.fillRect(col * blockSize,
+                     row * blockSize,
+                     blockSize,
+                     blockSize);
+        }//end col loop
+      }//end row loop
+    }//end paint
+
+  }//end inner class CanvasType0scale</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1191">
+Because you already understand the color algorithm for the Grayscale plot 
+format, the code in 
+
+<link id="a1199" target-id="Listing_20">
+
+Listing 20
+
+</link>
+
+ should not require further explanation. This code 
+establishes the elevation level for each point on the calibration surface and 
+paints the box that represents that elevation in the appropriate color.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h21009">
+<title>
+<emphasis id="Color_Shift_plot_format" effect="bold">
+
+Color Shift plot format
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1192">
+The 
+
+<emphasis id="strong1114" effect="bold">
+CanvasType1surface
+
+</emphasis>
+ class is used to instantiate an 
+object that represents a normalized 3D surface with the colors ranging from blue 
+at the low elevations through aqua, green, and yellow to red at the high 
+elevations with a smooth gradient from 1 to 254.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1023" display="block">
+
+	
+
+<para id="p1193">
+<emphasis id="em1056" effect="italics">
+(The lowest elevation with a value of 0 is colored black. The highest 
+	elevation with a value of 255 is colored white.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1194">
+The center image in 
+
+<link id="a1200" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+ is an example of this plotting format.
+
+</para>
+
+
+
+
+
+<section id="h31031">
+<title>
+<emphasis id="Beginning_of_the_class_named_CanvasType1surface" effect="bold">
+
+Beginning of the class named CanvasType1surface
+
+</emphasis>
+
+ 
+
+
+</title>
+
+
+
+
+<para id="p1195">
+The beginning of the class and the constructor for the class named 
+
+<emphasis id="strong1115" effect="bold">
+CanvasType1surface
+
+</emphasis>
+ are shown in 
+
+
+<link id="a1201" target-id="Listing_21">
+
+Listing 21
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<table id="table1023" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1023">
+<row id="tr1046">
+
+
+
+<entry id="th1023">
+<emphasis id="Listing_21" effect="bold">
+
+Listing 21.
+
+</emphasis>
+
+ Beginning of the class named CanvasType1surface.
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1023">
+<row id="tr1047">
+<entry id="td1023">
+
+		
+
+<code id="pre1021" display="block">  class CanvasType1surface extends Canvas{
+    
+    CanvasType1surface(){//constructor   
+      //Set the size of the Canvas based on the
+      // size of the surface and the size of the
+      // square used to represent each value on
+      // the surface.
+      setSize(dataWidth * blockSize,
+              dataHeight * blockSize);
+      getCenter();
+    }//end constructor</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1196">
+The beginning of each of the three classes that produce the three plotting 
+formats is essentially the same. Therefore, the code in 
+
+<link id="a1202" target-id="Listing_21">
+
+Listing 21
+
+</link>
+
+ is 
+essentially the same as the code in 
+
+<link id="a1203" target-id="Listing_14">
+
+Listing 14
+
+</link>
+
+ and should not require further 
+explanation. The significant differences between the three classes lie in their 
+overridden 
+
+<emphasis id="strong1116" effect="bold">
+paint
+
+</emphasis>
+ methods.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31032">
+<title>
+<emphasis id="Overridden_paint" effect="bold">
+
+Overridden paint
+
+</emphasis>
+
+ method
+
+</title>
+
+
+
+
+<para id="p1197">
+The overridden 
+
+<emphasis id="strong1117" effect="bold">
+paint
+
+</emphasis>
+ method for this class, which begins in 
+
+
+<link id="a1204" target-id="Listing_22">
+
+Listing 22
+
+</link>
+
+, is probably the most complex of the three.
+
+</para>
+
+
+
+
+
+<table id="table1024" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1024">
+<row id="tr1048">
+
+
+
+<entry id="th1024">
+<emphasis id="Listing_22" effect="bold">
+
+Listing 22.
+
+</emphasis>
+
+ Beginning of the overridden paint 
+method.
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1024">
+<row id="tr1049">
+<entry id="td1024">
+
+		
+
+<code id="pre1022" display="block">    public void paint(Graphics g){
+      Color color = null;
+      for(int row = 0;row &lt; dataHeight;row++){
+        for(int col = 0;col &lt; dataWidth;col++){
+          int red = 0;
+          int green = 0;
+          int blue = 0;</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1198">
+The 
+
+<emphasis id="strong1118" effect="bold">
+paint
+
+</emphasis>
+ method for this class begins by setting up a pair 
+of nested 
+
+<emphasis id="strong1119" effect="bold">
+for
+
+</emphasis>
+ loops that will be used to process each elevation 
+point on the surface, and by initializing the color values for red, green, and 
+blue to 0 in the innermost loop.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31033">
+<title>
+<emphasis id="Set_white_and_black_for_max_and_min_values" effect="bold">
+
+Set white and black for max and min values
+
+</emphasis>
+
+
+</title>
+
+
+<para id="p1199">
+If the elevation value is equal to 255, color values are set to cause that elevation to be painted white. If the elevation value is equal to 0, color values are set to cause that elevation to be painted black.
+
+</para>
+
+
+
+
+
+<para id="p1200">
+<link id="a1205" target-id="Listing_23">
+
+Listing 23
+
+</link>
+
+ sets the color values to cause the extreme values of 0 and 255 to 
+be painted black and white. Note that the code in 
+
+<link id="a1206" target-id="Listing_23">
+
+Listing 23
+
+</link>
+
+ is the beginning of 
+a series of 
+
+<emphasis id="strong1120" effect="bold">
+if-else
+
+</emphasis>
+ constructs.
+
+</para>
+
+
+
+
+
+<table id="table1025" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1025">
+<row id="tr1050">
+
+
+
+<entry id="th1025">
+<emphasis id="Listing_23" effect="bold">
+
+Listing 23.
+
+</emphasis>
+
+ Set white and black for max and min 
+values.
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1025">
+<row id="tr1051">
+<entry id="td1025">
+
+		
+
+<code id="pre1023" display="block">          if((int)data[row][col] == 255){
+            red = green = blue = 255;//white
+          }else if((int)data[row][col] == 0 ){
+            red = green = blue = 0;//black</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+</section>
+<section id="h31034">
+<title>
+<emphasis id="Elevations_other_than_the_extreme_ends" effect="bold">
+
+Elevations other than the 
+extreme ends
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1201">
+If the elevation is not one of the extreme values of 0 or 255, control passes 
+to code that subdivides the total elevation range from 1 to 254 into the 
+following four ranges and then sets the color values for each range separately:
+
+</para>
+
+
+
+
+
+<list id="ul1030" list-type="bulleted">
+
+	
+
+<item id="li1165">
+0 less than elevation less than or equal 63
+
+</item>
+
+
+	
+
+<item id="li1166">
+63 less than elevation less than or equal 127
+
+</item>
+
+
+	
+
+<item id="li1167">
+127 less than elevation less than or equal 191
+
+</item>
+
+
+	
+
+<item id="li1168">
+191 less than elevation less than or equal 254
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<section id="h41046">
+<title>
+Processing the lowest range
+
+</title>
+
+
+
+
+<para id="p1202">
+<link id="a1207" target-id="Listing_24">
+
+Listing 24
+
+</link>
+
+ shows the code that is used to process the lowest range of 
+elevations between 1 and 63.
+
+</para>
+
+
+
+
+
+<table id="table1026" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1026">
+<row id="tr1052">
+
+
+
+<entry id="th1026">
+<emphasis id="Listing_24" effect="bold">
+
+Listing 24.
+
+</emphasis>
+
+ Process elevations from 1 to 63 
+inclusive.
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1026">
+<row id="tr1053">
+<entry id="td1026">
+
+		
+
+<code id="pre1024" display="block">          }else if(((int)data[row][col] &gt; 0) &amp;&amp; 
+                    ((int)data[row][col] &lt;= 63)){
+            int temp = 4 * ((int)data[row][col] 
+                                            - 0);
+            blue = 255;
+            green = temp;</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1203">
+What we are shooting for here is to produce color values that will result in 
+a smooth gradient of color from blue at the low end to aqua at the high end of 
+the range.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1024" display="block">
+
+	
+
+<para id="p1204">
+<emphasis id="em1057" effect="italics">
+(See the leftmost one-fourth of the calibration scale for the middle 
+	image in 
+
+<link id="a1208" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41047">
+<title>
+Scale the elevation values
+
+</title>
+
+
+
+
+<para id="p1205">
+<link id="a1209" target-id="Listing_24">
+
+Listing 24
+
+</link>
+
+ begins by multiplying the elevation value by a factor of 4 to put 
+it into the range from 4 to 252. This makes the elevation values compatible with 
+allowable color values that range from 0 to 255.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41048">
+<title>
+The color aqua
+
+</title>
+
+
+
+
+<para id="p1206">
+The color aqua is produced by mixing equal amounts of blue and green. 
+
+
+<link id="a1210" target-id="Listing_24">
+
+ Listing 24
+
+</link>
+
+ holds the value of blue constant at 255 and increases the value of green in 
+proportion to the elevation value. Thus, at the lower end of the range, blue has 
+a value of 255 and green has a value of 4. 
+
+<emphasis id="em1058" effect="italics">
+(This is almost pure blue.)
+
+</emphasis>
+ 
+At the upper end of the range, blue still has a value of 255 and green has a 
+value of 252. 
+
+<emphasis id="em1059" effect="italics">
+(This is almost the pure secondary color aqua.)
+
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1207">
+In all cases, the value of red is 0 within this range. These color values 
+
+<emphasis id="em1060" effect="italics">
+
+(blue and temp)
+
+</emphasis>
+ will be used later to instantiate a 
+
+<emphasis id="strong1121" effect="bold">
+Color
+
+</emphasis>
+ 
+object, which will be used to control the plotting color for that portion of the 
+display.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31035">
+<title>
+<emphasis id="Processing_the_other_three_ranges" effect="bold">
+
+Processing the other three 
+ranges
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1208">
+Now that you know the basic scheme, you shouldn't have any difficulty 
+understanding the code for processing the other three ranges shown in 
+
+
+<link id="a1211" target-id="Listing_25">
+
+Listing 
+25
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<table id="table1027" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1027">
+<row id="tr1054">
+
+
+
+<entry id="th1027">
+<emphasis id="Listing_25" effect="bold">
+
+Listing 25.
+
+</emphasis>
+
+ Processing the other three ranges.
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1027">
+<row id="tr1055">
+<entry id="td1027">
+
+		
+
+<code id="pre1025" display="block">          }else if(((int)data[row][col] &gt; 63) &amp;&amp; 
+                   ((int)data[row][col] &lt;= 127)){
+            int temp = 4 * ((int)data[row][col] 
+                                           - 64);
+            green = 255;
+            blue = 255 - temp;
+            
+          }else if(((int)data[row][col] &gt; 127) &amp;&amp;
+                   ((int)data[row][col] &lt;= 191)){
+            int temp = 4 * ((int)data[row][col] 
+                                          - 128);
+            green = 255;
+            red = temp;
+          
+          }else if(((int)data[row][col] &gt; 191) &amp;&amp;
+                   ((int)data[row][col] &lt;= 254)){
+            int temp = 4 * ((int)data[row][col] 
+                                          - 192);
+            red = 255;
+            green = 255 - temp;
+
+          }//end else</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41049">
+<title>
+Gradient from aqua to green
+
+</title>
+
+
+
+
+<para id="p1209">
+The second range produces a smooth gradient from aqua to green. In this 
+range, the green color value is held constant at 255 and the blue color value is 
+caused to decrease in inverse proportion to the normalized color value.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41050">
+<title>
+Gradient from green to yellow
+
+</title>
+
+
+
+
+<para id="p1210">
+The third range produces a smooth gradient from green to yellow. 
+
+<emphasis id="em1061" effect="italics">
+(Yellow 
+is produced by mixing equal amounts of red and green.)
+
+</emphasis>
+ Within this range, 
+green is held constant at a value of 255 and the value of red increases in 
+direct proportion to the normalized elevation value.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41051">
+<title>
+Gradient from yellow to red
+
+</title>
+
+
+
+
+<para id="p1211">
+The fourth range produces a smooth gradient from yellow to red. Within this 
+range, the value of red is held constant at 255 and the value of green decreases 
+in inverse proportion to the normalized elevation value.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41052">
+<title>
+A homework assignment
+
+</title>
+
+
+
+
+<para id="p1212">
+A useful homework assignment would be for you to modify the program as 
+follows:
+
+</para>
+
+
+
+
+
+<quote id="blockquote1025" display="block">
+
+	
+
+<para id="p1213">
+<emphasis id="em1062" effect="italics">
+Subdivide the total range into eight sub ranges instead of four as I 
+	did. Choose four additional colors that you can produce by mixing various 
+	levels of red, green, and blue. Modify the code to cause the colors to vary 
+	with a smooth gradient through those eight colors in succession.
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41053">
+<title>
+The rest of the overridden paint method
+
+</title>
+
+
+
+
+<para id="p1214">
+The rest of the overridden 
+
+<emphasis id="strong1122" effect="bold">
+paint
+
+</emphasis>
+ method for this class is 
+essentially the same as the code that I explained in 
+
+<link id="a1212" target-id="Listing_16">
+
+Listing 16
+
+</link>
+
+ through 
+
+
+<link id="a1213" target-id="Listing_18">
+
+ Listing 18
+
+</link>
+
+. Having set the current plotting color, the method goes on to paint a square 
+of pixels in that color at the correct location. Then it draws the optional red 
+axes if specified. Therefore, I won't repeat that explanation. You can view this 
+code in 
+
+<link id="a1214" target-id="Listing_29">
+
+Listing 29
+
+</link>
+
+ near the end of the module.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31036">
+<title>
+<emphasis id="The_class_named_CanvasType1scale" effect="bold">
+
+The class named CanvasType1scale
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1215">
+The inner class named 
+
+<emphasis id="strong1123" effect="bold">
+CanvasType1scale
+
+</emphasis>
+ is used to construct 
+a color scale that matches the color algorithm used in the class named 
+
+<emphasis id="strong1124" effect="bold">
+
+CanvasType1surface
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<para id="p1216">
+The overridden 
+
+<emphasis id="strong1125" effect="bold">
+paint
+
+</emphasis>
+ method for this class replicates the 
+color algorithm in the overridden 
+
+<emphasis id="strong1126" effect="bold">
+paint
+
+</emphasis>
+ method for the 
+
+<emphasis id="strong1127" effect="bold">
+
+CanvasType1surface
+
+</emphasis>
+ class.
+
+</para>
+
+
+
+
+
+<para id="p1217">
+Except for the difference in the overridden 
+
+<emphasis id="strong1128" effect="bold">
+paint
+
+</emphasis>
+ method, 
+the structure of this class is the same as the class named 
+
+<emphasis id="strong1129" effect="bold">
+
+CanvasType0scale
+
+</emphasis>
+, which I discussed earlier beginning with 
+
+<link id="a1215" target-id="Listing_19">
+
+Listing 19
+
+</link>
+
+. 
+Therefore, I won't repeat that discussion here. You can view the class in 
+
+
+<link id="a1216" target-id="Listing_29">
+
+Listing 29
+
+</link>
+
+ near the end of the module.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h21010">
+<title>
+<emphasis id="Color_Contour_plot_format" effect="bold">
+
+Color Contour plot format
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1218">
+The class named 
+
+<emphasis id="strong1130" effect="bold">
+CanvasType2surface
+
+</emphasis>
+ is an inner class used to 
+instantiate an object that plots a surface where each elevation on the surface 
+is represented by a color taken from a color palette containing a finite number 
+of colors. As written, the color palette contains 23 different colors and shades 
+of gray, but you can easily increase that number if you would like to do so.
+
+</para>
+
+
+
+
+
+<section id="h31037">
+<title>
+<emphasis id="The_color_palette" effect="bold">
+
+The color palette
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1219">
+Before getting into the details of the class, I will explain the color 
+palette. The color palette is produced by a method named 
+
+<emphasis id="strong1131" effect="bold">
+getColorPalette
+
+</emphasis>
+, 
+shown in its entirety in 
+
+<link id="a1217" target-id="Listing_26">
+
+Listing 26
+
+</link>
+
+. This is a utility method that is called by 
+the inner classes named 
+
+<emphasis id="strong1132" effect="bold">
+CanvasType2surface
+
+</emphasis>
+ and 
+
+<emphasis id="strong1133" effect="bold">
+
+CanvasType2scale
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<table id="table1028" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1028">
+<row id="tr1056">
+
+
+
+<entry id="th1028">
+<emphasis id="Listing_26" effect="bold">
+
+Listing 26.
+
+</emphasis>
+
+ The method named getColorPalette.
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1028">
+<row id="tr1057">
+<entry id="td1028">
+
+		
+
+<code id="pre1026" display="block">  Color[] getColorPalette(){
+    //Note that the following is an initialized
+    // 1D array of type Color.
+    Color[] colorPalette = {
+      Color.BLACK,//             0,  0,  0
+      Color.GRAY,//            128,128,128
+      Color.LIGHT_GRAY,//      192,192,192
+      Color.BLUE,//              0,  0,255
+      new Color(100,100,255),//100,100,255
+      new Color(140,140,255),//140,140,255
+      new Color(175,175,255),//175,175,255
+      Color.CYAN,//              0,255,255
+      new Color(140,255,255),//140,255,255
+      Color.GREEN,//             0,255,  0
+      new Color(140,255,140),//140,255,140
+      new Color(200,255,200),//200,255,200
+      Color.PINK,//            255,175,175
+      new Color(255,140,255),//255,140,255
+      Color.MAGENTA,//         255,  0,255
+      new Color(255,0,140),  //255,  0,140
+      Color.RED,//             255,  0,  0
+      new Color(255,100,0),//  255,100,  0
+      Color.ORANGE,//          255,200,  0
+      new Color(255,225,0),//  255,225,  0
+      Color.YELLOW,//          255,255,  0
+      new Color(255,255,150),//255,255,150
+      Color.WHITE};//          255,255,255
+      
+    return colorPalette;
+  }//end getColorPalette</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41054">
+<title>
+The getColorPalette method
+
+</title>
+
+
+
+
+<para id="p1220">
+The purpose of this method is to establish a color palette containing 
+references to 
+
+<emphasis id="strong1134" effect="bold">
+Color
+
+</emphasis>
+ objects representing 23 distinct colors and 
+shades of gray. The references are stored in a one-dimensional array object as 
+element type 
+
+<emphasis id="strong1135" effect="bold">
+Color
+
+</emphasis>
+. The values shown in comments in 
+
+<link id="a1218" target-id="Listing_26">
+
+Listing 26
+
+</link>
+
+ 
+represent the values of red, green, and blue required to produce that specific 
+color.
+
+</para>
+
+
+
+
+
+<para id="p1221">
+As you can see, some of the elements in the array refer to 
+
+<emphasis id="strong1136" effect="bold">
+Color
+
+</emphasis>
+ 
+objects defined as named constants
+
+<emphasis id="em1063" effect="italics">
+ (public final variables)
+
+</emphasis>
+ in the
+
+
+<emphasis id="strong1137" effect="bold">
+Color
+
+</emphasis>
+ class. Other elements in the array refer to 
+
+<emphasis id="strong1138" effect="bold">
+Color
+
+</emphasis>
+ 
+objects that are instantiated using red, green, and blue color values of my own 
+choosing. The actual colors represented by these objects, going from top to 
+bottom, match the colors shown in the calibration scale for the rightmost image 
+in 
+
+<link id="a1219" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41055">
+<title>
+Rearrange and add new colors
+
+</title>
+
+
+
+
+<para id="p1222">
+If you would like to do so, you can rearrange the colors in the array. This 
+will result in different colors being adjacent to one another in the calibration 
+scale. Also if you would like to do so, you can remove colors from the array or 
+add new colors of your own choosing to the array. The overridden paint methods 
+in the classes named 
+
+<emphasis id="strong1139" effect="bold">
+CanvasType2surface
+
+</emphasis>
+ and 
+
+<emphasis id="strong1140" effect="bold">
+
+CanvasType2scale
+
+</emphasis>
+ are designed to take such changes into account.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31038">
+<title>
+<emphasis id="The_CanvasType2surface_class" effect="bold">
+
+The CanvasType2surface class
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1223">
+You can view the entire class named 
+
+<emphasis id="strong1141" effect="bold">
+CanvasType2surface
+
+</emphasis>
+ in 
+
+
+<link id="a1220" target-id="Listing_29">
+
+Listing 29
+
+</link>
+
+ near the end of the module. Because of the similarity of this class 
+to others that I have previously discussed, I will limit my discussion to the 
+portions of the overridden 
+
+<emphasis id="strong1142" effect="bold">
+paint
+
+</emphasis>
+ method that distinguish this 
+class from the others.
+
+</para>
+
+
+
+
+
+<para id="p1224">
+As it turns out, this is perhaps the simplest of the three overridden 
+
+<emphasis id="strong1143" effect="bold">
+
+paint
+
+</emphasis>
+ methods. The method begins in 
+
+<link id="a1221" target-id="Listing_27">
+
+Listing 27
+
+</link>
+
+ where the 
+
+<emphasis id="strong1144" effect="bold">
+
+getColorPalette
+
+</emphasis>
+ method is called to get a reference to the color 
+palette discussed above.
+
+</para>
+
+
+
+
+
+<para id="p1225">
+Then a pair of nested 
+
+<emphasis id="strong1145" effect="bold">
+for
+
+</emphasis>
+ loops is set up to process every 
+elevation value on the 3D surface.
+
+</para>
+
+
+
+
+
+<table id="table1029" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1029">
+<row id="tr1058">
+
+
+
+<entry id="th1029">
+<emphasis id="Listing_27" effect="bold">
+
+Listing 27.
+
+</emphasis>
+
+ Beginning of overridden paint method.
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1029">
+<row id="tr1059">
+<entry id="td1029">
+
+		
+
+<code id="pre1027" display="block">    public void paint(Graphics g){
+      Color[] colorPalette = getColorPalette();
+
+      for(int row = 0;row &lt; dataHeight;row++){
+        for(int col = 0;col &lt; dataWidth;col++){
+
+          int quantizedData = (int)(Math.round(
+                  data[row][col]*(
+                    colorPalette.length-1)/255));</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41056">
+<title>
+Quantize the elevation levels
+
+</title>
+
+
+
+
+<para id="p1226">
+The code in 
+
+<link id="a1222" target-id="Listing_27">
+
+Listing 27
+
+</link>
+
+ quantizes the elevation levels into a set of integer 
+values ranging from 0 to one less than the number of elements in the color 
+palette. As written, this redefines the normalized elevation values as extending 
+from 0 to 22, instead of from 0 to 255.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1026" display="block">
+
+	
+
+<para id="p1227">
+<emphasis id="em1064" effect="italics">
+(If you change the length of the color palette, the number of ranges 
+	will change accordingly.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+</section>
+<section id="h31039">
+<title>
+<emphasis id="Set_the_color_value" effect="bold">
+
+Set the color value
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1228">
+The code in 
+
+<link id="a1223" target-id="Listing_28">
+
+Listing 28
+
+</link>
+
+ uses the quantized elevation value to index into the 
+color palette and retrieve a reference to a 
+
+<emphasis id="strong1146" effect="bold">
+Color
+
+</emphasis>
+ object. This reference is 
+passed to the 
+
+<emphasis id="strong1147" effect="bold">
+setColor
+
+</emphasis>
+ method setting the current plotting color to the color 
+represented by that index value.
+
+</para>
+
+
+
+
+
+<table id="table1030" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1030">
+<row id="tr1060">
+
+
+
+<entry id="th1030">
+<emphasis id="Listing_28" effect="bold">
+
+Listing 28.
+
+</emphasis>
+
+ Set the color value.
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1030">
+<row id="tr1061">
+<entry id="td1030">
+
+		
+
+<code id="pre1028" display="block">          g.setColor(colorPalette[quantizedData]);</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1229">
+Having set the current plotting color, as in the other two cases discussed 
+earlier, the method goes on to paint a square of pixels in that color at the 
+correct location. Then it draws the optional axes if specified. The code to 
+accomplish these operations is the same as code discussed previously, so I won't 
+repeat that discussion here. You can view the code in 
+
+<link id="a1224" target-id="Listing_29">
+
+Listing 29
+
+</link>
+
+ near the end of 
+the module.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31040">
+<title>
+<emphasis id="The_class_named_CanvasType2scale" effect="bold">
+
+The class named CanvasType2scale
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1230">
+This inner class is used to construct a color scale that matches the color 
+algorithm used in the class named 
+
+<emphasis id="strong1148" effect="bold">
+CanvasType2surface
+
+</emphasis>
+. Except 
+for the difference in the overridden 
+
+<emphasis id="strong1149" effect="bold">
+paint
+
+</emphasis>
+ method, this class 
+is essentially the same as the other two classes used to construct color scale 
+objects. Therefore, I won't repeat that discussion.
+
+</para>
+
+
+
+
+
+<para id="p1231">
+You can view the class in its entirety in 
+
+<link id="a1225" target-id="Listing_29">
+
+Listing 29
+
+</link>
+
+ near the end of the 
+module. You can view the graphic output produced by this class in the 
+calibration scale for the image at the rightmost end of 
+
+<link id="a1226" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h11005">
+<title>
+<emphasis id="Run_the_program" effect="bold">
+
+Run the program
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+<para id="p1232">
+I encourage you to copy, compile, and run the program that you will find in 
+
+
+<link id="a1227" target-id="Listing_29">
+
+Listing 29
+
+</link>
+
+. Modify the program and experiment with it in order to learn as much 
+as you can about the use of Java for displaying 3D data.
+
+</para>
+
+
+
+
+
+<para id="p1233">
+<emphasis id="strong1150" effect="bold">
+<emphasis id="em1065" effect="italics">
+A better color scheme
+
+</emphasis>
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1234">
+See if you can come up with a better color scheme than the color schemes that 
+I used in my version of the program. For example, you might add new colors to 
+the color palette used for the Color Contour plot. That will be very easy to do. 
+All you need to do is add them to the array.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1027" display="block">
+
+	
+
+<para id="p1235">
+<emphasis id="em1066" effect="italics">
+(The hard part will be to identify new colors that are visually 
+	separable from the colors that are already being used.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1236">
+You might also add new colors to the color algorithm for the Color Shift 
+plot. This will be somewhat more difficult in that additional coding will be 
+required to incorporate those new colors.
+
+</para>
+
+
+
+
+
+<para id="p1237">
+<emphasis id="strong1151" effect="bold">
+<emphasis id="em1067" effect="italics">
+Create different test surfaces
+
+</emphasis>
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1238">
+You might also want to modify the code in the 
+
+<emphasis id="strong1152" effect="bold">
+main
+
+</emphasis>
+ method to 
+cause it to create different test surfaces. You could even write new independent 
+programs that create surfaces and use this class named 
+
+<emphasis id="strong1153" effect="bold">
+ImgMod29
+
+</emphasis>
+ 
+to plot those surfaces. Remember, all that's necessary to use this class to plot 
+your own 3D surface is to include a statement similar to the following in your 
+code:
+
+</para>
+
+
+
+
+
+<code id="pre1029" display="block">new ImgMod29(data,blockSize,true,0);</code>
+
+
+
+
+<para id="p1239">
+<emphasis id="strong1154" effect="bold">
+<emphasis id="em1068" effect="italics">
+Create larger test surfaces with a smaller blockSize
+
+</emphasis>
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1240">
+It was necessary for me to keep the images in this module small in order to 
+force them to fit into this publication format. As you are experimenting, make 
+your test surfaces larger and your 
+
+<emphasis id="strong1155" effect="bold">
+blockSize
+
+</emphasis>
+ smaller. This will 
+result in smoother edges where different colors meet.
+
+</para>
+
+
+
+
+
+<para id="p1241">
+<emphasis id="strong1156" effect="bold">
+<emphasis id="em1069" effect="italics">
+The parameters to the ImgMod29 constructor
+
+</emphasis>
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1242">
+The parameter named 
+
+<emphasis id="strong1157" effect="bold">
+data
+
+</emphasis>
+ in the above example is a reference 
+to a 2D array of type 
+
+<emphasis id="strong1158" effect="bold">
+double
+
+</emphasis>
+ that describes the surface to be 
+plotted.
+
+</para>
+
+
+
+
+
+<para id="p1243">
+The second parameter named 
+
+<emphasis id="strong1159" effect="bold">
+blockSize
+
+</emphasis>
+ specifies the size of 
+one side of the square of pixels in the final plot that you want to use to 
+represent each elevation point on your 3D surface. Set this to 0 if you are 
+unsure as to what size square you need.
+
+</para>
+
+
+
+
+
+<para id="p1244">
+The third parameter specifies whether or not you want to have the optional 
+red axes drawn. A value of true causes the axes to be drawn. A value of false 
+causes the axes to be omitted.
+
+</para>
+
+
+
+
+
+<para id="p1245">
+The fourth parameter is an integer that specifies the plotting format as 
+follows:
+
+</para>
+
+
+
+
+
+<list id="ul1031" list-type="bulleted">
+
+	
+
+<item id="li1169">
+0 - Grayscale (linear)
+
+</item>
+
+
+	
+
+<item id="li1170">
+1 - Color Shift (linear)
+
+</item>
+
+
+	
+
+<item id="li1171">
+2 - Color Contour (linear)
+
+</item>
+
+
+	
+
+<item id="li1172">
+3 - Grayscale with logarithmic data conversion
+
+</item>
+
+
+	
+
+<item id="li1173">
+4 - Color Shift with logarithmic data conversion
+
+</item>
+
+
+	
+
+<item id="li1174">
+5 - Color Contour with logarithmic data conversion
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1246">
+The class couldn't be simpler to use.
+
+</para>
+
+
+
+
+
+<para id="p1247">
+Above all, have fun and learn as much as you can in the process.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h11006">
+<title>
+<emphasis id="Summary" effect="bold">
+
+Summary
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1248">
+In this module, I explained and illustrated a program for using Java and 
+color to plot 3D surfaces. The program is extremely easy to use and makes it 
+easy to plot your surface using six different plotting formats in a wide range 
+of sizes. 
+
+</para>
+
+
+
+
+
+</section>
+<section id="h11007">
+<title>
+<emphasis id="Complete_program_listings" effect="bold">
+
+Complete program listing
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1249">
+A complete listing of the program is provided in 
+
+<link id="a1228" target-id="Listing_29">
+
+Listing 29
+
+</link>
+
+ below.
+
+</para>
+
+
+
+
+
+<table id="table1031" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1031">
+<row id="tr1062">
+
+
+
+<entry id="th1031">
+<emphasis id="Listing_29" effect="bold">
+
+Listing 29.
+
+</emphasis>
+
+ Source code for ImgMod29.java.
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1031">
+<row id="tr1063">
+<entry id="td1031">
+
+		
+
+<code id="pre1030" display="block">/*File ImgMod29.java
+Copyright 2005, R.G.Baldwin
+
+The purpose of this program is to display a 3D
+surface using color to represent the height of 
+each point on the surface.
+
+The constructor for this class receives a 3D 
+surface defined as a rectangular 2D array of 
+double values.  The surface values may be 
+positive or negative or both.  When an object of 
+the class is constructed, it draws the 3D surface
+using one of six possible formats representing 
+the height of each point on the surface with a 
+color.  
+
+The constructor requires four parameters:
+
+double[][] dataIn
+int blockSize
+boolean axis
+int display
+
+The purpose of each parameter is as follows:
+
+dataIn - The parameter named dataIn is a 
+reference to the array containing the data that 
+describes the 3D surface.
+
+blockSize - The value of the parameter named 
+blockSize defines the size of a colored square in
+the final display that represents an input 
+surface value.  For example, if blockSize is 1, 
+each input surface value will be represented by a
+single pixel in the display.  If blockSize is 5,
+each input surface value will be represented by
+a colored square having 5 pixels on each side.
+For example, the test code in the main method 
+displays a surface having 59 values along the 
+horizontal axis and 59 values along the vertical 
+axis.  Each value on the surface is represented 
+in the final display by a colored square that is 
+2 pixels on each side.
+
+axis - The parameter named axis specifies whether
+red axes will be drawn on the display with the 
+origin at the center.
+
+display - The parameter named display specifies 
+one of six possible display formats.  The value 
+of display must be between 0 and 5 inclusive. 
+Values of 0, 1, and 2 specify the following 
+formats:
+
+  0 - Gray scale gradient from black at the 
+  minimum to white at the maximum.
+  1 - Color gradient from blue at the low end
+  through aqua, green, yellow to red at the 
+  high end. The minimum value is colored black.
+  The maximum value is colored white..
+  2.- The surface is subdivided into 23 levels 
+  and each of the 23 levels is represented by 
+  one of the following Color Contour plot in order 
+  from minimum to maximum.
+    Color.BLACK
+    Color.GRAY
+    Color.LIGHT_GRAY
+    Color.BLUE
+    new Color(100,100,255)
+    new Color(140,140,255)
+    new Color(175,175,255)
+    Color.CYAN
+    new Color(140,255,255)
+    Color.GREEN
+    new Color(140,255,140)
+    new Color(200,255,200)
+    Color.PINK
+    new Color(255,140,255)
+    Color.MAGENTA
+    new Color(255,0,140)
+    Color.RED
+    new Color(255,100,0)
+    Color.ORANGE
+    new Color(255,225,0)
+    Color.YELLOW
+    new Color(255,255,150)
+    Color.WHITE
+
+Values of 3, 4, and 5 for the parameter named 
+display draw the surface in the same formats as 
+above except that the surface values are first 
+rectified and then converted to log base 10 
+values before being converted to color and drawn.
+
+When the surface is drawn, a horizontal scale 
+strip is drawn immediately below the surface 
+showing the colors used in the drawing 
+starting with the color for the minimum at the 
+left and progressing to the color for the maximum
+at the right.
+
+Regardless of whether the surface values are 
+converted to log values or not, the surface 
+values are normalized to cause them to extend 
+from 0 to 255 before converting to color and 
+drawing.
+
+For a display value of 0 or 3, the highest point 
+with a value of 255 is painted white.  The lowest
+point with a value of 0 is painted black,  The 
+surface is represented using shades of gray.  The
+shade changes from black to white in a uniform 
+gradient as the height of the normalized surface 
+values progress from 0 to 255.
+
+For a display value of 1 or 4, the lowest point 
+is painted black and the highest point is 
+painted white. The color changes from blue 
+through aqua, green, and yellow to red in a 
+smooth gradient as the normalized surface values
+progress from 1 to 254.  (Values of 0 and 255 
+would be pure blue and pure red if they were not
+overridden by black and white.)
+
+For a display value of 2 or 5, the highest point 
+with a value of 255 is painted white.  The lowest
+point with a value of 0 is painted black,  The 
+surface is represented using a combination of 
+unique shades of gray and unique colors as the 
+normalized surface values progress from 0 to 255.
+This is not a gradient display.  Rather, this 
+display format is similar to a contour map where 
+each distinct color traces out a constant level 
+on the normalized surface being drawn.
+
+Although the class is intended to be used by 
+other programs to display surfaces produced by 
+those programs, the class has a main method 
+making it possible to run it in a stand-alone 
+mode for testing.  When run as a stand-alone
+program, the class produces and displays six 
+individual surfaces with the lowest point in the 
+upper left corner and the highest point in the 
+lower right corner.  The scale strip is displayed
+immediately below each surface. The six surfaces 
+are stacked in the upper left corner of the 
+screen.  (You must physically move the ones on 
+the top to see the ones on the bottom.)  The 
+stacking order of the surfaces from bottom to top
+is based on display types in the order 0, 1, 2, 
+3, 4, and 5.  The surfaces that are displayed
+are 3D parabolas. Some of the surfaces show axes
+and some do not.
+
+The constructor defines an anonymous inner class
+listener on the close button on the frame.  
+Clicking the close button will terminate the 
+program that uses an object of this class.
+
+Tested using J2SE 5.0 and WinXP
+************************************************/
+import java.awt.*;
+import java.awt.event.*;
+
+class ImgMod29 extends Frame{
+  int dataWidth;
+  int dataHeight;
+  int blockSize;
+  boolean axis;
+  double[][] data;
+
+
+  ImgMod29(double[][] dataIn,int blockSize,
+           boolean axis,int display){
+    //Get and save several important values
+    this.blockSize = blockSize;
+    this.axis = axis;
+    dataHeight = dataIn.length;
+    dataWidth = dataIn[0].length;
+    boolean logPlot = false;
+    int displayType = display;
+    
+    //plot types 0, 1, and 2 with no log
+    // conversion for display parameter
+    // value  = 0, 1, or 2. This is the default
+    // and no special code is required.
+    //plot types 0, 1, and 2 with log conversion
+    // for display parameter value = 3, 4, or 5.
+    if(display == 3){
+      displayType = 0;
+      logPlot = true;
+    }else if(display == 4){
+      displayType = 1;
+      logPlot = true;
+    }else if(display == 5){
+      displayType = 2;
+      logPlot = true;
+    }else if((display &gt; 5) || (display &lt; 0)){
+      System.out.println(
+         "DisplayType input error, terminating");
+      System.exit(0);
+    }//end if
+    
+    //Make a copy of the input data array to
+    // avoid damaging the original data.
+    data = new double[dataHeight][dataWidth];
+    for(int row = 0;row &lt; dataHeight;row++){
+      for(int col = 0;col &lt; dataWidth;col++){
+        data[row][col] = dataIn[row][col];
+      }//end loop on col
+    }//end loop on row
+    
+    if(logPlot){//Convert to log base 10.
+      for(int row = 0;row &lt; dataHeight;row++){
+        for(int col = 0;col &lt; dataWidth;col++){
+          //Change the sign on negative values
+          // before converting to log values.
+          if(data[row][col] &lt; 0){
+            data[row][col] = -data[row][col];
+          }//end if
+          if(data[row][col] &gt; 0){
+            //Convert value to log base 10. Log
+            // of 0 is undefined. Just leave it
+            // at 0.
+            data[row][col] = 
+                      Math.log10(data[row][col]);
+          }//end if
+        }//end col loop
+      }//end row loop
+    }//end if on logPlot
+
+    //Force the data into the range from 0 to 255
+    // regardless of whether or not it has been
+    // converted to log values.
+    scaleTheSurfaceData();
+
+    Canvas surface = null;
+    Canvas scale = null;
+    
+    //Establish the format based on the value of
+    // the parameter named display.
+    if(displayType == 0){
+      //Create a type 0 Canvas object to draw the
+      // surface on.  This is a gray scale 
+      // display.
+      surface = new CanvasType0surface();
+      //Create a Canvas object to draw the scale
+      // on.
+      scale = new CanvasType0scale();
+    }else if(displayType == 1){
+      //Color Shift plot
+      surface = new CanvasType1surface();
+      scale = new CanvasType1scale();
+    }else if(displayType == 2){
+      //Color Contour plot.
+      surface = new CanvasType2surface();
+      scale = new CanvasType2scale();
+    }//end if-else on display type
+
+    //Add the plotted surface to center of the
+    // Frame
+    add(BorderLayout.CENTER,surface);
+    //Add the scale to bottom of Frame
+    add(BorderLayout.SOUTH,scale);
+    //Cause the size of the Frame to be just
+    // right to contain the two Canvas objects.
+    pack();
+
+    //Set Frame cosmetics and make it visible.
+    setTitle("Copyright 2005 R.G.Baldwin");
+    setVisible(true);
+    
+    //Use an anonymous class to register a window
+    // listener on the Frame.  This class extends
+    // WindowAdapter
+    addWindowListener(new WindowAdapter(){
+        public void windowClosing(WindowEvent e){
+          System.exit(0);
+        }//end windowClosing
+      }//end class definition
+    );//end addWindowListener
+    
+  }//end constructor
+  //-------------------------------------------//
+  
+  double min;
+  double max;
+  //This method is used to scale the surface data
+  // to force it to fit in the range from 0 to
+  // 255.
+  void scaleTheSurfaceData(){
+    //Find the minimum surface value.
+    min = Double.MAX_VALUE;
+    for(int row = 0;row &lt; dataHeight;row++){
+      for(int col = 0;col &lt; dataWidth;col++){
+        if(data[row][col] &lt; min)
+          min = data[row][col];
+      }//end col loop
+    }//end row loop
+
+    //Shift all values up or down to force new
+    // minimum value to be 0.
+    for(int row = 0;row &lt; dataHeight;row++){
+      for(int col = 0;col &lt; dataWidth;col++){
+        data[row][col] = data[row][col] - min;
+      }//end col loop
+    }//end row loop
+      
+    //Now get the maximum value of the shifted
+    // surface values
+    max = -Double.MAX_VALUE;
+    for(int row = 0;row &lt; dataHeight;row++){
+      for(int col = 0;col &lt; dataWidth;col++){
+        if(data[row][col] &gt; max)
+          max = data[row][col];
+      }//end col loop
+    }//end row loop
+
+    //Now scale all values to cause the new
+    // maximum value to be 255.
+    for(int row = 0;row &lt; dataHeight;row++){
+      for(int col = 0;col &lt; dataWidth;col++){
+        data[row][col] = 
+                      data[row][col] * 255/max;
+      }//end col loop
+    }//end row loop
+  }//end scaleTheSurfaceData
+  //-------------------------------------------//
+
+  //main method for self-testing the class
+  public static void main(String[] args){
+    //Create the array of test data.
+    int numberRows = 59;
+    int numberCols = 59;
+    double[][] data = 
+              new double[numberRows][numberCols];
+    int blockSize = 2;
+
+    //Create a surface with a minimum at the
+    // upper left corner and a maximum at the
+    // lower right corner.  This surface is
+    // a 3D parabola.
+    for(int row = 0;row &lt; numberRows;row++){
+      for(int col = 0;col &lt; numberCols;col++){
+        int xSquare = col * col;
+        int ySquare = row * row;
+        data[row][col] = xSquare + ySquare;
+      }//end col loop
+    }//end row loop
+
+    //Instantiate objects to display the test
+    // data surface in six different formats on
+    // top of one another in the upper left 
+    // corner of the screen.  Represent each
+    // surface value by a colored square that is
+    // blockSize pixels on each side.  Draw a red
+    // axis at the center of some of the
+    // surfaces.
+    new ImgMod29(data,blockSize,true,0);
+    new ImgMod29(data,blockSize,false,1);    
+    new ImgMod29(data,blockSize,true,2);
+    new ImgMod29(data,blockSize,true,3);
+    new ImgMod29(data,blockSize,false,4);    
+    new ImgMod29(data,blockSize,true,5);
+  }//end main
+  //-------------------------------------------//
+  
+  int horizCenter;
+  int vertCenter;
+  //This helper method is used to find the
+  // horizontal and vertical center of the
+  // surface.  These values are used to locate
+  // the red axes that are drawn on the surface.
+  // Note that the returned values depend on
+  // whether the dimensions of the surface are
+  // odd or even.
+  void getCenter(){
+    if(dataWidth%2 == 0){//even
+      horizCenter = 
+           dataWidth * blockSize/2 + blockSize/2;
+    }else{//odd
+      horizCenter = dataWidth * blockSize/2;
+    }//end else
+    
+    if(dataHeight%2 == 0){//even
+      vertCenter = 
+          dataHeight * blockSize/2 + blockSize/2;
+    }else{//odd
+      vertCenter = dataHeight * blockSize/2;
+    }//end else
+  }//end getCenter
+  //-------------------------------------------//
+
+  //Note that the following six classes are
+  // inner classes. This makes it possible for
+  // methods in the class to access instance
+  // variables and methods of the containing
+  // object.
+
+  //This class is used to draw a gray scale
+  // surface ranging from white at the high end
+  // to black at the low end with a smooth
+  // gradient in between.
+  class CanvasType0surface extends Canvas{
+    CanvasType0surface(){//constructor
+      //Set the size of the Canvas based on the
+      // size of the surface and the size of the
+      // square used to represent each value on
+      // the surface.
+      setSize(dataWidth * blockSize,
+              dataHeight * blockSize);
+      getCenter();
+    }//end constructor
+    
+    //Override the paint method to draw the
+    // surface.
+    public void paint(Graphics g){
+      //Vary from white to black going from high
+      // to low.
+      Color color = null;
+      for(int row = 0;row &lt; dataHeight;row++){
+        for(int col = 0;col &lt; dataWidth;col++){
+          //Add in red, green, and blue in
+          // proportion to the value of the
+          // surface height.
+          int red = (int)data[row][col];
+          int green = red;
+          int blue = red;
+          //Compute the color value for the
+          // point on the surface.
+          color = new Color(red,green,blue);
+          //Set the color value.
+          g.setColor(color);
+          //Draw a square of the specified size
+          //in the specified color at the
+          // specified location.
+          g.fillRect(col * blockSize,
+                     row * blockSize,
+                     blockSize,
+                     blockSize);
+        }//end col loop
+      }//end row loop
+      
+      //If axis is true, draw red lines to form
+      // an origin at the center
+      if(axis){
+        g.setColor(Color.RED);
+        g.drawLine(0,vertCenter,2*horizCenter,
+                                     vertCenter);
+        g.drawLine(horizCenter,0,horizCenter,
+                                   2*vertCenter);
+      }//end if
+    }//end paint
+  }//end inner class CanvasType0surface
+  //===========================================//
+  
+  //Note that this is an inner class.
+  //This class is used to construct a color scale
+  // that matches the color scheme used in the
+  // class named CanvasType0surface.
+  class CanvasType0scale extends Canvas{
+    //Set the physical height of the scale strip
+    // in pixels.
+    int scaleHeight = 6 * blockSize;
+    
+    CanvasType0scale(){//constructor
+      //Set the size of the Canvas based on the
+      // width of the surface and the size of the
+      // square used to represent each value on
+      // the surface.
+      setSize(dataWidth * blockSize,scaleHeight);
+    }//end constructor
+  
+    //Override the paint method to draw the
+    // scale strip.
+    public void paint(Graphics g){
+      //Vary from white to black going from 255
+      // to 0.
+      Color color = null;
+      //Don't draw in top row. Leave it blank to
+      // separate the scale strip from the 
+      // drawing of the surface above it.
+      for(int row = 1;row &lt; scaleHeight;row++){
+        for(int col = 0;col &lt; dataWidth;col++){
+          
+          //Compute the value of the scale
+          // surface.
+          int scaleValue = 255 * col/
+                                 (dataWidth - 1);
+
+          //See the class named 
+          // CanvasType0surface for explanatory
+          // comments regarding the following
+          // color algorithm.          
+          int red = scaleValue;
+          int green = red;
+          int blue = red;
+          color = new Color(red,green,blue);
+          g.setColor(color);
+          g.fillRect(col * blockSize,
+                     row * blockSize,
+                     blockSize,
+                     blockSize);
+        }//end col loop
+      }//end row loop
+    }//end paint
+
+  }//end inner class CanvasType0scale
+  //===========================================//
+  
+  //This class is used to draw a surface with the
+  // colors ranging from blue at the low end
+  // through aqua, green, and yellow to red at
+  // the high end with a smooth gradient from 1
+  // to 254.  The lowest point with a value of 0
+  // is colored black.  The highest point with a
+  // value of 255 is colored white.
+  class CanvasType1surface extends Canvas{
+    
+    CanvasType1surface(){//constructor   
+      //Set the size of the Canvas based on the
+      // size of the surface and the size of the
+      // square used to represent each value on
+      // the surface.
+      setSize(dataWidth * blockSize,
+              dataHeight * blockSize);
+      getCenter();
+    }//end constructor
+    
+    //Override the paint method to draw the
+    // surface.
+    public void paint(Graphics g){
+      //Vary color as described in the comments
+      // above.
+      Color color = null;
+      for(int row = 0;row &lt; dataHeight;row++){
+        for(int col = 0;col &lt; dataWidth;col++){
+          int red = 0;
+          int green = 0;
+          int blue = 0;
+          
+          if((int)data[row][col] == 255){
+            red = green = blue = 255;//white
+          }else if((int)data[row][col] == 0 ){
+            red = green = blue = 0;//black
+            
+          }else if(((int)data[row][col] &gt; 0) &amp;&amp; 
+                    ((int)data[row][col] &lt;= 63)){
+            int temp = 4 * ((int)data[row][col] 
+                                            - 0);
+            blue = 255;
+            green = temp;
+
+          }else if(((int)data[row][col] &gt; 63) &amp;&amp; 
+                   ((int)data[row][col] &lt;= 127)){
+            int temp = 4 * ((int)data[row][col] 
+                                           - 64);
+            green = 255;
+            blue = 255 - temp;
+            
+          }else if(((int)data[row][col] &gt; 127) &amp;&amp;
+                   ((int)data[row][col] &lt;= 191)){
+            int temp = 4 * ((int)data[row][col] 
+                                          - 128);
+            green = 255;
+            red = temp;
+          
+          }else if(((int)data[row][col] &gt; 191) &amp;&amp;
+                   ((int)data[row][col] &lt;= 254)){
+            int temp = 4 * ((int)data[row][col] 
+                                          - 192);
+            red = 255;
+            green = 255 - temp;
+
+          }else{//impossible condition
+            System.out.println(
+                       "Should not reach here.");
+            System.exit(0);
+          }//end else
+          
+          //Compute the color value for the
+          // point on the surface.
+          color = new Color(red,green,blue);
+          //Set the color value.
+          g.setColor(color);
+          //Draw a square of the specified size
+          // in the specified color at the
+          // specified location.
+          g.fillRect(col * blockSize,
+                     row * blockSize,
+                     blockSize,
+                     blockSize);
+        }//end col loop
+      }//end row loop
+      
+      //If axis is true, draw red lines to form
+      // an origin at the center
+      if(axis){
+        g.setColor(Color.RED);
+        g.drawLine(0,vertCenter,2*horizCenter,
+                                     vertCenter);
+        g.drawLine(horizCenter,0,horizCenter,
+                                   2*vertCenter);
+      }//end if
+    }//end paint
+  }//end inner class CanvasType1surface
+  //===========================================//
+
+  //Note that this is an inner class.  This class
+  // is used to construct a color scale that
+  // matches the color scheme used in the class
+  // named CanvasType1surface.
+  class CanvasType1scale extends Canvas{
+   int scaleHeight = 6 * blockSize;
+    
+    CanvasType1scale(){//constructor
+      //Set the size of the Canvas based on the
+      // width of the surface and the size of the
+      // square used to represent each value on
+      // the surface.
+      setSize(dataWidth * blockSize,scaleHeight);
+    }//end constructor
+  
+    //Override the paint method to draw the
+    // scale.
+    public void paint(Graphics g){
+      //Vary from yellow to blue going from 255
+      // to 0.
+      Color color = null;
+      for(int row = 1;row &lt; scaleHeight;row++){
+        for(int col = 0;col &lt; dataWidth;col++){
+          
+          int scaleValue = 255 * col/(
+                                  dataWidth - 1);
+          // See the class named
+          // CanvasType1surface for explanatory
+          // comments regarding this color 
+          // algorithm.
+          int red = 0;
+          int green = 0;
+          int blue = 0;
+          if(scaleValue == 255){
+            red = green = blue = 255;//white
+          }else if(scaleValue == 0 ){
+            red = green = blue = 0;//black
+            
+          }else if((scaleValue &gt; 0) &amp;&amp; 
+                             (scaleValue &lt;= 63)){
+            scaleValue = 4 * (scaleValue - 0);
+            blue = 255;
+            green = scaleValue;
+
+          }else if((scaleValue &gt; 63) &amp;&amp; 
+                            (scaleValue &lt;= 127)){
+            scaleValue = 4 * (scaleValue - 64);
+            green = 255;
+            blue = 255 - scaleValue;
+            
+          }else if((scaleValue &gt; 127) &amp;&amp; 
+                            (scaleValue &lt;= 191)){
+            scaleValue = 4 * (scaleValue - 128);
+            green = 255;
+            red = scaleValue;
+          
+          }else if((scaleValue &gt; 191) &amp;&amp; 
+                            (scaleValue &lt;= 254)){
+            scaleValue = 4 * (scaleValue - 192);
+            red = 255;
+            green = 255 - scaleValue;
+
+          }else{//impossible condition
+            System.out.println(
+                       "Should not reach here.");
+            System.exit(0);
+          }//end else
+          
+          color = new Color(red,green,blue);
+          g.setColor(color);
+          g.fillRect(col * blockSize,
+                     row * blockSize,
+                     blockSize,
+                     blockSize);
+        }//end col loop
+      }//end row loop
+    }//end paint
+
+  }//end inner class CanvasType1scale
+  //===========================================//
+
+  //This is a utility method used by the two
+  // inner classes that follow.  The purpose of
+  // this method is to establish a color palette
+  // containing 23 distinct Colors and shades of
+  // gray.  The values shown in comments
+  // represent the values of red, green, and blue
+  // for that specific color.
+  Color[] getColorPalette(){
+    //Note that the following is an initialized
+    // 1D array of type Color.
+    Color[] colorPalette = {
+      Color.BLACK,//             0,  0,  0
+      Color.GRAY,//            128,128,128
+      Color.LIGHT_GRAY,//      192,192,192
+      Color.BLUE,//              0,  0,255
+      new Color(100,100,255),//100,100,255
+      new Color(140,140,255),//140,140,255
+      new Color(175,175,255),//175,175,255
+      Color.CYAN,//              0,255,255
+      new Color(140,255,255),//140,255,255
+      Color.GREEN,//             0,255,  0
+      new Color(140,255,140),//140,255,140
+      new Color(200,255,200),//200,255,200
+      Color.PINK,//            255,175,175
+      new Color(255,140,255),//255,140,255
+      Color.MAGENTA,//         255,  0,255
+      new Color(255,0,140),  //255,  0,140
+      Color.RED,//             255,  0,  0
+      new Color(255,100,0),//  255,100,  0
+      Color.ORANGE,//          255,200,  0
+      new Color(255,225,0),//  255,225,  0
+      Color.YELLOW,//          255,255,  0
+      new Color(255,255,150),//255,255,150
+      Color.WHITE};//          255,255,255
+      
+    return colorPalette;
+  }//end getColorPalette
+  //===========================================//
+  
+  //Note that this is an inner class.
+  //This class is used to draw a surface
+  // representing the heights of the points on
+  // the surface using the colors and shades of
+  // gray defined in the color palette..
+  class CanvasType2surface extends Canvas{
+    
+    CanvasType2surface(){//constructor
+      //Set the size of the Canvas based on the
+      // size of the surface and the size of the
+      // square used to represent each value on
+      // the surface.
+      setSize(dataWidth * blockSize,
+              dataHeight * blockSize);
+      getCenter();
+    }//end constructor
+    
+    //Override the paint method to draw the
+    // surface.
+    public void paint(Graphics g){
+      Color[] colorPalette = getColorPalette();
+
+      for(int row = 0;row &lt; dataHeight;row++){
+        for(int col = 0;col &lt; dataWidth;col++){
+          //Quantize the surface into a set of
+          // levels where the number of levels is
+          // equal to the number of colors in the
+          // color palette.
+          int quantizedData = (int)(Math.round(
+                  data[row][col]*(
+                    colorPalette.length-1)/255));
+          //Set the color for this point to the
+          // corresponding color from the
+          // palette by matching the integer
+          // value of the level and the index
+          // value of the palette.
+          g.setColor(colorPalette[
+                                 quantizedData]);
+          //Draw a square in the output image of
+          // the specified color at the specified
+          // location.
+          g.fillRect(col * blockSize,
+                     row * blockSize,
+                     blockSize,
+                     blockSize);
+        }//end col loop
+      }//end row loop
+      
+      //If axis is true, draw red lines to form
+      // an origin at the center
+      if(axis){
+        g.setColor(Color.RED);
+        g.drawLine(0,vertCenter,2*horizCenter,
+                                     vertCenter);
+        g.drawLine(horizCenter,0,horizCenter,
+                                   2*vertCenter);
+      }//end if
+    }//end paint
+  }//end inner class CanvasType2surface
+  //===========================================//
+  
+  //Note that this is an inner class.  This class
+  // is used to construct a color scale that
+  // matches the color scheme used in the class
+  // named CanvasType2surface.
+  class CanvasType2scale extends Canvas{
+    int scaleHeight = 6 * blockSize;
+    
+    CanvasType2scale(){//constructor
+      //Set the size of the Canvas based on the
+      // width of the surface and the size of the
+      // square used to represent each value on
+      // the surface.
+      setSize(dataWidth * blockSize,scaleHeight);
+    }//end constructor
+  
+    //Override the paint method to draw the
+    // scale.
+    public void paint(Graphics g){
+      Color[] colorPalette = getColorPalette();
+
+      for(int row = 1;row &lt; scaleHeight;row++){
+        for(int col = 0;col &lt; dataWidth;col++){
+          
+          //Get the value of the point on the
+          // scale surface.
+          double scaleValue = 
+                           255.0 * col/dataWidth;
+          //See the class named
+          // CanvasType2surface for an
+          // explanation of this color
+          // algorithm.
+          int quantizedData = (int)(Math.round(
+                  scaleValue*(
+                    colorPalette.length-1)/255));
+          g.setColor(colorPalette[
+                                 quantizedData]);
+          g.fillRect(col * blockSize,
+                     row * blockSize,
+                     blockSize,
+                     blockSize);
+        }//end col loop
+      }//end row loop
+    }//end paint
+
+  }//end inner class CanvasType2scale
+  //===========================================//
+  
+}//end outer class ImgMod29</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+	
+
+</section>
+<section id="h11008">
+<title>
+<emphasis id="Miscellaneous" effect="bold">
+
+Miscellaneous
+
+</emphasis>
+
+
+</title>
+
+
+	
+
+<para id="p1250">
+This section contains a variety of miscellaneous information.
+
+</para>
+
+
+
+
+
+	
+
+<note id="note1000" type="">
+
+
+		
+
+
+			
+
+
+				
+
+<emphasis id="strong1160" effect="bold">
+Housekeeping material
+
+</emphasis>
+
+				
+
+<list id="ul1032" list-type="bulleted">
+
+					
+
+<item id="li1175">
+Module name: Java1489-Plotting 3D Surfaces using Java
+
+</item>
+
+
+					
+
+<item id="li1176">
+File: Java1489.htm
+
+</item>
+
+
+					
+
+<item id="li1177">
+Published: 05/31/05
+
+</item>
+
+
+
+				
+
+</list>
+
+
+
+
+<para id="p1251">
+Learn how to write a Java class that uses color to plot 3D surfaces in six different formats and a wide range of sizes. The class is extremely easy to use. You can incorporate the 3D plotting capability into your own programs by inserting a single statement into your programs.
+
+</para>
+
+
+
+				
+
+</note>
+
+
+
+
+
+	
+
+<note id="note1001" type="">
+
+
+		
+
+
+			
+
+
+				
+
+<emphasis id="strong1161" effect="bold">
+Disclaimers:
+
+</emphasis>
+<para id="p1252">
+<emphasis id="strong1162" effect="bold">
+Financial
+
+</emphasis>
+: Although the Connexions
+site makes it possible for you to download a PDF file for this
+module at no charge, and also makes it possible for you to
+purchase a pre-printed version of the PDF file, you should be
+aware that some of the HTML elements in this module may not translate well into
+PDF.
+
+</para>
+
+
+
+				
+
+<para id="p1253">
+I also want you to know that, I receive no financial compensation from the Connexions website even if you purchase 
+	the PDF version of the module.
+
+</para>
+
+
+
+				
+
+<para id="p1254">
+In the past, unknown individuals have copied my modules from cnx.org, converted them to Kindle books, and 
+				placed them for sale on Amazon.com showing me as the author. I 
+				neither receive compensation for those sales nor do I know who does 
+				receive compensation. If you purchase such a book, please be 
+				aware that it is a copy of a module that is freely 
+				available on cnx.org and that it was made and published without 
+				my prior knowledge.
+
+</para>
+
+
+
+				
+
+<para id="p1255">
+<emphasis id="strong1163" effect="bold">
+Affiliation
+
+</emphasis>
+: I am a professor of Computer Information 
+	Technology at Austin Community College in Austin, TX.
+	
+
+</para>
+
+
+
+
+</note>
+
+
+
+	
+
+
+<para id="p1256">
+-end- 
+
+</para>
+
+
+
+
+
+
+
+</section>
+</content>
+
+
+
+
+</document>

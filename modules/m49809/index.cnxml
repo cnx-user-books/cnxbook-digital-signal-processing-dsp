@@ -1,0 +1,11382 @@
+<document xmlns="http://cnx.rice.edu/cnxml"> 
+<title>Java1491-2D Fourier Transforms using Java, Part 2</title>
+<metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m49809</md:content-id>
+  <md:title>Java1491-2D Fourier Transforms using Java, Part 2</md:title>
+  <md:abstract>Examine the code for a Java class that can be used to perform forward and inverse 2D Fourier transforms on 3D surfaces in the space domain.  Learn how the 2D Fourier transform behaves for a variety of different sample surfaces in the space domain.</md:abstract>
+  <md:uuid>1397e03f-aff1-4017-939c-f67102017848</md:uuid>
+</metadata>
+
+<content>
+
+
+
+
+
+
+<quote id="blockquote1000" display="block">
+
+
+
+<para id="p1000">
+Revised: Wed Oct 21 16:16:44 CDT 2015
+
+</para>
+
+
+
+This page is included in the following book: 
+
+<link id="a1000" url="http://cnx.org/contents/98d253c0-8044-4e22-a707-7b8d819bc8a7">
+
+
+        Digital Signal Processing - DSP
+
+</link>
+
+
+
+
+</quote>
+
+
+
+
+
+
+
+
+
+
+
+<section id="h11000">
+<title>
+<emphasis id="Table_of_contents" effect="bold">
+
+Table of contents
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+
+<list id="ul1000" list-type="bulleted">
+<item id="li1000">
+<link id="a1001" target-id="Table_of_contents">
+
+Table of contents
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1001">
+<link id="a1002" target-id="Preface">
+
+Preface
+
+</link>
+
+
+
+
+<list id="ul1001" list-type="bulleted">
+<item id="li1002">
+<link id="a1003" target-id="Two_separate_programs">
+
+Two separate programs
+
+</link>
+
+
+
+
+<list id="ul1002" list-type="bulleted">
+<item id="li1003">
+<link id="a1004" target-id="Using_the_class_named_ImgMod30">
+
+Using the class named ImgMod30
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1004">
+<link id="a1005" target-id="Digital_signal_processing_(DSP)">
+
+Digital signal processing (DSP)
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1005">
+<link id="a1006" target-id="Will_use_in_subsequent_modules">
+
+Will use in subsequent modules
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1006">
+<link id="a1007" target-id="Viewing_tip">
+
+Viewing tip
+
+</link>
+
+
+
+
+<list id="ul1003" list-type="bulleted">
+<item id="li1007">
+<link id="a1008" target-id="Figures">
+
+Figures
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1008">
+<link id="a1009" target-id="Listings">
+
+Listings
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1009">
+<link id="a1010" target-id="General_discussion">
+
+General discussion
+
+</link>
+
+
+
+
+<list id="ul1004" list-type="bulleted">
+<item id="li1010">
+<link id="a1011" target-id="The_space_domain">
+
+The space domain
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1011">
+<link id="a1012" target-id="A_purely_real_space_domain">
+
+A purely real space domain
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1012">
+<link id="a1013" target-id="Preview">
+
+Preview
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1013">
+<link id="a1014" target-id="Sample_programs">
+
+Sample programs
+
+</link>
+
+
+
+
+<list id="ul1005" list-type="bulleted">
+<item id="li1014">
+<link id="a1015" target-id="The_class_named_ImgMod30">
+
+The class named ImgMod30
+
+</link>
+
+
+
+
+<list id="ul1006" list-type="bulleted">
+<item id="li1015">
+<link id="a1016" target-id="The_xform2D_method">
+
+The xform2D method
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1016">
+<link id="a1017" target-id="The_inverseXform2D_method">
+
+The inverseXform2D method
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1017">
+<link id="a1018" target-id="The_shiftOrigin_method">
+
+The shiftOrigin method
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1018">
+<link id="a1019" target-id="The_program_named_ImgMod31">
+
+The program named ImgMod31
+
+</link>
+
+
+
+
+<list id="ul1007" list-type="bulleted">
+<item id="li1019">
+<link id="a1020" target-id="Command_line_parameters">
+
+Command line parameters
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1020">
+<link id="a1021" target-id="Forward_and_inverse_Fourier_transforms">
+
+Forward and inverse Fourier 
+transforms
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1021">
+<link id="a1022" target-id="Fourteen_cases">
+
+Fourteen cases
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1022">
+<link id="a1023" target-id="A_stack_of_output_images">
+
+A stack of output images
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1023">
+<link id="a1024" target-id="Numeric_output_">
+
+Numeric output 
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1024">
+<link id="a1025" target-id="How_to_use_the_program_named_ImgMod31">
+
+How to use the program named 
+ImgMod31
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1025">
+<link id="a1026" target-id="Program_code_for_ImgMod31">
+
+Program code for ImgMod31
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1026">
+<link id="a1027" target-id="Code_and_graphic_output_for_fourteen_example_cases">
+
+Code and 
+graphic output for fourteen example cases
+
+</link>
+
+
+
+
+<list id="ul1008" list-type="bulleted">
+<item id="li1027">
+<link id="a1028" target-id="For_switchCase__0">
+
+Case 0
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1028">
+<link id="a1029" target-id="For_switchCase__1">
+
+Case 1
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1029">
+<link id="a1030" target-id="For_switchCase__2">
+
+Case 2
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1030">
+<link id="a1031" target-id="For_switchCase__3">
+
+Case 3
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1031">
+<link id="a1032" target-id="For_switchCase__4">
+
+Case 4
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1032">
+<link id="a1033" target-id="For_switchCase__5">
+
+Case 5
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1033">
+<link id="a1034" target-id="For_switchCase__6">
+
+Case 6
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1034">
+<link id="a1035" target-id="For_switchCase__7">
+
+Case 7
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1035">
+<link id="a1036" target-id="For_switchCase__8">
+
+Case 8
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1036">
+<link id="a1037" target-id="For_switchCase__9">
+
+Case 9
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1037">
+<link id="a1038" target-id="For_switchCase__10">
+
+Case 10
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1038">
+<link id="a1039" target-id="For_switchCase__11">
+
+Case 11
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1039">
+<link id="a1040" target-id="For_switchCase__12_">
+
+Case 12 
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1040">
+<link id="a1041" target-id="For_switchCase__13">
+
+Case 13
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1041">
+<link id="a1042" target-id="Run_the_program">
+
+Run the program
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1042">
+<link id="a1043" target-id="Summary">
+
+Summary
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1043">
+<link id="a1044" target-id="Complete_program_listings">
+
+Complete program listings
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1044">
+<link id="a1045" target-id="Miscellaneous">
+
+Miscellaneous
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+
+
+	
+	
+
+</section>
+<section id="h11001">
+<title>
+<emphasis id="Preface" effect="bold">
+
+Preface
+
+</emphasis>
+
+
+</title>
+
+
+	
+
+
+<para id="p1001">
+This is the second module in a two-part series. The first part published 
+earlier was titled
+
+
+<link id="a1046" url="http://cnx.org/contents/59521521-d933-4314-856b-94f2e906de1a/Java1490-2D-Fourier-Transforms">
+
+
+Java1490-2D Fourier Transforms using Java, Part 1
+
+</link>
+
+. In this module, I will 
+teach you how to perform two-dimensional (2D) Fourier transforms using Java. I 
+will
+
+</para>
+
+
+
+
+
+<list id="ul1009" list-type="bulleted">
+
+	
+
+<item id="li1045">
+Explain the conceptual and computational aspects of 2D Fourier 
+	transforms
+
+</item>
+
+
+	
+
+<item id="li1046">
+Explain the relationship between the space domain and the
+	
+
+<link id="a1047" url="http://scienceworld.wolfram.com/physics/Wavenumber.html">
+
+wavenumber
+
+</link>
+
+ 
+	domain
+
+</item>
+
+
+	
+
+<item id="li1047">
+Provide sufficient background information that you will be able to 
+	appreciate the importance of the 2D Fourier transform
+
+</item>
+
+
+	
+
+<item id="li1048">
+Provide Java software to perform 2D Fourier transforms
+
+</item>
+
+
+	
+
+<item id="li1049">
+Provide Java software to test and exercise that capability
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<section id="h21000">
+<title>
+<emphasis id="Two_separate_programs" effect="bold">
+
+Two separate programs
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1002">
+I will present and explain two separate programs. One program consists of a 
+single class named 
+
+<emphasis id="strong1000" effect="bold">
+ImgMod30
+
+</emphasis>
+. The purpose of this class is to 
+satisfy the computational requirements for forward and inverse 2D Fourier 
+transforms. This class also provides a method for rearranging the spectral data 
+into a more useful format for plotting. The second program named 
+
+<emphasis id="strong1001" effect="bold">
+
+ImgMod31
+
+</emphasis>
+ will be used to test the 2D Fourier transform class, and also 
+to illustrate the use of 2D Fourier transforms for some well known sample 
+surfaces.
+
+</para>
+
+
+
+
+
+<para id="p1003">
+A third class named 
+
+<emphasis id="strong1002" effect="bold">
+ImgMod29
+
+</emphasis>
+ will be used to display various 
+3D surfaces resulting from the application of the 2D Fourier transform. I 
+explained this class in an earlier module titled
+
+
+<link id="a1048" url="http://cnx.org/contents/ea4ac046-e5a6-4503-b6e4-6c2d23b65d57/Java1489-Plotting-3D-Surfaces-">
+
+
+Plotting 3D Surfaces using Java
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<section id="h31000">
+<title>
+<emphasis id="Using_the_class_named_ImgMod30" effect="bold">
+
+Using the class named ImgMod30
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1004">
+The 2D Fourier transform class couldn't be easier to use. To perform a 
+forward transform execute a statement similar to the following:
+
+</para>
+
+
+
+
+
+<code id="pre1000" display="block">ImgMod30.xform2D(spatialData,realSpect,
+                      imagSpect,amplitudeSpect);</code>
+
+
+
+
+<para id="p1005">
+The first parameter in the above statement is a reference to an array object 
+containing the data to be transformed. The other three parameters refer to array 
+objects that will be populated with the results of the transform.
+
+</para>
+
+
+
+
+
+<para id="p1006">
+To perform an inverse transform execute a statement similar to the following:
+
+</para>
+
+
+
+
+
+<code id="pre1001" display="block">ImgMod30.inverseXform2D(realSpect,imagSpect,
+                             recoveredSpatialData);</code>
+
+
+
+
+<para id="p1007">
+The first two parameters in the above statement refer to array objects 
+containing the complex spectral data to be transformed. The third parameter 
+refers to an array that will be populated with the results of the inverse 
+transform.
+
+</para>
+
+
+
+
+
+<para id="p1008">
+To rearrange the spectral data for plotting, execute a statement similar to 
+the following where the parameter refers to an array object containing the 
+spectral data to be rearranged.
+
+</para>
+
+
+
+
+
+<code id="pre1002" display="block">double[][] shiftedRealSpect = 
+                 ImgMod30.shiftOrigin(realSpect);</code>
+
+
+
+
+</section>
+<section id="h31001">
+<title>
+<emphasis id="Digital_signal_processing_DSP" effect="bold">
+
+Digital signal processing (DSP)
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1009">
+This module will cover some technically difficult material in the general 
+area of Digital Signal Processing, or DSP for short. As usual, the better 
+prepared you are, the more likely you are to understand the material. For 
+example, it would be well for you to already understand the one-dimensional 
+Fourier transform before tackling the 2D Fourier transform. If you don't already 
+have that knowledge, you can learn about one-dimensional Fourier transforms by 
+studying the following 
+
+<emphasis id="lessons" effect="bold">
+
+modules
+
+</emphasis>
+
+:
+
+</para>
+
+
+
+
+
+<list id="ul1010" list-type="bulleted">
+
+	
+
+<item id="li1050">
+
+	
+
+<link id="a1049" url="http://cnx.org/contents/9fdb2951-7fca-47a1-83fc-d3d3d15d6ff1/Java1478-Fun-with-Java-How-and">
+
+
+	Java1478 Fun with Java, How and Why Spectral Analysis Works
+
+</link>
+
+
+</item>
+
+
+	
+
+<item id="li1051">
+
+	
+
+<link id="a1050" url="http://cnx.org/contents/201ece7a-a2bf-4576-9528-4c3c4e5322c9/Java1482-Spectrum-Analysis-usi">
+
+
+	Java1482 Spectrum Analysis using Java, Sampling Frequency, Folding 
+	Frequency, and the FFT Algorithm 
+
+</link>
+
+
+</item>
+
+
+	
+
+<item id="li1052">
+
+	
+
+<link id="a1051" url="http://cnx.org/contents/97db670f-e425-49a8-8899-875426fc316d/Java1483-Spectrum-Analysis-usi">
+
+
+	Java1483 Spectrum Analysis using Java, Frequency Resolution versus Data 
+	Length 
+
+</link>
+
+
+</item>
+
+
+	
+
+<item id="li1053">
+
+	
+
+<link id="a1052" url="http://cnx.org/contents/50125581-8665-4687-b43f-fd30f2f1ba28/Java1484-Spectrum-Analysis-usi">
+
+
+	Java1484 Spectrum Analysis using Java, Complex Spectrum and Phase Angle
+
+</link>
+
+
+</item>
+
+
+	
+
+<item id="li1054">
+
+	
+
+<link id="a1053" url="http://cnx.org/contents/d4a9b39f-233d-4145-aefe-065f172755b6/Java1485-Spectrum-Analysis-usi">
+
+
+	Java1485 Spectrum Analysis using Java, Forward and Inverse Transforms, 
+	Filtering in the Frequency Domain
+
+</link>
+
+ 
+
+</item>
+
+
+	
+
+<item id="li1055">
+
+	
+
+<link id="a1054" url="http://cnx.org/contents/3f1897b9-3841-440b-bdf2-ddac318df6b8/Java1486-Fun-with-Java-Underst">
+
+
+	Java1486 Fun with Java, Understanding the Fast Fourier Transform (FFT) 
+	Algorithm
+
+</link>
+
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1010">
+In addition, I strongly recommend that you study
+
+
+<link id="a1055" url="http://cnx.org/contents/59521521-d933-4314-856b-94f2e906de1a/Java1490-2D-Fourier-Transforms">
+
+
+Java1490-2D Fourier Transforms using Java, Part 1
+
+</link>
+
+ before embarking on this 
+part. 
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31002">
+<title>
+<emphasis id="Will_use_in_subsequent_modules" effect="bold">
+
+Will use in subsequent modules
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1011">
+The 2D Fourier transform has many uses. I will use the 2D Fourier transform 
+in several future modules involving such diverse topics as:
+
+</para>
+
+
+
+
+
+<list id="ul1011" list-type="bulleted">
+
+	
+
+<item id="li1056">
+Processing image pixels in the wavenumber domain
+
+</item>
+
+
+	
+
+<item id="li1057">
+Advanced steganography 
+
+<emphasis id="em1000" effect="italics">
+(hiding messages in images)
+
+</emphasis>
+</item>
+
+
+	
+
+<item id="li1058">
+Hiding watermarks and trademarks in images
+
+</item>
+
+
+
+
+</list>
+
+
+	
+	
+	
+
+</section>
+</section>
+<section id="h21001">
+<title>
+<emphasis id="Viewing_tip" effect="bold">
+
+Viewing tip
+
+</emphasis>
+
+
+</title>
+
+
+	
+
+<para id="p1012">
+I recommend that you open another copy of this module in a separate 
+browser window and use the following links to easily find and view the Figures 
+and Listings while you are reading about them.
+
+</para>
+
+
+
+	
+
+<section id="h31003">
+<title>
+<emphasis id="Figures" effect="bold">
+
+Figures
+
+</emphasis>
+
+
+</title>
+
+
+	
+
+
+<list id="ul1012" list-type="bulleted">
+
+
+
+<item id="li1059">
+<link id="a1056" target-id="Figure_1">
+
+Figure 1.
+
+</link>
+
+
+ Two views of the same wavenumber spectrum.
+
+</item>
+
+
+
+
+<item id="li1060">
+<link id="a1057" target-id="Figure_2">
+
+Figure 2.
+
+</link>
+
+
+ Numeric output.
+
+</item>
+
+
+
+
+<item id="li1061">
+<link id="a1058" target-id="Figure_3">
+
+Figure 3.
+
+</link>
+
+
+ How to use the program named ImgMod31.
+
+</item>
+
+
+
+
+<item id="li1062">
+<link id="a1059" target-id="Figure_4">
+
+Figure 4.
+
+</link>
+
+
+ An example test surface plot.
+
+</item>
+
+
+
+
+<item id="li1063">
+<link id="a1060" target-id="Figure_5">
+
+Figure 5.
+
+</link>
+
+
+ An impulse in space.
+
+</item>
+
+
+
+
+<item id="li1064">
+<link id="a1061" target-id="Figure_6">
+
+Figure 6.
+
+</link>
+
+
+ A displaced impulse in space.
+
+</item>
+
+
+
+
+<item id="li1065">
+<link id="a1062" target-id="Figure_7">
+
+Figure 7.
+
+</link>
+
+
+ A box on the diagonal in space.
+
+</item>
+
+
+
+
+<item id="li1066">
+<link id="a1063" target-id="Figure_8">
+
+Figure 8.
+
+</link>
+
+
+ Graphic output for Case 3.
+
+</item>
+
+
+
+
+<item id="li1067">
+<link id="a1064" target-id="Figure_9">
+
+Figure 9.
+
+</link>
+
+
+ Graphic output for Case 4.
+
+</item>
+
+
+
+
+<item id="li1068">
+<link id="a1065" target-id="Figure_10">
+
+Figure 10.
+
+</link>
+
+
+ Graphic output for Case 5.
+
+</item>
+
+
+
+
+<item id="li1069">
+<link id="a1066" target-id="Figure_11">
+
+Figure 11.
+
+</link>
+
+
+ Graphic output for Case 6.
+
+</item>
+
+
+
+
+<item id="li1070">
+<link id="a1067" target-id="Figure_12">
+
+Figure 12.
+
+</link>
+
+
+ Graphic output for Case 7.
+
+</item>
+
+
+
+
+<item id="li1071">
+<link id="a1068" target-id="Figure_13">
+
+Figure 13.
+
+</link>
+
+
+ Graphic output for Case 9.
+
+</item>
+
+
+
+
+<item id="li1072">
+<link id="a1069" target-id="Figure_14">
+
+Figure 14.
+
+</link>
+
+
+ Graphic output for Case 11.
+
+</item>
+
+
+
+
+<item id="li1073">
+<link id="a1070" target-id="Figure_15">
+
+Figure 15.
+
+</link>
+
+
+ Graphic output for Case 12.
+
+</item>
+
+
+
+
+<item id="li1074">
+<link id="a1071" target-id="Figure_16">
+
+Figure 16.
+
+</link>
+
+
+ Graphic output for Case 13.
+
+</item>
+
+
+
+
+</list>
+
+
+
+	
+	
+
+</section>
+<section id="h31004">
+<title>
+<emphasis id="Listings" effect="bold">
+
+Listings
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<list id="ul1013" list-type="bulleted">
+
+
+
+<item id="li1075">
+<link id="a1072" target-id="Listing_1">
+
+Listing 1.
+
+</link>
+
+
+ Beginning of the class named ImgMod30.
+
+</item>
+
+
+
+
+<item id="li1076">
+<link id="a1073" target-id="Listing_2">
+
+Listing 2.
+
+</link>
+
+
+ The remainder of the xform2D method.
+
+</item>
+
+
+
+
+<item id="li1077">
+<link id="a1074" target-id="Listing_3">
+
+Listing 3.
+
+</link>
+
+
+ The inverseXform2D method.
+
+</item>
+
+
+
+
+<item id="li1078">
+<link id="a1075" target-id="Listing_4">
+
+Listing 4.
+
+</link>
+
+
+ The shiftOrigin method code.
+
+</item>
+
+
+
+
+<item id="li1079">
+<link id="a1076" target-id="Listing_5">
+
+Listing 5.
+
+</link>
+
+
+ Beginning of the class named ImgMod31.
+
+</item>
+
+
+
+
+<item id="li1080">
+<link id="a1077" target-id="Listing_6">
+
+Listing 6.
+
+</link>
+
+
+ Create and save the test surface.
+
+</item>
+
+
+
+
+<item id="li1081">
+<link id="a1078" target-id="Listing_7">
+
+Listing 7.
+
+</link>
+
+
+ Display the test surface.
+
+</item>
+
+
+
+
+<item id="li1082">
+<link id="a1079" target-id="Listing_8">
+
+Listing 8.
+
+</link>
+
+
+ Perform the forward Fourier transform.
+
+</item>
+
+
+
+
+<item id="li1083">
+<link id="a1080" target-id="Listing_9">
+
+Listing 9.
+
+</link>
+
+
+ Display unshifted amplitude spectrum.
+
+</item>
+
+
+
+
+<item id="li1084">
+<link id="a1081" target-id="Listing_10">
+
+Listing 10.
+
+</link>
+
+
+ Shift the origin and display the results.
+
+</item>
+
+
+
+
+<item id="li1085">
+<link id="a1082" target-id="Listing_11">
+
+Listing 11.
+
+</link>
+
+
+ Perform an inverse transform.
+
+</item>
+
+
+
+
+<item id="li1086">
+<link id="a1083" target-id="Listing_12">
+
+Listing 12.
+
+</link>
+
+
+ Display the result of the inverse transform.
+
+</item>
+
+
+
+
+<item id="li1087">
+<link id="a1084" target-id="Listing_13">
+
+Listing 13.
+
+</link>
+
+
+ Display some numeric results.
+
+</item>
+
+
+
+
+<item id="li1088">
+<link id="a1085" target-id="Listing_14">
+
+Listing 14.
+
+</link>
+
+
+ Beginning of the getSpatialData method.
+
+</item>
+
+
+
+
+<item id="li1089">
+<link id="a1086" target-id="Listing_15">
+
+Listing 15.
+
+</link>
+
+
+ Code for Case 0.
+
+</item>
+
+
+
+
+<item id="li1090">
+<link id="a1087" target-id="Listing_16">
+
+Listing 16.
+
+</link>
+
+
+ Code for Case 1.
+
+</item>
+
+
+
+
+<item id="li1091">
+<link id="a1088" target-id="Listing_17">
+
+Listing 17.
+
+</link>
+
+
+ Code for Case 2.
+
+</item>
+
+
+
+
+<item id="li1092">
+<link id="a1089" target-id="Listing_18">
+
+Listing 18.
+
+</link>
+
+
+ Code for Case 7.
+
+</item>
+
+
+
+
+<item id="li1093">
+<link id="a1090" target-id="Listing_19">
+
+Listing 19.
+
+</link>
+
+
+ Code for Case 8.
+
+</item>
+
+
+
+
+<item id="li1094">
+<link id="a1091" target-id="Listing_20">
+
+Listing 20.
+
+</link>
+
+
+ The end of the getSpatialData method.
+
+</item>
+
+
+
+
+<item id="li1095">
+<link id="a1092" target-id="Listing_21">
+
+Listing 21.
+
+</link>
+
+
+ ImgMod30.java.
+
+</item>
+
+
+
+
+<item id="li1096">
+<link id="a1093" target-id="Listing_22">
+
+Listing 22.
+
+</link>
+
+
+ ImgMod31.java.
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h11002">
+<title>
+<emphasis id="General_discussion" effect="bold">
+
+General discussion
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<section id="h21002">
+<title>
+<emphasis id="The_space_domain" effect="bold">
+
+The space domain
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1013">
+In
+
+
+<link id="a1094" url="http://cnx.org/contents/59521521-d933-4314-856b-94f2e906de1a/Java1490-2D-Fourier-Transforms">
+
+
+Part 1
+
+</link>
+
+ of this series, I extended the concept of the Fourier transform from 
+the time domain into the space domain. I pointed out that while the time domain 
+is one-dimensional, the space domain is thee-dimensional. However, in order to 
+keep the complexity of this module in check, we will assume that space is only 
+two-dimensional. This will serve us well later for such tasks as image 
+processing.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1001" display="block">
+
+	
+
+<para id="p1014">
+<emphasis id="em1001" effect="italics">
+(Three-dimensional Fourier transforms are beyond the scope of this 
+	module. I will write a module on using Fourier transforms in 
+	three-dimensional space later if I have the time.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h21003">
+<title>
+<emphasis id="A_purely_real_space_domain" effect="bold">
+
+A purely real space domain
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1015">
+Although the space domain can be 
+
+<emphasis id="em1002" effect="italics">
+(and often is)
+
+</emphasis>
+ complex, many 
+interesting problems, 
+
+<emphasis id="em1003" effect="italics">
+(such as photographic image processing)
+
+</emphasis>
+ can be 
+dealt with under the assumption that the space domain is purely real. We will 
+make that assumption in this module. This assumption will allow us to simplify 
+our computations when performing the 2D Fourier transform to transform our data 
+from the space domain into the wavenumber domain.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h11003">
+<title>
+<emphasis id="Preview" effect="bold">
+
+Preview
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1016">
+I will present and explain two complete Java programs in this module. The 
+first program is a single class named 
+
+<emphasis id="strong1003" effect="bold">
+ImgMod30
+
+</emphasis>
+, which provides 
+the capability to perform forward and inverse Fourier transforms on 
+three-dimensional surfaces. In addition, the class provides a method that can be 
+used to reformat the wavenumber spectrum to make it more suitable for display.
+
+</para>
+
+
+
+
+
+<para id="p1017">
+The second program is named 
+
+<emphasis id="strong1004" effect="bold">
+ImgMod31
+
+</emphasis>
+. This is an executable 
+program whose purpose is to exercise and to test the 
+
+<emphasis id="strong1005" effect="bold">
+ImgMod30
+
+</emphasis>
+ 
+class using several examples for which the results should already be known.
+
+</para>
+
+
+
+	
+	
+
+</section>
+<section id="h11004">
+<title>
+<emphasis id="Sample_programs" effect="bold">
+
+Sample programs
+
+</emphasis>
+
+
+</title>
+
+
+	
+	
+
+<section id="h21004">
+<title>
+<emphasis id="The_class_named_ImgMod30" effect="bold">
+
+The class named ImgMod30
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1018">
+This class provides 2D Fourier transform capability that can be used for 
+image processing and other purposes. The class provides three static methods:
+
+
+</para>
+
+
+
+
+
+<list id="ul1014" list-type="bulleted">
+
+	
+
+<item id="li1097">
+<emphasis id="strong1006" effect="bold">
+xform2D
+
+</emphasis>
+: Performs a forward 2D Fourier transform on a 
+	purely real surface described by a 2D array of 
+
+<emphasis id="strong1007" effect="bold">
+double
+
+</emphasis>
+ 
+	values in the space domain to produce a complex spectrum in the wavenumber 
+	domain. The method returns the real part, the imaginary part, and the 
+	amplitude spectrum, each in its own 2D array of 
+
+<emphasis id="strong1008" effect="bold">
+double
+
+</emphasis>
+ 
+	values.
+
+</item>
+
+
+	
+
+<item id="li1098">
+<emphasis id="strong1009" effect="bold">
+inverseXform2D
+
+</emphasis>
+: Performs an inverse 2D Fourier 
+	transform from the complex wavenumber domain into the real space domain 
+	using the real and imaginary parts of the wavenumber spectrum as input. 
+	Returns the surface in the space domain as a 2D array of 
+
+<emphasis id="strong1010" effect="bold">
+double
+
+</emphasis>
+ 
+	values. Assumes that the real and imaginary parts in the wavenumber domain 
+	are consistent with a purely real surface in the space domain, and does not 
+	return an imaginary surface for the space domain
+
+</item>
+
+
+	
+
+<item id="li1099">
+<emphasis id="strong1011" effect="bold">
+shiftOrigin
+
+</emphasis>
+: The wavenumber spectrum produced by
+	
+
+<emphasis id="strong1012" effect="bold">
+xform2D
+
+</emphasis>
+ has its origin in the top-left corner with the 
+	Nyquist folding wave numbers near the center. This is not a very suitable 
+	format for visual analysis. This method rearranges the data to place the 
+	origin at the center with the Nyquist folding wave numbers along the edges.
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1019">
+The class was tested using JDK 1.8 and Windows 7. The class uses the static 
+import capability that was introduced in J2SE 5.0. Therefore, it should not 
+compile using earlier versions of the compiler.
+
+</para>
+
+
+
+
+
+<section id="h31005">
+<title>
+<emphasis id="The_xform2D_method" effect="bold">
+
+The xform2D method
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1020">
+The beginning of the class and the beginning of the static method named
+
+
+<emphasis id="strong1013" effect="bold">
+xform2D
+
+</emphasis>
+ is shown in 
+
+<link id="a1095" target-id="Listing_1">
+
+ Listing 1
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1021">
+This method computes a forward 2D Fourier transform from the space domain 
+into the wavenumber domain. The number of points produced for the wavenumber 
+domain matches the number of points received for the space domain in both 
+dimensions. Note that the input data must be purely real. In other words, the 
+program assumes that there are no imaginary values in the space domain. 
+Therefore, this is not a general purpose 2D complex-to-complex transform.
+
+</para>
+
+
+
+	
+	
+
+<table id="table1000" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1000">
+<row id="tr1000">
+
+
+
+<entry id="th1000">
+<emphasis id="Listing_1" effect="bold">
+
+Listing 1.
+
+</emphasis>
+
+ Beginning of the class named ImgMod30.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1000">
+<row id="tr1001">
+<entry id="td1000">
+
+		
+
+<code id="pre1003" display="block">class ImgMod30{
+  static void xform2D(double[][] inputData,
+                      double[][] realOut,
+                      double[][] imagOut,
+                      double[][] amplitudeOut){
+
+    int height = inputData.length;
+    int width = inputData[0].length;
+    
+    System.out.println("height = " + height);
+    System.out.println("width = " + width);</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41000">
+<title>
+<emphasis id="Parameters" effect="bold">
+
+Parameters
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1022">
+The first parameter is a reference to a 2D 
+
+<emphasis id="strong1014" effect="bold">
+double
+
+</emphasis>
+ array 
+object containing the data to be transformed. The remaining three parameters are 
+references to 2D 
+
+<emphasis id="strong1015" effect="bold">
+double
+
+</emphasis>
+ array objects of the same size that 
+will be populated with the following transform results:
+
+</para>
+
+
+
+
+
+<list id="ul1015" list-type="bulleted">
+
+	
+
+<item id="li1100">
+The real part
+
+</item>
+
+
+	
+
+<item id="li1101">
+The imaginary part
+
+</item>
+
+
+	
+
+<item id="li1102">
+The amplitude 
+
+<emphasis id="em1004" effect="italics">
+(square root of sum of squares of the real and 
+	imaginary parts)
+
+</emphasis>
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1023">
+<link id="a1096" target-id="Listing_1">
+
+ Listing 1
+
+</link>
+
+ also determines and displays the dimensions of the incoming 2D 
+array of data to be transformed.
+
+</para>
+
+
+
+
+
+<para id="p1024">
+I won't bore you with the details as to how and why the 2D Fourier transform 
+does what it does. Neither will I bore you with the details of the code that 
+implements the 2D Fourier transform. If you understand the material that I have
+
+
+<link id="a1097" target-id="lessons">
+
+previously published
+
+</link>
+
+ on Fourier 
+transforms in one dimension, this code and these concepts should be a 
+straightforward extension from one dimension to two dimensions.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41001">
+<title>
+<emphasis id="The_remainder_of_the_xform2D_method" effect="bold">
+
+The remainder of the xform2D method
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1025">
+The remainder of the 
+
+<emphasis id="strong1016" effect="bold">
+xform2D
+
+</emphasis>
+ method is shown in 
+
+<link id="a1098" target-id="Listing_2">
+
+ Listing 2
+
+</link>
+
+. Note that it was 
+necessary to sacrifice indentation in order to force these very long equations 
+to be compatible with this narrow publication format and still be somewhat 
+readable.
+
+</para>
+
+
+
+
+
+<table id="table1001" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1001">
+<row id="tr1002">
+
+
+
+<entry id="th1001">
+<emphasis id="Listing_2" effect="bold">
+
+Listing 2.
+
+</emphasis>
+
+ The remainder of the xform2D method.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1001">
+<row id="tr1003">
+<entry id="td1001">
+
+		
+
+<code id="pre1004" display="block">    //Two outer loops iterate on output data.
+    for(int yWave = 0;yWave &lt; height;yWave++){
+      for(int xWave = 0;xWave &lt; width;xWave++){
+        //Two inner loops iterate on input data.
+        for(int ySpace = 0;ySpace &lt; height;
+                                       ySpace++){
+          for(int xSpace = 0;xSpace &lt; width;
+                                       xSpace++){
+//Compute real, imag, and ampltude. 
+realOut[yWave][xWave] += 
+ (inputData[ySpace][xSpace]*cos(2*PI*((1.0*
+ xWave*xSpace/width)+(1.0*yWave*ySpace/height))))
+ /sqrt(width*height);
+ 
+imagOut[yWave][xWave ] -= 
+ (inputData[ySpace][xSpace]*sin(2*PI*((1.0*xWave*
+  xSpace/width) + (1.0*yWave*ySpace/height))))
+  /sqrt(width*height);
+  
+amplitudeOut[yWave][xWave] =
+ sqrt(
+  realOut[yWave][xWave] * realOut[yWave][xWave] +
+  imagOut[yWave][xWave] * imagOut[yWave][xWave]);
+          }//end xSpace loop
+        }//end ySpace loop
+      }//end xWave loop
+    }//end yWave loop
+  }//end xform2D method</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+</section>
+</section>
+<section id="h31006">
+<title>
+<emphasis id="The_inverseXform2D_method" effect="bold">
+
+The inverseXform2D method
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1026">
+The 
+
+<emphasis id="strong1017" effect="bold">
+inverseXform2d
+
+</emphasis>
+ method is shown in its entirety in 
+
+<link id="a1099" target-id="Listing_3">
+
+ Listing 3
+
+</link>
+
+. This method 
+computes an inverse 2D Fourier transform from the complex wavenumber domain into the 
+real space domain. The number of points produced for the space domain matches the 
+number of points received for the wavenumber domain in both dimensions.
+
+</para>
+
+
+
+
+
+<para id="p1027">
+This method assumes that the inverse transform will produce purely real 
+values in the space domain. Therefore, in the interest of computational 
+efficiency, the method does not compute the imaginary output values. Therefore, 
+this is not a general purpose 2D complex-to-complex transform. For correct 
+results, the input complex data must match that obtained by performing a forward 
+transform on purely real data in the space domain.
+
+</para>
+
+
+
+
+
+<para id="p1028">
+Once again it was necessary to sacrifice indentation to force this very long 
+equation to be compatible with this narrow publication format and still be 
+readable.
+
+</para>
+
+
+
+
+
+
+<table id="table1002" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1002">
+<row id="tr1004">
+
+
+
+<entry id="th1002">
+<emphasis id="Listing_3" effect="bold">
+
+Listing 3.
+
+</emphasis>
+
+ The inverseXform2D method.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1002">
+<row id="tr1005">
+<entry id="td1002">
+
+		
+
+<code id="pre1005" display="block">  static void inverseXform2D(double[][] real,
+                             double[][] imag,
+                             double[][] dataOut){
+
+    int height = real.length;
+    int width = real[0].length;
+    
+    System.out.println("height = " + height);
+    System.out.println("width = " + width);
+
+    //Two outer loops iterate on output data.
+    for(int ySpace = 0;ySpace &lt; height;ySpace++){
+      for(int xSpace = 0;xSpace &lt; width;
+                                       xSpace++){
+        //Two inner loops iterate on input data.
+        for(int yWave = 0;yWave &lt; height;
+                                        yWave++){
+
+          for(int xWave = 0;xWave &lt; width;
+                                        xWave++){
+//Compute real output data. 
+dataOut[ySpace][xSpace] += 
+ (real[yWave][xWave]*cos(2*PI*((1.0 * xSpace*
+ xWave/width) + (1.0*ySpace*yWave/height))) - 
+ imag[yWave][xWave]*sin(2*PI*((1.0 * xSpace*
+ xWave/width) + (1.0*ySpace*yWave/height))))
+ /sqrt(width*height);
+          }//end xWave loop
+        }//end yWave loop
+      }//end xSpace loop
+    }//end ySpace loop
+  }//end inverseXform2D method</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41002">
+<title>
+<emphasis id="Parametersa" effect="bold">
+
+Parameters
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1029">
+This method requires three parameters. The first two parameters are 
+references to 2D arrays containing the real and imaginary parts of the complex 
+wavenumber spectrum that is to be transformed into a surface in the space 
+domain.
+
+</para>
+
+
+
+
+
+<para id="p1030">
+The third parameter is a reference to a 2D array of the same size that will 
+be populated with the transform results.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31007">
+<title>
+<emphasis id="The_shiftOrigin_method" effect="bold">
+
+The shiftOrigin method
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1031">
+This method deserves some explanation. The reason that this method is needed 
+is illustrated by 
+
+<link id="a1100" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+<section id="h41003">
+<title>
+<emphasis id="Two_views_of_the_same_wavenumber_spectrum" effect="bold">
+
+Two views of the same wavenumber spectrum
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1032">
+Both of the images in 
+
+<link id="a1101" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ represent the same wavenumber spectrum, but 
+they are plotted against different coordinate systems. 
+
+</para>
+
+
+
+
+
+
+
+<table id="table1003" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1003">
+<row id="tr1006">
+<entry id="th1003">
+
+
+
+<emphasis id="Figure_1" effect="bold">
+
+Figure 1.
+
+</emphasis>
+
+ Two views of the same wavenumber spectrum.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1003">
+<row id="tr1007">
+<entry id="td1003">
+
+
+
+
+<media id="media1000" alt="missing image" display="block">
+<image id="img1000" mime-type="image/jpeg" src="../../media/1491-fig01.jpg" width="223" height="539"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+</section>
+<section id="h41004">
+<title>
+<emphasis id="How_the_wavenumber_spectrum_is_actually_computed" effect="bold">
+
+How the wavenumber spectrum is actually computed
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1033">
+The top image shows how the wavenumber spectrum is actually computed.
+
+</para>
+
+
+
+
+
+<para id="p1034">
+The wavenumber spectrum is computed covering an area of wavenumber space with 
+the 0,0 origin in the top-left corner. The computation extends to twice the 
+Nyquist folding wave number along each axis.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41005">
+<title>
+<emphasis id="Computationally_sound_but_not_visually_pleasing" effect="bold">
+
+Computationally sound but not visually pleasing
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1035">
+While this format is computationally sound, it isn't what most of us are 
+accustomed to seeing in plots in wavenumber space. Rather, we are accustomed to 
+seeing wavenumber spectra plotted with the 0,0 origin at the center.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41006">
+<title>
+<emphasis id="The_wavenumber_spectrum_is_periodic" effect="bold">
+
+The wavenumber spectrum is periodic
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1036">
+Knowing that the area of wavenumber space shown in the top image of 
+
+<link id="a1102" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ 
+covers one complete period of a periodic surface, the 
+
+<emphasis id="strong1018" effect="bold">
+shiftOrigin
+
+</emphasis>
+ method 
+rearranges the results 
+
+<emphasis id="em1005" effect="italics">
+(for display purposes only)
+
+</emphasis>
+ to that shown in the bottom 
+image in 
+
+<link id="a1103" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+. The origin is at the center in the bottom image of 
+
+<link id="a1104" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+. 
+The edges of the lower image in 
+
+<link id="a1105" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ are the Nyquist folding wave numbers.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41007">
+<title>
+<emphasis id="The_shiftOrigin_method_code" effect="bold">
+
+The shiftOrigin method code
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1037">
+The 
+
+<emphasis id="strong1019" effect="bold">
+shiftOrigin
+
+</emphasis>
+ method is shown in its entirety in 
+
+<link id="a1106" target-id="Listing_4">
+
+ Listing 4
+
+</link>
+
+. Although this 
+method is rather long, it is also completely straightforward. Therefore, it 
+shouldn't require a further explanation. You may be able to develop a much 
+shorter algorithm for accomplishing the same task.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1004" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1004">
+<row id="tr1008">
+
+
+
+<entry id="th1004">
+<emphasis id="Listing_4" effect="bold">
+
+Listing 4.
+
+</emphasis>
+
+ The shiftOrigin method code.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1004">
+<row id="tr1009">
+<entry id="td1004">
+
+		
+
+<code id="pre1006" display="block">  //Method to shift the wavenumber origin and
+  // place it at the center for a more visually
+  // pleasing display.  Must be applied
+  // separately to the real part, the imaginary
+  // part, and the amplitude spectrum for a
+  // wavenumber spectrum.
+  static double[][] shiftOrigin(double[][] data){
+    int numberOfRows = data.length;
+    int numberOfCols = data[0].length;
+    int newRows;
+    int newCols;
+    
+    double[][] output = 
+          new double[numberOfRows][numberOfCols];
+          
+    //Must treat the data differently when the
+    // dimension is odd than when it is even.
+    
+    if(numberOfRows%2 != 0){//odd
+      newRows = numberOfRows + 
+                            (numberOfRows + 1)/2;
+    }else{//even
+      newRows = numberOfRows + numberOfRows/2;
+    }//end else
+    
+    if(numberOfCols%2 != 0){//odd
+      newCols = numberOfCols +
+                            (numberOfCols + 1)/2;
+    }else{//even
+      newCols = numberOfCols + numberOfCols/2;
+    }//end else
+    
+    //Create a temporary working array.
+    double[][] temp = 
+                    new double[newRows][newCols];
+                    
+    //Copy input data into the working array.
+    for(int row = 0;row &lt; numberOfRows;row++){
+      for(int col = 0;col &lt; numberOfCols;col++){
+        temp[row][col] = data[row][col];
+      }//col loop
+    }//row loop
+    
+    //Do the horizontal shift first
+    if(numberOfCols%2 != 0){//shift for odd
+
+      //Slide leftmost (numberOfCols+1)/2 columns
+      // to the right by numberOfCols columns
+      for(int row = 0;row &lt; numberOfRows;row++){
+        for(int col = 0;
+                 col &lt; (numberOfCols+1)/2;col++){
+          temp[row][col + numberOfCols] = 
+                                  temp[row][col];
+        }//col loop
+      }//row loop
+
+      //Now slide everything back to the left by
+      // (numberOfCols+1)/2 columns
+      for(int row = 0;row &lt; numberOfRows;row++){
+        for(int col = 0;
+                       col &lt; numberOfCols;col++){
+          temp[row][col] = 
+             temp[row][col+(numberOfCols + 1)/2];
+        }//col loop
+      }//row loop
+      
+    }else{//shift for even
+      //Slide leftmost (numberOfCols/2) columns
+      // to the right by numberOfCols columns.
+      for(int row = 0;row &lt; numberOfRows;row++){
+        for(int col = 0;
+                     col &lt; numberOfCols/2;col++){
+          temp[row][col + numberOfCols] = 
+                                  temp[row][col];
+        }//col loop
+      }//row loop
+      
+      //Now slide everything back to the left by
+      // numberOfCols/2 columns
+      for(int row = 0;row &lt; numberOfRows;row++){
+        for(int col = 0;
+                       col &lt; numberOfCols;col++){
+          temp[row][col] = 
+                 temp[row][col + numberOfCols/2];
+        }//col loop
+      }//row loop
+    }//end else
+
+    //Now do the vertical shift
+    if(numberOfRows%2 != 0){//shift for odd
+      //Slide topmost (numberOfRows+1)/2 rows
+      // down by numberOfRows rows.
+      for(int col = 0;col &lt; numberOfCols;col++){
+        for(int row = 0;
+                 row &lt; (numberOfRows+1)/2;row++){
+          temp[row + numberOfRows][col] = 
+                                  temp[row][col];
+        }//row loop
+      }//col loop
+
+      //Now slide everything back up by
+      // (numberOfRows+1)/2 rows.
+      for(int col = 0;col &lt; numberOfCols;col++){
+        for(int row = 0;
+                       row &lt; numberOfRows;row++){
+          temp[row][col] = 
+             temp[row+(numberOfRows + 1)/2][col];
+        }//row loop
+      }//col loop
+      
+    }else{//shift for even
+      //Slide topmost (numberOfRows/2) rows down
+      // by numberOfRows rows
+      for(int col = 0;col &lt; numberOfCols;col++){
+        for(int row = 0;
+                     row &lt; numberOfRows/2;row++){
+          temp[row + numberOfRows][col] = 
+                                  temp[row][col];
+        }//row loop
+      }//col loop
+      
+      //Now slide everything back up by
+      // numberOfRows/2 rows.
+      for(int col = 0;col &lt; numberOfCols;col++){
+        for(int row = 0;
+                       row &lt; numberOfRows;row++){
+          temp[row][col] = 
+                 temp[row + numberOfRows/2][col];
+        }//row loop
+      }//col loop
+    }//end else
+    
+    //Shifting of the origin is complete.  Copy
+    // the rearranged data from temp to output
+    // array.
+    for(int row = 0;row &lt; numberOfRows;row++){
+      for(int col = 0;col &lt; numberOfCols;col++){
+        output[row][col] = temp[row][col];
+      }//col loop
+    }//row loop
+
+    return output;
+  }//end shiftOrigin method
+
+}//end class ImgMod30</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+</section>
+<section id="h41008">
+<title>
+<emphasis id="End_of_the_ImgMod30_class" effect="bold">
+
+End of the ImgMod30 class
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1038">
+<link id="a1107" target-id="Listing_4">
+
+ Listing 4
+
+</link>
+
+ also signals the end of the class definition for the class named 
+ImgMod30.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h21005">
+<title>
+<emphasis id="The_program_named_ImgMod31" effect="bold">
+
+The program named ImgMod31
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1039">
+The purpose of this program is to exercise and to test the 2D Fourier 
+transform methods and the axis shifting method provided by the class named 
+ImgMod30.
+
+</para>
+
+
+
+
+
+<section id="h31008">
+<title>
+<emphasis id="Command_line_parameters" effect="bold">
+
+Command line parameters
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1040">
+The 
+
+<emphasis id="strong1020" effect="bold">
+main
+
+</emphasis>
+ method in this class reads two command line 
+parameters and uses them to select:
+
+</para>
+
+
+
+
+
+<list id="ul1016" list-type="bulleted">
+
+	
+
+<item id="li1103">
+A specific case involving a particular 3D input surface in the space 
+	domain.
+
+</item>
+
+
+	
+
+<item id="li1104">
+A specific display format.
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+</section>
+<section id="h31009">
+<title>
+<emphasis id="Forward_and_inverse_Fourier_transforms" effect="bold">
+
+Forward and inverse Fourier 
+transforms
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1041">
+The program performs a 2D Fourier transform on that surface followed by an 
+inverse 2D Fourier transform. Six different plots are produced in this process 
+showing different aspects of the transform and the inverse transform.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31010">
+<title>
+<emphasis id="Fourteen_cases" effect="bold">
+
+Fourteen cases
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1042">
+There are 14 different cases built into the program with case numbers ranging 
+from 0 to 13 inclusive. Each of the cases is designed such that the results of 
+the analysis should be known in advance by a person familiar with 2D Fourier 
+analysis and the wavenumber domain. Thus, these cases can be used to confirm 
+that the transform code was properly written.
+
+</para>
+
+
+
+
+
+<para id="p1043">
+The cases are also designed to illustrate the impact of various space domain 
+characteristics on the wavenumber spectrum. This information will be useful 
+later when analyzing the results of performing 2D transforms on photographic 
+images for example.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31011">
+<title>
+<emphasis id="A_stack_of_output_images" effect="bold">
+
+A stack of output images
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1044">
+Each time the program is run, it produces a stack of six output images in the 
+top-left corner of the screen. A brief description of each of the output 
+images is provided in the following list. The top-to-bottom order of the stack 
+is:
+
+</para>
+
+
+
+
+
+<list id="ol1000" list-type="enumerated">
+
+	
+
+<item id="li1105">
+Space domain output of inverse Fourier transform. Compare with original 
+	input in 6 below.
+
+</item>
+
+
+	
+
+<item id="li1106">
+Amplitude spectrum in wavenumber domain with shifted origin. Compare 
+	with 5 below.
+
+</item>
+
+
+	
+
+<item id="li1107">
+Imaginary wavenumber spectrum with shifted origin.
+
+</item>
+
+
+	
+
+<item id="li1108">
+Real wavenumber spectrum with shifted origin.
+
+</item>
+
+
+	
+
+<item id="li1109">
+Amplitude spectrum in wavenumber domain without shifted origin. Compare 
+	with 2 above.
+
+</item>
+
+
+	
+
+<item id="li1110">
+Space domain input data. Compare with 1 above.
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1045">
+To view the images near the bottom of the stack, you must physically move 
+those on top to get them out of the way.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31012">
+<title>
+<emphasis id="Numeric_output_" effect="bold">
+
+Numeric output 
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1046">
+In addition, the program produces some numeric output on the command line 
+screen that may be useful in confirming the validity of the forward and inverse 
+transform processes. 
+
+<link id="a1108" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ shows an example of the numeric output. 
+
+</para>
+
+
+
+
+
+
+
+<table id="table1005" summary="This is a table." pgwide="630">
+<tgroup cols="1">
+
+
+<thead id="thead1005">
+<row id="tr1010">
+<entry id="th1005">
+
+
+
+<emphasis id="Figure_2" effect="bold">
+
+Figure 2.
+
+</emphasis>
+
+ Numeric output.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1005">
+<row id="tr1011">
+<entry id="td1005">
+
+		
+
+<code id="pre1007" display="block">height = 41
+width = 41
+height = 41
+width = 41
+
+2.0                  1.9999999999999916
+0.5000000000000002   0.49999999999999845
+0.49999999999999956  0.4999999999999923
+1.7071067811865475   1.7071067811865526
+0.2071067811865478   0.20710678118654233
+0.20710678118654713  0.20710678118655435
+1.0                  1.0000000000000064
+-0.4999999999999997 -0.49999999999999484
+-0.5000000000000003 -0.4999999999999965</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<quote id="blockquote1002" display="block">
+
+	
+
+<para id="p1047">
+<emphasis id="em1006" effect="italics">
+(Note that I manually inserted some and spaces line breaks in 
+	
+
+<link id="a1109" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ 
+	to cause the numeric values to line up in columns so as to be more 
+	readable.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<section id="h41009">
+<title>
+<emphasis id="The_size_of_the_surfaces" effect="bold">
+
+The size of the surfaces
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1048">
+The first two lines of numeric output in 
+
+<link id="a1110" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ show the size of the 
+spatial surface for the forward transform. The second two lines show the size of 
+the wavenumber surface for the inverse transform.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41010">
+<title>
+<emphasis id="The_quality_of_the_transform_process" effect="bold">
+
+The quality of the 
+transform process
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1049">
+The remaining nine lines indicate something about the quality of the forward 
+and inverse transforms in terms of the ability of the inverse transform to 
+replicate the original spatial surface. These lines also indicate something 
+about the correctness of the overall scaling from original input to final 
+output.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41011">
+<title>
+<emphasis id="Matching_pairs_of_values" effect="bold">
+
+Matching pairs of values
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1050">
+Each of the last nine lines contains a pair of values. The first value is a 
+sample from the original spatial surface. The second value is a sample from the 
+corresponding location on the spatial surface produced by performing an inverse 
+transform on the wavenumber spectrum. The two values in each pair of values 
+should match. If they match, this indicates the probability of a valid result.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1003" display="block">
+
+	
+
+<para id="p1051">
+<emphasis id="em1007" effect="italics">
+(Note however that this is a very small sampling of the values that 
+	make up the original and replicated spatial data and problems could arise in 
+	areas that are not included in this small sample.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1052">
+The match is very good in the example shown above. This example is from Case 
+#12.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31013">
+<title>
+<emphasis id="How_to_use_the_program_named_ImgMod31" effect="bold">
+
+How to use the program named 
+ImgMod31
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1053">
+Usage information for the program is shown in 
+
+<link id="a1111" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1006" summary="This is a table." pgwide="630">
+<tgroup cols="1">
+
+
+<thead id="thead1006">
+<row id="tr1012">
+<entry id="th1006">
+
+
+
+<emphasis id="Figure_3" effect="bold">
+
+Figure 3.
+
+</emphasis>
+
+ How to use the program named ImgMod31.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1006">
+<row id="tr1013">
+<entry id="td1006">
+
+		
+
+<para id="p1054">
+Usage:
+
+</para>
+
+
+
+		
+
+<code id="pre1008" display="block">java ImgMod31 CaseNumber DisplayType
+
+  CaseNumber ranges from 0 to 13 inclusive.
+  DisplayType ranges from 0 to 2 inclusive.
+  
+  If a case number is not provided, Case 2 will be run by 
+    default.
+  If a display type is not provided, display type 1 will be 
+    used by default.</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1055">
+A description of each case is provided by the comments in this program. In 
+addition, each case will be discussed in detail in this module.
+
+</para>
+
+
+
+
+
+<para id="p1056">
+See 
+
+<emphasis id="strong1021" effect="bold">
+ImgMod29
+
+</emphasis>
+ in the earlier module titled
+
+
+<link id="a1112" url="http://cnx.org/contents/ea4ac046-e5a6-4503-b6e4-6c2d23b65d57/Java1489-Plotting-3D-Surfaces-">
+
+
+Plotting 3D Surfaces using Java
+
+</link>
+
+ for a definition of 
+
+<emphasis id="strong1022" effect="bold">
+DisplayType
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<para id="p1057">
+You can terminate the program by clicking on the close button on any of the 
+display frames produced by the program.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31014">
+<title>
+<emphasis id="Program_code_for_ImgMod31" effect="bold">
+
+Program code for ImgMod31
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1058">
+The beginning of the class and the beginning of the 
+
+<emphasis id="strong1023" effect="bold">
+main
+
+</emphasis>
+ method is shown in 
+
+
+<link id="a1113" target-id="Listing_5">
+
+ Listing 5
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+
+
+<table id="table1007" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1007">
+<row id="tr1014">
+
+
+
+<entry id="th1007">
+<emphasis id="Listing_5" effect="bold">
+
+Listing 5.
+
+</emphasis>
+
+ Beginning of the class named ImgMod31.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1007">
+<row id="tr1015">
+<entry id="td1007">
+
+		
+
+<code id="pre1009" display="block">class ImgMod31{
+  
+  public static void main(String[] args){
+    int switchCase = 2;//default
+    int displayType = 1;//default
+    if(args.length == 1){
+      switchCase = Integer.parseInt(args[0]);
+    }else if(args.length == 2){
+      switchCase = Integer.parseInt(args[0]);
+      displayType = Integer.parseInt(args[1]);
+    }else{
+      System.out.println("Usage: java ImgMod31 " 
+                     + "CaseNumber DisplayType");
+      System.out.println(
+           "CaseNumber from 0 to 13 inclusive.");
+      System.out.println(
+           "DisplayType from 0 to 2 inclusive.");
+      System.out.println("Running case " 
+                  + switchCase + " by default.");
+      System.out.println("Running DisplayType "
+                 + displayType + " by default.");
+    }//end else</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1059">
+The code in 
+
+<link id="a1114" target-id="Listing_5">
+
+ Listing 5
+
+</link>
+
+ gets the input parameters and uses them to set the case 
+and the display format. A default case and a default display format are used if 
+this information is not provided by the user.
+
+</para>
+
+
+
+
+
+<section id="h41012">
+<title>
+<emphasis id="Create_and_save_the_test_surface" effect="bold">
+
+Create and save the test surface
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1060">
+<link id="a1115" target-id="Listing_6">
+
+ Listing 6
+
+</link>
+
+ calls the method named 
+
+<emphasis id="strong1024" effect="bold">
+getSpatialData
+
+</emphasis>
+ to create a 
+test surface that matches the specified case. This surface will be used for 
+testing the transform process.
+
+</para>
+
+
+
+
+
+<table id="table1008" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1008">
+<row id="tr1016">
+
+
+
+<entry id="th1008">
+<emphasis id="Listing_6" effect="bold">
+
+Listing 6.
+
+</emphasis>
+
+ Create and save the test surface.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1008">
+<row id="tr1017">
+<entry id="td1008">
+
+		
+
+<code id="pre1010" display="block">    int rows = 41;
+    int cols = 41;
+
+    double[][] spatialData = 
+            getSpatialData(switchCase,rows,cols);</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1061">
+I will discuss the method named 
+
+<emphasis id="strong1025" effect="bold">
+getSpatialData
+
+</emphasis>
+ in detail 
+later. For now, just assume that the 2D array object referred to by 
+
+<emphasis id="strong1026" effect="bold">
+
+spatialData
+
+</emphasis>
+ contains the test surface when this method returns.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41013">
+<title>
+<emphasis id="Display_the_test_surface" effect="bold">
+
+Display the test surface
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1062">
+<link id="a1116" target-id="Listing_7">
+
+ Listing 7
+
+</link>
+
+ instantiates an object of the class named 
+
+<emphasis id="strong1027" effect="bold">
+ImgMod29
+
+</emphasis>
+ to display the 
+test surface in the display format indicated by the value of 
+
+<emphasis id="strong1028" effect="bold">
+displayType
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<table id="table1009" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1009">
+<row id="tr1018">
+
+
+
+<entry id="th1009">
+<emphasis id="Listing_7" effect="bold">
+
+Listing 7.
+
+</emphasis>
+
+ Display the test surface.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1009">
+<row id="tr1019">
+<entry id="td1009">
+
+
+
+<code id="pre1011" display="block">    new ImgMod29(spatialData,3,false,displayType);</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1063">
+The value of false in the third parameter indicates that the axes should not 
+be displayed.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1004" display="block">
+
+	
+
+<para id="p1064">
+<emphasis id="em1008" effect="italics">
+(See the module titled 
+
+</emphasis>
+
+	
+
+<link id="a1117" url="http://cnx.org/contents/ea4ac046-e5a6-4503-b6e4-6c2d23b65d57/Java1489-Plotting-3D-Surfaces-">
+
+
+	
+
+<emphasis id="em1009" effect="italics">
+Plotting 3D Surfaces using Java
+
+</emphasis>
+</link>
+
+
+<emphasis id="em1010" effect="italics">
+ for an explanation of the 
+	second parameter. Basically, this parameter is used to control the overall 
+	size of the plot on the screen.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41014">
+<title>
+<emphasis id="An_example_test_surface_plot" effect="bold">
+
+An example test surface plot
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1065">
+The top-left image in 
+
+<link id="a1118" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ is an example of the output produced by the 
+code in 
+
+<link id="a1119" target-id="Listing_7">
+
+ Listing 7
+
+</link>
+
+ for a 
+
+<emphasis id="strong1029" effect="bold">
+displayType
+
+</emphasis>
+ value of 0.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1005" display="block">
+
+	
+
+<para id="p1066">
+<emphasis id="em1011" effect="italics">
+(
+
+<link id="a1120" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ shows the grayscale format. See the module titled 
+
+</emphasis>
+
+	
+
+<link id="a1121" url="http://cnx.org/contents/ea4ac046-e5a6-4503-b6e4-6c2d23b65d57/Java1489-Plotting-3D-Surfaces-">
+
+
+	
+
+<emphasis id="em1012" effect="italics">
+Plotting 3D Surfaces using Java
+
+</emphasis>
+</link>
+
+
+<emphasis id="em1013" effect="italics">
+ for an explanation of the three 
+	available non-logarithmic display formats.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+
+
+<table id="table1010" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1010">
+<row id="tr1020">
+<entry id="th1010">
+
+
+
+<emphasis id="Figure_4" effect="bold">
+
+Figure 4.
+
+</emphasis>
+
+ An example test surface plot.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1010">
+<row id="tr1021">
+<entry id="td1010">
+
+
+
+
+<media id="media1001" alt="missing image" display="block">
+<image id="img1001" mime-type="image/jpeg" src="../../media/1491-fig04.jpg" width="634" height="541"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<para id="p1067">
+<link id="a1122" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ shows the results for a test surface 
+
+<emphasis id="strong1030" effect="bold">
+switchCase
+
+</emphasis>
+ 
+value of 2. I will discuss the particulars of this case in detail later.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41015">
+<title>
+<emphasis id="Perform_the_forward_Fourier_transform" effect="bold">
+
+Perform the forward Fourier 
+transform
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1068">
+<link id="a1123" target-id="Listing_8">
+
+ Listing 8
+
+</link>
+
+ performs the forward Fourier transform to transform the test 
+surface into the wavenumber domain. 
+
+</para>
+
+
+
+
+
+
+
+<table id="table1011" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1011">
+<row id="tr1022">
+
+
+
+<entry id="th1011">
+<emphasis id="Listing_8" effect="bold">
+
+Listing 8.
+
+</emphasis>
+
+ Perform the forward Fourier transform.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1011">
+<row id="tr1023">
+<entry id="td1011">
+
+		
+
+<code id="pre1012" display="block">    double[][] realSpect = //Real part
+                          new double[rows][cols];
+    double[][] imagSpect = //Imaginary part
+                          new double[rows][cols];
+    double[][] amplitudeSpect = //Amplitude
+                          new double[rows][cols];
+
+    ImgMod30.xform2D(spatialData,realSpect,
+                       imagSpect,amplitudeSpect);</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+</section>
+<section id="h41016">
+<title>
+<emphasis id="Prepare_array_objects_to_receive_the_transform_results" effect="bold">
+
+Prepare 
+array objects to receive the transform results
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1069">
+<link id="a1124" target-id="Listing_8">
+
+ Listing 8
+
+</link>
+
+ begins by preparing some array objects to receive the transform 
+results. The forward transform receives an incoming surface array and returns 
+the real and imaginary parts of the complex wavenumber spectrum along with the 
+amplitude spectrum by populating three array objects passed as parameters to the 
+method.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41017">
+<title>
+<emphasis id="Perform_the_forward_transform" effect="bold">
+
+Perform the forward transform
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1070">
+Then 
+
+<link id="a1125" target-id="Listing_8">
+
+ Listing 8
+
+</link>
+
+ calls the static 
+
+<emphasis id="strong1031" effect="bold">
+xform2D
+
+</emphasis>
+ method of the
+
+
+<emphasis id="strong1032" effect="bold">
+ImgMod30
+
+</emphasis>
+ class to perform the forward transform, returning the 
+results by way of the parameters to the method.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41018">
+<title>
+<emphasis id="Display_unshifted_amplitude_spectrum" effect="bold">
+
+Display unshifted amplitude 
+spectrum
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1071">
+The top-right image in 
+
+<link id="a1126" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ is an example of the type of display 
+produced by the code in 
+
+<link id="a1127" target-id="Listing_9">
+
+ Listing 9
+
+</link>
+
+. This is a plot of the amplitude spectrum 
+without the wavenumber origin being shifted to place it at the center.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1006" display="block">
+
+	
+
+<para id="p1072">
+<emphasis id="em1014" effect="italics">
+(The wavenumber origin is in the top-left corner of the top-right 
+	image in 
+
+<link id="a1128" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1073">
+This image also shows the result of passing true as the third parameter 
+causing the red axes to be plotted on top of the spectral data.
+
+</para>
+
+
+
+
+
+<table id="table1012" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1012">
+<row id="tr1024">
+
+
+
+<entry id="th1012">
+<emphasis id="Listing_9" effect="bold">
+
+Listing 9.
+
+</emphasis>
+
+ Display unshifted amplitude spectrum.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1012">
+<row id="tr1025">
+<entry id="td1012">
+
+		
+
+<code id="pre1013" display="block">    new ImgMod29(amplitudeSpect,3,true,
+                                    displayType);</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+</section>
+<section id="h41019">
+<title>
+<emphasis id="Need_to_shift_the_origin_for_display" effect="bold">
+
+Need to shift the origin for 
+display
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1074">
+The top-right image in 
+
+<link id="a1129" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ is in a format that is not particularly 
+good for viewing. In particular, the origin is at the top-left corner. The 
+horizontal Nyquist folding wavenumber is near the horizontal center of the plot. 
+The vertical Nyquist folding wave number is near the vertical center of the 
+plot. It is much easier for most people to understand the plot when the 
+wavenumber origin is shifted to the center of the plot with the Nyquist folding 
+wave numbers at the edges of the plot.
+
+</para>
+
+
+
+
+
+<para id="p1075">
+The method named 
+
+<emphasis id="strong1033" effect="bold">
+shiftOrigin
+
+</emphasis>
+ can be used to rearrange the 
+data and shift the origin to the center of the plot.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41020">
+<title>
+<emphasis id="Shift_the_origin_and_display_the_results" effect="bold">
+
+Shift the origin and 
+display the results
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1076">
+<link id="a1130" target-id="Listing_10">
+
+ Listing 10
+
+</link>
+
+ shifts the origin to the center of the plot and displays:
+
+</para>
+
+
+
+
+
+<list id="ul1017" list-type="bulleted">
+
+	
+
+<item id="li1111">
+The real part of the shifted spectrum
+
+</item>
+
+
+	
+
+<item id="li1112">
+The imaginary part of the shifted spectrum
+
+</item>
+
+
+	
+
+<item id="li1113">
+The amplitude of the shifted spectrum
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1077">
+The axes are displayed in all three cases.
+
+</para>
+
+
+
+
+
+<table id="table1013" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1013">
+<row id="tr1026">
+
+
+
+<entry id="th1013">
+<emphasis id="Listing_10" effect="bold">
+
+Listing 10.
+
+</emphasis>
+
+ Shift the origin and display the results.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1013">
+<row id="tr1027">
+<entry id="td1013">
+
+		
+
+<code id="pre1014" display="block">    double[][] shiftedRealSpect = 
+                 ImgMod30.shiftOrigin(realSpect);
+    new ImgMod29(shiftedRealSpect,3,true,
+                                    displayType);
+    
+    double[][] shiftedImagSpect = 
+                 ImgMod30.shiftOrigin(imagSpect);
+    new ImgMod29(shiftedImagSpect,3,true,
+                                    displayType);
+    
+    double[][] shiftedAmplitudeSpect = 
+            ImgMod30.shiftOrigin(amplitudeSpect);
+    new ImgMod29(shiftedAmplitudeSpect,3,true,
+                                    displayType);</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+</section>
+<section id="h41021">
+<title>
+<emphasis id="Example_displays" effect="bold">
+
+Example displays
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1078">
+Examples of the displays produced by the code in 
+
+<link id="a1131" target-id="Listing_10">
+
+ Listing 10
+
+</link>
+
+ are shown in 
+
+
+<link id="a1132" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+. The surface being transformed is shown in the top-left in 
+
+<link id="a1133" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ and 
+the result of the inverse transform 
+
+<emphasis id="em1015" effect="italics">
+(discussed later)
+
+</emphasis>
+ is shown in 
+the bottom-left in 
+
+<link id="a1134" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1079">
+The real part of the shifted wavenumber spectrum is shown in the image 
+in the top-center of 
+
+<link id="a1135" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+. The imaginary part of the shifted wavenumber 
+spectrum is shown in the bottom-center of 
+
+<link id="a1136" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+. 
+
+</para>
+
+
+
+
+
+<para id="p1080">
+The unshifted amplitude spectrum is shown in the top-right in 
+
+<link id="a1137" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ and the shifted amplitude 
+spectrum is shown in the bottom-right image in 
+
+<link id="a1138" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+. The origin has been 
+shifted to the center in the three cases shown in the top-center, bottom-center, 
+and bottom-right.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1007" display="block">
+
+	
+
+<para id="p1081">
+<emphasis id="em1016" effect="italics">
+(It would probably be constructive for you to compare the two 
+	rightmost images in 
+
+<link id="a1139" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ in order to appreciate the result of shifting 
+	the origin to the center.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41022">
+<title>
+<emphasis id="Perform_an_inverse_transform" effect="bold">
+
+Perform an inverse transform
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1082">
+<link id="a1140" target-id="Listing_11">
+
+ Listing 11
+
+</link>
+
+ performs an inverse Fourier transform to transform the complex 
+wavenumber surface into a real surface in the space domain. Ideally, the result 
+should exactly match the space domain surface that was transformed into the 
+wavenumber domain in 
+
+<link id="a1141" target-id="Listing_8">
+
+ Listing 8
+
+</link>
+
+. However, because of small arithmetic errors that 
+accumulate in the forward and inverse transform computations, it is unusual for 
+an exact match to be achieved.
+
+</para>
+
+
+
+
+
+<table id="table1014" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1014">
+<row id="tr1028">
+
+
+
+<entry id="th1014">
+<emphasis id="Listing_11" effect="bold">
+
+Listing 11.
+
+</emphasis>
+
+ Perform an inverse transform.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1014">
+<row id="tr1029">
+<entry id="td1014">
+
+		
+
+<code id="pre1015" display="block">    double[][] recoveredSpatialData = 
+                          new double[rows][cols];
+
+    ImgMod30.inverseXform2D(realSpect,imagSpect,
+                           recoveredSpatialData);</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+</section>
+<section id="h41023">
+<title>
+<emphasis id="Prepare_an_array_object_to_store_the_results" effect="bold">
+
+Prepare an array 
+object to store the results
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1083">
+<link id="a1142" target-id="Listing_11">
+
+ Listing 11
+
+</link>
+
+ begins by preparing an array object to store the results of the 
+inverse transform process.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41024">
+<title>
+<emphasis id="Call_the_inverseXform2D_method" effect="bold">
+
+Call the inverseXform2D method
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1084">
+Then 
+
+<link id="a1143" target-id="Listing_11">
+
+ Listing 11
+
+</link>
+
+ calls the 
+
+<emphasis id="strong1034" effect="bold">
+inverseXform2D
+
+</emphasis>
+ method to transform 
+the complex wavenumber spectrum into a real space function. The 
+
+<emphasis id="strong1035" effect="bold">
+
+inverseXform2D
+
+</emphasis>
+ method requires the real and imaginary parts of the 
+complex wavenumber spectrum as input parameters.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1008" display="block">
+
+	
+
+<para id="p1085">
+<emphasis id="em1017" effect="italics">
+(Note that these are the original real and imaginary parts of the 
+	complex wavenumber spectrum. They are not the versions for which the origin 
+	has been shifted for display purposes.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1086">
+The 
+
+<emphasis id="strong1036" effect="bold">
+inverseXform2D
+
+</emphasis>
+ method also receives an incoming array 
+object in which to store the real result of the transform process.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41025">
+<title>
+<emphasis id="Display_the_result_of_the_inverse_transform" effect="bold">
+
+Display the result of 
+the inverse transform
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1087">
+Finally, 
+
+<link id="a1144" target-id="Listing_12">
+
+ Listing 12
+
+</link>
+
+ displays the result of the inverse transform as a surface in the space domain. This surface should compare favorably with the 
+original surface that was transformed into the wavenumber domain in 
+
+<link id="a1145" target-id="Listing_8">
+
+ Listing 8
+
+</link>
+
+ 
+
+</para>
+
+
+
+
+
+<table id="table1015" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1015">
+<row id="tr1030">
+
+
+
+<entry id="th1015">
+<emphasis id="Listing_12" effect="bold">
+
+Listing 12.
+
+</emphasis>
+
+ Display the result of the inverse transform.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1015">
+<row id="tr1031">
+<entry id="td1015">
+
+		
+
+<code id="pre1016" display="block">    new ImgMod29(recoveredSpatialData,3,false,
+                                    displayType);</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1088">
+The output produced by 
+
+<link id="a1146" target-id="Listing_12">
+
+ Listing 12
+
+</link>
+
+ is shown in the lower-left image in 
+
+
+<link id="a1147" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+. 
+Compare this with the input surface shown in the top-left image in 
+
+<link id="a1148" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+. 
+As you can see, they do compare favorably. In fact, they appear to be identical 
+in this grayscale plotting format. We will see later that when a more sensitive 
+plotting format is used, small differences in the two may become apparent.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41026">
+<title>
+<emphasis id="Display_some_numeric_results" effect="bold">
+
+Display some numeric results
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1089">
+As discussed earlier, the code in 
+
+<link id="a1149" target-id="Listing_13">
+
+ Listing 13
+
+</link>
+
+ samples and displays a few 
+corresponding points on the original surface and the surface produced by the 
+inverse transform process. The results can be used to evaluate the overall 
+quality of the process as well as the correctness of the overall scaling.
+
+</para>
+
+
+
+
+
+<table id="table1016" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1016">
+<row id="tr1032">
+
+
+
+<entry id="th1016">
+<emphasis id="Listing_13" effect="bold">
+
+Listing 13.
+
+</emphasis>
+
+ Display some numeric results.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1016">
+<row id="tr1033">
+<entry id="td1016">
+
+		
+
+<code id="pre1017" display="block">    for(int row = 0;row &lt; 3;row++){
+      for(int col = 0;col &lt; 3;col++){
+        System.out.println(
+          spatialData[row][col] + " " + 
+           recoveredSpatialData[row][col] + " ");
+      }//col
+    }//row
+  }//end main</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1090">
+Each line of output text contains two values, and ideally the two values 
+should be exactly the same. Realistically, because of small computational errors 
+in the transform and inverse transform process, it is unlikely that the two 
+values will be exactly the same except in computationally trivial cases. Unless 
+the two values are very close, however, something probably went wrong in the 
+transform process and the results should not be trusted.
+
+</para>
+
+
+
+
+
+<para id="p1091">
+<link id="a1150" target-id="Listing_13">
+
+ Listing 13
+
+</link>
+
+ also signals the end of the 
+
+<emphasis id="strong1037" effect="bold">
+main
+
+</emphasis>
+ method.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41027">
+<title>
+<emphasis id="What_do_we_know_so_far" effect="bold">
+
+What do we know so far?
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1092">
+Now we know how to use the 
+
+<emphasis id="strong1038" effect="bold">
+ImgMod30
+
+</emphasis>
+ class and the 
+
+<emphasis id="strong1039" effect="bold">
+ImgMod29
+
+</emphasis>
+ class to:
+
+</para>
+
+
+
+
+
+<list id="ul1018" list-type="bulleted">
+
+	
+
+<item id="li1114">
+Transform a purely real 3D surface from the space domain into the 
+	wavenumber domain
+
+</item>
+
+
+	
+
+<item id="li1115">
+Transform a complex wavenumber spectrum into a purely real surface in 
+	the space domain
+
+</item>
+
+
+	
+
+<item id="li1116">
+Shift the origin of the real, imaginary, and amplitude wavenumber 
+	spectral parts to convert the data into a format that is more suitable for 
+	plotting
+
+</item>
+
+
+	
+
+<item id="li1117">
+Plot 3D surfaces in both domains
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1093">
+It is time to for us to take a look at the method named 
+
+<emphasis id="strong1040" effect="bold">
+getSpatialData
+
+</emphasis>
+ that 
+can be used to create any of fourteen standard surfaces in the space domain.
+
+</para>
+
+
+
+
+
+
+</section>
+<section id="h41028">
+<title>
+<emphasis id="The_getSpatialData_method" effect="bold">
+
+The getSpatialData method
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1094">
+This method constructs and returns a specific 3D surface in a 2D array of 
+type 
+
+<emphasis id="strong1041" effect="bold">
+double
+
+</emphasis>
+. The surface is identified by the value of an incoming parameter 
+named 
+
+<emphasis id="strong1042" effect="bold">
+switchCase
+
+</emphasis>
+. There are 14 possible cases. The allowable values for 
+
+
+<emphasis id="strong1043" effect="bold">
+switchCase
+
+</emphasis>
+ range from 0 through 13 inclusive.
+
+</para>
+
+
+
+
+
+<para id="p1095">
+The other two input parameters specify the size of the surface that will be 
+produced in units of rows and columns.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41029">
+<title>
+<emphasis id="The_code_for_the_getSpatialData_method" effect="bold">
+
+The code for the getSpatialData method
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1096">
+The 
+
+<emphasis id="strong1044" effect="bold">
+getSpatialData
+
+</emphasis>
+ method begins in 
+
+<link id="a1151" target-id="Listing_14">
+
+ Listing 14
+
+</link>
+
+. 
+
+</para>
+
+
+
+
+
+<table id="table1017" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1017">
+<row id="tr1034">
+
+
+
+<entry id="th1017">
+<emphasis id="Listing_14" effect="bold">
+
+Listing 14.
+
+</emphasis>
+
+ Beginning of the getSpatialData method.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1017">
+<row id="tr1035">
+<entry id="td1017">
+
+		
+
+<code id="pre1018" display="block">  private static double[][] getSpatialData(
+               int switchCase,int rows,int cols){
+    
+    double[][] spatialData = 
+                          new double[rows][cols];
+    
+    switch(switchCase){</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1097">
+<link id="a1152" target-id="Listing_14">
+
+ Listing 14
+
+</link>
+
+ begins by creating a 2D array object of type 
+
+<emphasis id="strong1045" effect="bold">
+double
+
+</emphasis>
+ 
+in which to store the surface.
+
+</para>
+
+
+
+
+
+<para id="p1098">
+Then 
+
+<link id="a1153" target-id="Listing_14">
+
+ Listing 14
+
+</link>
+
+ shows the beginning of a 
+
+<emphasis id="strong1046" effect="bold">
+switch
+
+</emphasis>
+ statement 
+that will be used to select the code to create a surface that matches the value 
+of the incoming parameter named 
+
+<emphasis id="strong1047" effect="bold">
+switchCase
+
+</emphasis>
+. 
+
+</para>
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h21006">
+<title>
+<emphasis id="Code_and_graphic_output_for_fourteen_example_cases" effect="bold">
+
+Code and 
+graphic output for fourteen example cases
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<section id="h31015">
+<title>
+<emphasis id="For_switchCase__0" effect="bold">
+
+Case 0
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1099">
+<link id="a1154" target-id="Listing_15">
+
+ Listing 15
+
+</link>
+
+ shows the code that is executed for a value of 
+
+<emphasis id="strong1048" effect="bold">
+switchCase
+
+</emphasis>
+ equal to 
+0. 
+
+</para>
+
+
+
+
+
+<table id="table1018" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1018">
+<row id="tr1036">
+
+
+
+<entry id="th1018">
+<emphasis id="Listing_15" effect="bold">
+
+Listing 15.
+
+</emphasis>
+
+ Code for Case 0.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1018">
+<row id="tr1037">
+<entry id="td1018">
+
+		
+
+<code id="pre1019" display="block">      case 0: 
+        spatialData[0][0] = 1;
+      break;</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1100">
+This case places a single non-zero point at the origin in the space domain. 
+The origin is at the top-left corner. The surface produced by this case is shown 
+in the leftmost image in 
+
+<link id="a1155" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+. The non-zero value can be seen as the 
+small white square in the top-left corner. In signal processing terminology, 
+this point can be viewed as an impulse in space. It is well known that such an 
+impulse produces a flat spectrum in wavenumber space.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1019" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1019">
+<row id="tr1038">
+<entry id="th1019">
+
+
+
+<emphasis id="Figure_5" effect="bold">
+
+Figure 5.
+
+</emphasis>
+
+ An impulse in space.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1019">
+<row id="tr1039">
+<entry id="td1019">
+
+
+
+
+<media id="media1002" alt="missing image" display="block">
+<image id="img1002" mime-type="image/jpeg" src="../../media/1491-fig05.jpg" width="433" height="281"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h41030">
+<title>
+<emphasis id="The_output_surface" effect="bold">
+
+The output surface
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1101">
+The rightmost image in 
+
+<link id="a1156" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ shows the result of:
+
+</para>
+
+
+
+
+
+<list id="ul1019" list-type="bulleted">
+
+	
+
+<item id="li1118">
+Performing a forward Fourier transform on the surface in the leftmost 
+	image
+
+</item>
+
+
+	
+
+<item id="li1119">
+Performing an inverse Fourier transform on the complex wavenumber 
+	spectrum produced by the forward transform.
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1102">
+You can see the impulse as the small white square in the top-left corner of 
+both images.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41031">
+<title>
+<emphasis id="The_wavenumber_spectrum_is_flat" effect="bold">
+
+The wavenumber spectrum is flat
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1103">
+Because the wavenumber spectrum is flat, plots of the spectrum are completely 
+featureless. Therefore, I did not include them in 
+
+<link id="a1157" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41032">
+<title>
+<emphasis id="A_very_small_error" effect="bold">
+
+A very small error
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1104">
+The numeric output shows that the final output surface matches the input 
+surface to within an error that is less than about one part in ten to the 
+fourteenth power. The program produces the expected results for this test case.
+
+</para>
+
+
+
+
+
+<para id="p1105">
+If you were to go back to the equations in 
+
+<link id="a1158" target-id="Listing_2">
+
+ Listing 2
+
+</link>
+
+ and 
+
+<link id="a1159" target-id="Listing_3">
+
+ Listing 3
+
+</link>
+
+ and work 
+this case out by hand, you would soon discover that the computational 
+requirements are almost trivial. Most of the computation involves doing 
+arithmetic using values of 1 and 0. Thus, there isn't a lot of opportunity for 
+computational errors in this case.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31016">
+<title>
+<emphasis id="For_switchCase__1" effect="bold">
+
+Case 1
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1106">
+Now we are going to see a case that is more significant from a computational 
+viewpoint. The input surface in this case will consist of a single impulse that 
+is not located at the origin in the space domain. Rather, it is displaced from 
+the origin.
+
+</para>
+
+
+
+
+
+<para id="p1107">
+The wavenumber amplitude spectrum of a single impulse in the space domain 
+should be flat regardless of the location of the impulse in the space domain. 
+However, the real and imaginary parts of the wavenumber spectrum are flat only 
+when the impulse is located at the origin in space. 
+
+</para>
+
+
+
+
+
+<para id="p1108">
+Regardless of the fact that the real and imaginary parts are not flat, the 
+square root of the sum of the squares of the real and imaginary parts 
+
+<emphasis id="em1018" effect="italics">
+(the 
+amplitude)
+
+</emphasis>
+ should be the same for every point in wavenumber space for this case. 
+Thus, the real and imaginary parts are related in a very special way.
+
+</para>
+
+
+
+
+
+<section id="h41033">
+<title>
+<emphasis id="The_code_for_switchCase__1" effect="bold">
+
+The code for Case 1
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1109">
+The code that is executed when switchCase equals 1 is shown in 
+
+<link id="a1160" target-id="Listing_16">
+
+ Listing 16
+
+</link>
+
+.
+
+
+</para>
+
+
+
+
+
+
+
+<table id="table1020" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1020">
+<row id="tr1040">
+
+
+
+<entry id="th1020">
+<emphasis id="Listing_16" effect="bold">
+
+Listing 16.
+
+</emphasis>
+
+ Code for Case 1.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1020">
+<row id="tr1041">
+<entry id="td1020">
+
+		
+
+<code id="pre1020" display="block">      case 1:
+        spatialData[2][2] = 1;
+      break;</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1110">
+This case places a single impulse close to but not at the origin in space. 
+This produces a flat amplitude spectrum in wavenumber space just like in Case 0. 
+However, the real and imaginary parts of the spectrum are different from Case 0. 
+They are not flat. The computations are probably more subject to errors in this 
+case than for Case 0.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41034">
+<title>
+<emphasis id="The_visual_output" effect="bold">
+
+The visual output
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1111">
+<link id="a1161" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+ shows the six output images produced by the program for a 
+
+<emphasis id="strong1049" effect="bold">
+
+switchCase
+
+</emphasis>
+ value of 1.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1021" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1021">
+<row id="tr1042">
+<entry id="th1021">
+
+
+
+<emphasis id="Figure_6" effect="bold">
+
+Figure 6.
+
+</emphasis>
+
+ A displaced impulse in space.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1021">
+<row id="tr1043">
+<entry id="td1021">
+
+
+
+
+<media id="media1003" alt="missing image" display="block">
+<image id="img1003" mime-type="image/jpeg" src="../../media/1491-fig06.jpg" width="636" height="544"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+</section>
+<section id="h41035">
+<title>
+<emphasis id="The_input_and_output_surfaces_match_visually" effect="bold">
+
+The input and output 
+surfaces match visually
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1112">
+The input and output surfaces showing the single impulse are in the two 
+leftmost images in 
+
+<link id="a1162" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+. From a visual viewpoint, the output at the bottom 
+appears to be an exact match for the input at the top.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41036">
+<title>
+<emphasis id="The_real_and_imaginary_parts" effect="bold">
+
+The real and imaginary parts
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1113">
+The real and imaginary parts of the wavenumber spectrum are shown in the two 
+center images. The real part is at the top and the imaginary part is at the 
+bottom.
+
+</para>
+
+
+
+
+
+<para id="p1114">
+For a single impulse in the space domain, we would expect each of these 
+surfaces to be a 3D sinusoidal wave 
+
+<emphasis id="em1019" effect="italics">
+(similar to a piece of corrugated sheet 
+metal)
+
+</emphasis>
+. That appears to be what we are seeing, with almost two full cycles 
+of the sinusoidal wave between the origin and the bottom right corner of the 
+image.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1009" display="block">
+
+	
+
+<para id="p1115">
+<emphasis id="em1020" effect="italics">
+(The distance between the peaks in the sinusoidal wave in wavenumber 
+	space is inversely proportional to the distance of the impulse from the 
+	origin in space. Hence, as the impulse approaches the origin in space, the 
+	peaks in wavenumber space become further and further apart. When the impulse 
+	is located at the origin in space, the distance between the peaks in 
+	wavenumber space becomes infinite, leading to flat real and imaginary 
+	parts.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41037">
+<title>
+<emphasis id="Symmetry" effect="bold">
+
+Symmetry
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1116">
+We know that the real part of a wavenumber spectrum resulting from the 
+Fourier transform of a real space function is symmetric about the origin. We 
+also know that the imaginary part is asymmetric about the origin. 
+
+</para>
+
+
+
+
+
+<para id="p1117">
+The symmetry/asymmetry requirements appear to be satisfied by this case. The 
+color bands in the real part at the top are symmetric on either side of the 
+origin.
+
+</para>
+
+
+
+
+
+<para id="p1118">
+The imaginary part is asymmetric about the origin 
+
+<emphasis id="em1021" effect="italics">
+(the centers of the 
+red/white and the blue/black bands appear to be equidistant from and on opposite 
+sides of the origin)
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41038">
+<title>
+<emphasis id="The_amplitude_spectrum_is_ugly" effect="bold">
+
+The amplitude spectrum is ugly
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1119">
+The amplitude spectrum is shown in the two rightmost images in 
+
+<link id="a1163" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+. The 
+unshifted amplitude spectrum is shown at the top. The amplitude spectrum with 
+the origin shifted to the center is shown at the bottom.
+
+</para>
+
+
+
+
+
+<para id="p1120">
+The ugliness of these two plots is an 
+
+<emphasis id="artifact" effect="bold">
+
+artifact
+
+</emphasis>
+
+ of the 
+3D plotting scheme implemented by the class named 
+
+<emphasis id="strong1050" effect="bold">
+ImgMod29
+
+</emphasis>
+. In 
+order to maximize the use of the available dynamic range in the plot, each 
+surface that is plotted is normalized such that:
+
+</para>
+
+
+
+
+
+<list id="ul1020" list-type="bulleted">
+
+	
+
+<item id="li1120">
+The highest elevation is colored white
+
+</item>
+
+
+	
+
+<item id="li1121">
+The lowest elevation is colored black
+
+</item>
+
+
+	
+
+<item id="li1122">
+Elevations between the highest and lowest values are colored according 
+	to the calibration scale below the image
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1121">
+This normalization is applied even when the distance between the highest and 
+lowest elevation is very small. As a result of computational errors, the 
+amplitude spectrum is not perfectly flat. Rather there are very small variations 
+from one point to the next. As a result, the colors used to plot the surface 
+switch among the full range of available colors even for tiny deviations from 
+perfect flatness.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41039">
+<title>
+<emphasis id="Averysmallerror1" effect="bold">
+
+A very small error
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1122">
+The total error for this case is very small. The numeric output shows that 
+the final output surface matches the input surface to within an error that is 
+less than about one part in ten to the thirteenth power. The program produces 
+the expected results for this test case.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31017">
+<title>
+<emphasis id="For_switchCase__2" effect="bold">
+
+Case 2
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1123">
+Now we are going to take a look at another case for which we know in advance 
+generally what the outcome should be. This will allow us to compare the outcome 
+with our expectations to confirm proper operation of the program.
+
+</para>
+
+
+
+
+
+<section id="h41040">
+<title>
+<emphasis id="A_box_on_the_diagonal_in_space" effect="bold">
+
+A box on the diagonal in space
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1124">
+This case places a box that is one unit tall on the diagonal near the origin 
+in the space domain as shown in the top-left image in 
+
+<link id="a1164" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1022" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1022">
+<row id="tr1044">
+<entry id="th1022">
+
+
+
+<emphasis id="Figure_7" effect="bold">
+
+Figure 7.
+
+</emphasis>
+
+ A box on the diagonal in space.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1022">
+<row id="tr1045">
+<entry id="td1022">
+
+
+
+
+<media id="media1004" alt="missing image" display="block">
+<image id="img1004" mime-type="image/jpeg" src="../../media/1491-fig07.jpg" width="635" height="542"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+</section>
+<section id="h41041">
+<title>
+<emphasis id="What_do_we_know" effect="bold">
+
+What do we know?
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1125">
+On the basis of prior experience, we know that the amplitude spectrum of this 
+surface along the horizontal and vertical axes of the wavenumber spectrum should 
+have a rectified sin(x)/x shape 
+
+<emphasis id="em1022" effect="italics">
+(all negative values are converted to 
+positive values)
+
+</emphasis>
+. We know that the peak in this amplitude spectrum should 
+appear at the origin in wavenumber space, and that the width of the peak should 
+be inversely proportional to the size of the box.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41042">
+<title>
+<emphasis id="The_code_for_switchCase__2" effect="bold">
+
+The code for Case 2
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1126">
+The code that constructs the space domain surface for this case is shown in 
+
+
+<link id="a1165" target-id="Listing_17">
+
+ Listing 17
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+<table id="table1023" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1023">
+<row id="tr1046">
+
+
+
+<entry id="th1023">
+<emphasis id="Listing_17" effect="bold">
+
+Listing 17.
+
+</emphasis>
+
+ Code for Case 2.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1023">
+<row id="tr1047">
+<entry id="td1023">
+
+		
+
+<code id="pre1021" display="block">      case 2:
+        spatialData[3][3] = 1;
+        spatialData[3][4] = 1;
+        spatialData[3][5] = 1;
+        spatialData[4][3] = 1;
+        spatialData[4][4] = 1;    
+        spatialData[4][5] = 1;
+        spatialData[5][3] = 1;
+        spatialData[5][4] = 1;    
+        spatialData[5][5] = 1;
+      break;</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1127">
+This code is completely straightforward. It sets the value of each of nine 
+adjacent points on the surface to a value of 1, while the values of all other 
+points on the surface remain at zero. The arrangement of those nine points forms 
+a square whose sides are parallel to the horizontal and vertical axes.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41043">
+<title>
+<emphasis id="The_real_and_imaginary_parts_of_the_spectrum" effect="bold">
+
+The real and 
+imaginary parts of the spectrum
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1128">
+There isn't a lot that I can tell you about what to expect regarding the real 
+and imaginary parts of this spectrum, other than that they should exhibit the 
+same 
+
+<link id="a1166" target-id="Symmetry">
+
+symmetry
+
+</link>
+
+ and asymmetry conditions 
+that I described earlier for the real and imaginary parts in general. These 
+requirements appear to be satisfied by the real part at the top center of 
+
+
+<link id="a1167" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+ 
+and the imaginary part at the bottom center of 
+
+<link id="a1168" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1129">
+Otherwise, the shape of the real and imaginary wavenumber spectra will depend 
+on the location of the box in space and the size and orientation of the box.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41044">
+<title>
+<emphasis id="A_different_plotting_color_scheme" effect="bold">
+
+A different plotting color 
+scheme
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1130">
+Note that the plotting color scheme that I used for 
+
+<link id="a1169" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+ is different 
+from any of the plots previously shown in this module. This color scheme is what 
+I refer to as the Color Contour scheme in the module titled 
+
+<link id="a1170" url="http://cnx.org/contents/ea4ac046-e5a6-4503-b6e4-6c2d23b65d57/Java1489-Plotting-3D-Surfaces-">
+
+
+Plotting 3D Surfaces using Java
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1131">
+This scheme quantizes the range from the lowest to the highest elevation into 
+23 levels, coloring the lowest elevation black, the highest elevation white, and 
+assigning very specific colors to the 21 levels in between. The colors and the 
+levels that they represent are shown in the calibration scales under the plots 
+in 
+
+<link id="a1171" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+. The lowest elevation is on the left end of the calibration scale. 
+The highest elevation is on the right end of the calibration scale.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41045">
+<title>
+<emphasis id="The_amplitude_spectrum" effect="bold">
+
+The amplitude spectrum
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1132">
+As before, the wavenumber amplitude spectrum with the origin in the top-left 
+corner is shown in the top-right image in 
+
+<link id="a1172" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+. The amplitude spectrum with 
+the origin shifted to the center is shown in the lower right image in 
+
+
+<link id="a1173" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1133">
+If you were to use the calibration scale to convert the colors along the 
+horizontal and vertical axes in the lower right image into numeric values, you 
+would find that they approximate a rectified sin(x)/x shape as expected.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41046">
+<title>
+<emphasis id="Theoutputsurfacea" effect="bold">
+
+The output surface
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1134">
+The output surface produced by performing an inverse Fourier transform on the 
+complex wavenumber spectrum is shown in the lower-left image in 
+
+<link id="a1174" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+. This 
+surface appears to match the input surface shown in the top-left image in 
+
+
+<link id="a1175" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41047">
+<title>
+<emphasis id="The_overall_results" effect="bold">
+
+The overall results
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1135">
+The numeric output for this case isn't very useful because none of the 
+samples for which numeric data is provided fall within the square. However, 
+because the real and imaginary parts exhibit the correct 
+
+<link id="a1176" target-id="Symmetry">
+
+symmetry
+
+</link>
+
+, , the shape of the amplitude 
+spectrum is generally what we expect, and the output from the inverse Fourier 
+transform appears to match the original input causes us to conclude that the 
+program is working properly in this case.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31018">
+<title>
+<emphasis id="For_switchCase__3" effect="bold">
+
+Case 3
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1136">
+This case places a raised box at the top near the origin in the space domain, 
+but the box is not on the diagonal as it was in Case 2.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1010" display="block">
+
+	
+
+<para id="p1137">
+<emphasis id="em1023" effect="italics">
+(See the top-left image in 
+
+<link id="a1177" target-id="Figure_8">
+
+ Figure 8
+
+</link>
+
+ for the new location of the box.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+
+
+<table id="table1024" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1024">
+<row id="tr1048">
+<entry id="th1024">
+
+
+
+<emphasis id="Figure_8" effect="bold">
+
+Figure 8.
+
+</emphasis>
+
+ Graphic output for Case 3.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1024">
+<row id="tr1049">
+<entry id="td1024">
+
+
+
+
+<media id="media1005" alt="missing image" display="block">
+<image id="img1005" mime-type="image/jpeg" src="../../media/1491-fig08.jpg" width="636" height="543"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h41048">
+<title>
+<emphasis id="Amplitude_spectrum_should_not_change" effect="bold">
+
+Amplitude spectrum should not 
+change
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1138">
+As long as the size and the orientation of the box doesn't change, the 
+wavenumber amplitude spectrum should be the same as Case 2 regardless of the 
+location of the box in space. Since the size and orientation of this box is the 
+same as in Case 2, the amplitude spectrum for this case should be the same as 
+for Case 2.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41049">
+<title>
+<emphasis id="The_real_and_imaginary_parts_of_the_spectrum_may_change" effect="bold">
+
+The real 
+and imaginary parts of the spectrum may change
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1139">
+However, the real and imaginary parts 
+
+<emphasis id="em1024" effect="italics">
+(or the phase)
+
+</emphasis>
+ change as the 
+location of the box changes relative to the origin in space.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41050">
+<title>
+<emphasis id="A_hypothetical_example" effect="bold">
+
+A hypothetical example
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1140">
+The purpose of this case is to illustrate a hypothetical example. If two 
+different photographic images contain a picture of the same object in the same 
+size and the same orientation in space, that object will contribute the same 
+values to the amplitude spectrum of both images regardless of where the object 
+is located in the different images.
+
+</para>
+
+
+
+
+
+<para id="p1141">
+For example, assume that a photographic image includes a picture of a vase. 
+Assume that the original image is cropped twice along two different borders 
+producing two new images. Assume that both of the new images contain the picture 
+of the vase, but in different locations. That vase will contribute the same 
+values to the amplitude spectra of the two images regardless of the location of 
+the vase in each of the images. This knowledge will be useful to us in future 
+modules when we begin using 2D Fourier transforms to process photographic 
+images.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41051">
+<title>
+<emphasis id="Amplitude_spectrum_is_the_same" effect="bold">
+
+Amplitude spectrum is the same
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1142">
+If you compare 
+
+<link id="a1178" target-id="Figure_8">
+
+ Figure 8
+
+</link>
+
+ with 
+
+<link id="a1179" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+, you will see that the amplitude 
+spectrum is the same for both surfaces despite the fact that the box is in a 
+different location in each of the two surfaces. However, the real and imaginary 
+parts of the spectrum in 
+
+<link id="a1180" target-id="Figure_8">
+
+ Figure 8
+
+</link>
+
+ are considerably different from the real and 
+imaginary parts of the spectrum in 
+
+<link id="a1181" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1143">
+The code that was used to create the surface for this case is 
+straightforward. You can view that code in 
+
+<link id="a1182" target-id="Listing_22">
+
+ Listing 22
+
+</link>
+
+ near the end of the 
+module.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31019">
+<title>
+<emphasis id="For_switchCase__4" effect="bold">
+
+Case 4
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1144">
+This case draws a short line containing eight points along the diagonal from 
+top-left to lower right in the space domain. You can view this surface in the 
+top-left image in 
+
+<link id="a1183" target-id="Figure_9">
+
+ Figure 9
+
+</link>
+
+. You can view the code that generated this surface in 
+
+
+<link id="a1184" target-id="Listing_22">
+
+ Listing 22
+
+</link>
+
+ near the end of the module.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1025" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1025">
+<row id="tr1050">
+<entry id="th1025">
+
+
+
+<emphasis id="Figure_9" effect="bold">
+
+Figure 9.
+
+</emphasis>
+
+ Graphic output for Case 4.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1025">
+<row id="tr1051">
+<entry id="td1025">
+
+
+
+
+<media id="media1006" alt="missing image" display="block">
+<image id="img1006" mime-type="image/jpeg" src="../../media/1491-fig09.jpg" width="638" height="542"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h41052">
+<title>
+<emphasis id="Another_example_of_sinxx" effect="bold">
+
+Another example of sin(x)/x
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1145">
+On the basis of prior experience, we would expect the wavenumber amplitude 
+spectrum, 
+
+<emphasis id="em1025" effect="italics">
+(when viewed along any line in wavenumber space parallel to the 
+line in space)
+
+</emphasis>
+, to have a rectified sin(x)/x shape. We would expect the 
+peak of that shape to be centered on the origin in wavenumber space. We would 
+expect the width of the peak in wavenumber space to be inversely proportional to 
+the length of the line in space.
+
+</para>
+
+
+
+
+
+<para id="p1146">
+We would expect the amplitude spectrum when viewed along any line in 
+wavenumber space perpendicular to the line in space to have a constant value.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41053">
+<title>
+<emphasis id="Our_expectations_are_borne_out" effect="bold">
+
+Our expectations are borne out
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1147">
+The shape of the amplitude spectrum shown in the lower right image in 
+
+
+<link id="a1185" target-id="Figure_9">
+
+ Figure 9
+
+</link>
+
+ 
+agrees with our expectations. Although not shown here, if we were to make the 
+line of points longer, the width of the peak in the rectified sin(x)/x would 
+become narrower. If we were to make the line of points shorter, the peak would 
+become wider, as we will demonstrate in Case 5.
+
+</para>
+
+
+
+
+
+<para id="p1148">
+Our expectations regarding 
+
+<link id="a1186" target-id="Symmetry">
+
+symmetry
+
+</link>
+
+ 
+and asymmetry for the real and imaginary parts shown in the center images of 
+
+
+<link id="a1187" target-id="Figure_9">
+
+ Figure 9
+
+</link>
+
+ are borne out. The real part is at the top center and the imaginary 
+part is at the bottom center.
+
+</para>
+
+
+
+
+
+<para id="p1149">
+The output from the inverse Fourier transform shown in the bottom left of 
+
+
+<link id="a1188" target-id="Figure_9">
+
+ Figure 9
+
+</link>
+
+ matches the original space domain surface in the top left of 
+
+<link id="a1189" target-id="Figure_9">
+
+ Figure 9
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31020">
+<title>
+<emphasis id="For_switchCase__5" effect="bold">
+
+Case 5
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1150">
+This case draws a short line consisting of only four points perpendicular to 
+the diagonal from top-left to lower right. This line of points is perpendicular 
+to the direction of the line of points in Case 4.
+
+</para>
+
+
+
+
+
+<para id="p1151">
+You can view the surface for this case in the top-left image of 
+
+<link id="a1190" target-id="Figure_10">
+
+ Figure 10
+
+</link>
+
+. 
+You can view the code that generated this surface in 
+
+<link id="a1191" target-id="Listing_22">
+
+ Listing 22
+
+</link>
+
+ near the end of 
+the module.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1026" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1026">
+<row id="tr1052">
+<entry id="th1026">
+
+
+
+<emphasis id="Figure_10" effect="bold">
+
+Figure 10.
+
+</emphasis>
+
+ Graphic output for Case 5.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1026">
+<row id="tr1053">
+<entry id="td1026">
+
+
+
+
+<media id="media1007" alt="missing image" display="block">
+<image id="img1007" mime-type="image/jpeg" src="../../media/1491-fig10.jpg" width="634" height="538"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h41054">
+<title>
+<emphasis id="Rotated_by_ninety_degrees" effect="bold">
+
+Rotated by ninety degrees
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1152">
+If you compare 
+
+<link id="a1192" target-id="Figure_10">
+
+ Figure 10
+
+</link>
+
+ with 
+
+<link id="a1193" target-id="Figure_9">
+
+ Figure 9
+
+</link>
+
+, you will see that the spectral result 
+is rotated ninety degrees relative to that shown for Case 4 where the line was 
+along the diagonal. In other words, rotating the line of points by ninety 
+degrees also rotated the structure in the wavenumber spectrum by ninety degrees.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41055">
+<title>
+<emphasis id="A_wider_peak" effect="bold">
+
+A wider peak
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1153">
+In addition, the line of points for Case 5 is shorter than the line of points 
+for Case 4 resulting in a wider peak in the rectified sin(x)/x shape for Case 5.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41056">
+<title>
+<emphasis id="Therealandimaginaryparts5" effect="bold">
+
+The real and imaginary parts
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1154">
+While the real and imaginary parts of the spectrum shown in the center of 
+
+
+<link id="a1194" target-id="Figure_10">
+
+ Figure 10
+
+</link>
+
+ are considerably different from anything that we have seen prior to 
+this, they still satisfy the 
+
+<link id="a1195" target-id="Symmetry">
+
+symmetry
+
+</link>
+
+ 
+and asymmetry conditions that we expect for the real and imaginary parts.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41057">
+<title>
+<emphasis id="The_final_output_matches_the_input" effect="bold">
+
+The final output matches the 
+input
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1155">
+The output from the inverse Fourier transform in the bottom left image in 
+
+
+<link id="a1196" target-id="Figure_10">
+
+ Figure 10
+
+</link>
+
+ matches the input surface in the top left image in 
+
+<link id="a1197" target-id="Figure_10">
+
+ Figure 10
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1156">
+All of this matches our expectations for this case.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31021">
+<title>
+<emphasis id="For_switchCase__6" effect="bold">
+
+Case 6
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1157">
+This case is considerably more complicated than the previous cases. You can 
+view the surface for this case in the top-left image in 
+
+<link id="a1198" target-id="Figure_11">
+
+ Figure 11
+
+</link>
+
+. You can view 
+the code that generated this surface in 
+
+<link id="a1199" target-id="Listing_22">
+
+ Listing 22
+
+</link>
+
+ near the end of the module.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1027" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1027">
+<row id="tr1054">
+<entry id="th1027">
+
+
+
+<emphasis id="Figure_11" effect="bold">
+
+Figure 11.
+
+</emphasis>
+
+ Graphic output for Case 6.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1027">
+<row id="tr1055">
+<entry id="td1027">
+
+
+
+
+<media id="media1008" alt="missing image" display="block">
+<image id="img1008" mime-type="image/jpeg" src="../../media/1491-fig11.jpg" width="635" height="540"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h41058">
+<title>
+<emphasis id="Many_weighted_lines_of_points" effect="bold">
+
+Many weighted lines of points
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1158">
+This case draws horizontal lines, vertical lines, and lines on both 
+diagonals. Each individual point on each line is given a value of either +1 or 
+-1. The weights of the individual points are adjusted so that the sum of all the 
+weights is 0. The weight at the point where the lines intersect is also 0.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41059">
+<title>
+<emphasis id="Black_is_1_white_is_1" effect="bold">
+
+Black is -1, white is +1
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1159">
+The small black squares in the top-left image in 
+
+<link id="a1200" target-id="Figure_11">
+
+ Figure 11
+
+</link>
+
+ represent points 
+with a weight of -1. The small white squares represent points with a weight of 
++1. The green background color represents a value of 0.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41060">
+<title>
+<emphasis id="Symmetries_on_four_different_axes" effect="bold">
+
+Symmetries on four different 
+axes
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1160">
+The wavenumber amplitude spectrum is shown in the bottom right image in 
+
+
+<link id="a1201" target-id="Figure_11">
+
+ Figure 11
+
+</link>
+
+. As you can see from that image, performing a 2D Fourier transform on 
+this surface produces a wavenumber amplitude spectrum that is symmetrical along 
+lines drawn at 0, 45, 90, and 135 degrees to the horizontal. There is a line of 
+symmetry in the amplitude spectrum for every line of points on the space domain 
+surface.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41061">
+<title>
+<emphasis id="Must_be_zero_at_the_wavenumber_origin" effect="bold">
+
+Must be zero at the 
+wavenumber origin
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1161">
+Because the sum of all the points is 0, the value of the wavenumber spectrum 
+at the origin must also be zero. This is indicated by the black square at the 
+origin in the lower right image.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41062">
+<title>
+<emphasis id="Peaks_at_the_folding_wave_numbers" effect="bold">
+
+Peaks at the folding wave 
+numbers
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1162">
+This amplitude spectrum has major peaks at the folding wave number on each of 
+the 45-degree axes. In addition, there are minor peaks at various other points 
+in the spectrum.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41063">
+<title>
+<emphasis id="Therealandimaginaryparts6" effect="bold">
+
+The real and imaginary parts
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1163">
+As expected, the real and imaginary parts of the spectrum, shown in the 
+center of 
+
+<link id="a1202" target-id="Figure_11">
+
+ Figure 11
+
+</link>
+
+ exhibit the required 
+
+<link id="a1203" target-id="Symmetry">
+
+
+symmetry
+
+</link>
+
+ and asymmetry that I discussed earlier.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41064">
+<title>
+<emphasis id="The_final_output" effect="bold">
+
+The final output
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1164">
+The output produced by performing an inverse Fourier transform on the complex 
+wavenumber spectrum is shown in the lower-left image in 
+
+<link id="a1204" target-id="Figure_11">
+
+ Figure 11
+
+</link>
+
+. This image 
+matches the input surface shown in the top left image in 
+
+<link id="a1205" target-id="Figure_11">
+
+ Figure 11
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31022">
+<title>
+<emphasis id="For_switchCase__7" effect="bold">
+
+Case 7
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1165">
+Now we are going to make a major change in direction. All of the surfaces 
+from cases 0 through 6 consisted of a few individual points located in specific 
+geometries in the space domain. All of the remaining points on the surface had a 
+value of zero. This resulted in continuous 
+
+<emphasis id="em1026" effect="italics">
+(but sampled)
+
+</emphasis>
+ surfaces in 
+the wavenumber domain.
+
+</para>
+
+
+
+
+
+<para id="p1166">
+Now we are going to generate continuous 
+
+<emphasis id="em1027" effect="italics">
+(but sampled)
+
+</emphasis>
+ surfaces in 
+the space domain. We will generate these surfaces as sinusoidal surfaces 
+
+<emphasis id="em1028" effect="italics">
+
+(similar to a sheet of corrugated sheet metal)
+
+</emphasis>
+ or the sums of sinusoidal 
+surfaces.
+
+</para>
+
+
+
+
+
+<para id="p1167">
+Performing Fourier transforms on these surfaces will produce amplitude 
+spectra consisting of a few non-zero points in wavenumber space with the 
+remaining points in the spectrum having values near zero.
+
+</para>
+
+
+
+
+
+<section id="h41065">
+<title>
+<emphasis id="Need_to_change_the_surface_plotting_scale" effect="bold">
+
+Need to change the 
+surface plotting scale
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1168">
+In order to make these amplitude spectra easier to view, I have modified the 
+program to cause the square representing each point in the amplitude spectrum to 
+be five pixels on each side instead of three pixels on each side. To keep the 
+overall size of the images under control, I reduced the width and the height of 
+the surfaces from 41 points to 23 points.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41066">
+<title>
+<emphasis id="Display_fewer_results" effect="bold">
+
+Display fewer results
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1169">
+I suspect that you have seen all the real parts, imaginary parts, and 
+unshifted amplitude spectra that you want to see. Therefore, at this point, I 
+will begin displaying only the input surface, the amplitude spectrum, and the 
+output surface that results from performing an inverse Fourier transform on the 
+complex spectrum.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41067">
+<title>
+<emphasis id="A_zero_frequency_sine_wave" effect="bold">
+
+A zero frequency sine wave
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1170">
+The first example in this category is shown in 
+
+<link id="a1206" target-id="Figure_12">
+
+ Figure 12
+
+</link>
+
+. The input surface 
+for this example is a sinusoidal wave with a frequency of zero. This results in 
+a perfectly flat surface in the space domain as shown in the leftmost image in 
+
+
+<link id="a1207" target-id="Figure_12">
+
+ Figure 12
+
+</link>
+
+. This surface is perfectly flat and featureless.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1028" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1028">
+<row id="tr1056">
+<entry id="th1028">
+
+
+
+<emphasis id="Figure_12" effect="bold">
+
+Figure 12.
+
+</emphasis>
+
+ Graphic output for Case 7.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1028">
+<row id="tr1057">
+<entry id="td1028">
+
+
+
+
+<media id="media1009" alt="missing image" display="block">
+<image id="img1009" mime-type="image/jpeg" src="../../media/1491-fig12.jpg" width="601" height="289"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+</section>
+<section id="h41068">
+<title>
+<emphasis id="The_code_for_this_case" effect="bold">
+
+The code for this case
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1171">
+The code that was used to generate this surface is shown in 
+
+<link id="a1208" target-id="Listing_18">
+
+ Listing 18
+
+</link>
+
+. For 
+the case of a sinusoidal wave with zero frequency, every point on the surface 
+has a value of 1.0.
+
+</para>
+
+
+
+
+
+
+<table id="table1029" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1029">
+<row id="tr1058">
+
+
+
+<entry id="th1029">
+<emphasis id="Listing_18" effect="bold">
+
+Listing 18.
+
+</emphasis>
+
+ Code for Case 7.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1029">
+<row id="tr1059">
+<entry id="td1029">
+
+		
+
+<code id="pre1022" display="block">      case 7:
+        for(int row = 0; row &lt; rows; row++){
+          for(int col = 0; col &lt; cols; col++){
+            spatialData[row][col] = 1.0;
+          }//end inner loop
+        }//end outer loop
+      break;</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+</section>
+<section id="h41069">
+<title>
+<emphasis id="A_single_point_at_the_origin" effect="bold">
+
+A single point at the origin
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1172">
+As shown by the center image in 
+
+<link id="a1209" target-id="Figure_12">
+
+ Figure 12
+
+</link>
+
+, the Fourier transform of this 
+surface produces a single point at the origin in wavenumber space. This is 
+exactly what we would expect.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41070">
+<title>
+<emphasis id="The_inverse_transform_output_is_ugly" effect="bold">
+
+The inverse transform output 
+is ugly
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1173">
+The result of performing an inverse Fourier transform on the complex spectrum 
+is shown in the rightmost image in 
+
+<link id="a1210" target-id="Figure_12">
+
+ Figure 12
+
+</link>
+
+. As was the case earlier in 
+
+
+<link id="a1211" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+, 
+the ugliness of this plot is an artifact of the 3D plotting scheme 
+implemented by the class named 
+
+<emphasis id="strong1051" effect="bold">
+ImgMod29
+
+</emphasis>
+. The
+
+
+<link id="a1212" target-id="artifact">
+
+explanation
+
+</link>
+
+ that I gave there applies here also.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41071">
+<title>
+<emphasis id="Averysmallerror7" effect="bold">
+
+A very small error
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1174">
+Once again, the total error is very small. The numeric output shows that the 
+final output surface matches the input surface to within an error that is less 
+than about one part in ten to the thirteenth power. Thus, the program produces 
+the expected results for this test case.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31023">
+<title>
+<emphasis id="For_switchCase__8" effect="bold">
+
+Case 8
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1175">
+This case draws a sinusoidal surface along the horizontal axis with one 
+sample per cycle.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1011" display="block">
+
+	
+
+<para id="p1176">
+<emphasis id="em1029" effect="italics">
+(This surface is under sampled by a factor of two under the commonly held 
+	belief that there should be at least two samples per cycle of the highest 
+	frequency component in the surface.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1177">
+Thus, it is impossible to distinguish this surface from a surface consisting 
+of a sinusoid with a frequency of zero.
+
+</para>
+
+
+
+
+
+<para id="p1178">
+The code that was used to produce this surface is shown in 
+
+<link id="a1213" target-id="Listing_19">
+
+ Listing 19
+
+</link>
+
+. This 
+code is typical of the code that I will be using to produce the remaining 
+surfaces in this module. This code is straightforward and shouldn't require 
+further explanation. 
+
+</para>
+
+
+
+
+
+<table id="table1030" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1030">
+<row id="tr1060">
+
+
+
+<entry id="th1030">
+<emphasis id="Listing_19" effect="bold">
+
+Listing 19.
+
+</emphasis>
+
+ Code for Case 8.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1030">
+<row id="tr1061">
+<entry id="td1030">
+
+		
+
+<code id="pre1023" display="block">      case 8:
+        for(int row = 0; row &lt; rows; row++){
+          for(int col = 0; col &lt; cols; col++){
+            spatialData[row][col] = 
+                                 cos(2*PI*col/1);
+          }//end inner loop
+        }//end outer loop
+      break;</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41072">
+<title>
+<emphasis id="The_graphic_output_for_Case_8" effect="bold">
+
+The graphic output for Case 8
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1179">
+The Fourier transform of this surface produces a single peak at the origin in 
+the wavenumber spectrum just like in 
+
+<link id="a1214" target-id="Figure_12">
+
+ Figure 12
+
+</link>
+
+. I didn't provide a display of 
+the graphic output for this case because it looks just like the graphic output 
+shown for the zero frequency sinusoid in 
+
+<link id="a1215" target-id="Figure_12">
+
+ Figure 12
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31024">
+<title>
+<emphasis id="For_switchCase__9" effect="bold">
+
+Case 9
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1180">
+This case draws a sinusoidal surface along the horizontal axis with two 
+samples per cycle as shown in the leftmost image in 
+
+<link id="a1216" target-id="Figure_13">
+
+ Figure 13
+
+</link>
+
+. This corresponds 
+to the Nyquist folding wavenumber.
+
+</para>
+
+
+
+
+
+<section id="h41073">
+<title>
+<emphasis id="The_wavenumber_spectrum" effect="bold">
+
+The wavenumber spectrum
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1181">
+The center image in 
+
+<link id="a1217" target-id="Figure_13">
+
+ Figure 13
+
+</link>
+
+ shows the wavenumber amplitude spectrum for 
+this surface. The wavenumber spectrum has white peak values at the positive and 
+negative folding wave numbers on the right and left edges of the imaged. The colors in between these two peaks are green, 
+blue, and gray indicating very low values.
+
+</para>
+
+
+
+
+
+
+
+
+<table id="table1031" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1031">
+<row id="tr1062">
+<entry id="th1031">
+
+
+
+<emphasis id="Figure_13" effect="bold">
+
+Figure 13.
+
+</emphasis>
+
+ Graphic output for Case 9.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1031">
+<row id="tr1063">
+<entry id="td1031">
+
+
+
+
+<media id="media1010" alt="missing image" display="block">
+<image id="img1010" mime-type="image/jpeg" src="../../media/1491-fig13.jpg" width="596" height="280"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+</section>
+<section id="h41074">
+<title>
+<emphasis id="The_inverse_Fourier_transform_output" effect="bold">
+
+The inverse Fourier transform 
+output
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1182">
+The output from the inverse Fourier transform performed on the complex 
+wavenumber spectrum for this case is shown in the rightmost image in 
+
+<link id="a1218" target-id="Figure_13">
+
+ Figure 13
+
+</link>
+
+. 
+The output is a good match for the input shown on the left.
+
+</para>
+
+
+
+
+
+<para id="p1183">
+You can view the code that was used to create this surface in 
+
+<link id="a1219" target-id="Listing_22">
+
+ Listing 22
+
+</link>
+
+ near 
+the end of the module.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31025">
+<title>
+<emphasis id="For_switchCase__10" effect="bold">
+
+Case 10
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1184">
+This case draws a sinusoidal surface along the vertical axis with two samples 
+per cycle. Again, this is the Nyquist folding wave number but the sinusoid 
+appears along the vertical axis instead of appearing along the horizontal axis. 
+If you run this case and view the results, you will see that it replicates the 
+results from Case 9 except that everything is rotated by ninety degrees in both 
+the space domain and the wavenumber domain.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31026">
+<title>
+<emphasis id="For_switchCase__11" effect="bold">
+
+Case 11
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1185">
+This case draws a sinusoidal surface along the horizontal axis with eight 
+samples per cycle as shown in the leftmost image of 
+
+<link id="a1220" target-id="Figure_14">
+
+ Figure 14
+
+</link>
+
+. 
+
+</para>
+
+
+
+
+
+
+
+<table id="table1032" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1032">
+<row id="tr1064">
+<entry id="th1032">
+
+
+
+<emphasis id="Figure_14" effect="bold">
+
+Figure 14.
+
+</emphasis>
+
+ Graphic output for Case 11.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1032">
+<row id="tr1065">
+<entry id="td1032">
+
+
+
+
+<media id="media1011" alt="missing image" display="block">
+<image id="img1011" mime-type="image/jpeg" src="../../media/1491-fig14.jpg" width="601" height="285"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h41075">
+<title>
+<emphasis id="Thewavenumberspectrum11" effect="bold">
+
+The wavenumber spectrum
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1186">
+Performing a forward Fourier transform on this surface produces symmetrical 
+peaks on the horizontal axis on either side of the wavenumber origin. The two 
+peaks are indicated by the small white and red squares on the horizontal axis in 
+the center image in 
+
+<link id="a1221" target-id="Figure_14">
+
+ Figure 14
+
+</link>
+
+. 
+
+</para>
+
+
+
+
+
+<quote id="blockquote1012" display="block">
+
+	
+
+<para id="p1187">
+<emphasis id="em1030" effect="italics">
+(Recall that for the plotting format used in 
+
+<link id="a1222" target-id="Figure_14">
+
+ Figure 14
+
+</link>
+
+, the color 
+	white is reserved for the single point with the highest elevation. The 
+	difference in an elevation colored white and an elevation colored red for 
+	this plotting format might be as small as one part in ten to the fourteenth 
+	or fifteenth power. As a practical matter, 
+
+</emphasis>
+<emphasis id="red_and_white" effect="bold">
+
+
+<emphasis id="em1031" effect="italics">
+
+	red and white
+
+</emphasis>
+</emphasis>
+
+
+<emphasis id="em1032" effect="italics">
+ indicate the same elevation for this plotting 
+	format.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1188">
+For a sinusoidal surface with eight samples per cycle, we would expect the 
+peaks to occur in the wavenumber spectrum about one-fourth of the distance from 
+the origin to the folding wavenumber. 
+
+<link id="a1223" target-id="Figure_14">
+
+ Figure 14
+
+</link>
+
+ meets that expectation.
+
+</para>
+
+
+
+
+
+<para id="p1189">
+The peaks are surrounded on both sides by blue and cyan colors, indicating 
+very low values.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41076">
+<title>
+<emphasis id="TheinverseFouriertransformoutput11" effect="bold">
+
+The inverse Fourier transform 
+output
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1190">
+The output from the inverse Fourier transformed performed on the complex 
+spectrum is shown in the rightmost image in 
+
+<link id="a1224" target-id="Figure_14">
+
+ Figure 14
+
+</link>
+
+. This output compares very 
+favorably with the input surface shown in the leftmost image. The difference 
+between the two is that the input has white vertical bands whereas the output 
+has red vertical bands 
+
+<emphasis id="em1033" effect="italics">
+(with a single white spot)
+
+</emphasis>
+. The above
+
+
+<link id="a1225" target-id="red_and_white">
+
+explanation
+
+</link>
+
+ of white versus red 
+applies here also.
+
+</para>
+
+
+
+
+
+<para id="p1191">
+You can view the code that created this surface in 
+
+<link id="a1226" target-id="Listing_22">
+
+ Listing 22
+
+</link>
+
+ near the end of 
+the module.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31027">
+<title>
+<emphasis id="For_switchCase__12_" effect="bold">
+
+Case 12 
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1192">
+This case draws a sinusoidal surface on the horizontal axis with three 
+samples per cycle plus a sinusoidal surface on the vertical axis with eight 
+samples per cycle as shown by the leftmost image in 
+
+<link id="a1227" target-id="Figure_15">
+
+ Figure 15
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+
+
+
+<table id="table1033" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1033">
+<row id="tr1066">
+<entry id="th1033">
+
+
+
+<emphasis id="Figure_15" effect="bold">
+
+Figure 15.
+
+</emphasis>
+
+ Graphic output for Case 12.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1033">
+<row id="tr1067">
+<entry id="td1033">
+
+
+
+
+<media id="media1012" alt="missing image" display="block">
+<image id="img1012" mime-type="image/jpeg" src="../../media/1491-fig15.jpg" width="599" height="282"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h41077">
+<title>
+<emphasis id="Thewavenumberspectrum12" effect="bold">
+
+The wavenumber spectrum
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1193">
+Performing a forward Fourier transform produces symmetrical peaks on the 
+horizontal and vertical axes on all four sides of the wave number origin. These 
+peaks are indicated by the red and white squares in the center image in 
+
+
+<link id="a1228" target-id="Figure_15">
+
+ Figure 15
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1013" display="block">
+
+	
+
+<para id="p1194">
+<emphasis id="em1034" effect="italics">
+(See the earlier discussion regarding the difference in elevation 
+	indicated by 
+
+</emphasis>
+<link id="a1229" target-id="red_and_white">
+
+
+<emphasis id="em1035" effect="italics">
+red and white
+
+</emphasis>
+</link>
+
+
+<emphasis id="em1036" effect="italics">
+ 
+	for this plotting format.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1195">
+The peaks on the vertical axis should be about one-fourth of the way between 
+the origin and the folding wavenumber. This appears to be the case. The peaks on 
+the horizontal axis should be about two-thirds of the way between the origin and 
+the folding wavenumber, which they also appear to be.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41078">
+<title>
+<emphasis id="Inverse_Fourier_transform_output" effect="bold">
+
+Inverse Fourier transform output
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1196">
+The output produced by performing an inverse Fourier transform on the complex 
+spectrum is shown in the rightmost image in 
+
+<link id="a1230" target-id="Figure_15">
+
+ Figure 15
+
+</link>
+
+. Taking the 
+
+<link id="a1231" target-id="red_and_white">
+
+red versus white
+
+</link>
+
+ issue into 
+account, this output compares favorably with the input surface shown in the 
+leftmost image in 
+
+<link id="a1232" target-id="Figure_15">
+
+ Figure 15
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1197">
+You can view the code that created this surface in 
+
+<link id="a1233" target-id="Listing_22">
+
+ Listing 22
+
+</link>
+
+ near the end of 
+the module.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31028">
+<title>
+<emphasis id="For_switchCase__13" effect="bold">
+
+Case 13
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1198">
+This case draws a sinusoidal surface at an angle of approximately 45 degrees 
+relative to the horizontal as shown in the leftmost image in 
+
+<link id="a1234" target-id="Figure_16">
+
+ Figure 16
+
+</link>
+
+. This 
+sinusoid has approximately eight samples per cycle.
+
+</para>
+
+
+
+
+
+
+
+
+
+<table id="table1034" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1034">
+<row id="tr1068">
+<entry id="th1034">
+
+
+
+<emphasis id="Figure_16" effect="bold">
+
+Figure 16.
+
+</emphasis>
+
+ Graphic output for Case 13.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1034">
+<row id="tr1069">
+<entry id="td1034">
+
+
+
+
+<media id="media1013" alt="missing image" display="block">
+<image id="img1013" mime-type="image/jpeg" src="../../media/1491-fig16.jpg" width="597" height="284"/>
+</media>
+
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h41079">
+<title>
+<emphasis id="thewavenumberspectrum13" effect="bold">
+
+The wavenumber spectrum
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1199">
+Performing a forward Fourier transform on this surface produces a pair of 
+peaks in the wavenumber spectrum that are symmetrical about the origin at 
+approximately 45 degrees relative to the horizontal axis. These peaks are 
+indicated by the red and white squares in the center image in 
+
+<link id="a1235" target-id="Figure_16">
+
+ Figure 16
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41080">
+<title>
+<emphasis id="TheinverseFouriertransformoutput13" effect="bold">
+
+The inverse Fourier transform 
+output
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1200">
+The output produced by performing an inverse Fourier transform on the complex 
+wavenumber spectrum is shown in the rightmost image in 
+
+<link id="a1236" target-id="Figure_16">
+
+ Figure 16
+
+</link>
+
+. This output 
+compares favorably with the input surface shown in the leftmost image in 
+
+
+<link id="a1237" target-id="Figure_16">
+
+ Figure 16
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1201">
+You can view the code that created this surface in 
+
+<link id="a1238" target-id="Listing_22">
+
+ Listing 22
+
+</link>
+
+ near the end of 
+the module.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41081">
+<title>
+<emphasis id="The_end_of_the_getSpatialData_method" effect="bold">
+
+The end of the getSpatialData 
+method
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1202">
+<link id="a1239" target-id="Listing_20">
+
+ Listing 20
+
+</link>
+
+ shows the end of the method named 
+
+<emphasis id="strong1052" effect="bold">
+getSpatialData
+
+</emphasis>
+ 
+and the end of the class named 
+
+<emphasis id="strong1053" effect="bold">
+ImgMod31
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+
+<table id="table1035" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1035">
+<row id="tr1070">
+
+
+
+<entry id="th1035">
+<emphasis id="Listing_20" effect="bold">
+
+Listing 20.
+
+</emphasis>
+
+ The end of the getSpatialData method.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1035">
+<row id="tr1071">
+<entry id="td1035">
+
+		
+
+<code id="pre1024" display="block">      default:
+        System.out.println("Case must be " +
+                  "between 0 and 13 inclusive.");
+        System.out.println(
+                         "Terminating program.");
+        System.exit(0);
+    }//end  switch statement
+    
+    return spatialData;
+  }//end getSpatialData
+}//end class ImgMod31</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1203">
+A default case is provided in the switch statement to deal with the 
+possibility that the user may specify a case that is not included in the 
+allowable limits of 0 through 13 inclusive.
+
+</para>
+
+
+
+
+
+<para id="p1204">
+The method ends by returning a reference to the array object containing the 
+3D surface that was created by the selected case in the switch statement.
+
+</para>
+
+
+
+
+
+
+</section>
+</section>
+</section>
+</section>
+<section id="h11005">
+<title>
+<emphasis id="Run_the_program" effect="bold">
+
+Run the program
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+<para id="p1205">
+I encourage you to copy, compile, and run the programs that you will find in 
+
+
+<link id="a1240" target-id="Listing_21">
+
+ Listing 21
+
+</link>
+
+ and 
+
+<link id="a1241" target-id="Listing_22">
+
+ Listing 22
+
+</link>
+
+ near the end of the module.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1014" display="block">
+
+	
+
+<para id="p1206">
+<emphasis id="em1037" effect="italics">
+(You will also need to go to the module titled 
+
+</emphasis>
+
+	
+
+<link id="a1242" url="http://cnx.org/contents/ea4ac046-e5a6-4503-b6e4-6c2d23b65d57/Java1489-Plotting-3D-Surfaces-">
+
+
+	
+
+<emphasis id="em1038" effect="italics">
+Plotting 3D Surfaces using Java
+
+</emphasis>
+</link>
+
+
+<emphasis id="em1039" effect="italics">
+ and get a copy of the 
+	source code for the program named 
+
+<emphasis id="strong1054" effect="bold">
+ImgMod29
+
+</emphasis>
+.) 
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1207">
+Modify the programs and experiment with them in order to learn as much as you 
+can about 2D Fourier transforms.
+
+</para>
+
+
+
+
+
+<para id="p1208">
+Create some different test cases and work with them until you understand why 
+they produce the results that they do.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h11006">
+<title>
+<emphasis id="Summary" effect="bold">
+
+Summary
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1209">
+I began
+
+
+<link id="a1243" url="http://cnx.org/contents/59521521-d933-4314-856b-94f2e906de1a/Java1490-2D-Fourier-Transforms">
+
+
+Part 1
+
+</link>
+
+ of this two-part series by explaining how the space domain and the 
+wavenumber domain in two-dimensional analysis are analogous to the time domain 
+and the frequency domain in one-dimensional analysis.
+
+</para>
+
+
+
+
+
+<para id="p1210">
+Then I introduced you to some practical examples showing how 2D Fourier 
+transforms and wavenumber spectra can be useful in solving engineering problems 
+involving antenna arrays.
+
+</para>
+
+
+
+
+
+<para id="p1211">
+In this module, I provided and explained a class that can be used to perform 
+forward and inverse 2D Fourier transforms, and can also be used to shift the 
+wavenumber origin from the top-left to the center for a more pleasing plot of 
+the wavenumber spectral data.
+
+</para>
+
+
+
+
+
+<para id="p1212">
+Finally, I provided and explained a program that is used to:
+
+</para>
+
+
+
+
+
+<list id="ul1021" list-type="bulleted">
+
+	
+
+<item id="li1123">
+Test the forward and inverse 2D Fourier transforms to confirm that the 
+	code is correct and that the transforms behave as they should
+
+</item>
+
+
+	
+
+<item id="li1124">
+Produce wavenumber spectra for simple surfaces to help the student gain 
+	a feel for the relationships that exist between the space domain and the 
+	wavenumber domain
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+
+</section>
+<section id="h11007">
+<title>
+<emphasis id="Complete_program_listings" effect="bold">
+
+Complete program listings
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1213">
+Complete listings of the classes presented in this module are provided in 
+
+
+<link id="a1244" target-id="Listing_21">
+
+ Listing 21
+
+</link>
+
+ and 
+
+<link id="a1245" target-id="Listing_22">
+
+ Listing 22
+
+</link>
+
+ below.
+
+</para>
+
+
+
+
+
+<para id="p1214">
+Listings for other programs mentioned in the module, such as 
+
+<emphasis id="strong1055" effect="bold">
+Dsp029
+
+</emphasis>
+, are provided in other modules. Those modules are 
+identified in the text of this module. 
+
+</para>
+
+
+
+
+
+
+
+<table id="table1036" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1036">
+<row id="tr1072">
+
+
+
+<entry id="th1036">
+<emphasis id="Listing_21" effect="bold">
+
+Listing 21.
+
+</emphasis>
+
+ ImgMod30.java.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1036">
+<row id="tr1073">
+<entry id="td1036">
+
+		
+
+<code id="pre1025" display="block">/*File ImgMod30.java
+Copyright 2005, R.G.Baldwin
+
+The purpose of this program is to provide 2D
+Fourier Transform capability to be used for image
+processing and other purposes.  The class
+provides three static methods:
+
+xform2D: Performs a forward 2D Fourier transform
+ on a surface described by a 2D array of double
+values in the space domain to produce a spectrum
+ in the wavenumber domain.  The method returns
+ the real part, the imaginary part, and the
+ amplitude spectrum, each in its own 2D array of
+ double values.
+
+inverseXform2D:  Performs an inverse 2D Fourier
+ transform from the wavenumber domain into the
+ space domain using the real and imaginary parts
+ of the wavenumber spectrum as input.  Returns
+ the surface in the space domain in a 2D array of
+ double values.
+
+shiftOrigin:  The wavenumber spectrum produced
+ by xform2D has its origin in the top-left
+ corner with the Nyquist folding wave numbers
+ near the center.  This is not a very suitable
+ format for visual analysis.  This method
+ rearranges the data to place the origin at the
+ center with the Nyquist folding wave numbers
+ along the edges.
+
+Tested using J2SE 5.0 and WinXP
+************************************************/
+import static java.lang.Math.*;
+
+class ImgMod30{
+
+  //This method computes a forward 2D Fourier
+  // transform from the space domain into the
+  // wavenumber domain.  The number of points
+  // produced for the wavenumber domain matches
+  // the number of points received for the space
+  // domain in both dimensions.  Note that the
+  // input data must be purely real.  In other
+  // words, the program assumes that there are
+  // no imaginary values in the space domain.
+  // Therefore, it is not a general purpose 2D
+  // complex-to-complex transform.
+  static void xform2D(double[][] inputData,
+                      double[][] realOut,
+                      double[][] imagOut,
+                      double[][] amplitudeOut){
+
+    int height = inputData.length;
+    int width = inputData[0].length;
+
+    System.out.println("height = " + height);
+    System.out.println("width = " + width);
+
+    //Two outer loops iterate on output data.
+    for(int yWave = 0;yWave &lt; height;yWave++){
+      for(int xWave = 0;xWave &lt; width;xWave++){
+        //Two inner loops iterate on input data.
+        for(int ySpace = 0;ySpace &lt; height;
+                                       ySpace++){
+          for(int xSpace = 0;xSpace &lt; width;
+                                       xSpace++){
+//Compute real, imag, and ampltude. Note that it
+// was necessary to sacrifice indentation to
+// force  these very long equations to be
+// compatible with this narrow publication format
+// and still be somewhat readable.
+realOut[yWave][xWave] +=
+(inputData[ySpace][xSpace]*cos(2*PI*((1.0*
+ xWave*xSpace/width)+(1.0*yWave*ySpace/height))))
+ /sqrt(width*height);
+
+imagOut[yWave][xWave ] -=
+(inputData[ySpace][xSpace]*sin(2*PI*((1.0*xWave*
+  xSpace/width) + (1.0*yWave*ySpace/height))))
+  /sqrt(width*height);
+
+amplitudeOut[yWave][xWave] =
+ sqrt(
+  realOut[yWave][xWave] * realOut[yWave][xWave] +
+  imagOut[yWave][xWave] * imagOut[yWave][xWave]);
+          }//end xSpace loop
+        }//end ySpace loop
+      }//end xWave loop
+    }//end yWave loop
+  }//end xform2D method
+  //-------------------------------------------//
+
+  //This method computes an inverse 2D Fourier
+  // transform from the wavenumber domain into
+  // the space domain.  The number of points
+  // produced for the space domain matches
+  // the number of points received for the wave-
+  // number domain in both dimensions.  Note that
+  // this method assumes that the inverse
+  // transform will produce purely real values in
+  // the space domain.  Therefore, in the
+  // interest of computational efficiency, it
+  // does not compute the imaginary output
+  // values.  Therefore, it is not a general
+  // purpose 2D complex-to-complex transform. For
+  // correct results, the input complex data must
+  // match that obtained by performing a forward
+  // transform on purely real data in the space
+  // domain.
+
+  static void inverseXform2D(double[][] real,
+                             double[][] imag,
+                             double[][] dataOut){
+
+    int height = real.length;
+    int width = real[0].length;
+
+    System.out.println("height = " + height);
+    System.out.println("width = " + width);
+
+    //Two outer loops iterate on output data.
+    for(int ySpace = 0;ySpace &lt; height;ySpace++){
+      for(int xSpace = 0;xSpace &lt; width;
+                                       xSpace++){
+        //Two inner loops iterate on input data.
+        for(int yWave = 0;yWave &lt; height;
+                                        yWave++){
+
+          for(int xWave = 0;xWave &lt; width;
+                                        xWave++){
+//Compute real output data. Note that it was
+// necessary to sacrifice indentation to force
+// this very long equation to be compatible with
+// this narrow publication format and still be
+// somewhat readable.
+dataOut[ySpace][xSpace] +=
+(real[yWave][xWave]*cos(2*PI*((1.0 * xSpace*
+ xWave/width) + (1.0*ySpace*yWave/height))) -
+imag[yWave][xWave]*sin(2*PI*((1.0 * xSpace*
+ xWave/width) + (1.0*ySpace*yWave/height))))
+ /sqrt(width*height);
+          }//end xWave loop
+        }//end yWave loop
+      }//end xSpace loop
+    }//end ySpace loop
+  }//end inverseXform2D method
+  //-------------------------------------------//
+
+  //Method to shift the wavenumber origin and
+  // place it at the center for a more visually
+  // pleasing display.  Must be applied
+  // separately to the real part, the imaginary
+  // part, and the amplitude spectrum for a wave-
+  // number spectrum.
+  static double[][] shiftOrigin(double[][] data){
+    int numberOfRows = data.length;
+    int numberOfCols = data[0].length;
+    int newRows;
+    int newCols;
+
+    double[][] output =
+          new double[numberOfRows][numberOfCols];
+
+    //Must treat the data differently when the
+    // dimension is odd than when it is even.
+
+    if(numberOfRows%2 != 0){//odd
+      newRows = numberOfRows +
+                            (numberOfRows + 1)/2;
+    }else{//even
+      newRows = numberOfRows + numberOfRows/2;
+    }//end else
+
+    if(numberOfCols%2 != 0){//odd
+      newCols = numberOfCols +
+                            (numberOfCols + 1)/2;
+    }else{//even
+      newCols = numberOfCols + numberOfCols/2;
+    }//end else
+
+    //Create a temporary working array.
+    double[][] temp =
+                    new double[newRows][newCols];
+
+    //Copy input data into the working array.
+    for(int row = 0;row &lt; numberOfRows;row++){
+      for(int col = 0;col &lt; numberOfCols;col++){
+        temp[row][col] = data[row][col];
+      }//col loop
+    }//row loop
+
+    //Do the horizontal shift first
+    if(numberOfCols%2 != 0){//shift for odd
+
+      //Slide leftmost (numberOfCols+1)/2 columns
+      // to the right by numberOfCols columns
+      for(int row = 0;row &lt; numberOfRows;row++){
+        for(int col = 0;
+                 col &lt; (numberOfCols+1)/2;col++){
+          temp[row][col + numberOfCols] =
+                                  temp[row][col];
+        }//col loop
+      }//row loop
+
+      //Now slide everything back to the left by
+      // (numberOfCols+1)/2 columns
+      for(int row = 0;row &lt; numberOfRows;row++){
+        for(int col = 0;
+                       col &lt; numberOfCols;col++){
+          temp[row][col] =
+             temp[row][col+(numberOfCols + 1)/2];
+        }//col loop
+      }//row loop
+
+    }else{//shift for even
+      //Slide leftmost (numberOfCols/2) columns
+      // to the right by numberOfCols columns.
+      for(int row = 0;row &lt; numberOfRows;row++){
+        for(int col = 0;
+                     col &lt; numberOfCols/2;col++){
+          temp[row][col + numberOfCols] =
+                                  temp[row][col];
+        }//col loop
+      }//row loop
+
+      //Now slide everything back to the left by
+      // numberOfCols/2 columns
+      for(int row = 0;row &lt; numberOfRows;row++){
+        for(int col = 0;
+                       col &lt; numberOfCols;col++){
+          temp[row][col] =
+                 temp[row][col + numberOfCols/2];
+        }//col loop
+      }//row loop
+    }//end else
+
+    //Now do the vertical shift
+    if(numberOfRows%2 != 0){//shift for odd
+      //Slide topmost (numberOfRows+1)/2 rows
+      // down by numberOfRows rows.
+      for(int col = 0;col &lt; numberOfCols;col++){
+        for(int row = 0;
+                 row &lt; (numberOfRows+1)/2;row++){
+          temp[row + numberOfRows][col] =
+                                  temp[row][col];
+        }//row loop
+      }//col loop
+
+      //Now slide everything back up by
+      // (numberOfRows+1)/2 rows.
+      for(int col = 0;col &lt; numberOfCols;col++){
+        for(int row = 0;
+                       row &lt; numberOfRows;row++){
+          temp[row][col] =
+             temp[row+(numberOfRows + 1)/2][col];
+        }//row loop
+      }//col loop
+
+    }else{//shift for even
+      //Slide topmost (numberOfRows/2) rows down
+      // by numberOfRows rows
+      for(int col = 0;col &lt; numberOfCols;col++){
+        for(int row = 0;
+                     row &lt; numberOfRows/2;row++){
+          temp[row + numberOfRows][col] =
+                                  temp[row][col];
+        }//row loop
+      }//col loop
+
+      //Now slide everything back up by
+      // numberOfRows/2 rows.
+      for(int col = 0;col &lt; numberOfCols;col++){
+        for(int row = 0;
+                       row &lt; numberOfRows;row++){
+          temp[row][col] =
+                 temp[row + numberOfRows/2][col];
+        }//row loop
+      }//col loop
+    }//end else
+
+    //Shifting of the origin is complete.  Copy
+    // the rearranged data from temp to output
+    // array.
+    for(int row = 0;row &lt; numberOfRows;row++){
+      for(int col = 0;col &lt; numberOfCols;col++){
+        output[row][col] = temp[row][col];
+      }//col loop
+    }//row loop
+
+    return output;
+  }//end shiftOrigin method
+
+}//end class ImgMod30</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<table id="table1037" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1037">
+<row id="tr1074">
+
+
+
+<entry id="th1037">
+<emphasis id="Listing_22" effect="bold">
+
+Listing 22.
+
+</emphasis>
+
+ ImgMod31.java.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1037">
+<row id="tr1075">
+<entry id="td1037">
+
+		
+
+<code id="pre1026" display="block">/*File ImgMod31.java
+Copyright 2005, R.G.Baldwin
+
+The purpose of this program is to exercise and
+test the 2D Fourier Transform methods and the
+axis shifting method provided by the class named
+ImgMod30.
+
+The main method in this class reads a command-
+line parameter and uses it to select a specific
+case involving a particular kind of input data
+in the space domain.  The program then performs
+a 2D Fourier transform on that data followed by
+an inverse 2D Fourier transform.
+
+There are 14 cases built into the program with
+case numbers ranging from 0 to 13 inclusive.
+Each of the cases is designed such that the
+results should be known in advance by a person
+familiar with 2D Fourier analysis and the wave-
+number domain.  The cases are also designed to
+illustrate the impact of various space-domain
+characteristics on the wavenumber spectrum.
+This information will be useful later when
+analyzing the results of performing 2D
+transforms on photographic images and other
+images as well.
+
+Each time the program is run, it produces a stack
+of six output images in the top-left corner of
+the screen.  The type of each image is listed
+below.  This list is in top-to-bottom order.  To
+view the images further down in the stack, you
+must  physically move those on top to get them
+out of the way.
+
+The top-to-bottom order of the output images is
+as follows:
+
+1. Space-domain output of inverse Fourier
+transform.  Compare with original input in 6
+below.
+2. Amplitude spectrum in wavenumber domain with
+shifted origin.  Compare with 5 below.
+3. Imaginary wavenumber spectrum with shifted
+origin.
+4. Real wavenumber spectrum with shifted
+origin.
+5. Amplitude spectrum in wavenumber domain
+without shifted origin.  Compare with 2 above.
+6. Space-domain input data.  Compare with 1
+above.
+
+In addition, the program produces some numeric
+output on the command-line screen that may be
+useful in confirming the validity of the inverse
+transform.  The following is an example:
+
+height = 41
+width = 41
+height = 41
+width = 41
+2.0 1.9999999999999916
+0.5000000000000002 0.49999999999999845
+0.49999999999999956 0.4999999999999923
+1.7071067811865475 1.7071067811865526
+0.2071067811865478 0.20710678118654233
+0.20710678118654713 0.20710678118655435
+1.0 1.0000000000000064
+-0.4999999999999997 -0.49999999999999484
+-0.5000000000000003 -0.4999999999999965
+
+The first two lines above indicate the size of
+the spatial surface for the forward transform.
+The second two lines indicate the size of the
+wavenumber surface for the inverse transform.
+
+The remaining nine lines indicate something
+about the quality of the inverse transform in
+terms of its ability to replicate the original
+spatial surface.  These lines also indicate
+something about the correctness or lack thereof
+of the overall scaling from original input to
+final output.  Each line contains a pair of
+values.  The first value is from the original
+spatial surface.  The second value is from the
+spatial surface produced by performing an inverse
+transform on the wavenumber spectrum.  The two
+values in each pair of values should match.  If
+they match, this indicates the probability of a
+valid result.  Note however that this is
+a very small sampling of the values that make
+up the original and replicated spatial data and
+problems could arise in areas that are not
+included in this small sample.  The match is very
+good in the example shown above.  This example
+is from Case #12.
+
+Usage: java ImgMod31 CaseNumber DisplayType
+CaseNumber from 0 to 13 inclusive.
+
+If a case number is not provided, Case #2 will be
+run by default.  If a display type is not
+provided, display type 1 will be used by default.
+
+A description of each case is provided by the
+comments in this program.
+
+See ImgMod29 for a definition of DisplayType,
+which can have a value of 0, 1, or 2.
+
+You can terminate the program by clicking on the
+close button on any of the display frames
+produced by the program.
+
+Tested using J2SE 5.0 and WinXP
+************************************************/
+import static java.lang.Math.*;
+
+class ImgMod31{
+
+  public static void main(String[] args){
+    //Get input parameters to select the case to
+    // be run and the displayType.  See ImgMod29
+    // for a description of displayType.  Use
+    // default case and displayType if the user
+    // fails to provide that information.
+    // If the user provides a non-numeric input
+    // parameter, an exception will be thrown.
+    int switchCase = 2;//default
+    int displayType = 1;//default
+    if(args.length == 1){
+      switchCase = Integer.parseInt(args[0]);
+    }else if(args.length == 2){
+      switchCase = Integer.parseInt(args[0]);
+      displayType = Integer.parseInt(args[1]);
+    }else{
+      System.out.println("Usage: java ImgMod31 "
+                     + "CaseNumber DisplayType");
+      System.out.println(
+           "CaseNumber from 0 to 13 inclusive.");
+      System.out.println(
+           "DisplayType from 0 to 2 inclusive.");
+      System.out.println("Running case "
+                  + switchCase + " by default.");
+      System.out.println("Running DisplayType "
+                 + displayType + " by default.");
+    }//end else
+
+    //Create the array of test data.
+    int rows = 41;
+    int cols = 41;
+
+    //Get a test surface in the space domain.
+    double[][] spatialData =
+            getSpatialData(switchCase,rows,cols);
+
+    //Display the spatial data.  Don't display
+    // the axes.
+    new ImgMod29(spatialData,3,false,
+                                    displayType);
+
+    //Perform the forward transform from the
+    // space domain into the wavenumber domain.
+    // First prepare some array objects to
+    // store the results.
+    double[][] realSpect = //Real part
+                          new double[rows][cols];
+    double[][] imagSpect = //Imaginary part
+                          new double[rows][cols];
+    double[][] amplitudeSpect = //Amplitude
+                          new double[rows][cols];
+    //Now perform the transform
+    ImgMod30.xform2D(spatialData,realSpect,
+                       imagSpect,amplitudeSpect);
+
+    //Display the raw amplitude spectrum without
+    // shifting the origin first.  Display the
+    // axes.
+    new ImgMod29(amplitudeSpect,3,true,
+                                    displayType);
+
+    //At this point, the wavenumber spectrum is
+    // not in a format that is good for viewing.
+    // In particular, the origin is at the t0p-
+    // left corner.  The horizontal Nyquist
+    // folding  wavenumber is near the
+    // horizontal center of the plot.  The
+    // vertical Nyquist folding wave number is
+    // near the vertical center of the plot.  It
+    // is much easier for most people to
+    // understand what is going on when the
+    // wavenumber origin is shifted to the
+    // center of the plot with the Nyquist
+    // folding wave numbers at the edges of the
+    // plot.  The method named shiftOrigin can be
+    // used to rearrange the data and to shift
+    // the orgin in that manner.
+
+    //Shift the origin and display the real part
+    // of the spectrum, the imaginary part of the
+    // spectrum, and the amplitude of the
+    // spectrum.  Display the axes in all three
+    // cases.
+    double[][] shiftedRealSpect =
+                 ImgMod30.shiftOrigin(realSpect);
+    new ImgMod29(shiftedRealSpect,3,true,
+                                    displayType);
+
+    double[][] shiftedImagSpect =
+                 ImgMod30.shiftOrigin(imagSpect);
+    new ImgMod29(shiftedImagSpect,3,true,
+                                    displayType);
+
+    double[][] shiftedAmplitudeSpect =
+            ImgMod30.shiftOrigin(amplitudeSpect);
+    new ImgMod29(shiftedAmplitudeSpect,3,true,
+                                    displayType);
+
+    //Now test the inverse transform by
+    // performing an inverse transform on the
+    // real and imaginary parts produced earlier
+    // by the forward transform.
+    //Begin by preparing an array object to store
+    // the results.
+    double[][] recoveredSpatialData =
+                          new double[rows][cols];
+    //Now perform the inverse transform.
+    ImgMod30.inverseXform2D(realSpect,imagSpect,
+                           recoveredSpatialData);
+
+    //Display the output from the inverse
+    // transform.  It should compare favorably
+    // with the original spatial surface.
+    new ImgMod29(recoveredSpatialData,3,false,
+                                    displayType);
+
+    //Use the following code to confirm correct
+    // scaling. If the scaling is correct, the
+    // two values in each pair of values should
+    // match.  Note that this is a very small
+    // subset of the total set of values that
+    // make up the original and recovered
+    // spatial data.
+    for(int row = 0;row &lt; 3;row++){
+      for(int col = 0;col &lt; 3;col++){
+        System.out.println(
+          spatialData[row][col] + " " +
+           recoveredSpatialData[row][col] + " ");
+      }//col
+    }//row
+  }//end main
+  //===========================================//
+
+  //This method constructs and returns a 3D
+  // surface in a 2D array of type double
+  // according to the identification of a
+  // specific case received as an input
+  // parameter.  There are 14 possible cases.  A
+  // description of each case is provided in the
+  // comments.  The other two input parameters
+  // specify the size of the surface in units of
+  // rows and columns.
+  private static double[][] getSpatialData(
+               int switchCase,int rows,int cols){
+
+    //Create an array to hold the data.  All
+    // elements are initialized to a value of
+    // zero.
+    double[][] spatialData =
+                          new double[rows][cols];
+
+    //Use a switch statement to select and
+    // create a specified case.
+    switch(switchCase){
+      case 0:
+        //This case places a single non-zero
+        // point at the origin in the space
+        // domain.  The origin is at the top-
+        // left corner.  In signal processing
+        // terminology, this point can be viewed
+        // as an impulse in space.  This produces
+        // a flat spectrum in wavenumber space.
+        spatialData[0][0] = 1;
+      break;
+
+      case 1:
+        //This case places a single non-zero
+        // point near but not at the origin in
+        // space.  This produces a flat spectrum
+        // in wavenumber space as in case 0.
+        // However, the real and imaginary parts
+        // of the transform are different from
+        // case 0 and the result is subject to
+        // arithmetic accuracy issues.  The
+        // plotted flat spectrum doesn't look
+        // very good because the color switches
+        // back and forth between three values
+        // that are very close to together.  This
+        // is the result of the display program
+        // normalizing the surface values based
+        // on the maximum and minimum values,
+        // which in this case are very close
+        // together.
+        spatialData[2][2] = 1;
+      break;
+
+      case 2:
+        //This case places a box on the diagonal
+        // near the origin. This produces a
+        // sin(x)/x shape to the spectrum with
+        // its peak at the origin in wavenumber
+        // space.
+        spatialData[3][3] = 1;
+        spatialData[3][4] = 1;
+        spatialData[3][5] = 1;
+        spatialData[4][3] = 1;
+        spatialData[4][4] = 1;
+        spatialData[4][5] = 1;
+        spatialData[5][3] = 1;
+        spatialData[5][4] = 1;
+        spatialData[5][5] = 1;
+      break;
+
+      case 3:
+
+        //This case places a box at the top near
+        // the origin.  This produces the same
+        // amplitude spectrum as case 2. However,
+        // the real and imaginary parts, (or the
+        // phase) is different from case 2 due to
+        // the difference in location of the box
+        // relative to the origin in space.
+        spatialData[0][3] = 1;
+        spatialData[0][4] = 1;
+        spatialData[0][5] = 1;
+        spatialData[1][3] = 1;
+        spatialData[1][4] = 1;
+        spatialData[1][5] = 1;
+        spatialData[2][3] = 1;
+        spatialData[2][4] = 1;
+        spatialData[2][5] = 1;
+      break;
+
+      case 4:
+        //This case draws a short line along the
+        // diagonal from top-left to lower
+        // right. This results in a spectrum with
+        // a sin(x)/x shape along that axis and a
+        // constant along the axis that is
+        // perpendicular to that axis
+        spatialData[0][0] = 1;
+        spatialData[1][1] = 1;
+        spatialData[2][2] = 1;
+        spatialData[3][3] = 1;
+        spatialData[4][4] = 1;
+        spatialData[5][5] = 1;
+        spatialData[6][6] = 1;
+        spatialData[7][7] = 1;
+      break;
+
+      case 5:
+        //This case draws a short line
+        // perpendicular to the diagonal from
+        // top-left to lower right.  The
+        // spectral result is shifted 90 degrees
+        // relative to that shown for case 4
+        // where the line was along the diagonal.
+        // In addition, the line is shorter
+        // resulting in wider lobes in the
+        // spectrum.
+        spatialData[0][3] = 1;
+        spatialData[1][2] = 1;
+        spatialData[2][1] = 1;
+        spatialData[3][0] = 1;
+      break;
+
+      case 6:
+          //This case draws horizontal lines,
+          // vertical lines, and lines on both
+          // diagonals.  The weights of the
+          // individual points is such that the
+          // average of all the weights is 0.
+          // The weight at the point where the
+          // lines intersect is also 0.  This
+          // produces a spectrum that is
+          // symmetrical across the axes at 0,
+          // 45, and 90 degrees.  The value of
+          // the spectrum at the origin is zero
+          // with major peaks at the folding
+          // wavenumbers on the 45-degree axes.
+          // In addition, there are minor peaks
+          // at various other points as well.
+          spatialData[0][0] = -1;
+          spatialData[1][1] = 1;
+          spatialData[2][2] = -1;
+          spatialData[3][3] = 0;
+          spatialData[4][4] = -1;
+          spatialData[5][5] = 1;
+          spatialData[6][6] = -1;
+
+          spatialData[6][0] = -1;
+          spatialData[5][1] = 1;
+          spatialData[4][2] = -1;
+          spatialData[3][3] = 0;
+          spatialData[2][4] = -1;
+          spatialData[1][5] = 1;
+          spatialData[0][6] = -1;
+
+          spatialData[3][0] = 1;
+          spatialData[3][1] = -1;
+          spatialData[3][2] = 1;
+          spatialData[3][3] = 0;
+          spatialData[3][4] = 1;
+          spatialData[3][5] = -1;
+          spatialData[3][6] = 1;
+
+          spatialData[0][3] = 1;
+          spatialData[1][3] = -1;
+          spatialData[2][3] = 1;
+          spatialData[3][3] = 0;
+          spatialData[4][3] = 1;
+          spatialData[5][3] = -1;
+          spatialData[6][3] = 1;
+      break;
+
+      case 7:
+        //This case draws a zero-frequency
+        // sinusoid (DC) on the surface with an
+        // infinite number of samples per cycle.
+        // This causes a single peak to appear in
+        // the spectrum at the wavenumber
+        // origin.  This origin is the top-left
+        // corner for the raw spectrum, and is
+        // at the center cross hairs after the
+        // origin has been shifted to the
+        // center for better viewing.
+        for(int row = 0; row &lt; rows; row++){
+          for(int col = 0; col &lt; cols; col++){
+            spatialData[row][col] = 1.0;
+          }//end inner loop
+        }//end outer loop
+      break;
+
+      case 8:
+        //This case draws a sinusoidal surface
+        // along the horizontal axis with one
+        // sample per cycle. This function is
+        // under-sampled by a factor of 2.
+        // This produces a single peak in the
+        // spectrum at the wave number origin.
+        // The result is the same as if the
+        // sinusoidal surface had zero frequency
+        // as in case 7..
+        for(int row = 0; row &lt; rows; row++){
+          for(int col = 0; col &lt; cols; col++){
+            spatialData[row][col] =
+                                 cos(2*PI*col/1);
+          }//end inner loop
+        }//end outer loop
+      break;
+
+      case 9:
+        //This case draws a sinusoidal surface on
+        // the horizontal axis with 2 samples per
+        // cycle.  This is the Nyquist folding
+        // wave number.  This causes a single
+        // peak to appear in the spectrum at the
+        // negative folding wave number on the
+        // horizontal axis.  A peak would also
+        // appear at the positive folding wave
+        // number if it were visible, but it is
+        // one unit outside the boundary of the
+        // plot.
+        for(int row = 0; row &lt; rows; row++){
+          for(int col = 0; col &lt; cols; col++){
+            spatialData[row][col] =
+                                 cos(2*PI*col/2);
+          }//end inner loop
+        }//end outer loop
+      break;
+
+      case 10:
+        //This case draws a sinusoidal surface on
+        // the vertical axis with 2 samples per
+        // cycle.  Again, this is the Nyquist
+        // folding wave number but the sinusoid
+        // appears along a different axis.  This
+        // causes a single peak to appear in the
+        // spectrum at the negative folding wave
+        // number on the vertical axis.  A peak
+        // would also appear at the positive
+        // folding wave number if it were
+        // visible, but it is one unit outside
+        // the boundary of the plot.
+        for(int row = 0; row &lt; rows; row++){
+          for(int col = 0; col &lt; cols; col++){
+            spatialData[row][col] =
+                                 cos(2*PI*row/2);
+          }//end inner loop
+        }//end outer loop
+      break;
+
+      case 11:
+        //This case draws a sinusoidal surface on
+        // the horizontal axis with 8 samples per
+        // cycle. You might think of this surface
+        // as resembling a sheet of corrugated
+        // roofing material.  This produces
+        // symmetrical peaks on the horizontal
+        // axis on either side of the wave-
+        // number origin.
+        for(int row = 0; row &lt; rows; row++){
+          for(int col = 0; col &lt; cols; col++){
+            spatialData[row][col] =
+                                 cos(2*PI*col/8);
+          }//end inner loop
+        }//end outer loop
+      break;
+
+      case 12:
+        //This case draws a sinusoidal surface on
+        // the horizontal axis with 3 samples per
+        // cycle plus a sinusoidal surface on the
+        // vertical axis with 8 samples per
+        // cycle. This produces symmetrical peaks
+        // on the horizontal and vertical axes on
+        // all four sides of the wave number
+        // origin.
+        for(int row = 0; row &lt; rows; row++){
+          for(int col = 0; col &lt; cols; col++){
+            spatialData[row][col] =
+               cos(2*PI*row/8) + cos(2*PI*col/3);
+          }//end inner loop
+        }//end outer loop
+      break;
+
+      case 13:
+        //This case draws a sinusoidal surface at
+        // an angle of approximately 45 degrees
+        // relative to the horizontal.  This
+        // produces a pair of peaks in the
+        // wavenumber spectrum that are
+        // symmetrical about the origin at
+        // approximately 45 degrees relative to
+        // the horizontal axis.
+        double phase = 0;
+        for(int row = 0; row &lt; rows; row++){
+          for(int col = 0; col &lt; cols; col++){
+            spatialData[row][col] =
+                       cos(2.0*PI*col/8 - phase);
+          }//end inner loop
+          //Increase phase for next row
+          phase += .8;
+        }//end outer loop
+      break;
+
+      default:
+        System.out.println("Case must be " +
+                  "between 0 and 13 inclusive.");
+        System.out.println(
+                         "Terminating program.");
+        System.exit(0);
+    }//end  switch statement
+
+    return spatialData;
+  }//end getSpatialData
+}//end class ImgMod31</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+	
+
+</section>
+<section id="h11008">
+<title>
+<emphasis id="Miscellaneous" effect="bold">
+
+Miscellaneous
+
+</emphasis>
+
+
+</title>
+
+
+	
+
+<para id="p1215">
+This section contains a variety of miscellaneous information.
+
+</para>
+
+
+
+
+
+	
+
+<note id="note1000" type="">
+
+
+		
+
+
+			
+
+
+				
+
+<emphasis id="strong1056" effect="bold">
+Housekeeping material
+
+</emphasis>
+
+				
+
+<list id="ul1022" list-type="bulleted">
+
+					
+
+<item id="li1125">
+Module name: Java1491-2D Fourier Transforms using Java, 
+					Part 2
+
+</item>
+
+
+					
+
+<item id="li1126">
+File: Java1491.htm
+
+</item>
+
+
+					
+
+<item id="li1127">
+Published: 08/09/05
+
+</item>
+
+
+
+				
+
+</list>
+
+
+
+
+<para id="p1216">
+Examine the code for a Java class that can be used to perform forward and inverse 2D Fourier transforms on 3D surfaces in the space domain. Learn how the 2D Fourier transform behaves for a variety of different sample surfaces in the space domain. 
+
+</para>
+
+
+
+				
+
+</note>
+
+
+
+
+
+	
+
+<note id="note1001" type="">
+
+
+		
+
+
+			
+
+
+				
+
+<emphasis id="strong1057" effect="bold">
+Disclaimers:
+
+</emphasis>
+<para id="p1217">
+<emphasis id="strong1058" effect="bold">
+Financial
+
+</emphasis>
+: Although the Connexions
+site makes it possible for you to download a PDF file for this
+module at no charge, and also makes it possible for you to
+purchase a pre-printed version of the PDF file, you should be
+aware that some of the HTML elements in this module may not translate well into
+PDF.
+
+</para>
+
+
+
+				
+
+<para id="p1218">
+I also want you to know that, I receive no financial compensation from the Connexions website even if you purchase 
+	the PDF version of the module.
+
+</para>
+
+
+
+				
+
+<para id="p1219">
+In the past, unknown individuals have copied my modules from cnx.org, converted them to Kindle books, and 
+				placed them for sale on Amazon.com showing me as the author. I 
+				neither receive compensation for those sales nor do I know who does 
+				receive compensation. If you purchase such a book, please be 
+				aware that it is a copy of a module that is freely 
+				available on cnx.org and that it was made and published without 
+				my prior knowledge.
+
+</para>
+
+
+
+				
+
+<para id="p1220">
+<emphasis id="strong1059" effect="bold">
+Affiliation
+
+</emphasis>
+: I am a professor of Computer Information 
+	Technology at Austin Community College in Austin, TX.
+	
+
+</para>
+
+
+
+
+</note>
+
+
+
+	
+
+
+
+<para id="p1221">
+-end- 
+
+</para>
+
+
+
+
+
+
+
+</section>
+</content>
+
+
+
+
+</document>

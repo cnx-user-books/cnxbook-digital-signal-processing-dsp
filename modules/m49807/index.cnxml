@@ -1,0 +1,5441 @@
+<document xmlns="http://cnx.rice.edu/cnxml"> 
+<title>Java1490-2D Fourier Transforms using Java, Part 1</title>
+<metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m49807</md:content-id>
+  <md:title>Java1490-2D Fourier Transforms using Java, Part 1</md:title>
+  <md:abstract>Learn how the space domain and the wavenumber domain in two-dimensional analysis are analogous to the time domain and the frequency domain in one-dimensional analysis.  Learn about some practical examples showing how 2D Fourier transforms and wavenumber spectra can be useful in solving engineering problems involving antenna arrays.</md:abstract>
+  <md:uuid>59521521-d933-4314-856b-94f2e906de1a</md:uuid>
+</metadata>
+
+<content>
+
+
+
+
+
+
+<quote id="blockquote1000" display="block">
+
+
+
+<para id="p1000">
+Revised: Tue Oct 20 11:48:13 CDT 2015
+
+</para>
+
+
+
+This page is included in the following book: 
+
+<link id="a1000" url="http://cnx.org/contents/98d253c0-8044-4e22-a707-7b8d819bc8a7">
+
+
+        Digital Signal Processing - DSP
+
+</link>
+
+
+
+
+</quote>
+
+
+
+
+
+
+
+
+
+
+
+
+<section id="h11000">
+<title>
+<emphasis id="Table_of_contents" effect="bold">
+
+Table of contents
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+<list id="ul1000" list-type="bulleted">
+<item id="li1000">
+<link id="a1001" target-id="Table_of_contents">
+
+Table of contents
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1001">
+<link id="a1002" target-id="Preface">
+
+Preface
+
+</link>
+
+
+
+
+<list id="ul1001" list-type="bulleted">
+<item id="li1002">
+<link id="a1003" target-id="Two_separate_programs">
+
+Two separate programs
+
+</link>
+
+
+
+
+<list id="ul1002" list-type="bulleted">
+<item id="li1003">
+<link id="a1004" target-id="Digital_signal_processing_DSP">
+
+Digital signal processing (DSP)
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1004">
+<link id="a1005" target-id="Will_use_in_subsequent_modules">
+
+Will use in subsequent modules
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1005">
+<link id="a1006" target-id="Viewing_tip">
+
+Viewing tip
+
+</link>
+
+
+
+
+<list id="ul1003" list-type="bulleted">
+<item id="li1006">
+<link id="a1007" target-id="Figures">
+
+Figures
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1007">
+<link id="a1008" target-id="General_discussion">
+
+General discussion
+
+</link>
+
+
+
+
+<list id="ul1004" list-type="bulleted">
+<item id="li1008">
+<link id="a1009" target-id="Time_domain_and_frequency_domain">
+
+Time domain and frequency domain
+
+</link>
+
+
+
+
+<list id="ul1005" list-type="bulleted">
+<item id="li1009">
+<link id="a1010" target-id="A_one-dimensional_Fourier_transform">
+
+A one-dimensional Fourier 
+transform
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1010">
+<link id="a1011" target-id="Time_domain_data_is_purely_real">
+
+Time domain data is purely real
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1011">
+<link id="a1012" target-id="The_space_domain">
+
+The space domain
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1012">
+<link id="a1013" target-id="Time_and_space_are_analogous">
+
+Time and space are analogous
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1013">
+<link id="a1014" target-id="Frequency_and_wavenumber_are_analogous">
+
+Frequency and wavenumber 
+are analogous
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1014">
+<link id="a1015" target-id="Period_and_wavelength_are_analogous">
+
+Period and wavelength are 
+analogous
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1015">
+<link id="a1016" target-id="Some_real_world_examples">
+
+Some real world examples
+
+</link>
+
+
+
+
+<list id="ul1006" list-type="bulleted">
+<item id="li1016">
+<link id="a1017" target-id="A_commercial_radio_station">
+
+A commercial radio station
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1017">
+<link id="a1018" target-id="Basic_concepts">
+
+Basic concepts
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1018">
+<link id="a1019" target-id="A_one-dimensional_space">
+
+A one-dimensional space
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1019">
+<link id="a1020" target-id="How_can_we_compute_the_array_response">
+
+How can we compute the array 
+response?
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1020">
+<link id="a1021" target-id="Three_example_wavenumber_spectra">
+
+Three example wavenumber spectra
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1021">
+<link id="a1022" target-id="Plots_of_3D_surfaces">
+
+Plots of 3D surfaces
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1022">
+<link id="a1023" target-id="A_wavenumber_filter">
+
+A wavenumber filter
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1023">
+<link id="a1024" target-id="Lets_apply_some_weights">
+
+Let's apply some weights
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1024">
+<link id="a1025" target-id="A_weighted_three_element_array">
+
+A weighted three-element array
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1025">
+<link id="a1026" target-id="A_three_element_array_with_negative_weighting">
+
+A three-element 
+array with negative weighting
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1026">
+<link id="a1027" target-id="What_can_we_learn_from_these_scenarios">
+
+What can we learn from 
+these scenarios?
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1027">
+<link id="a1028" target-id="Extending_into_two_dimensions">
+
+Extending into two dimensions
+
+</link>
+
+
+
+
+<list id="ul1007" list-type="bulleted">
+<item id="li1028">
+<link id="a1029" target-id="Move_the_array_to_a_table_top">
+
+Move the array to a table top
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1029">
+<link id="a1030" target-id="The_2D_wavenumber_response_of_a_linear_array">
+
+The 2D wavenumber 
+response of a linear array
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1030">
+<link id="a1031" target-id="A_two-dimensional_array">
+
+A two-dimensional array
+
+</link>
+
+
+
+
+<list id="ul1008" list-type="bulleted">
+<item id="li1031">
+<link id="a1032" target-id="Computing_the_wavenumber_response">
+
+Computing the wavenumber 
+response
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1032">
+<link id="a1033" target-id="Arrays_are_used_in_various_applications">
+
+Arrays are used in various 
+applications
+
+</link>
+
+
+
+
+<list id="ul1009" list-type="bulleted">
+<item id="li1033">
+<link id="a1034" target-id="Radio_astronomy">
+
+Radio astronomy
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1034">
+<link id="a1035" target-id="Seismology">
+
+Seismology
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1035">
+<link id="a1036" target-id="Sonar">
+
+Sonar
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1036">
+<link id="a1037" target-id="Radar">
+
+Radar
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1037">
+<link id="a1038" target-id="Petroleum_exploration">
+
+Petroleum exploration
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1038">
+<link id="a1039" target-id="Image_processing">
+
+Image processing
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1039">
+<link id="a1040" target-id="Summary">
+
+Summary
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1040">
+<link id="a1041" target-id="Whats_next">
+
+What's next?
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1041">
+<link id="a1042" target-id="Miscellaneous">
+
+Miscellaneous
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+
+
+
+
+	
+	
+
+</section>
+<section id="h11001">
+<title>
+<emphasis id="Preface" effect="bold">
+
+Preface
+
+</emphasis>
+
+
+</title>
+
+
+	
+	
+
+<para id="p1001">
+This is the first module of a two-part series. In this module, I will: 
+
+</para>
+
+
+
+
+
+<list id="ul1010" list-type="bulleted">
+
+	
+
+<item id="li1042">
+Explain the conceptual and computational aspects of 2D Fourier 
+	transforms
+
+</item>
+
+
+	
+
+<item id="li1043">
+Explain the relationship between the space domain and the
+	
+
+<link id="a1043" url="http://scienceworld.wolfram.com/physics/Wavenumber.html">
+
+wavenumber
+
+</link>
+
+ 
+	domain
+
+</item>
+
+
+	
+
+<item id="li1044">
+Provide sufficient background information that you will be able to 
+	appreciate the importance of the 2D Fourier transform
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<section id="h21000">
+<title>
+<emphasis id="Two_separate_programs" effect="bold">
+
+Two separate programs
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1002">
+In 
+
+
+<link id="a1044" url="http://cnx.org/contents/1397e03f-aff1-4017-939c-f67102017848/Java1491-2D-Fourier-Transforms">
+
+Part 2
+
+</link>
+
+ 
+of this series, I will present and explain two separate programs. One program consists of a 
+single class named 
+
+<emphasis id="strong1000" effect="bold">
+ImgMod30
+
+</emphasis>
+. The purpose of this class is to 
+satisfy the computational requirements for forward and inverse 2D Fourier 
+transforms. This class also provides a method for rearranging the spectral data 
+into a more useful format for plotting. The second program named 
+
+<emphasis id="strong1001" effect="bold">
+
+ImgMod31
+
+</emphasis>
+ will be used to test the 2D Fourier transform class, and also 
+to illustrate the use of 2D Fourier transforms for some well known sample 
+surfaces.
+
+</para>
+
+
+
+
+
+
+<para id="p1003">
+A third class named 
+
+<emphasis id="strong1002" effect="bold">
+ImgMod29
+
+</emphasis>
+ will be used to display various 
+3D surfaces resulting from the application of the 2D Fourier transform. I 
+explained this class in an earlier module titled
+
+
+<link id="a1045" url="http://cnx.org/contents/ea4ac046-e5a6-4503-b6e4-6c2d23b65d57/Java1489-Plotting-3D-Surfaces-">
+
+
+Plotting 3D Surfaces using Java
+
+</link>
+
+..
+
+</para>
+
+
+
+
+
+<section id="h31000">
+<title>
+<emphasis id="Digital_signal_processing_DSP" effect="bold">
+
+Digital signal processing (DSP)
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1004">
+This and the following module will cover some technically difficult material in the general 
+area of Digital Signal Processing, or DSP for short. As usual, the better 
+prepared you are, the more likely you are to understand the material. For 
+example, it would be well for you to already understand the one-dimensional 
+Fourier transform before tackling the 2D Fourier transform. If you don't already 
+have that knowledge, you can learn about one-dimensional Fourier transforms by 
+studying the following 
+
+<emphasis id="lessons" effect="bold">
+
+modules
+
+</emphasis>
+
+:
+
+</para>
+
+
+
+
+
+<list id="ul1011" list-type="bulleted">
+
+	
+
+<item id="li1045">
+
+	
+
+<link id="a1046" url="http://cnx.org/contents/9fdb2951-7fca-47a1-83fc-d3d3d15d6ff1/Java1478-Fun-with-Java-How-and">
+
+
+	1478 Fun with Java, How and Why Spectral Analysis Works
+
+</link>
+
+
+</item>
+
+
+	
+
+<item id="li1046">
+
+	
+
+<link id="a1047" url="http://cnx.org/contents/201ece7a-a2bf-4576-9528-4c3c4e5322c9/Java1482-Spectrum-Analysis-usi">
+
+
+	1482 Spectrum Analysis using Java, Sampling Frequency, Folding Frequency, 
+	and the FFT Algorithm 
+
+</link>
+
+
+</item>
+
+
+	
+
+<item id="li1047">
+
+	
+
+<link id="a1048" url="http://cnx.org/contents/97db670f-e425-49a8-8899-875426fc316d/Java1483-Spectrum-Analysis-usi">
+
+
+	1483 Spectrum Analysis using Java, Frequency Resolution versus Data Length
+	
+
+</link>
+
+
+</item>
+
+
+	
+
+<item id="li1048">
+
+	
+
+<link id="a1049" url="http://cnx.org/contents/50125581-8665-4687-b43f-fd30f2f1ba28/Java1484-Spectrum-Analysis-usi">
+
+
+	1484 Spectrum Analysis using Java, Complex Spectrum and Phase Angle
+
+</link>
+
+
+</item>
+
+
+	
+
+<item id="li1049">
+
+	
+
+<link id="a1050" url="http://cnx.org/contents/d4a9b39f-233d-4145-aefe-065f172755b6/Java1485-Spectrum-Analysis-usi">
+
+
+	1485 Spectrum Analysis using Java, Forward and Inverse Transforms, Filtering 
+	in the Frequency Domain
+
+</link>
+
+ 
+
+</item>
+
+
+	
+
+<item id="li1050">
+
+	
+
+<link id="a1051" url="http://cnx.org/contents/3f1897b9-3841-440b-bdf2-ddac318df6b8/Java1486-Fun-with-Java-Underst">
+
+
+	1486 Fun with Java, Understanding the Fast Fourier Transform (FFT) Algorithm
+
+</link>
+
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+</section>
+<section id="h31001">
+<title>
+<emphasis id="Will_use_in_subsequent_modules" effect="bold">
+
+Will use in subsequent modules
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1005">
+The 2D Fourier transform has many uses. I will use the 2D Fourier transform 
+in several future modules involving such diverse topics as:
+
+</para>
+
+
+
+
+
+<list id="ul1012" list-type="bulleted">
+
+	
+
+<item id="li1051">
+Processing image pixels in the wavenumber domain
+
+</item>
+
+
+	
+
+<item id="li1052">
+Advanced steganography 
+
+<emphasis id="em1000" effect="italics">
+(hiding messages in images)
+
+</emphasis>
+</item>
+
+
+	
+
+<item id="li1053">
+Hiding watermarks and trademarks in images
+
+</item>
+
+
+
+
+</list>
+
+
+	
+	
+
+</section>
+</section>
+<section id="h21001">
+<title>
+<emphasis id="Viewing_tip" effect="bold">
+
+Viewing tip
+
+</emphasis>
+
+
+</title>
+
+
+	
+
+<para id="p1006">
+I recommend that you open another copy of this module in a separate 
+browser window and use the following links to easily find and view the Figures 
+	while you are reading about them.
+
+</para>
+
+
+
+	
+
+<section id="h31002">
+<title>
+<emphasis id="Figures" effect="bold">
+
+Figures
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+
+<list id="ul1013" list-type="bulleted">
+
+
+
+<item id="li1054">
+<link id="a1052" target-id="Figure_1">
+
+Figure 1.
+
+</link>
+
+
+ A standing wave on a wire.
+
+</item>
+
+
+
+
+<item id="li1055">
+<link id="a1053" target-id="Figure_2">
+
+Figure 2.
+
+</link>
+
+
+ Three example wavenumber spectra.
+
+</item>
+
+
+
+
+<item id="li1056">
+<link id="a1054" target-id="Figure_3">
+
+Figure 3.
+
+</link>
+
+
+ A three-element array with weighted sensors.
+
+
+</item>
+
+
+
+
+<item id="li1057">
+<link id="a1055" target-id="Figure_4">
+
+Figure 4.
+
+</link>
+
+
+ The 2D wavenumber response of a linear array.
+
+</item>
+
+
+
+
+<item id="li1058">
+<link id="a1056" target-id="Figure_5">
+
+Figure 5.
+
+</link>
+
+
+ Wavenumber response of a two-dimensional array.
+
+</item>
+
+
+
+
+<item id="li1059">
+<link id="a1057" target-id="Figure_6">
+
+Figure 6.
+
+</link>
+
+
+ Image processing in the space domain.
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+
+	
+
+</section>
+</section>
+</section>
+<section id="h11002">
+<title>
+<emphasis id="General_discussion" effect="bold">
+
+General discussion
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<section id="h21002">
+<title>
+<emphasis id="Time_domain_and_frequency_domain" effect="bold">
+
+Time domain and frequency domain
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1007">
+In my earlier modules on DSP, you learned about the relationship between the 
+time domain and the frequency domain. For example, you learned that time has 
+only one dimension. In the real world, time only goes forward.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1001" display="block">
+
+	
+
+<para id="p1008">
+<emphasis id="em1001" effect="italics">
+(In the computer world, we can make it appear that time can also go 
+	backwards, but this still constitutes only one dimension.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1009">
+The important point is that time can only go forward or backwards. It cannot 
+go sideways.
+
+</para>
+
+
+
+
+
+<section id="h31003">
+<title>
+<emphasis id="A_one-dimensional_Fourier_transform" effect="bold">
+
+A one-dimensional Fourier 
+transform
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1010">
+You learned that you can perform a one-dimensional Fourier transform to 
+transform your data from the time domain into the frequency domain. Similarly, 
+you can perform an inverse one-dimensional Fourier transform to transform your 
+data from the frequency domain back into the time domain.
+
+</para>
+
+
+
+
+
+<para id="p1011">
+You learned about several characteristics of Fourier transforms. For example, 
+you learned that a Fourier transform is both linear and reversible. You either 
+have learned or you will learn in a future module that convolution in the time 
+domain is equivalent to multiplication in the frequency domain, and that 
+convolution in the frequency domain is equivalent to multiplication in the time 
+domain.
+
+</para>
+
+
+
+
+
+<para id="p1012">
+You learned that with enough computational power, you can easily transform a 
+given set of data back and forth between these two domains. This makes it 
+possible to use the domain of your choice to perform a given signal processing 
+operation, even if the results need to be delivered in the other domain.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31004">
+<title>
+<emphasis id="Time_domain_data_is_purely_real" effect="bold">
+
+Time domain data is purely real
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1013">
+Although it is possible to use the Fourier transform to transform a set of 
+complex data from one domain to another domain, real-world time domain data is 
+not complex data. Rather, it is purely real. Assuming that the data in one 
+domain is always purely real leads to some simplification of the computational 
+requirements for performing the Fourier transform. In general, most of the 
+previous DSP modules assumed real data in the time domain and complex data in 
+the frequency domain.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31005">
+<title>
+<emphasis id="The_space_domain" effect="bold">
+
+The space domain
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1014">
+In this module, we will extend the concept of the Fourier transform from the 
+time domain into the space domain. In making this extension, we will encounter 
+some significant additional complexity. For example, while time is 
+one-dimensional, space is three-dimensional. While you can only move forward and 
+backwards in time, you can move up, down, forward, backward, and from side to 
+side in space.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1002" display="block">
+
+	
+
+<para id="p1015">
+<emphasis id="em1002" effect="italics">
+(In order to keep the complexity of this module in check, we will 
+	assume that space is only two-dimensional, allowing movement up, down, and 
+	from side to side only. This will serve us well later for such tasks as 
+	image processing. Three-dimensional Fourier transforms are beyond the scope 
+	of this module.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1016">
+It is also possible and very common to combine time domain signal processing 
+with space domain signal processing. However, that also is beyond the scope of 
+this module.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31006">
+<title>
+<emphasis id="Time_and_space_are_analogous" effect="bold">
+
+Time and space are analogous
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1017">
+We will consider the space domain to be analogous to the time domain, with 
+the stipulation that the space domain has two dimensions. The unit of measure in 
+the time domain is usually seconds, or some derivative thereof. The unit of 
+measure in space is usually meters, or some derivative thereof.
+
+</para>
+
+
+
+
+
+<para id="p1018">
+As with the time domain, we will assume that all space domain surfaces are 
+purely real 
+
+<emphasis id="em1003" effect="italics">
+(as opposed to being complex)
+
+</emphasis>
+. This will allow us to 
+simplify our computations when performing the 2D Fourier transform to transform 
+our data from the space domain into the wavenumber domain.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1003" display="block">
+
+	
+
+<para id="p1019">
+<emphasis id="em1004" effect="italics">
+(I will point out that from a practical viewpoint this assumption is 
+	much more limiting in the space domain than in the time domain. Complex 
+	space domain functions are quite common in such areas as antenna array 
+	processing.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h31007">
+<title>
+<emphasis id="Frequency_and_wavenumber_are_analogous" effect="bold">
+
+Frequency and wavenumber 
+are analogous
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1020">
+We will consider the wavenumber domain to be analogous to the frequency 
+domain. The unit of measure in the frequency domain is cycle per second, or some 
+derivative thereof. The unit of measure in the wavenumber domain is cycles per 
+meter or some derivative thereof.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31008">
+<title>
+<emphasis id="Period_and_wavelength_are_analogous" effect="bold">
+
+Period and wavelength are 
+analogous
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1021">
+The reciprocal of the typical unit of measure in the frequency domain is 
+seconds per cycle, commonly referred to as the period. The reciprocal of the 
+typical unit of measure in the wavenumber domain is meters per cycle, commonly 
+referred to as the wavelength.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h21003">
+<title>
+<emphasis id="Some_real_world_examples" effect="bold">
+
+Some real world examples
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1022">
+With all of this as background, I will begin by discussing some real world 
+engineering problems for which the solution lies in an understanding of the 
+wavenumber domain. I will use these examples to show some of the practical uses 
+of 2D Fourier transforms.
+
+</para>
+
+
+
+
+
+
+<para id="p1023">
+Following that 
+
+<emphasis id="em1005" effect="italics">
+(in 
+
+
+<link id="a1058" url="http://cnx.org/contents/1397e03f-aff1-4017-939c-f67102017848/Java1491-2D-Fourier-Transforms">
+
+Part 2
+
+</link>
+
+ of this 
+series)
+
+</emphasis>
+, I will present and explain a class 
+that you can copy and use to perform 2D Fourier transforms. Then I will present 
+and explain a program that exercises and tests the 2D Fourier transform class 
+for some common 3D surfaces.
+
+</para>
+
+
+
+
+
+<section id="h31009">
+<title>
+<emphasis id="A_commercial_radio_station" effect="bold">
+
+A commercial radio station
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1024">
+Assume that you have just acquired an FCC license to build and operate a new 
+commercial radio station in a small town in west Texas. As is frequently the 
+case in west Texas, your town is situated at the intersection of two highways. 
+One highway runs northeast and southwest. The other highway runs northwest and 
+southwest. The two highways are generally perpendicular to one another. Like 
+many highways in west Texas, each of these highways is straight as an arrow with 
+very few curves.
+
+</para>
+
+
+
+
+
+<section id="h41000">
+<title>
+<emphasis id="Where_people_live" effect="bold">
+
+Where people live
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1025">
+Your town has a small business district at the intersection of the two 
+highways. Beyond that, most of the people who live in your town 
+
+<emphasis id="em1006" effect="italics">
+(and who will 
+listen to your radio station
+
+</emphasis>
+) live along the two highways. Thus most of the 
+population lives in the directions of northeast, southwest, northwest, and 
+southeast from the center of town. There are very few people living in the 
+directions of north, south, east, and west. That real estate is mostly populated 
+by cows and cotton fields.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41001">
+<title>
+<emphasis id="A_limit_on_the_transmitting_power" effect="bold">
+
+A limit on the transmitting power
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1026">
+Your new FCC license places a limit on the amount of power that you will be 
+allowed to transmit. You would like to use that available power to reach a many 
+human listeners as possible. If you simply construct an omnidirectional 
+transmitting antenna and start broadcasting, approximately half of the power 
+that you transmit will be available mostly to cows and cotton plants. As a 
+result, the amount of power, and hence the reach of the power that you transmit 
+to human listeners will be less than you would like for it to be.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41002">
+<title>
+<emphasis id="A_directional_transmitting_antenna" effect="bold">
+
+A directional transmitting antenna
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1027">
+While the FCC won't allow you to increase the amount of power that you 
+transmit, they will allow you to control the directions in which you choose to 
+transmit that power. You will probably hire an expert in the transmission of 
+radio signals to design a directional transmitting antenna system, which will 
+broadcast most of the available power in the directions where the people live. 
+Ideally, the antenna system will transmit very little of the available power in 
+the directions of the cows and the cotton fields.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41003">
+<title>
+<emphasis id="The_design_of_the_antenna_system" effect="bold">
+
+The design of the antenna system
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1028">
+The antenna designer will have many tools at her disposal. Whether or not she 
+uses wavenumber terminology, many of the calculations that she performs will 
+depend on wavenumber concepts. She will be concerned about the reciprocal 
+wavenumber 
+
+<emphasis id="em1007" effect="italics">
+(wavelength)
+
+</emphasis>
+ of the radio signals that will be broadcast. She will 
+be concerned with the lengths of the active elements in the antenna system, and 
+the distance between active elements if she chooses to use an array of active 
+elements.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31010">
+<title>
+<emphasis id="Basic_concepts" effect="bold">
+
+Basic concepts
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1029">
+I will leave the radio station scenario at this point and discuss some more 
+basic concepts. I will return to the radio station scenario later. We will need 
+to start with simpler things and work our way up to the radio station scenario.
+
+</para>
+
+
+
+
+
+<para id="p1030">
+Much of this discussion will be couched in terms of receiving signals rather 
+than transmitting signals. 
+
+<emphasis id="em1008" effect="italics">
+(For most people, receiving is easier to understand 
+than transmitting.)
+
+</emphasis>
+ However, most of the conclusions that we reach regarding 
+antenna systems used for receiving signals are also applicable to antenna 
+systems used for transmitting signals.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31011">
+<title>
+<emphasis id="A_one-dimensional_space" effect="bold">
+
+A one-dimensional space
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1031">
+Just to get us started down the right path, we will temporarily constrain 
+space to have only one dimension. We will discuss the propagation of waves along 
+a taut wire, as well as the measurement of the waves propagating along that 
+wire.
+
+</para>
+
+
+
+
+
+<para id="p1032">
+Assume that a wire is fastened at both ends, is fairly taut, and is suspended 
+between two walls so that it is free to move up and down only. Assume that we 
+attach two sensors to the wire, one meter apart, and that each of these sensors 
+is capable of generating an electrical signal that is proportional to the 
+vertical displacement of the wire at the point where the sensor is attached. If 
+the wire goes up, the sensor generates a positive signal. If the wire goes down, 
+the sensor generates a negative signal.
+
+</para>
+
+
+
+
+
+<section id="h41004">
+<title>
+<emphasis id="Standing_waves" effect="bold">
+
+Standing waves
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1033">
+There are two ways that we can approach this analysis. If the wire is very 
+long, we can think in terms of a deformation pulse that propagates along the 
+wire passing by our sensors once and only once. This would fall into the 
+category of 
+
+<emphasis id="em1009" effect="italics">
+transient analysis
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<para id="p1034">
+On the other hand, if the wire is shorter, we can think in terms of vibrating 
+one end of the wire in such a way that a standing wave will develop on the wire. 
+This is probably the easier of the two approaches to understand because you may 
+have created standing waves on a rope as a child.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41005">
+<title>
+<emphasis id="What_does_a_standing_wave_look_like" effect="bold">
+
+What does a standing wave look like?
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1035">
+Once a standing wave is set up on the wire, it will take on an appearance 
+very similar to the sine wave shown in 
+
+<link id="a1059" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1000" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1000">
+<row id="tr1000">
+<entry id="th1000">
+
+
+
+<emphasis id="Figure_1" effect="bold">
+
+Figure 1.
+
+</emphasis>
+
+ A standing wave on a wire.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1000">
+<row id="tr1001">
+<entry id="td1000">
+
+
+
+
+<media id="media1000" alt="missing image" display="block">
+<image id="img1000" mime-type="image/gif" src="../../media/java1490a.gif" width="401" height="278"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<para id="p1036">
+<link id="a1060" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ represents a snapshot taken at a single instant in time. Obviously 
+the wire doesn't remain in the position shown in 
+
+<link id="a1061" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ for very long. Rather 
+a single point on the wire will move up and down with time with the overall 
+appearance being as shown in 
+
+<link id="a1062" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+. The distance between any two positive 
+peaks is what we would refer to as the wavelength of the standing wave.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41006">
+<title>
+<emphasis id="Add_the_sensor_output_signals" effect="bold">
+
+Add the sensor output signals
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1037">
+Now consider what would happen if we were to electronically add the 
+electrical outputs produced by the two sensors. The result would depend on the 
+distance between the sensors relative to the wavelength of the standing wave. 
+For example, if the two sensors were exactly one wavelength apart, the two 
+sensors would move up and down in unison, and the sum of the two signals would 
+be double the signal level produced by either sensor alone. The result would be 
+the same as if the two sensors were located at the same place on the wire.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41007">
+<title>
+<emphasis id="A_one-half_wavelength_spacing" effect="bold">
+
+A one-half wavelength spacing
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1038">
+On the other hand, if the two sensors were exactly one-half wavelength apart, 
+one would be going up when the other is going down, and the electrical output 
+from one would cancel the electrical output from the other. In space processing 
+terminology, this would be referred to as a 
+
+<emphasis id="em1010" effect="italics">
+null point
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41008">
+<title>
+<emphasis id="Change_the_wavelength_of_the_standing_wave" effect="bold">
+
+Change the wavelength 
+of the standing wave
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1039">
+Now consider what would happen if you were to leave the two sensors in the 
+same locations as before and do something to the wire to change the wavelength 
+of the standing wave. The output from the sum of the two sensors would range 
+from zero to maximum as the wavelength relative to the sensor separation varies 
+from one-half wavelength to one full wavelength. For a one-half wavelength 
+separation, the output would be zero. For a full wavelength separation, 
+the output would be at its maximum.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41009">
+<title>
+<emphasis id="A_two_element_array" effect="bold">
+
+A two-element array
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1040">
+We could refer to our two sensors as a 
+
+<emphasis id="em1011" effect="italics">
+two-element array
+
+</emphasis>
+, and we 
+could refer to the output produced by the sum of the two sensors as the response 
+of the array. We could plot the response versus wavelength. However, in the same 
+sense that it is more common to plot the response of electrical filters versus 
+frequency 
+
+<emphasis id="em1012" effect="italics">
+(instead of period)
+
+</emphasis>
+, it is probably most common to plot the 
+response of arrays versus wavenumber 
+
+<emphasis id="em1013" effect="italics">
+(instead of wavelength)
+
+</emphasis>
+. 
+Therefore, in this module, we will plot the response of the array versus 
+wavenumber.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31012">
+<title>
+<emphasis id="How_can_we_compute_the_array_response" effect="bold">
+
+How can we compute the array 
+response?
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1041">
+This is where Fourier transforms come into play. We could compute the 
+response of our one-dimensional array for waves propagating along the length of 
+the wire by treating the elements of the array as samples in space and 
+performing a one-dimensional Fourier transform on the elements of the array.
+
+</para>
+
+
+
+
+
+<section id="h41010">
+<title>
+<emphasis id="A_sampled_space_series" effect="bold">
+
+A sampled space series
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1042">
+In this case, we would consider the array elements to constitute samples 
+taken in space in the same way that we consider a sampled time series to 
+constitute samples taken in time. In other words, the array elements constitute 
+a sampled space series. The Fourier transform of a sampled time series is the 
+frequency spectrum of the time series. The Fourier transform of a sampled space 
+series is the wavenumber spectrum of the space series.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31013">
+<title>
+<emphasis id="Three_example_wavenumber_spectra" effect="bold">
+
+Three example wavenumber spectra
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1043">
+To set the stage for what we will be seeing later, 
+
+<link id="a1063" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ depicts three 
+different two-element arrays with different spacing in the three 
+
+<emphasis id="em1014" effect="italics">
+(black and white)
+
+</emphasis>
+ images across the top 
+of the figure. The wavenumber response for each of the three arrays is shown in 
+the three images in the bottom row of images in 
+
+<link id="a1064" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1004" display="block">
+<emphasis id="em1015" effect="italics">
+(In 
+
+<link id="a1065" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+, the array elements are represented by the white 
+dots on the black background.)
+
+</emphasis>
+</quote>
+
+
+
+
+
+
+<table id="table1001" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1001">
+<row id="tr1002">
+<entry id="th1001">
+
+
+
+<emphasis id="Figure_2" effect="bold">
+
+Figure 2.
+
+</emphasis>
+
+ Three example wavenumber spectra.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1001">
+<row id="tr1003">
+<entry id="td1001">
+
+
+		
+
+<media id="media1001" alt="missing image" display="block">
+<image id="img1001" mime-type="image/jpeg" src="../../media/1490-fig02.jpg" width="532" height="173"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+</section>
+<section id="h31014">
+<title>
+<emphasis id="Plots_of_3D_surfaces" effect="bold">
+
+Plots of 3D surfaces
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+<para id="p1044">
+The images shown in 
+
+<link id="a1066" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ were produced using the class named 
+
+<emphasis id="strong1003" effect="bold">
+ImgMod29
+
+</emphasis>
+, 
+which I explained earlier in the module titled
+
+
+<link id="a1067" url="http://cnx.org/contents/ea4ac046-e5a6-4503-b6e4-6c2d23b65d57/Java1489-Plotting-3D-Surfaces-">
+
+
+Plotting 3D Surfaces using Java
+
+</link>
+
+. You can refer back to that module for a 
+detailed explanation of the display format. Briefly, each of the six 
+individual images in 
+
+<link id="a1068" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ is a plot of a 3D surface, with the elevation of 
+the surface at any particular point being indicated by the color at that point 
+based on the colors on the calibration scale below each plot.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1005" display="block">
+
+	
+
+<para id="p1045">
+<emphasis id="em1016" effect="italics">
+(The calibration scale is the strip that changes color in a smooth 
+	gradient from black through blue, cyan, green, yellow, red, and white with black at the left 
+	end and white at the right end.
+
+</emphasis>
+</para>
+
+
+
+	
+
+<para id="p1046">
+<emphasis id="em1017" effect="italics">
+The three images in the top row of 
+
+<link id="a1069" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ with the white dots on 
+	the black background represent the array 
+	elements for each of the three arrays. The three images in the bottom row of 
+	
+
+<link id="a1070" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ represent the wavenumber response of the corresponding arrays in 
+	the top row.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<section id="h41011">
+<title>
+<emphasis id="Black_white_and_the_colors_in_between" effect="bold">
+
+Black, white, and the colors in between
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1047">
+The lowest 
+
+<emphasis id="em1018" effect="italics">
+(algebraic)
+
+</emphasis>
+ elevation in the plot is colored black. Hence the backgrounds are 
+black in the top three plots. The highest elevation is colored white. The 
+array elements are white in the top three plots.
+
+</para>
+
+
+
+
+
+<para id="p1048">
+Between black and white, the elevation is given by the color scale below the 
+plot with the lowest elevation on the left of the scale and the highest 
+elevation on the right. Thus, a green elevation is about half way between the 
+lowest and highest elevations. Blue elevations are near the low end. Red 
+elevations are near the high end. Cyan and yellow elevations fall in between as 
+shown by the calibration scale.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41012">
+<title>
+<emphasis id="The_maximum_array_output" effect="bold">
+
+The maximum array output
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1049">
+All three wavenumber plots have a maximum response at the center, which is 
+the zero wavenumber origin. In effect, this corresponds to infinite wavelength. 
+If the wavelength is infinite, it doesn't matter what the separation between the 
+elements is, they will all move up and down in unison and their electrical 
+outputs will add constructively to produce a maximum output.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41013">
+<title>
+<emphasis id="Response_of_the_leftmost_array" effect="bold">
+
+Response of the leftmost array
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1050">
+Now consider the leftmost pair of images where the two array elements are 
+relatively close together. The wavenumber response of this array has a pair of 
+null points about midway between the center and either end, as indicated by the 
+blue and black colors. This is the wavenumber for which the element spacing is 
+an exact multiple of one-half of the wavelength, causing the elements to move in 
+equal but opposite directions in response to the wave motion. Thus, the output 
+from one element cancels the output from the other element producing zero 
+voltage in the sum.
+
+</para>
+
+
+
+
+
+<para id="p1051">
+This same pair of images shows high responses at either end as indicated by 
+the red areas. This is the wavenumber for which the element spacing is an exact 
+multiple of one wavelength.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41014">
+<title>
+<emphasis id="The_Nyquist_folding_wavenumber" effect="bold">
+
+The Nyquist folding wavenumber
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1052">
+If this were a frequency spectrum analysis, we would say that the end points 
+are at the Nyquist folding frequency, which is one-half of the sampling 
+frequency. Thus, we can say that in the wavenumber domain, the end points on the 
+two leftmost 
+plots are at the Nyquist folding wavenumber, which is one-half the sampling 
+wavenumber.
+
+</para>
+
+
+
+
+
+<para id="p1053">
+As in the frequency domain, the wavenumber spectrum is periodic. The section of the wavenumber spectrum 
+that we are viewing represents one complete period of a periodic wavenumber 
+spectrum ranging from minus the folding wavenumber on the left, through zero wavenumber 
+at the center, to 
+plus the folding wavenumber on the right.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1006" display="block">
+
+	
+
+<para id="p1054">
+<emphasis id="em1019" effect="italics">
+(If you are already familiar with this sort of thing, you may have 
+	figured out that the separation between our elements in this example is 
+	twice the sampling distance that determines the location of the folding 
+	wavenumber.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41015">
+<title>
+<emphasis id="Estimating_the_array_response_from_the_colors" effect="bold">
+
+Estimating the array response from the colors
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1055">
+The leftmost array response shows a white area at the center.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1007" display="block">
+
+	
+
+<para id="p1056">
+<emphasis id="em1020" effect="italics">
+(The white area is split by the vertical component of red axes drawn on 
+	the plot. The color of the axes has nothing to do with elevations on the 
+	surface. I simply decided to draw them in red to make them stand out.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1057">
+This array response also shows the two black areas mentioned earlier. You can 
+use the orange, yellow, green, and cyan locations on the calibration scale to 
+estimate the response of the array to different wavenumber values between 
+maximum and minimum.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41016">
+<title>
+<emphasis id="Additional_separation_between_array_elements" effect="bold">
+
+Additional separation between array elements
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1058">
+Now consider the two images in the center of 
+
+<link id="a1071" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ where the wavenumber 
+range is the same as the wavenumber plot on the left. The elements for this 
+array are separated more than the elements in the leftmost pair of images. 
+Again, the wavenumber response for this array has a maximum value at the origin, 
+which is at the center of the wavenumber response in the lower image. In 
+addition, this array response has a high 
+
+<emphasis id="em1021" effect="italics">
+(red)
+
+</emphasis>
+ response at four other 
+wavenumber zones 
+
+<emphasis id="em1022" effect="italics">
+(for a total of five)
+
+</emphasis>
+, whereas the array on the left had only three red zones. 
+Similarly, this array has a low response (black and blue) at four different 
+wavenumber zones whereas the array on the left has a low response at only two 
+wavenumber zones.
+
+</para>
+
+
+
+
+
+<para id="p1059">
+Thus, changing the separation between the elements has a significant impact 
+on the wavenumber response of the array.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41017">
+<title>
+<emphasis id="Separate_the_elements_even_more" effect="bold">
+
+Separate the elements even more
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1060">
+Finally, consider the pair of images on the right where the elements are even 
+further apart. This array response has even more peaks and valleys than the 
+other two.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31015">
+<title>
+<emphasis id="A_wavenumber_filter" effect="bold">
+
+A wavenumber filter
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1061">
+The sum of the outputs from an array of sensor elements represents a form of 
+wavenumber filter 
+
+<emphasis id="em1023" effect="italics">
+(much as the correct combination of resistors, capacitors, and 
+inductors represents a frequency filter)
+
+</emphasis>
+. If we need to pass signals having one 
+wavenumber and to suppress signals having a different wavenumber, we may be able 
+to adjust the separation between the elements so as to put a peak on the 
+desirable wavenumber and to put a null point on the undesirable wavenumbers.
+
+</para>
+
+
+
+
+
+<section id="h41018">
+<title>
+<emphasis id="A_two_element_array_is_fairly_limiting" effect="bold">
+
+A two-element array is fairly limiting
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1062">
+Of course, with only two elements, we don't have very many degrees of freedom 
+to work with. We could exercise more control over our wavenumber filter if we 
+had more elements. We could do even better if we had the ability to give each 
+element a different weight 
+
+<emphasis id="em1024" effect="italics">
+(including a negative weight)
+
+</emphasis>
+ when the signals from 
+all the elements are added together. Finally, we could do even better still if 
+we had the ability to insert a programmable time delay 
+
+<emphasis id="em1025" effect="italics">
+(phase shift)
+
+</emphasis>
+ into the 
+output from each of the elements before adding them together.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1008" display="block">
+
+	
+
+<para id="p1063">
+<emphasis id="em1026" effect="italics">
+(The use of programmable time delays falls in the category of a space 
+	series that is complex rather than being purely real. Thus, that topic is 
+	beyond the scope of this module.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+</section>
+<section id="h31016">
+<title>
+<emphasis id="Lets_apply_some_weights" effect="bold">
+
+Let's apply some weights
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1064">
+Now let's modify our scenario and see what we can learn in the process. We 
+are going to increase the size of the array from two to three elements. We are 
+also going to assume that we can apply amplification, sign reversal, or both to 
+the element output signals before adding those signals together. The results are 
+shown in 
+
+<link id="a1072" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+. We will compare the results in 
+
+<link id="a1073" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+ with the results 
+discussed earlier in 
+
+<link id="a1074" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+, so this may be a good time for you to open 
+another copy of this module in a separate browser window if you haven't already 
+done so.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1002" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1002">
+<row id="tr1004">
+<entry id="th1002">
+
+
+
+<emphasis id="Figure_3" effect="bold">
+
+Figure 3.
+
+</emphasis>
+
+ A three-element array with weighted sensors.
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1002">
+<row id="tr1005">
+<entry id="td1002">
+
+
+		
+
+<media id="media1002" alt="missing image" display="block">
+<image id="img1002" mime-type="image/jpeg" src="../../media/1490-fig03.jpg" width="534" height="175"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h41019">
+<title>
+<emphasis id="The_leftmost_pair_of_images" effect="bold">
+
+The leftmost pair of images
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1065">
+The leftmost pair of images in 
+
+<link id="a1075" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+ is similar to the leftmost pair of 
+images in 
+
+<link id="a1076" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+, except that we added a third element in 
+
+<link id="a1077" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1066">
+All three elements in 
+
+<link id="a1078" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+ are weighted equally prior to summation. The 
+separation between the left and center elements is the same as in 
+
+<link id="a1079" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+. The 
+separation between the center and right elements is the same as the separation 
+between the left and center elements.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41020">
+<title>
+<emphasis id="The_wavenumber_response" effect="bold">
+
+The wavenumber response
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1067">
+The most noticeable thing about the wavenumber response for this 
+three-element array is that the central peak is narrower than the central peak for the 
+two-element array at the left of 
+
+<link id="a1080" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+. In addition, the trough between the 
+central peak and the peaks at the ends is deeper, broader, and probably flatter
+
+
+<emphasis id="em1027" effect="italics">
+(although the degree of flatness is hard to determine from this plotting 
+format)
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41021">
+<title>
+<emphasis id="Could_continue_adding_elements_to_the_array" effect="bold">
+
+Could continue adding 
+elements to 
+the array
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1068">
+Although I won't demonstrate it, I can tell you that if I were to continue 
+adding elements in this manner to increase the length of the array, the central 
+peak and the peaks at the folding wavenumbers would continue getting narrower, 
+and the trough between the peaks would continue getting deeper and probably 
+flatter.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41022">
+<title>
+<emphasis id="A_more_selective_wavenumber_filter" effect="bold">
+
+A more selective wavenumber 
+filter
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1069">
+In other words, when viewed as a wavenumber filter, a long array with more 
+elements is a more 
+selective wavenumber filter than a short array with fewer elements. By properly designing an array 
+to act as a wavenumber filter, it is possible to cause that filter to be very 
+selective.
+
+</para>
+
+
+
+
+
+<para id="p1070">
+When we use a properly designed array to produce a directional antenna, it is 
+possible to produce a highly directional antenna 
+
+<emphasis id="em1028" effect="italics">
+(and avoid wasting our 
+valuable radio frequency energy by sending it to cows and cotton plants).
+
+</emphasis>
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31017">
+<title>
+<emphasis id="A_weighted_three_element_array" effect="bold">
+
+A weighted three-element array
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1071">
+Continuing with our three-element array scenario, let's take a look at the 
+center pair of images in 
+
+<link id="a1081" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+ and compare them with the leftmost images in 
+
+
+<link id="a1082" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1072">
+For this case, the array still contains three elements with the same spacing 
+as before. However, the electrical output from the center element is amplified 
+to make it twice as strong as the outputs from the other two elements before the 
+three electrical signals are added together.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1009" display="block">
+
+	
+
+<emphasis id="em1029" effect="italics">
+Note that the array elements are no longer shown as being white against 
+	a black background in the very top of the top-center image. Instead, the 
+	center element is white but the other two elements are greenish indicating 
+	different weights.
+
+</emphasis>
+</quote>
+
+
+
+
+<para id="p1073">
+It is a little hard to tell what this does to the central peak in the 
+wavenumber response, but it definitely changes the shape of the response in the 
+trough between the peaks. Whether or not this would be a beneficial change would 
+depend on the problem being addressed.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31018">
+<title>
+<emphasis id="A_three_element_array_with_negative_weighting" effect="bold">
+
+A three-element 
+array with negative weighting
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1074">
+Finally, take a look at the rightmost pair of images in 
+
+<link id="a1083" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+. Once again, 
+the array contains three elements and the center element is weighted twice as 
+heavily as the other two. In addition, the sign of the electrical signals from 
+the two outer elements is inverted before the three are added together.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1010" display="block">
+
+	
+
+<emphasis id="em1030" effect="italics">
+Note that the black color represents the smallest algebraic value. 
+	Negative values are smaller than positive values. Therefore, the background 
+	(which represents a weigh of zero) has changed from black to something 
+	between green and blue. The two elements with 
+	the negative weights are shown as black and the element with the positive 
+	weight is shown as white.
+
+</emphasis>
+</quote>
+
+
+
+
+<section id="h41023">
+<title>
+<emphasis id="Thewavenumberresponse02" effect="bold">
+
+The wavenumber response
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1075">
+This has a major impact on the wavenumber response of the three-element 
+array.
+
+</para>
+
+
+
+
+
+<para id="p1076">
+There is no longer a peak at a wavenumber value of zero. Rather, there is now 
+a null point at zero wavenumber as indicated by the black and blue colors at the 
+center of the plot. There is now a peak on each side of zero 
+
+<emphasis id="em1031" effect="italics">
+(as indicated 
+by the white and red colors)
+
+</emphasis>
+, half way between zero and the folding 
+wavenumber.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41024">
+<title>
+<emphasis id="Two_full_peaks_but_at_different_locations" effect="bold">
+
+Two full peaks but at 
+different locations
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1077">
+If you consider the peaks at the ends of the wavenumber response for the 
+leftmost and center images in 
+
+<link id="a1084" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+ to each represent only half a peak 
+
+<emphasis id="em1032" effect="italics">
+
+(with the other half being off the scale to the left and the right)
+
+</emphasis>
+, all 
+three scenarios have two complete peaks in their wavenumber responses.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1011" display="block">
+
+	
+
+<para id="p1078">
+<emphasis id="em1033" effect="italics">
+(You could think in terms of printing the wavenumber response on a 
+	piece of paper, cutting it out, and taping the two ends together to form a 
+	continuous ring. As you made a complete traversal of the ring, you would 
+	encounter two peaks.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1079">
+However, the locations of the two peaks for the rightmost array are at 
+completely different wavenumber values than are the peaks for the other two 
+arrays. The two peaks exhibited by the rightmost array are in the locations of 
+the two nulls for the center array. Similarly, the null points for the rightmost 
+array are in the same locations as the two peaks for the center array.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31019">
+<title>
+<emphasis id="What_can_we_learn_from_these_scenarios" effect="bold">
+
+What can we learn from 
+these scenarios?
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1080">
+We learn that we can have a significant impact on the wavenumber response of 
+an array by increasing the number of elements in the array. We can also have a 
+significant impact on the wavenumber response by applying weights, 
+
+<emphasis id="em1034" effect="italics">
+
+(including sign changes)
+
+</emphasis>
+, to the electrical signals produced by the array 
+elements before adding them together.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h21004">
+<title>
+<emphasis id="Extending_into_two_dimensions" effect="bold">
+
+Extending into two dimensions
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1081">
+Now let's complicate things a bit by extending our array analysis into two 
+dimensions. Up to this point, we have assumed that our sensors were attached to 
+a wire that was free to move up and down only. As such, waves impinging on the 
+array were constrained to approach the array from one end or the other. In this 
+case the wavenumber was completely determined by the wavelength of the wave.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1012" display="block">
+
+	
+
+<para id="p1082">
+<emphasis id="em1035" effect="italics">
+(For our purposes, the wavelength is given by the ratio of 
+	propagation speed in meters per second to frequency in cycles per second. 
+	Canceling out the units leaves us with wavelength in meters per cycle.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<section id="h31020">
+<title>
+<emphasis id="Move_the_array_to_a_table_top" effect="bold">
+
+Move the array to a table top
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1083">
+Let's move our array of sensors from the wire to a large sheet of metal on 
+the top of a table. For the time being, we will still place the elements in a 
+line with uniform spacing. However, we will now assume that a wave can impinge 
+on the array from any direction along the surface of the sheet of metal.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1013" display="block">
+
+	
+
+<para id="p1084">
+<emphasis id="em1036" effect="italics">
+(For simplicity, we will assume that there is some sort of insulation 
+	between the sheet of metal and the table top to prevent waves from impinging 
+	on the array from below.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<section id="h41025">
+<title>
+<emphasis id="What_does_a_wave_look_like_in_this_scenario" effect="bold">
+
+What does a wave look 
+like in this scenario?
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1085">
+Imagine a piece of corrugated sheet metal or fiber glass. 
+
+<emphasis id="em1037" effect="italics">
+(Material like 
+this is sometimes used to build a roof on a patio.)
+
+</emphasis>
+ When you look at it 
+from one end, it looks something like the sine wave in 
+
+<link id="a1085" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+. However, if you 
+keep it at eye level and slowly turn it in the horizontal plane, the distance between the peaks will 
+appear to become shorter and shorter until finally you don't see any peaks at 
+all. What you see at that point is something that appears to have the same 
+thickness from one end to the other. This is the view that one of our sensors 
+sees as the wavefront of an impinging wave.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41026">
+<title>
+<emphasis id="The_angle_of_attack_is_important" effect="bold">
+
+The angle of attack is important
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1086">
+We now have a much more complex situation. If the waves continue to impinge 
+on the array from one end or the other, the situation will be exactly the same 
+as when the sensors were on the wire. However, the 
+
+<emphasis id="em1038" effect="italics">
+apparent
+
+</emphasis>
+ wavenumber or 
+wavelength of a wave as seen by the array will depend on the angle of attack.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1014" display="block">
+
+	
+
+<para id="p1087">
+<emphasis id="em1039" effect="italics">
+(There is now a difference between the actual wavelength or 
+	wavenumber and the apparent wavelength or wavenumber as seen by the array.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41027">
+<title>
+<emphasis id="Infinite_wavelength" effect="bold">
+
+Infinite wavelength
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1088">
+For example, if the wave impinges on the array from a broadside direction, 
+all of the sensors will move up and down in unison regardless of their 
+separation and regardless of the actual wavelength of the wave. For this case, 
+the wave will appear to the array to have infinite wavelength or zero 
+wavenumber.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1015" display="block">
+
+	
+
+<para id="p1089">
+<emphasis id="em1040" effect="italics">
+(A linear array has no ability to filter on the basis of wavenumber 
+	for waves that impinge on the array from the broadside direction. All waves 
+	from that direction appear to have zero wavenumber. This will lead us later 
+	to consider the use of a two-dimensional array.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+</section>
+<section id="h31021">
+<title>
+<emphasis id="The_2D_wavenumber_response_of_a_linear_array" effect="bold">
+
+The 2D wavenumber 
+response of a linear array
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1090">
+<link id="a1086" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ shows the two-dimensional wavenumber response for a five element 
+linear array with equal weighting for all of the elements. The array is shown at 
+the top. The wavenumber response of the array is shown at the bottom.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1016" display="block">
+
+	
+
+<para id="p1091">
+<emphasis id="em1041" effect="italics">
+(In this case, I placed all five elements on adjacent points on the space 
+	sampling grid with no spaces in between. This places them so close together 
+	that you can't visually separate them in the image and they appear as a 
+	white line in a black background.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+
+
+<table id="table1003" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1003">
+<row id="tr1006">
+<entry id="th1003">
+
+
+
+<emphasis id="Figure_4" effect="bold">
+
+Figure 4.
+
+</emphasis>
+
+ The 2D wavenumber response of a linear array.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1003">
+<row id="tr1007">
+<entry id="td1003">
+
+
+		
+
+<media id="media1003" alt="missing image" display="block">
+<image id="img1003" mime-type="image/jpeg" src="../../media/1490-fig04.jpg" width="193" height="454"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h41028">
+<title>
+<emphasis id="The_response_for_a_constant_wavenumber" effect="bold">
+
+The response for a constant 
+wavenumber
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1092">
+If you were to draw a circle centered on the crosshairs 
+
+<emphasis id="em1042" effect="italics">
+(axes)
+
+</emphasis>
+ in 
+the center of the wavenumber response, the points on that circle would represent 
+a fixed wavenumber for a wave arriving from any direction. The value of the 
+response at any particular point on the circle would indicate the response of 
+the array to a wave having that wavenumber from that direction.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41029">
+<title>
+<emphasis id="Response_versus_direction" effect="bold">
+
+Response versus direction
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1093">
+If the diameter of the circle is larger than the width of the red vertical 
+band, and if you were to plot that response versus direction, you would see that 
+the response is maximum for the two directions that are broadside to the array 
+and the response tends to drop off as the direction approaches the end-fire 
+direction of the array.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41030">
+<title>
+<emphasis id="Symmetry" effect="bold">
+
+Symmetry
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1094">
+You would also notice quite a lot of symmetry. For example, the maximum 
+response occurs in two directions that are 180 degrees apart. In fact, if you 
+pick any direction and a given wavenumber, the response is the same for that 
+direction and for the direction that is 180 degrees around from that direction.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41031">
+<title>
+<emphasis id="Not_good_for_the_radio_transmitter" effect="bold">
+
+Not good for the radio 
+transmitter
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1095">
+This wouldn't be a very good design for the radio station that I described 
+earlier. If one of the broadside directions of the array faces northeast and the 
+other faces southwest, then the people who live in the northwest and southeast 
+directions wouldn't receive a very good signal from your transmitter. You need a 
+design that maximizes the power in the four directions where the people live, 
+and that minimizes the power in the other directions. To accomplish that, we 
+will need a two-dimensional array in place of our one-dimensional linear array.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h21005">
+<title>
+<emphasis id="A_two-dimensional_array" effect="bold">
+
+A two-dimensional array
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1096">
+We will achieve the desired array response by using an array having thirteen 
+elements in the form of a cross with very specific weighting applied to each 
+element prior to summation. The weighted array and the wavenumber response of the array 
+are shown in 
+
+<link id="a1087" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1004" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1004">
+<row id="tr1008">
+<entry id="th1004">
+
+
+
+<emphasis id="Figure_5" effect="bold">
+
+Figure 5.
+
+</emphasis>
+
+ Wavenumber response of a two-dimensional array.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1004">
+<row id="tr1009">
+<entry id="td1004">
+
+
+		
+
+<media id="media1004" alt="missing image" display="block">
+<image id="img1004" mime-type="image/jpeg" src="../../media/1490-fig05.jpg" width="187" height="455"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h31022">
+<title>
+<emphasis id="Computing_the_wavenumber_response" effect="bold">
+
+Computing the wavenumber 
+response
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1097">
+The wavenumber response of the array 
+
+<emphasis id="em1043" effect="italics">
+(shown at the bottom in 
+
+<link id="a1088" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+)
+
+</emphasis>
+ 
+was produced by performing a 2D Fourier transform on the weighted array 
+
+<emphasis id="em1044" effect="italics">
+
+(shown at the top in 
+
+<link id="a1089" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+)
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<para id="p1098">
+The center element in the array was weighted by -4.5 before summation. 
+
+<emphasis id="em1045" effect="italics">
+
+(The signal from this element was amplified by a factor of 4.5 and the sign of 
+the signal was inverted prior to summation.)
+
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1099">
+The twelve remaining elements were weighted by a factor of 1.0 before 
+summation.
+
+</para>
+
+
+
+
+
+<section id="h41032">
+<title>
+<emphasis id="A_constant_wave_number" effect="bold">
+
+A constant wave number
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1100">
+Regardless of direction, the wavelength or wavenumber of the RF energy 
+transmitted by a commercial radio station is the same and it doesn't change over 
+time, 
+
+<emphasis id="em1046" effect="italics">
+(unless the frequency on which the station broadcasts changes)
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<para id="p1101">
+Once again, we can determine the wavenumber response of the array for a given 
+wavenumber from any direction by drawing a circle on the response plot, centered 
+at the origin, with the radius of the circle equal to the specific wavenumber of 
+interest.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41033">
+<title>
+<emphasis id="Assume_a_wavenumber" effect="bold">
+
+Assume a wavenumber
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1102">
+Assume that the wavenumber of interest in our case is exactly equal to the 
+distance from the origin to the white spot in the upper right quadrant of the 
+wavenumber response plot. This white spot represents the maximum response of the 
+array.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1017" display="block">
+
+	
+
+<para id="p1103">
+<emphasis id="em1047" effect="italics">
+(If our computation had perfect accuracy, there would be a white spot 
+	at the same location in all four quadrants.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1104">
+Draw a circle centered on the origin having a radius that causes the circle 
+to go through the white spot.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41034">
+<title>
+<emphasis id="Determine_the_response_versus_direction" effect="bold">
+
+Determine the response 
+versus direction
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1105">
+The color corresponding to the response at any point on the circle represents 
+the response of the array to that wavenumber for waves arriving from that 
+direction 
+
+<emphasis id="em1048" effect="italics">
+(or in the case of a transmitter, for waves being transmitted in 
+that direction)
+
+</emphasis>
+. 
+
+</para>
+
+
+
+
+
+<para id="p1106">
+The circle passes through yellow, red, and white 
+
+<emphasis id="em1049" effect="italics">
+(indicating a high 
+response)
+
+</emphasis>
+ in the general directions of northeast, southeast, southwest, and 
+northwest. This means that a strong RF signal will be transmitted to the people 
+living along the highways in those four directions.
+
+</para>
+
+
+
+
+
+<para id="p1107">
+The circle passes through green, cyan, and blue 
+
+<emphasis id="em1050" effect="italics">
+(indicating a lower 
+response)
+
+</emphasis>
+ in the general directions of north, south, east, and west. This 
+means that very little of the precious RF energy will be transmitted to the 
+cotton plants and the cows that live in those directions.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41035">
+<title>
+<emphasis id="A_possible_solution_to_the_problem" effect="bold">
+
+A possible solution to the 
+problem
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1108">
+Thus, an array of active transmitter elements arranged and weighted as shown 
+at the top of 
+
+<link id="a1090" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ might be a reasonable design solution for your radio 
+station. 
+
+<emphasis id="em1051" effect="italics">
+(However, I suspect that an experienced RF engineer would have a 
+much more sophisticated solution.)
+
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1109">
+In any event, you have now seen one possible practical example of the use of 
+a 2D Fourier transform.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h21006">
+<title>
+<emphasis id="Arrays_are_used_in_various_applications" effect="bold">
+
+Arrays are used in various 
+applications
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1110">
+Although this example was admittedly somewhat contrived, it is not far 
+fetched. Arrays similar to those that I have been discussing are widely used in 
+the technology area of spatial signal processing. 
+
+</para>
+
+
+
+
+
+<section id="h31023">
+<title>
+<emphasis id="Radio_astronomy" effect="bold">
+
+Radio astronomy
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1111">
+Perhaps the application that is most familiar to the general public 
+
+<emphasis id="em1052" effect="italics">
+(due 
+to widespread publicity and a very popular movie)
+
+</emphasis>
+ is the
+
+
+<link id="a1091" url="http://www.seti.org/ata">
+
+Paul Allen radio telescope
+
+</link>
+
+ used in the
+
+
+<link id="a1092" url="http://www.setileague.org/array2k/iaa2001.htm">
+
+Search for 
+Extraterrestrial Intelligence (SETI)
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1112">
+In the past, much of this work has been done using a very large dish antenna 
+known as the 
+
+<link id="a1093" url="http://www.daviddarling.info/encyclopedia/A/Arecibor.html">
+
+
+Arecibo Radio Telescope
+
+</link>
+
+ in Puerto Rico. Efforts are now underway involving 
+an alternative approach that uses a large
+
+
+<link id="a1094" url="http://www.setileague.org/array2k/array2kb.jpg">
+
+array
+
+</link>
+
+ of small 
+dishes instead of one large dish.
+
+</para>
+
+
+
+
+
+<para id="p1113">
+By properly processing and then summing the outputs produced by the dishes in 
+the array, the users will be able to steer the telescope and possibly to also 
+eliminate strong sources of interference.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31024">
+<title>
+<emphasis id="Seismology" effect="bold">
+
+Seismology
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1114">
+Arrays of seismometers are used by U.S. government agencies to monitor for 
+seismic signals produced by earthquakes in locations nearly halfway around the 
+earth.
+
+</para>
+
+
+
+
+
+<para id="p1115">
+By applying complex, frequency dependent weighting factors to the seismometer 
+outputs before summing them, the arrays can be tuned to provide a complex 
+response in wavenumber space. For example, the arrays can be processed to form 
+response beams looking in different directions with a beam width that is 
+relatively constant across a wide band of interesting frequencies. In addition, 
+null points in the wavenumber response can be created to suppress seismic noise 
+that originates from specific points on the earth such as mines, rock quarries, 
+and cities.
+
+</para>
+
+
+
+
+
+<para id="p1116">
+The design and analysis of such array systems use 2D 
+
+<emphasis id="em1053" effect="italics">
+(and sometimes 3D)
+
+</emphasis>
+ 
+Fourier transforms. Because the weights that are applied are produced by complex 
+frequency filters, the transform programs that are used must treat both the 
+space domain data and the wavenumber data as complex 
+
+<emphasis id="em1054" effect="italics">
+(instead of being 
+purely real as in the examples in this module)
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31025">
+<title>
+<emphasis id="Sonar" effect="bold">
+
+Sonar
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1117">
+Probably ninety percent of all sonar systems currently installed on surface 
+ships and submarines use arrays for steering and processing both active and 
+passive sonar. In almost all cases, these are 3D arrays. Some of the arrays 
+contain multiple sensors on the surface of a portion of a sphere. Some contain 
+multiple sensors located along slats that are mounted on a frame much like the 
+staves on a barrel. Some are located on the sides of the vessel. There are 
+probably numerous other geometries in use as well.
+
+</para>
+
+
+
+
+
+<para id="p1118">
+A Fourier transform program used with these arrays would normally have to be 
+a 3D Fourier transform program capable of transforming from complex space 
+functions to complex wavenumber functions.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31026">
+<title>
+<emphasis id="Radar" effect="bold">
+
+Radar
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1119">
+One of the reasons that sonar is typically processed using arrays has to do 
+with the wavelength of the signals and the operating environment. It is usually 
+not practical to physically move a sonar sensor large enough to do the job in 
+order to cause it to look in different directions. Thus arrays of small sensors 
+are used with the ability to steer beams electronically in order to look in 
+different directions.
+
+</para>
+
+
+
+
+
+<para id="p1120">
+Because of the shorter wavelengths involved, typical radar sensors are 
+usually small enough that they can be physically turned and tilted. Thus, it is 
+not unusual to see radar sensors turning around and tilting up and down. 
+Although I'm not personally aware of any applications that use arrays of radar 
+sensors, my suspicion is that there probably are some being used in fixed air 
+surveillance operations.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31027">
+<title>
+<emphasis id="Petroleum_exploration" effect="bold">
+
+Petroleum exploration
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1121">
+A large percentage of petroleum exploration involves the insertion of a 
+powerful surge of acoustic energy into the ground 
+
+<emphasis id="em1055" effect="italics">
+(or into the ocean)
+
+</emphasis>
+ and 
+listening for and recording the echo signals returned by the various layers of 
+the earth. By moving across the earth and repeating this process, a
+
+
+<link id="a1095" url="http://sepwww.stanford.edu/sep/prof/iei/mltp/paper_html/node5.html">
+
+
+profile
+
+</link>
+
+ of the earth's layering can be produced. An experienced exploration 
+geophysicist can examine the profiles and reach conclusions as to the likelihood 
+that a particular stratum contains petroleum.
+
+</para>
+
+
+
+
+
+<para id="p1122">
+Exploration geophysicists have been using arrays of sensors for this purpose 
+for at least the past 55 years according to my personal knowledge, and probably 
+for many years before that.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31028">
+<title>
+<emphasis id="Image_processing" effect="bold">
+
+Image processing
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<section id="h41036">
+<title>
+<emphasis id="Image_processing_in_the_wavenumber_domain" effect="bold">
+
+Image processing in the wavenumber domain
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1123">
+While the examples described above are interesting, they are beyond the scope 
+of anything that I can demonstrate online. However, there are several 
+interesting applications using 2D Fourier transforms that I can demonstrate 
+online. One of those applications is image processing.
+
+</para>
+
+
+
+
+
+<para id="p1124">
+Future modules will show how to use 2D Fourier transforms for such purposes 
+as softening images, sharpening images, doing edge detection on images, etc. For 
+this application, it is satisfactory to use a 2D Fourier transform program that 
+assumes that the space domain data is purely real. Therefore, the program that I 
+will present and explain in  
+
+
+<link id="a1096" url="http://cnx.org/contents/1397e03f-aff1-4017-939c-f67102017848/Java1491-2D-Fourier-Transforms">
+
+Part 2
+
+</link>
+
+ of this module will make that assumption.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41037">
+<title>
+<emphasis id="Image_processing_in_the_space_domain" effect="bold">
+
+Image processing in the space domain
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1125">
+The 2D Fourier transform will be used in future modules to help explain how 
+and why 2D image convolution behaves the way it does. A preview of that material 
+is shown in 
+
+<link id="a1097" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1005" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1005">
+<row id="tr1010">
+<entry id="th1005">
+
+
+
+<emphasis id="Figure_6" effect="bold">
+
+Figure 6.
+
+</emphasis>
+
+ Image processing in the space domain.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1005">
+<row id="tr1011">
+<entry id="td1005">
+
+
+		
+
+<media id="media1005" alt="missing image" display="block">
+<image id="img1005" mime-type="image/jpeg" src="../../media/1490-fig06.jpg" width="538" height="472"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h51000">
+<title>
+<emphasis id="Convolution_versus_multiplication" effect="bold">
+
+Convolution versus multiplication
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1126">
+Convolution in the space domain is equivalent to multiplication 
+in the wavenumber domain, and vice versa.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h51001">
+<title>
+<emphasis id="A_simple_space_function_and_its_wavenumber_spectrum" effect="bold">
+
+A simple space function and its wavenumber spectrum
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1127">
+The top left image in 
+
+<link id="a1098" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+ shows a simple 3D surface in space consisting 
+of a raised square. The wavenumber spectrum of that surface is shown in the 
+lower left image in 
+
+<link id="a1099" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+. Note that the spectrum has a peak at a wavenumber 
+value of zero with low values at the higher wave numbers near the edges. The 
+peak in the center is relatively narrow with respect to the folding wave number 
+at the edges.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h51002">
+<title>
+<emphasis id="A_2D_convolution_operator_and_its_spectral_response" effect="bold">
+
+A 2D convolution operator and its spectral response
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1128">
+The image in the upper center of 
+
+<link id="a1100" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+ shows a typical 2D convolution 
+operator consisting of a value of +8 in the center surrounded by eight 
+coefficients each having a value of -1.
+
+</para>
+
+
+
+
+
+<para id="p1129">
+The wavenumber spectral response of that convolution operator is shown in the 
+lower center. Note that it has peaks at the folding wavenumbers on all four 
+sides with a low value in the center.
+
+</para>
+
+
+
+
+
+<para id="p1130">
+The deepest part of the trough in the center is relatively narrow with 
+respect to the folding wave numbers at the edges. However, it is somewhat 
+broader than the peak in the spectrum at the lower left.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h51003">
+<title>
+<emphasis id="The_result_of_convolution" effect="bold">
+
+The result of convolution
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1131">
+The image in the upper right shows the result of convolving the space domain 
+surface in the upper left with the convolution operator in the upper center. 
+This output space domain surface has a green square area in the center that is 
+at the same level as the green background. In this case, green represents an 
+elevation of 0, which is about midway between the lowest elevation (black) and 
+the highest elevation (white).
+
+</para>
+
+
+
+
+
+</section>
+<section id="h51004">
+<title>
+<emphasis id="Positive_and_negative_fences" effect="bold">
+
+Positive and negative fences
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1132">
+Surrounding the green square is a yellow and white fence representing very 
+high elevations. Surrounding that fence is a black and blue fence, representing 
+very low elevations consisting of large negative values.
+
+</para>
+
+
+
+
+
+<para id="p1133">
+Thus, as you move from the outside to the inside of the square in the output 
+surface, the elevation goes from a background level of zero, to a large negative 
+value, followed immediately by a large positive value, followed by zero.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h51005">
+<title>
+<emphasis id="Edge_detection" effect="bold">
+
+Edge detection
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1134">
+This is one form of edge detection. The edges of the square 
+in the input surface have been emphasized and the flat portion of the input 
+surface has been deemphasized in the convolution output.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h51006">
+<title>
+<emphasis id="Wavenumber_spectrum_of_the_convolution_output" effect="bold">
+
+Wavenumber spectrum of the convolution output
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1135">
+The wavenumber spectrum of the output from the convolution operation is shown 
+in the lower right. The spectrum indicates that this surface is made up mostly 
+of wavenumber components having mid range to high values.
+
+</para>
+
+
+
+
+
+<para id="p1136">
+If you are familiar with digital signal processing, you will know that in 
+order for a space 
+
+<emphasis id="em1056" effect="italics">
+(or time)
+
+</emphasis>
+ function to contain very rapid changes in value 
+
+
+<emphasis id="em1057" effect="italics">
+(such as the elevation changes at the fences described above)
+
+</emphasis>
+ the function must 
+contain significant high wavenumber 
+
+<emphasis id="em1058" effect="italics">
+(or frequency)
+
+</emphasis>
+ components. That appears to 
+be the case here indicated by the red areas on the four sides of the wavenumber 
+spectrum.
+
+</para>
+
+
+
+
+
+<para id="p1137">
+Although this spectrum was produced by convolution in the space domain 
+followed by a 2D Fourier transform on the convolution output, you should be able 
+to see that the shape of the spectrum on the bottom right approximates the 
+product of the spectrum of the original surface on the bottom left and the 
+spectral response of the convolution operator in the bottom center.
+
+</para>
+
+
+
+
+
+<para id="p1138">
+Thus, the same results could have been produced using multiplication in the 
+wavenumber domain followed by an inverse Fourier transform to produce the space 
+domain result. Convolution in the space domain is equivalent to multiplication 
+in the wavenumber domain and vice versa.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h41038">
+<title>
+<emphasis id="Hidden_watermarks_and_trademarks" effect="bold">
+
+Hidden watermarks and trademarks
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1139">
+Another interesting application that I can demonstrate online is using 2D 
+Fourier transforms to hide secret trademarks and watermarks in images. The 
+purpose of a hidden trademark or watermark is for the owner of the image to be 
+able to demonstrate that the image may have been used inappropriately by someone 
+else. Once again, this application can be satisfied by treating the space domain 
+data as purely real. I plan to demonstrate how this is done in a future module.
+
+</para>
+
+
+
+
+
+
+</section>
+</section>
+</section>
+</section>
+<section id="h11003">
+<title>
+<emphasis id="Summary" effect="bold">
+
+Summary
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1140">
+I began by explaining how the space domain and the wavenumber domain in 
+two-dimensional analysis are analogous to the time domain and the frequency 
+domain in one-dimensional analysis.
+
+</para>
+
+
+
+
+
+<para id="p1141">
+Then I introduced you to some practical examples showing how 2D Fourier 
+transforms and wavenumber spectra can be useful in solving engineering problems 
+involving antenna arrays.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h11004">
+<title>
+<emphasis id="Whats_next" effect="bold">
+
+What's next?
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1142">
+In 
+
+
+<link id="a1101" url="http://cnx.org/contents/1397e03f-aff1-4017-939c-f67102017848/Java1491-2D-Fourier-Transforms">
+
+Part 2
+
+</link>
+
+ 
+of this two-part series, I will provide and explain a Java class that can be 
+used to perform forward and inverse 2D Fourier transforms, and can also be used 
+to shift the wavenumber origin from the upper left to the center for a more 
+pleasing plot of the wavenumber spectrum.
+
+</para>
+
+
+
+
+
+<para id="p1143">
+In addition, I will provide and explain a program that is used to:
+
+</para>
+
+
+
+
+
+<list id="ul1014" list-type="bulleted">
+
+	
+
+<item id="li1060">
+Test the forward and inverse 2D Fourier transforms to confirm that the 
+	code is correct and that the transformations behave as they should
+
+</item>
+
+
+	
+
+<item id="li1061">
+Produce wavenumber spectra for simple surfaces to help the student gain 
+	a feel for the relationship that exists between the space domain and the 
+	wavenumber domain
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+	
+
+</section>
+<section id="h11005">
+<title>
+<emphasis id="Miscellaneous" effect="bold">
+
+Miscellaneous
+
+</emphasis>
+
+
+</title>
+
+
+	
+
+<para id="p1144">
+This section contains a variety of miscellaneous information.
+
+</para>
+
+
+
+
+
+	
+
+<note id="note1000" type="">
+
+
+		
+
+
+			
+
+
+				
+
+<emphasis id="strong1004" effect="bold">
+Housekeeping material
+
+</emphasis>
+
+				
+
+<list id="ul1015" list-type="bulleted">
+
+					
+
+<item id="li1062">
+Module name: Java1490-2D Fourier Transforms using Java
+
+</item>
+
+
+					
+
+<item id="li1063">
+File: Java1490.htm
+
+</item>
+
+
+					
+
+<item id="li1064">
+Published: 07/12/05
+
+</item>
+
+
+				
+
+</list>
+
+
+
+
+<para id="p1145">
+Learn how the space domain and the wavenumber domain in two-dimensional analysis are analogous to the time domain and the frequency domain in one-dimensional analysis. Learn about some practical examples showing how 2D Fourier transforms and wavenumber spectra can be useful in solving engineering problems involving antenna arrays. 
+
+</para>
+
+
+
+				
+
+</note>
+
+
+
+
+
+	
+
+<note id="note1001" type="">
+
+
+		
+
+
+			
+
+
+				
+
+<emphasis id="strong1005" effect="bold">
+Disclaimers:
+
+</emphasis>
+<para id="p1146">
+<emphasis id="strong1006" effect="bold">
+Financial
+
+</emphasis>
+: Although the Connexions
+site makes it possible for you to download a PDF file for this
+module at no charge, and also makes it possible for you to
+purchase a pre-printed version of the PDF file, you should be
+aware that some of the HTML elements in this module may not translate well into
+PDF.
+
+</para>
+
+
+
+				
+
+<para id="p1147">
+I also want you to know that, I receive no financial compensation from the Connexions website even if you purchase 
+	the PDF version of the module.
+
+</para>
+
+
+
+				
+
+<para id="p1148">
+In the past, unknown individuals have copied my modules from cnx.org, converted them to Kindle books, and 
+				placed them for sale on Amazon.com showing me as the author. I 
+				neither receive compensation for those sales nor do I know who does 
+				receive compensation. If you purchase such a book, please be 
+				aware that it is a copy of a module that is freely 
+				available on cnx.org and that it was made and published without 
+				my prior knowledge.
+
+</para>
+
+
+
+				
+
+<para id="p1149">
+<emphasis id="strong1007" effect="bold">
+Affiliation
+
+</emphasis>
+: I am a professor of Computer Information 
+	Technology at Austin Community College in Austin, TX.
+	
+
+</para>
+
+
+
+
+</note>
+
+
+
+	
+
+
+
+<para id="p1150">
+-end- 
+
+</para>
+
+
+
+
+
+
+
+</section>
+</content>
+
+
+
+
+</document>

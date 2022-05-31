@@ -1,0 +1,80 @@
+<col:collection xmlns="http://cnx.rice.edu/collxml" xmlns:md="http://cnx.rice.edu/mdml" xmlns:col="http://cnx.rice.edu/collxml" xml:lang="en">
+  <metadata xmlns:md="http://cnx.rice.edu/mdml" mdml-version="0.5">
+    <md:content-id>col11642</md:content-id>
+    <md:title>Digital Signal Processing - DSP</md:title>
+    <md:language>en</md:language>
+    <md:license url="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution License</md:license>
+    <md:uuid>98d253c0-8044-4e22-a707-7b8d819bc8a7</md:uuid>
+<md:slug>digital-signal-processing-dsp</md:slug>
+</metadata>
+  <col:content>
+    <col:subcollection>
+      <md:title>Preface</md:title>
+      <col:content>
+        <col:module document="m49772"/>
+      </col:content>
+    </col:subcollection>
+    <col:subcollection>
+      <md:title>Time Series</md:title>
+      <col:content>
+        <col:module document="m49769"/>
+        <col:module document="m49773"/>
+        <col:module document="m49774"/>
+      </col:content>
+    </col:subcollection>
+    <col:subcollection>
+      <md:title>Plotting Data</md:title>
+      <col:content>
+        <col:module document="m49795"/>
+        <col:module document="m49803"/>
+        <col:module document="m49805"/>
+      </col:content>
+    </col:subcollection>
+    <col:subcollection>
+      <md:title>Fourier Analysis</md:title>
+      <col:content>
+        <col:module document="m49794"/>
+        <col:module document="m49796"/>
+        <col:module document="m49797"/>
+        <col:module document="m49798"/>
+        <col:module document="m49799"/>
+        <col:module document="m49801"/>
+        <col:module document="m49807"/>
+        <col:module document="m49809"/>
+      </col:content>
+    </col:subcollection>
+    <col:subcollection>
+      <md:title>Convolution and Frequency Filtering</md:title>
+      <col:content>
+        <col:module document="m49812"/>
+        <col:module document="m49813"/>
+      </col:content>
+    </col:subcollection>
+    <col:subcollection>
+      <md:title>Adaptive Processing</md:title>
+      <col:content>
+        <col:module document="m49840"/>
+        <col:module document="m49847"/>
+        <col:module document="m49849"/>
+        <col:module document="m49850"/>
+        <col:module document="m49852"/>
+        <col:module document="m49867"/>
+        <col:module document="m49881"/>
+      </col:content>
+    </col:subcollection>
+    <col:subcollection>
+      <md:title>Data Compression and the Discrete Cosine Transform</md:title>
+      <col:content>
+        <col:module document="m59439"/>
+        <col:module document="m59429"/>
+        <col:module document="m59433"/>
+        <col:module document="m59436"/>
+        <col:module document="m59442"/>
+      </col:content>
+    </col:subcollection>
+    <col:subcollection>
+      <md:title>Recursive Filtering</md:title>
+      <col:content/>
+    </col:subcollection>
+  </col:content>
+</col:collection>

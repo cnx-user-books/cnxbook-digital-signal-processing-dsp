@@ -1,0 +1,8278 @@
+<document xmlns="http://cnx.rice.edu/cnxml"> 
+<title>Java1483-Spectrum Analysis using Java, Frequency Resolution versus Data Length</title>
+<metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m49797</md:content-id>
+  <md:title>Java1483-Spectrum Analysis using Java, Frequency Resolution versus Data Length</md:title>
+  <md:abstract>Baldwin provides the code and explains the requirements for using spectral analysis to resolve spectral peaks for pulses containing closely spaced truncated sinusoids.</md:abstract>
+  <md:uuid>97db670f-e425-49a8-8899-875426fc316d</md:uuid>
+</metadata>
+
+<content>
+
+
+
+
+
+
+<quote id="blockquote1000" display="block">
+
+
+
+<para id="p1000">
+Revised: Fri Oct 16 23:18:32 CDT 2015
+
+</para>
+
+
+
+
+
+<para id="p1001">
+This page is included in the following books:
+
+</para>
+
+
+
+
+<list id="ul1000" list-type="bulleted">
+
+	
+
+<item id="li1000">
+<link id="a1000" url="http://cnx.org/contents/98d253c0-8044-4e22-a707-7b8d819bc8a7">
+
+
+        Digital Signal Processing - DSP
+
+</link>
+
+ 
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+</quote>
+
+
+
+
+
+
+
+
+
+
+
+<section id="h11000">
+<title>
+<emphasis id="Table_of_contents" effect="bold">
+
+Table of contents
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+<list id="ul1001" list-type="bulleted">
+<item id="li1001">
+<link id="a1001" target-id="Table_of_contents">
+
+Table of contents
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1002">
+<link id="a1002" target-id="Preface">
+
+Preface
+
+</link>
+
+
+
+
+<list id="ul1002" list-type="bulleted">
+<item id="li1003">
+<link id="a1003" target-id="Viewing_tip">
+
+Viewing tip
+
+</link>
+
+
+
+
+<list id="ul1003" list-type="bulleted">
+<item id="li1004">
+<link id="a1004" target-id="Figures">
+
+Figures
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1005">
+<link id="a1005" target-id="Listings">
+
+Listings
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1006">
+<link id="a1006" target-id="Preview">
+
+Preview
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1007">
+<link id="a1007" target-id="Discussion_and_sample_code">
+
+Discussion and sample code
+
+</link>
+
+
+
+
+<list id="ul1004" list-type="bulleted">
+<item id="li1008">
+<link id="a1008" target-id="Five_pulses_in_the_time_domain">
+
+Five pulses in the time domain
+
+</link>
+
+
+
+
+<list id="ul1005" list-type="bulleted">
+<item id="li1009">
+<link id="a1009" target-id="The_lengths_of_the_pulses">
+
+The lengths of the pulses
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1010">
+<link id="a1010" target-id="The_program_named_Dsp031a">
+
+The program named Dsp031a
+
+</link>
+
+
+
+
+<list id="ul1006" list-type="bulleted">
+<item id="li1011">
+<link id="a1011" target-id="Time_series_containing_sinusoidal_pulses">
+
+Time series containing 
+sinusoidal pulses
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1012">
+<link id="a1012" target-id="Beginning_of_the_class_named_Dsp031a">
+
+Beginning of the class named 
+Dsp031a
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1013">
+<link id="a1013" target-id="Spectralanalysisresults01">
+
+Spectral analysis results
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1014">
+<link id="a1014" target-id="The_program_named_Dsp031">
+
+The program named Dsp031
+
+</link>
+
+
+
+
+<list id="ul1007" list-type="bulleted">
+<item id="li1015">
+<link id="a1015" target-id="Description">
+
+Description
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1016">
+<link id="a1016" target-id="Uses_a_DFT_algorithm">
+
+Uses a DFT algorithm
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1017">
+<link id="a1017" target-id="Beginning_of_the_class_named_Dsp031">
+
+Beginning of the class named 
+Dsp031
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1018">
+<link id="a1018" target-id="Perform_the_spectral_analysis">
+
+Perform the spectral analysis
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1019">
+<link id="a1019" target-id="Separating_closely_spaced_frequencies">
+
+Separating closely spaced 
+frequencies
+
+</link>
+
+
+
+
+<list id="ul1008" list-type="bulleted">
+<item id="li1020">
+<link id="a1020" target-id="Five_new_pulses">
+
+Five new pulses
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1021">
+<link id="a1021" target-id="The_program_named_Dsp032a">
+
+The program named Dsp032a
+
+</link>
+
+
+
+
+<list id="ul1009" list-type="bulleted">
+<item id="li1022">
+<link id="a1022" target-id="Spectral_analysis_output">
+
+Spectral analysis output
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1023">
+<link id="a1023" target-id="The_program_named_Dsp032">
+
+The program named Dsp032
+
+</link>
+
+
+
+
+<list id="ul1010" list-type="bulleted">
+<item id="li1024">
+<link id="a1024" target-id="One_more_experiment">
+
+One more experiment
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1025">
+<link id="a1025" target-id="The_five_pulses">
+
+The five pulses
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1026">
+<link id="a1026" target-id="Spectral_analysis_results">
+
+Spectral analysis results
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1027">
+<link id="a1027" target-id="The_program_named_Dsp033">
+
+The program named Dsp033
+
+</link>
+
+
+
+
+<list id="ul1011" list-type="bulleted">
+<item id="li1028">
+<link id="a1028" target-id="The_spectral_analysis">
+
+The spectral analysis
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1029">
+<link id="a1029" target-id="Run_the_program">
+
+Run the programs
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1030">
+<link id="a1030" target-id="Summary">
+
+Summary
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1031">
+<link id="a1031" target-id="Whats_next">
+
+What's next?
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1032">
+<link id="a1032" target-id="Complete_program_listings">
+
+Complete program listings
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1033">
+<link id="a1033" target-id="Miscellaneous">
+
+Miscellaneous
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+
+
+
+
+
+</section>
+<section id="h11001">
+<title>
+<emphasis id="Preface" effect="bold">
+
+Preface
+
+</emphasis>
+
+
+</title>
+
+
+	
+	
+
+<para id="p1002">
+<emphasis id="strong1000" effect="bold">
+<emphasis id="em1000" effect="italics">
+The how and the why of spectral analysis
+
+</emphasis>
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1003">
+A previous module titled 
+
+<link id="a1034" url="http://cnx.org/contents/9fdb2951-7fca-47a1-83fc-d3d3d15d6ff1/Java1478-Fun-with-Java-How-and">
+
+
+Fun with Java, How and Why Spectral Analysis Works
+
+</link>
+
+ explained some of the 
+fundamentals regarding spectral analysis. An understanding of that module is a 
+prerequisite to an understanding of this module.
+
+</para>
+
+
+
+
+
+<para id="p1004">
+Another previous module titled
+
+
+<link id="a1035" url="http://cnx.org/contents/201ece7a-a2bf-4576-9528-4c3c4e5322c9/Java1482-Spectrum-Analysis-usi">
+
+
+Spectrum Analysis using Java, Sampling Frequency, Folding Frequency, and the FFT 
+Algorithm
+
+</link>
+
+ presented and explained several Java programs for doing spectral 
+analysis. In that module, I used a DFT program to illustrate several aspects of 
+spectral analysis that center around the sampling frequency and the Nyquist 
+folding frequency.
+
+</para>
+
+
+
+
+
+<para id="p1005">
+I also used and briefly explained two different plotting programs that were 
+originally explained in the earlier module titled
+
+
+<link id="a1036" url="http://cnx.org/contents/b5a14d3a-c54c-4239-b414-bae75d1e8cda/Java1468-Plotting-Engineering-">
+
+
+Plotting Engineering and Scientific Data using Java
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1006">
+An understanding of the module titled
+
+
+<link id="a1037" url="http://cnx.org/contents/201ece7a-a2bf-4576-9528-4c3c4e5322c9/Java1482-Spectrum-Analysis-usi">
+
+
+Spectrum Analysis using Java, Sampling Frequency, Folding Frequency, and the FFT 
+Algorithm
+
+</link>
+
+  is also a prerequisite to an understanding of this module.
+
+</para>
+
+
+
+
+
+<para id="p1007">
+<emphasis id="strong1001" effect="bold">
+<emphasis id="em1001" effect="italics">
+Frequency resolution versus data length
+
+</emphasis>
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1008">
+In this module I will use similar programs to explain and illustrate the 
+manner in which spectral frequency resolution behaves with respect to data 
+length.
+
+</para>
+
+
+
+
+
+<para id="p1009">
+<emphasis id="A_hypothetical_situation" effect="bold">
+
+
+<emphasis id="strong1002" effect="bold">
+<emphasis id="em1002" effect="italics">
+A hypothetical situation
+
+</emphasis>
+</emphasis>
+</emphasis>
+
+
+</para>
+
+
+
+
+
+<para id="p1010">
+Consider a hypothetical situation in which you are performing spectral 
+analysis on underwater acoustic signals in an attempt to identify enemy 
+submarines.
+
+</para>
+
+
+
+
+
+<para id="p1011">
+You are aware that the enemy submarine contains a device that operates 
+occasionally in short bursts. You are also aware that this device contains two 
+rotating machines that rotate at almost but not quite the same speed.
+
+</para>
+
+
+
+
+
+<para id="p1012">
+During an operating burst of the device, each of the two machines contained 
+in the device will emit acoustic energy that may appear as a peak in your 
+spectral analysis output. 
+
+<emphasis id="em1003" effect="italics">
+(Note that I said, "may appear" and did not say, "will 
+appear.")
+
+</emphasis>
+ If you can identify the two peaks, you can conclusively identify the 
+acoustic source as an enemy submarine.
+
+</para>
+
+
+
+
+
+<para id="p1013">
+<emphasis id="strong1003" effect="bold">
+<emphasis id="em1004" effect="italics">
+The big question
+
+</emphasis>
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1014">
+How long must the operating bursts of this device be in order for you to 
+resolve the peaks and identify the enemy submarine under ideal conditions? That 
+is the question that I will attempt to answer in this module by teaching you 
+about the relationship between frequency resolution and data length.
+
+</para>
+
+
+
+	
+	
+
+<section id="h21000">
+<title>
+<emphasis id="Viewing_tip" effect="bold">
+
+Viewing tip
+
+</emphasis>
+
+
+</title>
+
+
+	
+
+<para id="p1015">
+I recommend that you open another copy of this module in a separate 
+browser window and use the following links to easily find and view the Figures 
+and Listings while you are reading about them.
+
+</para>
+
+
+
+	
+
+<section id="h31000">
+<title>
+<emphasis id="Figures" effect="bold">
+
+Figures
+
+</emphasis>
+
+
+</title>
+
+
+	
+	
+
+
+<list id="ul1012" list-type="bulleted">
+
+
+
+<item id="li1034">
+<link id="a1038" target-id="Figure_1">
+
+Figure 1.
+
+</link>
+
+
+ Five pulses in the time domain.
+
+</item>
+
+
+
+
+<item id="li1035">
+<link id="a1039" target-id="Figure_2">
+
+Figure 2.
+
+</link>
+
+
+ Spectral analyses of five pulses.
+
+</item>
+
+
+
+
+<item id="li1036">
+<link id="a1040" target-id="Figure_3">
+
+Figure 3.
+
+</link>
+
+
+ Expanded spectral analyses of five pulses.
+
+</item>
+
+
+
+
+<item id="li1037">
+<link id="a1041" target-id="Figure_4">
+
+Figure 4.
+
+</link>
+
+
+ Five pulses with two sinusoids each.
+
+</item>
+
+
+
+
+<item id="li1038">
+<link id="a1042" target-id="Figure_5">
+
+Figure 5.
+
+</link>
+
+
+ Spectral analyses of five pulses.
+
+</item>
+
+
+
+
+<item id="li1039">
+<link id="a1043" target-id="Figure_6">
+
+Figure 6.
+
+</link>
+
+
+ Five pulses with additive sinusoids.
+
+</item>
+
+
+
+
+<item id="li1040">
+<link id="a1044" target-id="Figure_7">
+
+Figure 7.
+
+</link>
+
+
+ Spectral analyses of five pulses.
+
+</item>
+
+
+
+
+<item id="li1041">
+<link id="a1045" target-id="Figure_8">
+
+Figure 8.
+
+</link>
+
+
+ Expanded spectral analyses of five pulses.
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+
+	
+
+</section>
+<section id="h31001">
+<title>
+<emphasis id="Listings" effect="bold">
+
+Listings
+
+</emphasis>
+
+
+</title>
+
+
+	
+	
+
+
+<list id="ul1013" list-type="bulleted">
+
+
+
+<item id="li1042">
+<link id="a1046" target-id="Listing_1">
+
+Listing 1.
+
+</link>
+
+
+ Beginning of the class named Dsp031a.
+
+</item>
+
+
+
+
+<item id="li1043">
+<link id="a1047" target-id="Listing_2">
+
+Listing 2.
+
+</link>
+
+
+ The constructor.
+
+</item>
+
+
+
+
+<item id="li1044">
+<link id="a1048" target-id="Listing_3">
+
+Listing 3.
+
+</link>
+
+
+ Beginning of the class named Dsp031.
+
+</item>
+
+
+
+
+<item id="li1045">
+<link id="a1049" target-id="Listing_4">
+
+Listing 4.
+
+</link>
+
+
+ Beginning of the constructor.
+
+</item>
+
+
+
+
+<item id="li1046">
+<link id="a1050" target-id="Listing_5">
+
+Listing 5.
+
+</link>
+
+
+ Perform the spectral analysis.
+
+</item>
+
+
+
+
+<item id="li1047">
+<link id="a1051" target-id="Listing_6">
+
+Listing 6.
+
+</link>
+
+
+ New code in the the program named Dsp032a.
+
+</item>
+
+
+
+
+<item id="li1048">
+<link id="a1052" target-id="Listing_7">
+
+Listing 7.
+
+</link>
+
+
+ Computation of the frequencies.
+
+</item>
+
+
+
+
+<item id="li1049">
+<link id="a1053" target-id="Listing_8">
+
+Listing 8.
+
+</link>
+
+
+ Create the pulses.
+
+</item>
+
+
+
+
+<item id="li1050">
+<link id="a1054" target-id="Listing_9">
+
+Listing 9.
+
+</link>
+
+
+ Dsp031a.java.
+
+</item>
+
+
+
+
+<item id="li1051">
+<link id="a1055" target-id="Listing_10">
+
+Listing 10.
+
+</link>
+
+
+ Dsp031.java.
+
+</item>
+
+
+
+
+<item id="li1052">
+<link id="a1056" target-id="Listing_11">
+
+Listing 11.
+
+</link>
+
+
+ Dsp032a.java.
+
+</item>
+
+
+
+
+<item id="li1053">
+<link id="a1057" target-id="Listing_12">
+
+Listing 12.
+
+</link>
+
+
+ File Dsp032.java.
+
+</item>
+
+
+
+
+<item id="li1054">
+<link id="a1058" target-id="Listing_13">
+
+Listing 13.
+
+</link>
+
+
+ Dsp033a.java.
+
+</item>
+
+
+
+
+<item id="li1055">
+<link id="a1059" target-id="Listing_14">
+
+Listing 14.
+
+</link>
+
+
+ File Dsp033.java.
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h11002">
+<title>
+<emphasis id="Preview" effect="bold">
+
+Preview
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1016">
+Before I get into the technical details, here is a preview of the programs 
+and their purposes that I will present and explain in this module:
+
+</para>
+
+
+
+
+
+<list id="ul1014" list-type="bulleted">
+
+	
+
+<item id="li1056">
+Dsp031 - Illustrates frequency resolution versus pulse length for pulses 
+	consisting of a truncated single sinusoid.
+
+</item>
+
+
+	
+
+<item id="li1057">
+Dsp031a - Displays the pulses analyzed by Dsp031.
+
+</item>
+
+
+	
+
+<item id="li1058">
+Dsp032 - Illustrates frequency resolution versus pulse length for pulses 
+	consisting of the sum of two truncated sinusoids with closely spaced 
+	frequencies.
+
+</item>
+
+
+	
+
+<item id="li1059">
+Dsp032a - Displays the pulses analyzed by Dsp032.
+
+</item>
+
+
+	
+
+<item id="li1060">
+Dsp033 - Illustrates frequency resolution versus pulse length for pulses 
+	consisting of the sum of two truncated sinusoids whose frequencies are 
+	barely resolvable.
+
+</item>
+
+
+	
+
+<item id="li1061">
+Dsp033a - Displays the pulses analyzed by Dsp033.
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1017">
+In addition, I will use the following programs that I explained in the module 
+titled
+
+
+<link id="a1060" url="http://cnx.org/contents/201ece7a-a2bf-4576-9528-4c3c4e5322c9/Java1482-Spectrum-Analysis-usi">
+
+
+Spectrum Analysis using Java, Sampling Frequency, Folding Frequency, and the FFT 
+Algorithm
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<list id="ul1015" list-type="bulleted">
+
+	
+
+<item id="li1062">
+ForwardRealToComplex01 - Class that implements the DFT algorithm for 
+	spectral analysis.
+
+</item>
+
+
+	
+
+<item id="li1063">
+Graph03 - Used to display various types of data. 
+
+<emphasis id="em1005" effect="italics">
+(The concepts were 
+	explained in an earlier module.)
+
+</emphasis>
+</item>
+
+
+	
+
+<item id="li1064">
+Graph06 - Also used to display various types of data in a somewhat 
+	different format. 
+
+<emphasis id="em1006" effect="italics">
+(The concepts were also explained in an earlier 
+	module.)
+
+</emphasis>
+</item>
+
+
+
+
+</list>
+
+
+	
+	
+
+</section>
+<section id="h11003">
+<title>
+<emphasis id="Discussion_and_sample_code" effect="bold">
+
+Discussion and sample code
+
+</emphasis>
+
+
+</title>
+
+
+	
+	
+
+<section id="h21001">
+<title>
+<emphasis id="Five_pulses_in_the_time_domain" effect="bold">
+
+Five pulses in the time domain
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1018">
+Let's begin by looking at the time series data that will be used as input 
+	to the first spectral analysis experiment. 
+
+<link id="a1061" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ shows five pulses in the 
+	time domain. 
+
+<link id="a1062" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ and 
+
+<link id="a1063" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+ show the result of performing a spectral 
+	analysis on each of these pulses.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1001" display="block">
+
+	
+
+<para id="p1019">
+<emphasis id="em1007" effect="italics">
+(The display in 
+
+<link id="a1064" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ was produced by the program named Dsp031a, 
+	which I will explain later.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+
+
+<table id="table1000" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1000">
+<row id="tr1000">
+<entry id="th1000">
+
+
+
+<emphasis id="Figure_1" effect="bold">
+
+Figure 1.
+
+</emphasis>
+
+ Five pulses in the time domain.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1000">
+<row id="tr1001">
+<entry id="td1000">
+
+
+
+
+<media id="media1000" alt="missing image" display="block">
+<image id="img1000" mime-type="image/jpeg" src="../../media/java1483A01.jpg" width="409" height="431"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h31002">
+<title>
+<emphasis id="The_lengths_of_the_pulses" effect="bold">
+
+The lengths of the pulses
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1020">
+If you examine 
+
+<link id="a1065" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ carefully, you will see that each pulse is twice as 
+long as the pulse above it. 
+
+<emphasis id="em1008" effect="italics">
+(There is a tick mark on the horizontal axes 
+every twenty-five samples.)
+
+</emphasis>
+ The bottom pulse is 400 samples long while the 
+top pulse is 25 samples long.
+
+</para>
+
+
+
+
+
+<section id="h41000">
+<title>
+Truncated sinusoids
+
+</title>
+
+
+
+
+<para id="p1021">
+Each pulse consists of a cosine wave that has been truncated at a different 
+length. The frequency of the cosine wave is the same for every pulse. As you 
+will see when we examine the code, the frequency of the cosine wave is 0.0625 
+times the sampling frequency. If you do the arithmetic, you will conclude that 
+this results in 16 samples per cycle of the cosine wave.
+
+</para>
+
+
+
+
+
+<para id="p1022">
+In all five cases, the length of the time series upon which spectral analysis 
+will be performed is 400 samples. For those four cases where the length of the 
+pulse is less than 400 samples, the remaining samples in the time series have a 
+value of zero.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41001">
+<title>
+Will compute at 400 frequencies
+
+</title>
+
+
+
+
+<para id="p1023">
+When the spectral analysis is performed later, the number of individual 
+frequencies at which the amplitude of the spectral energy will be computed will 
+be equal to the total data length. Therefore, the amplitude of the spectral 
+energy will be computed at the same 400 frequencies for each of the five time 
+series. That makes it convenient for us to stack the spectral plots up 
+vertically and compare them 
+
+<emphasis id="em1009" effect="italics">
+(as in 
+
+<link id="a1066" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+)
+
+</emphasis>
+. This makes it easy for us 
+to compare the distribution of energy across the frequency spectrum for pulses 
+of different lengths.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41002">
+<title>
+Graph03 and Graph06
+
+</title>
+
+
+
+
+<para id="p1024">
+The plots in 
+
+<link id="a1067" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ were produced using the program named 
+
+<emphasis id="strong1004" effect="bold">
+Graph03
+
+</emphasis>
+. 
+Other plots in this module will be produced using the program named 
+
+<emphasis id="strong1005" effect="bold">
+
+Graph06
+
+</emphasis>
+. I explained those programs in earlier modules, and I provided 
+the source code for both programs in the previous module titled
+
+
+<link id="a1068" url="http://cnx.org/contents/201ece7a-a2bf-4576-9528-4c3c4e5322c9/Java1482-Spectrum-Analysis-usi">
+
+
+Spectrum Analysis using Java, Sampling Frequency, Folding Frequency, and the FFT 
+Algorithm
+
+</link>
+
+. Therefore, I won't repeat those explanations or provide the 
+source code for those programs in this module.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h21002">
+<title>
+<emphasis id="The_program_named_Dsp031a" effect="bold">
+
+The program named Dsp031a
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1025">
+A complete listing of the program named 
+
+<emphasis id="strong1006" effect="bold">
+Dsp031a
+
+</emphasis>
+ is provided 
+in 
+
+<link id="a1069" target-id="Listing_9">
+
+ Listing 9
+
+</link>
+
+ near the end of the module.
+
+</para>
+
+
+
+
+
+<para id="p1026">
+This program displays sinusoidal pulses identical to those processed by the 
+program named 
+
+<emphasis id="strong1007" effect="bold">
+Dsp031
+
+</emphasis>
+, which will be discussed later.
+
+</para>
+
+
+
+
+
+<section id="h31003">
+<title>
+<emphasis id="Time_series_containing_sinusoidal_pulses" effect="bold">
+
+Time series containing 
+sinusoidal pulses
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1027">
+The program named 
+
+<emphasis id="strong1008" effect="bold">
+Dsp031a
+
+</emphasis>
+ creates and displays five separate 
+time series, each 400 samples in length. Each time series contains a pulse and 
+the pulses are different lengths.
+
+</para>
+
+
+
+
+
+<para id="p1028">
+Each pulse consists of a truncated sinusoid. The frequency of the sinusoid 
+for each of the pulses is the same.
+
+</para>
+
+
+
+
+
+<para id="p1029">
+Frequency values are specified as type 
+
+<emphasis id="strong1009" effect="bold">
+double
+
+</emphasis>
+ as a fraction 
+of the sampling frequency. The frequency of each sinusoid is 0.0625 times the 
+sampling frequency.
+
+</para>
+
+
+
+
+
+<section id="h41003">
+<title>
+The pulse lengths
+
+</title>
+
+
+
+
+<para id="p1030">
+The lengths of the five pulses are:
+
+</para>
+
+
+
+
+
+<list id="ul1016" list-type="bulleted">
+
+	
+
+<item id="li1065">
+25 samples
+
+</item>
+
+
+	
+
+<item id="li1066">
+50 samples
+
+</item>
+
+
+	
+
+<item id="li1067">
+100 samples
+
+</item>
+
+
+	
+
+<item id="li1068">
+200 samples
+
+</item>
+
+
+	
+
+<item id="li1069">
+400 samples
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+</section>
+</section>
+<section id="h31004">
+<title>
+<emphasis id="Beginning_of_the_class_named_Dsp031a" effect="bold">
+
+Beginning of the class named 
+Dsp031a
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1031">
+This program is very similar to programs that I explained in previous modules 
+in this series, so my explanation will be very brief. As usual, I will explain 
+the program in fragments.
+
+</para>
+
+
+
+
+
+<para id="p1032">
+The beginning of the class, along with the declaration and initialization of 
+several variables is shown in 
+
+<link id="a1070" target-id="Listing_1">
+
+ Listing 1
+
+</link>
+
+. The names of the variables along with 
+the embedded comments should make the code self explanatory.
+
+</para>
+
+
+
+
+
+
+<table id="table1001" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1001">
+<row id="tr1002">
+
+
+
+<entry id="th1001">
+<emphasis id="Listing_1" effect="bold">
+
+Listing 1.
+
+</emphasis>
+
+ Beginning of the class named Dsp031a.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1001">
+<row id="tr1003">
+<entry id="td1001">
+
+		
+
+<code id="pre1000" display="block">class Dsp031a implements GraphIntfc01{
+  final double pi = Math.PI;
+
+  int len = 400;//data length
+  int numberPulses = 5;
+  //Frequency of the sinusoids
+  double freq = 0.0625;
+  //Amplitude of the sinusoids
+  double amp = 160;
+
+  //Following arrays will contain sinusoidal data
+  double[] data1 = new double[len];
+  double[] data2 = new double[len];
+  double[] data3 = new double[len];
+  double[] data4 = new double[len];
+  double[] data5 = new double[len];</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41004">
+<title>
+The constructor
+
+</title>
+
+
+
+
+<para id="p1033">
+<link id="a1071" target-id="Listing_2">
+
+ Listing 2
+
+</link>
+
+ shows the constructor, which creates the raw sinusoidal data and 
+stores that data in the array objects created in 
+
+<link id="a1072" target-id="Listing_1">
+
+ Listing 1
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1002" display="block">
+
+	
+
+<para id="p1034">
+<emphasis id="em1010" effect="italics">
+(Recall that all element values in the array objects are initialized with 
+	a value of zero. Therefore, the code in 
+
+<link id="a1073" target-id="Listing_2">
+
+ Listing 2
+
+</link>
+
+ only needs to store the 
+	non-zero values in the array objects.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<table id="table1002" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1002">
+<row id="tr1004">
+
+
+
+<entry id="th1002">
+<emphasis id="Listing_2" effect="bold">
+
+Listing 2.
+
+</emphasis>
+
+ The constructor.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1002">
+<row id="tr1005">
+<entry id="td1002">
+
+		
+
+<code id="pre1001" display="block"> public Dsp031a(){//constructor
+
+    //Create the raw data
+    for(int x = 0;x &lt; len/16;x++){
+      data1[x] = amp*Math.cos(2*pi*x*freq);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/8;x++){
+      data2[x] = amp*Math.cos(2*pi*x*freq);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/4;x++){
+      data3[x] = amp*Math.cos(2*pi*x*freq);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/2;x++){
+      data4[x] = amp*Math.cos(2*pi*x*freq);
+    }//end for loop
+
+    for(int x = 0;x &lt; len;x++){
+      data5[x] = amp*Math.cos(2*pi*x*freq);
+    }//end for loop
+
+  }//end constructor</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1035">
+The code in the conditional clause of each of the for loops in 
+
+<link id="a1074" target-id="Listing_2">
+
+ Listing 2
+
+</link>
+
+ 
+controls the length of each of the sinusoidal pulses.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41005">
+<title>
+The interface methods
+
+</title>
+
+
+
+
+<para id="p1036">
+As you can see in 
+
+<link id="a1075" target-id="Listing_1">
+
+ Listing 1
+
+</link>
+
+, the class implements the interface named 
+
+<emphasis id="strong1010" effect="bold">
+
+GraphIntfc01
+
+</emphasis>
+. I introduced this interface in the earlier module titled
+
+
+<link id="a1076" url="http://cnx.org/contents/b5a14d3a-c54c-4239-b414-bae75d1e8cda/Java1468-Plotting-Engineering-">
+
+
+Plotting Engineering and Scientific Data using Java
+
+</link>
+
+ and also discussed it in 
+the previous module titled
+
+
+<link id="a1077" url="http://cnx.org/contents/201ece7a-a2bf-4576-9528-4c3c4e5322c9/Java1482-Spectrum-Analysis-usi">
+
+
+Spectrum Analysis using Java, Sampling Frequency, Folding Frequency, and the FFT 
+Algorithm
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1037">
+The remaining code for the class named 
+
+<emphasis id="strong1011" effect="bold">
+Dsp031a
+
+</emphasis>
+ consists of 
+the methods necessary to satisfy the interface. These methods are called by the 
+plotting programs named 
+
+<emphasis id="strong1012" effect="bold">
+Graph03
+
+</emphasis>
+ and 
+
+<emphasis id="strong1013" effect="bold">
+Graph06
+
+</emphasis>
+ to 
+obtain and plot the data returned by the methods. As implemented in 
+
+<emphasis id="strong1014" effect="bold">
+
+Dsp031a
+
+</emphasis>
+, these interface methods return the values stored in the array 
+objects referred to by 
+
+<emphasis id="strong1015" effect="bold">
+data1
+
+</emphasis>
+ through 
+
+<emphasis id="strong1016" effect="bold">
+data5
+
+</emphasis>
+. 
+Thus, the values stored in those array objects are plotted in 
+
+<link id="a1078" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31005">
+<title>
+<emphasis id="Spectralanalysisresults01" effect="bold">
+
+Spectral analysis results
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1038">
+<link id="a1079" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ shows the result of using the program named 
+
+<emphasis id="strong1017" effect="bold">
+Dsp031
+
+</emphasis>
+ 
+to perform a spectral analysis on each of the five pulses shown in 
+
+<link id="a1080" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+. 
+These results were plotted using the program named 
+
+<emphasis id="strong1018" effect="bold">
+Graph06
+
+</emphasis>
+. 
+With this plotting program, each data value is plotted as a vertical bar. 
+However, in this case, the sides of each of the bars are so close together that 
+the area under the spectral curve appears to be solid black.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1003" display="block">
+
+	
+
+<para id="p1039">
+<emphasis id="em1011" effect="italics">
+(When you run this program, you can expand the display to full screen 
+	and see the individual vertical bars. However, I can't do that and maintain 
+	the narrow publication format required for this module.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+
+<table id="table1003" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1003">
+<row id="tr1006">
+<entry id="th1003">
+
+
+
+<emphasis id="Figure_2" effect="bold">
+
+Figure 2.
+
+</emphasis>
+
+ Spectral analyses of five pulses.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1003">
+<row id="tr1007">
+<entry id="td1003">
+
+
+
+
+<media id="media1001" alt="missing image" display="block">
+<image id="img1001" mime-type="image/jpeg" src="../../media/java1483a02.jpg" width="409" height="431"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h41006">
+<title>
+Interpretation of the results
+
+</title>
+
+
+
+
+<para id="p1040">
+Before I get into the interpretation, I need to point out that I normalized 
+the data plotted in 
+
+<link id="a1081" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ to cause each spectral peak to have approximately 
+the same value. Otherwise, the spectral analysis result values for the short 
+pulses would have been too small to be visible in this plotting format.
+
+</para>
+
+
+
+
+
+<para id="p1041">
+Therefore, the fact that the area under the curve in the top plot is greater 
+than the area under the curve in the bottom plot doesn't indicate that the first 
+pulse contains more energy than the last pulse. It simply means that I 
+normalized the data for best results in plotting.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41007">
+<title>
+Spectrum of an ideal sinusoid
+
+</title>
+
+
+
+
+<para id="p1042">
+That having been said, different people will probably interpret these results 
+in different ways. Let's begin by stating that the theoretical spectrum for a 
+sinusoid of infinite length in the absence of noise is a single vertical line 
+having zero width and infinite height.
+
+</para>
+
+
+
+
+
+<para id="p1043">
+In the real world of measurements, however, there is no such thing as a 
+sinusoid of infinite length. Rather, every measurement that we make must 
+truncate the sinusoid at some point in time. For a theoretical signal of 
+infinite length, every spectral analysis that we can perform is an imperfect 
+estimate of the spectrum.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41008">
+<title>
+Two viewpoints
+
+</title>
+
+
+
+
+<para id="p1044">
+There are at least two ways to think of the pulses shown in 
+
+<link id="a1082" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+. 
+
+</para>
+
+
+
+
+
+<list id="ol1000" list-type="enumerated">
+
+	
+
+<item id="li1070">
+Each pulse is a truncated section of an ideal sinusoid of infinite 
+	length.
+
+</item>
+
+
+	
+
+<item id="li1071">
+Each pulse is a signal having a definite planned start and stop time.
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1045">
+The way that you interpret the results shown in 
+
+<link id="a1083" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ depends on your 
+viewpoint regarding the pulses.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41009">
+<title>
+The first viewpoint
+
+</title>
+
+
+
+
+<para id="p1046">
+If your viewpoint is that each pulse is a truncated section of an ideal 
+sinusoid of infinite length, then the width of each of the peaks 
+
+<emphasis id="em1012" effect="italics">
+(beyond 
+zero width)
+
+</emphasis>
+ is the result of measurement error introduced by the truncation 
+process.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41010">
+<title>
+The second viewpoint
+
+</title>
+
+
+
+
+<para id="p1047">
+If your viewpoint is that each pulse is a signal having a definite planned 
+start and stop time, then the widths and the shape of each of the peaks 
+describes the full range of frequency components required to physically generate 
+such a pulse. This is the viewpoint that is consistent with the
+
+
+<link id="a1084" target-id="A_hypothetical_situation">
+
+hypothetical situation
+
+</link>
+
+ 
+involving a device on a submarine that I described earlier in this module.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41011">
+<title>
+A simplified hypothetical situation
+
+</title>
+
+
+
+
+<para id="p1048">
+Assume for the moment that the hypothetical device on the submarine contains 
+only one rotating machine and that this device is turned on and off occasionally 
+in short bursts. Because of the rotating machine, when the device is turned on, 
+it will emit acoustic energy whose frequency matches the rotating speed of the 
+machine.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1004" display="block">
+
+	
+
+<para id="p1049">
+<emphasis id="em1013" effect="italics">
+(In reality, it will probably also emit acoustic energy at other 
+	frequencies as well, but we will consider it to be a very ideal machine. We 
+	will also assume the complete absence of any other acoustic noise in the 
+	environment.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1050">
+Assume that you have a recording window of 400 samples, and that you are able 
+to record five such bursts within each of five separate recording windows. 
+Further assume that the lengths of the individual bursts match the time periods 
+indicated by the pulses in 
+
+<link id="a1085" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41012">
+<title>
+The spectra of the bursts
+
+</title>
+
+
+
+
+<para id="p1051">
+If you perform spectral analysis on each of the five individual 400-sample 
+windows containing the bursts, and if you normalize the peak values for plotting 
+purposes, you should get results similar to those shown in 
+
+<link id="a1086" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41013">
+<title>
+The spectral bandwidth of the signal
+
+</title>
+
+
+
+
+<para id="p1052">
+The frequency range over which energy is distributed is referred to as the 
+bandwidth of the signal. As you can see in 
+
+<link id="a1087" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+, shorter pulses require 
+wider bandwidth.
+
+</para>
+
+
+
+
+
+<para id="p1053">
+For example, considerably more bandwidth is required of a communication 
+system that is required to reliably transmit a series of short truncated 
+sinusoids than one that is only required to reliably transmit a continuous tone 
+at a single frequency.
+
+</para>
+
+
+
+
+
+<para id="p1054">
+At the same time, it is very difficult to convey very much information with a 
+signal consisting of a continuous tone at a single frequency 
+
+<emphasis id="em1014" effect="italics">
+(other than the 
+fact that the tone exists)
+
+</emphasis>
+. Communication systems designed to convey information 
+usually encode that information by either turning the tone on and off or by 
+causing it to shift among a set of previously defined frequencies. The tone is 
+often referred to as the 
+
+<emphasis id="em1015" effect="italics">
+carrier
+
+</emphasis>
+ and the encoding of the information is often 
+referred to as 
+
+<emphasis id="em1016" effect="italics">
+modulating
+
+</emphasis>
+ the carrier.
+
+</para>
+
+
+
+
+
+<para id="p1055">
+Thus, you need greater bandwidth to reliably convey more information.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41014">
+<title>
+The relationship between pulse length and bandwidth
+
+</title>
+
+
+
+
+<para id="p1056">
+So far, we can draw one important conclusion from our experiment.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1005" display="block">
+
+	
+
+<para id="p1057">
+<emphasis id="strong1019" effect="bold">
+<emphasis id="em1017" effect="italics">
+Shorter pulses require greater bandwidth. 
+
+</emphasis>
+</emphasis>
+ 
+
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1058">
+This leads to an important question. What is the numerical relationship 
+between pulse length and bandwidth? Although we can draw the above general 
+conclusion from 
+
+<link id="a1088" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+, it is hard to draw any quantitative conclusions from 
+
+
+<link id="a1089" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+. That brings us to the expanded plot of the spectral data shown in 
+
+
+<link id="a1090" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41015">
+<title>
+An expanded plot of the spectral results
+
+</title>
+
+
+
+
+<para id="p1059">
+<link id="a1091" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+ shows the left one-fourth of the spectral results from 
+
+<link id="a1092" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ 
+plotted in the same horizontal space. In other words, 
+
+<link id="a1093" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+ discards the 
+upper three-fourths of the spectral results from 
+
+<link id="a1094" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ and shows only the 
+lower one-fourth of the spectral results on an expanded scale. 
+
+<link id="a1095" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+ also 
+provides tick marks that make it convenient to perform measurements on the 
+plots.
+
+</para>
+
+
+
+
+
+<para id="p1060">
+Also, whereas 
+
+<link id="a1096" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ was plotted using the program named 
+
+<emphasis id="strong1020" effect="bold">
+Graph06
+
+</emphasis>
+, 
+
+<link id="a1097" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+ 
+was plotted using the program named 
+
+<emphasis id="strong1021" effect="bold">
+Graph03
+
+</emphasis>
+. Thus, 
+
+<link id="a1098" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+ uses a different 
+plotting format than 
+
+<link id="a1099" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+
+</para>
+
+
+
+
+
+
+
+<table id="table1004" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1004">
+<row id="tr1008">
+<entry id="th1004">
+
+
+
+<emphasis id="Figure_3" effect="bold">
+
+Figure 3.
+
+</emphasis>
+
+ Expanded spectral analyses of five pulses.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1004">
+<row id="tr1009">
+<entry id="td1004">
+
+
+
+
+<media id="media1002" alt="missing image" display="block">
+<image id="img1002" mime-type="image/jpeg" src="../../media/java1483a03.jpg" width="409" height="431"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+</section>
+<section id="h41016">
+<title>
+Picking numeric values
+
+</title>
+
+
+
+
+<para id="p1061">
+The curves in 
+
+<link id="a1100" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+ are spread out to the point that we can pick some 
+approximate numeric values off the plot, and from this, we can draw a very 
+significant conclusion.
+
+</para>
+
+
+
+
+
+<para id="p1062">
+For purposes of our approximation, consider the bandwidth to be the distance 
+along the frequency axis between the points where the curves touch zero on 
+either side of the peak. Using this approximation, the bandwidth indicated by 
+the spectral analyses in 
+
+<link id="a1101" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+ shows the bandwidth of each spectrum to be 
+twice as wide as the one below it.
+
+</para>
+
+
+
+
+
+<para id="p1063">
+Referring back to 
+
+<link id="a1102" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+, recall that the length of each pulse was half 
+that of the one below it. The conclusion is:
+
+</para>
+
+
+
+
+
+<quote id="blockquote1006" display="block">
+
+	
+
+<para id="p1064">
+<emphasis id="strong1022" effect="bold">
+<emphasis id="em1018" effect="italics">
+The bandwidth of a truncated sinusoidal pulse is inversely 
+	proportional to the length of the pulse.
+
+</emphasis>
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1065">
+If you reduce the length of the pulse by a factor of two, you must double the 
+bandwidth of a transmission system designed to reliably transmit a pulse of that 
+length.
+
+</para>
+
+
+
+
+
+<para id="p1066">
+This will also be an important conclusion regarding our ability to separate 
+and identify the two spectral peaks in the burst of acoustic energy described in 
+our original 
+
+<link id="a1103" target-id="A_hypothetical_situation">
+
+hypothetical 
+situation
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h21003">
+<title>
+<emphasis id="The_program_named_Dsp031" effect="bold">
+
+The program named Dsp031
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1067">
+The generation of the signals and the spectral analysis for the results 
+presented in 
+
+<link id="a1104" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ and 
+
+<link id="a1105" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+ were performed using the program named 
+
+
+<emphasis id="strong1023" effect="bold">
+Dsp031
+
+</emphasis>
+. A complete listing of the program is shown in 
+
+<link id="a1106" target-id="Listing_10">
+
+ Listing 10
+
+</link>
+
+ near the end of 
+the module. 
+
+</para>
+
+
+
+
+
+<section id="h31006">
+<title>
+<emphasis id="Description" effect="bold">
+
+Description
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1068">
+This program performs spectral analyses on five separate time series, each 
+400 samples in length.
+
+</para>
+
+
+
+
+
+<para id="p1069">
+Each time series contains a pulse and the pulses are different lengths. 
+
+<emphasis id="em1019" effect="italics">
+(The 
+lengths of the individual pulses match that shown in 
+
+<link id="a1107" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+.)
+
+</emphasis>
+ Each pulse 
+consists of a truncated sinusoid. The frequency of the sinusoid for each pulse 
+is the same.
+
+</para>
+
+
+
+
+
+<para id="p1070">
+All frequency values are specified as type 
+
+<emphasis id="strong1024" effect="bold">
+double
+
+</emphasis>
+ as a fraction of the 
+sampling frequency. The frequency of all five sinusoids is 0.0625 times the 
+sampling frequency.
+
+</para>
+
+
+
+
+
+<para id="p1071">
+The lengths of the pulses are:
+
+</para>
+
+
+
+
+
+<list id="ul1017" list-type="bulleted">
+
+	
+
+<item id="li1072">
+25 samples
+
+</item>
+
+
+	
+
+<item id="li1073">
+50 samples
+
+</item>
+
+
+	
+
+<item id="li1074">
+100 samples
+
+</item>
+
+
+	
+
+<item id="li1075">
+200 samples
+
+</item>
+
+
+	
+
+<item id="li1076">
+400 samples
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1072">
+If this sounds familiar, it is because the pulses are identical to those 
+displayed in 
+
+<link id="a1108" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ and discussed under 
+
+<emphasis id="strong1025" effect="bold">
+Dsp031a
+
+</emphasis>
+ above.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31007">
+<title>
+<emphasis id="Uses_a_DFT_algorithm" effect="bold">
+
+Uses a DFT algorithm
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1073">
+The spectral analysis process uses a DFT algorithm and computes the amplitude 
+of the spectral energy at 400 equally spaced frequencies between zero and the 
+folding frequency.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1007" display="block">
+
+	
+
+<para id="p1074">
+<emphasis id="em1020" effect="italics">
+(Recall from the module titled 
+
+</emphasis>
+
+	
+
+<link id="a1109" url="http://cnx.org/contents/201ece7a-a2bf-4576-9528-4c3c4e5322c9/Java1482-Spectrum-Analysis-usi">
+
+
+	
+
+<emphasis id="em1021" effect="italics">
+Spectrum Analysis using Java, Sampling Frequency, Folding Frequency, and the 
+	FFT Algorithm
+
+</emphasis>
+</link>
+
+
+<emphasis id="em1022" effect="italics">
+ that the folding frequency is one-half the sampling 
+	frequency.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1075">
+This program computes and displays the amplitude spectrum at frequency 
+intervals that are one-half of the frequency intervals for a typical FFT 
+algorithm.
+
+</para>
+
+
+
+
+
+<section id="h41017">
+<title>
+Normalize the results
+
+</title>
+
+
+
+
+<para id="p1076">
+The results of the spectral analysis are multiplied by the reciprocal of the 
+lengths of the individual pulses to normalize all five plots to the same peak 
+value. Otherwise, the results for the short pulses would be too small to see on 
+the plots.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41018">
+<title>
+Will discuss in fragments
+
+</title>
+
+
+
+
+<para id="p1077">
+Once again, this program is very similar to programs explained in the 
+previous module titled
+
+
+<link id="a1110" url="http://cnx.org/contents/201ece7a-a2bf-4576-9528-4c3c4e5322c9/Java1482-Spectrum-Analysis-usi">
+
+
+Spectrum Analysis using Java, Sampling Frequency, Folding Frequency, and the FFT 
+Algorithm
+
+</link>
+
+. Therefore, this discussion will be very brief.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31008">
+<title>
+<emphasis id="Beginning_of_the_class_named_Dsp031" effect="bold">
+
+Beginning of the class named 
+Dsp031
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1078">
+The code in 
+
+<link id="a1111" target-id="Listing_3">
+
+ Listing 3
+
+</link>
+
+ declares and initializes some variables and creates the 
+array objects that will contain the sinusoidal pulses.
+
+</para>
+
+
+
+
+
+<para id="p1079">
+In addition, the code in 
+
+<link id="a1112" target-id="Listing_3">
+
+ Listing 3
+
+</link>
+
+ declares reference variables that will be 
+used to refer to array objects containing results of the spectral analysis 
+process that are not used in this program.
+
+</para>
+
+
+
+
+
+<para id="p1080">
+Finally, 
+
+<link id="a1113" target-id="Listing_3">
+
+ Listing 3
+
+</link>
+
+ declares reference variables that will be used to refer to 
+array objects containing the results plotted in 
+
+<link id="a1114" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ and 
+
+<link id="a1115" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1081">
+Given the names of the variables, the comments, and what you learned in the 
+earlier modules, the code in 
+
+<link id="a1116" target-id="Listing_3">
+
+ Listing 3
+
+</link>
+
+ should be self explanatory.
+
+</para>
+
+
+
+
+
+
+
+
+
+
+<table id="table1005" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1005">
+<row id="tr1010">
+
+
+
+<entry id="th1005">
+<emphasis id="Listing_3" effect="bold">
+
+Listing 3.
+
+</emphasis>
+
+ Beginning of the class named Dsp031.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1005">
+<row id="tr1011">
+<entry id="td1005">
+
+		
+
+<code id="pre1002" display="block">class Dsp031 implements GraphIntfc01{
+  final double pi = Math.PI;
+
+  int len = 400;//data length
+  //Sample that represents zero time.
+  int zeroTime = 0;
+  //Low and high frequency limits for the
+  // spectral analysis.
+  double lowF = 0.0;
+  double highF = 0.5;
+  int numberSpectra = 5;
+  //Frequency of the sinusoids
+  double freq = 0.0625;
+  //Amplitude of the sinusoids
+  double amp = 160;
+
+  //Following arrays will contain data that is
+  // input to the spectral analysis process.
+  double[] data1 = new double[len];
+  double[] data2 = new double[len];
+  double[] data3 = new double[len];
+  double[] data4 = new double[len];
+  double[] data5 = new double[len];
+  
+  //Following arrays receive information back
+  // from the spectral analysis that is not used
+  // in this program.
+  double[] real;
+  double[] imag;
+  double[] angle;
+  
+  //Following arrays receive the magnitude
+  // spectral information back from the spectral
+  // analysis process.
+  double[] mag1;
+  double[] mag2;
+  double[] mag3;
+  double[] mag4;
+  double[] mag5;</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41019">
+<title>
+The constructor
+
+</title>
+
+
+
+
+<para id="p1082">
+The constructor begins in 
+
+<link id="a1117" target-id="Listing_4">
+
+ Listing 4
+
+</link>
+
+. The code in 
+
+<link id="a1118" target-id="Listing_4">
+
+ Listing 4
+
+</link>
+
+ is identical to 
+that shown earlier in 
+
+<link id="a1119" target-id="Listing_2">
+
+ Listing 2
+
+</link>
+
+. This code generates the five sinusoidal pulses 
+and stores the data representing those pulses in the arrays referred to by 
+
+
+<emphasis id="strong1026" effect="bold">
+data1
+
+</emphasis>
+ 
+through 
+
+<emphasis id="strong1027" effect="bold">
+data5
+
+</emphasis>
+. So far, except for the declaration of some extra variables, this 
+program isn't much different from the program named 
+
+<emphasis id="strong1028" effect="bold">
+Dsp031a
+
+</emphasis>
+ discussed earlier in 
+this module. 
+
+</para>
+
+
+
+
+
+<table id="table1006" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1006">
+<row id="tr1012">
+
+
+
+<entry id="th1006">
+<emphasis id="Listing_4" effect="bold">
+
+Listing 4.
+
+</emphasis>
+
+ Beginning of the constructor.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1006">
+<row id="tr1013">
+<entry id="td1006">
+
+		
+
+<code id="pre1003" display="block">  public Dsp031(){//constructor
+
+    //Create the raw data
+    for(int x = 0;x &lt; len/16;x++){
+      data1[x] = amp*Math.cos(2*pi*x*freq);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/8;x++){
+      data2[x] = amp*Math.cos(2*pi*x*freq);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/4;x++){
+      data3[x] = amp*Math.cos(2*pi*x*freq);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/2;x++){
+      data4[x] = amp*Math.cos(2*pi*x*freq);
+    }//end for loop
+
+    for(int x = 0;x &lt; len;x++){
+      data5[x] = amp*Math.cos(2*pi*x*freq);
+    }//end for loop</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+</section>
+</section>
+<section id="h31009">
+<title>
+<emphasis id="Perform_the_spectral_analysis" effect="bold">
+
+Perform the spectral analysis
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1083">
+The remainder of the constructor is shown in 
+
+<link id="a1120" target-id="Listing_5">
+
+ Listing 5
+
+</link>
+
+. This code calls the 
+
+
+<emphasis id="strong1029" effect="bold">
+transform
+
+</emphasis>
+ method of the 
+
+<emphasis id="strong1030" effect="bold">
+ForwardRealToComplex01
+
+</emphasis>
+ class five times in succession to 
+perform the spectral analysis on each of the five pulses shown in 
+
+<link id="a1121" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1008" display="block">
+
+	
+
+<para id="p1084">
+<emphasis id="em1023" effect="italics">
+(I explained the 
+
+<emphasis id="strong1031" effect="bold">
+transform
+
+</emphasis>
+ method in detail in the previous module titled 	
+	
+
+</emphasis>
+ 	
+
+<link id="a1122" url="http://cnx.org/contents/201ece7a-a2bf-4576-9528-4c3c4e5322c9/Java1482-Spectrum-Analysis-usi">
+
+
+	
+
+<emphasis id="em1024" effect="italics">
+Spectrum Analysis using Java, Sampling Frequency, Folding Frequency, and the 
+	FFT Algorithm
+
+</emphasis>
+</link>
+
+
+<emphasis id="em1025" effect="italics">
+.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<table id="table1007" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1007">
+<row id="tr1014">
+
+
+
+<entry id="th1007">
+<emphasis id="Listing_5" effect="bold">
+
+Listing 5.
+
+</emphasis>
+
+ Perform the spectral analysis.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1007">
+<row id="tr1015">
+<entry id="td1007">
+
+		
+
+<code id="pre1004" display="block">    mag1 = new double[len];
+    real = new double[len];
+    imag = new double[len];
+    angle = new double[len];
+    ForwardRealToComplex01.transform(data1,real,
+      imag,angle,mag1,zeroTime,lowF,highF);
+
+    mag2 = new double[len];
+    real = new double[len];
+    imag = new double[len];
+    angle = new double[len];
+    ForwardRealToComplex01.transform(data2,real,
+      imag,angle,mag2,zeroTime,lowF,highF);
+
+    mag3 = new double[len];
+    real = new double[len];
+    imag = new double[len];
+    angle = new double[len];
+    ForwardRealToComplex01.transform(data3,real,
+      imag,angle,mag3,zeroTime,lowF,highF);
+
+    mag4 = new double[len];
+    real = new double[len];
+    imag = new double[len];
+    angle = new double[len];
+    ForwardRealToComplex01.transform(data4,real,
+      imag,angle,mag4,zeroTime,lowF,highF);
+
+    mag5 = new double[len];
+    real = new double[len];
+    imag = new double[len];
+    angle = new double[len];
+    ForwardRealToComplex01.transform(data5,real,
+      imag,angle,mag5,zeroTime,lowF,highF);
+
+  }//end constructor</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1085">
+Each time the transform method is called, it computes the magnitude spectrum 
+for the incoming data and saves it in the output array.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1009" display="block">
+
+	
+
+<para id="p1086">
+<emphasis id="em1026" effect="italics">
+(Note that the real, imag, and angle arrays are not used later, so they 
+	are discarded each time a new spectral analysis is performed.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<section id="h41020">
+<title>
+The interface methods
+
+</title>
+
+
+
+
+<para id="p1087">
+The 
+
+<emphasis id="strong1032" effect="bold">
+Dsp031
+
+</emphasis>
+ class also implements the interface named 
+
+<emphasis id="strong1033" effect="bold">
+GraphIntfc01
+
+</emphasis>
+. The 
+remaining code in the program consists of the methods required to satisfy that 
+interface. Except for the identification of the arrays from which the methods 
+extract data to be returned for plotting, these methods are identical to those 
+defined in the earlier class named 
+
+<emphasis id="strong1034" effect="bold">
+Dsp031a
+
+</emphasis>
+. Therefore, I won't discuss them 
+further.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41021">
+<title>
+What we have learned so far
+
+</title>
+
+
+
+
+<para id="p1088">
+So far, the main things that we have learned is that shorter pulses require 
+greater bandwidth, and the bandwidth required to faithfully represent a 
+truncated sinusoidal pulse is the reciprocal of the length of the pulse.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h21004">
+<title>
+<emphasis id="Separating_closely_spaced_frequencies" effect="bold">
+
+Separating closely spaced 
+frequencies
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1089">
+Now we will look at the issues involved in using spectral analysis to 
+separate and identify the frequencies of two closely-spaced spectral peaks for a 
+pulse composed of the sum of two sinusoids. Once again, we will begin by looking 
+at some results and then discuss the code that produced those results. 
+
+</para>
+
+
+
+
+
+<section id="h31010">
+<title>
+<emphasis id="Five_new_pulses" effect="bold">
+
+Five new pulses
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1090">
+The five pulses that we will be working with in this example are shown in 
+
+
+<link id="a1123" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+. As you can see, these pulses are a little more ugly than the pulses 
+shown in 
+
+<link id="a1124" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+. As you can also see, as was the case in 
+
+<link id="a1125" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+, each pulse 
+appears to be a shorter or longer version of the other pulses in terms of its 
+waveform.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1008" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1008">
+<row id="tr1016">
+<entry id="th1008">
+
+
+
+<emphasis id="Figure_4" effect="bold">
+
+Figure 4.
+
+</emphasis>
+
+ Five pulses with two sinusoids each.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1008">
+<row id="tr1017">
+<entry id="td1008">
+
+
+
+
+<media id="media1003" alt="missing image" display="block">
+<image id="img1003" mime-type="image/jpeg" src="../../media/java1483a04.jpg" width="409" height="431"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h41022">
+<title>
+Produced by Dsp032a
+
+</title>
+
+
+
+
+<para id="p1091">
+The plots in 
+
+<link id="a1126" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ were produced by the program named 
+
+<emphasis id="strong1035" effect="bold">
+Dsp032a
+
+</emphasis>
+, 
+which I will briefly discuss later. 
+
+<emphasis id="em1027" effect="italics">
+(A complete listing of the program is 
+shown in 
+
+<link id="a1127" target-id="Listing_11">
+
+ Listing 11
+
+</link>
+
+ near the end of the module.)
+
+</emphasis>
+ This program creates and 
+displays pulses identical to those processed by the program named 
+
+<emphasis id="strong1036" effect="bold">
+Dsp032
+
+</emphasis>
+, 
+which I will also briefly discuss later. 
+
+<emphasis id="em1028" effect="italics">
+(A complete listing of the program 
+named 
+
+<emphasis id="strong1037" effect="bold">
+Dsp32
+
+</emphasis>
+ is presented in 
+
+<link id="a1128" target-id="Listing_12">
+
+ Listing 12
+
+</link>
+
+.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</section>
+<section id="h41023">
+<title>
+Five time series containing pulses
+
+</title>
+
+
+
+
+<para id="p1092">
+The program creates and displays five separate time series, each 400 samples 
+in length. Each time series contains a pulse and the pulses are different 
+lengths. As before, each of the pulses shown in 
+
+<link id="a1129" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ is half the length of 
+the pulse below it.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41024">
+<title>
+The sum of two sinusoids
+
+</title>
+
+
+
+
+<para id="p1093">
+Each pulse consists of the sum of two sinusoids at closely spaced 
+frequencies. The frequencies of the two sinusoids for all pulses are the same.
+
+</para>
+
+
+
+
+
+<para id="p1094">
+All frequency values are specified as type 
+
+<emphasis id="strong1038" effect="bold">
+double
+
+</emphasis>
+ as a 
+fraction of the sampling frequency. The frequencies of the two sinusoids are 
+equidistant from a center frequency of 0.0625 times the sampling frequency.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1010" display="block">
+
+	
+
+<para id="p1095">
+<emphasis id="em1029" effect="italics">
+(Recall that 0.0625 was the frequency of the only sinusoid contained 
+	in the pulses shown in 
+
+<link id="a1130" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ and processed by the program named 
+
+<emphasis id="strong1039" effect="bold">
+
+	Dsp031
+
+</emphasis>
+.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41025">
+<title>
+The frequencies and pulse lengths
+
+</title>
+
+
+
+
+<para id="p1096">
+The frequency of one sinusoid is (0.0625 - 2.0/len) times the sampling 
+frequency, where len is the length of the time series containing the pulse.
+
+<emphasis id="em1030" effect="italics">
+ 
+(The value for len is 400 samples in this program.)
+
+</emphasis>
+ The frequency of the 
+other sinusoid is (0.0625 + 2.0/len) times the sampling frequency.
+
+</para>
+
+
+
+
+
+<para id="p1097">
+The lengths of the five pulses are:
+
+</para>
+
+
+
+
+
+<list id="ul1018" list-type="bulleted">
+
+	
+
+<item id="li1077">
+25 samples
+
+</item>
+
+
+	
+
+<item id="li1078">
+50 samples
+
+</item>
+
+
+	
+
+<item id="li1079">
+100 samples
+
+</item>
+
+
+	
+
+<item id="li1080">
+200 samples
+
+</item>
+
+
+	
+
+<item id="li1081">
+400 samples
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1098">
+<emphasis id="em1031" effect="italics">
+(Note that 
+
+<link id="a1131" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ has tick marks every 25 samples.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h21005">
+<title>
+<emphasis id="The_program_named_Dsp032a" effect="bold">
+
+The program named Dsp032a
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1099">
+The only new code in this program is the code in the constructor that creates 
+the pulses and stores them in the data arrays. This code consists of five 
+separate 
+
+<emphasis id="strong1040" effect="bold">
+for
+
+</emphasis>
+ loops, one for each pulse. The code for the first 
+
+
+<emphasis id="strong1041" effect="bold">
+for
+
+</emphasis>
+ loop, which is typical of the five, is shown in 
+
+<link id="a1132" target-id="Listing_6">
+
+ Listing 6
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+<table id="table1009" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1009">
+<row id="tr1018">
+
+
+
+<entry id="th1009">
+<emphasis id="Listing_6" effect="bold">
+
+Listing 6.
+
+</emphasis>
+
+ New code in the the program named Dsp032a.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1009">
+<row id="tr1019">
+<entry id="td1009">
+
+		
+
+<code id="pre1005" display="block">  public Dsp032a(){//constructor
+
+    //Create the raw data
+    for(int x = 0;x &lt; len/16;x++){
+      data1[x] = amp*Math.cos(2*pi*x*freq1)
+                    + amp*Math.cos(2*pi*x*freq2);
+    }//end for loop
+
+//... code removed for brevity
+
+  }//end constructor</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1100">
+As you can see from 
+
+<link id="a1133" target-id="Listing_6">
+
+ Listing 6
+
+</link>
+
+, the values that make up the pulse are produced 
+by adding together the values of two different cosine functions having different 
+frequencies. The values for 
+
+<emphasis id="strong1042" effect="bold">
+freq1
+
+</emphasis>
+ and 
+
+<emphasis id="strong1043" effect="bold">
+freq2
+
+</emphasis>
+ 
+are as described above.
+
+</para>
+
+
+
+
+
+<para id="p1101">
+You can view the remainder of this program in 
+
+<link id="a1134" target-id="Listing_11">
+
+ Listing 11
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<section id="h31011">
+<title>
+<emphasis id="Spectral_analysis_output" effect="bold">
+
+Spectral analysis output
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1102">
+The results of running the program named 
+
+<emphasis id="strong1044" effect="bold">
+Dsp032
+
+</emphasis>
+ and 
+displaying the results with the program named 
+
+<emphasis id="strong1045" effect="bold">
+Graph03
+
+</emphasis>
+ are shown 
+in 
+
+<link id="a1135" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1010" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1010">
+<row id="tr1020">
+<entry id="th1010">
+
+
+
+<emphasis id="Figure_5" effect="bold">
+
+Figure 5.
+
+</emphasis>
+
+ Spectral analyses of five pulses.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1010">
+<row id="tr1021">
+<entry id="td1010">
+
+
+
+
+<media id="media1004" alt="missing image" display="block">
+<image id="img1004" mime-type="image/jpeg" src="../../media/java1483a05.jpg" width="409" height="431"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<para id="p1103">
+Each of the peaks in the third, fourth, and fifth plots in 
+
+<link id="a1136" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ 
+corresponds to the frequency of one of the two sinusoids that were added 
+together to produce the pulses shown in 
+
+<link id="a1137" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<section id="h41026">
+<title>
+Can we answer the original question now?
+
+</title>
+
+
+
+
+<para id="p1104">
+The question posed in the original
+
+
+<link id="a1138" target-id="A_hypothetical_situation">
+
+hypothetical situation
+
+</link>
+
+ 
+was 
+
+<emphasis id="em1032" effect="italics">
+"how long must the operating bursts of this device be in order for you to 
+resolve the peaks and identify the enemy submarine under ideal conditions?"
+
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1105">
+We are looking at very ideal conditions in 
+
+<link id="a1139" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ and 
+
+<link id="a1140" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+. In 
+particular, the pulses exist completely in the absence of noise.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1011" display="block">
+
+	
+
+<para id="p1106">
+<emphasis id="em1033" effect="italics">
+(The existence of wide-band noise added to the pulses in 
+
+<link id="a1141" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ would 
+	cause a change in the spectral results in 
+
+<link id="a1142" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+. That change might be 
+	described as having the appearance of grass and weeds growing on the 
+	baseline across the entire spectrum. The stronger the wide-band noise, the 
+	taller would be the weeds.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41027">
+<title>
+Cannot resolve two peaks for first two pulses
+
+</title>
+
+
+
+
+<para id="p1107">
+Clearly for the ideal condition of recording the bursts in the total absence 
+of noise, you cannot resolve the peaks from the top two plots in 
+
+<link id="a1143" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+. For 
+those two pulses, the spectral peaks simply merge together to form a single 
+broad peak. Therefore, for this amount of separation between the frequencies of 
+the two sinusoids, the lengths of the first two pulses in 
+
+<link id="a1144" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ are 
+insufficient to allow for separation and identification of the separate peaks.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41028">
+<title>
+We must be in luck
+
+</title>
+
+
+
+
+<para id="p1108">
+We seem to have the problem bracketed. 
+
+<emphasis id="em1034" effect="italics">
+(Were we really lucky, or did I plan 
+it this way?)
+
+</emphasis>
+ Under the ideal conditions of this experiment, the peaks are 
+separable in the middle plot of 
+
+<link id="a1145" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+. Thus, for the amount of separation 
+between the frequencies of the two sinusoids, the length of the third pulse is 
+
+
+<link id="a1146" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ is sufficient to allow for separation and identification of the 
+separate peaks.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41029">
+<title>
+A qualified answer to the question
+
+</title>
+
+
+
+
+<para id="p1109">
+The peaks are even better separated in the bottom two plots in 
+
+<link id="a1147" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+. For 
+the five pulses used in this experiment and the amount of separation between the 
+frequencies of the two sinusoids, any pulse as long or longer than the length of 
+the third pulse is 
+
+<link id="a1148" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ is sufficient to allow for separation and 
+identification of the separate peaks.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41030">
+<title>
+What about the effects of noise?
+
+</title>
+
+
+
+
+<para id="p1110">
+If you were to add a nominal amount of wide-band noise to the mix, it would 
+become more difficult to resolve the peaks for the bottom three plots in 
+
+
+<link id="a1149" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ because the peaks would be growing out of a bed of weeds.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1012" display="block">
+
+	
+
+<para id="p1111">
+<emphasis id="em1035" effect="italics">
+(If you add enough wide-band noise, you couldn't resolve the peaks using 
+	any of the plots, because the peaks would be completely "lost in the 
+	noise.") 
+
+</emphasis>
+ 
+
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41031">
+<title>
+What can we learn from this?
+
+</title>
+
+
+
+
+<para id="p1112">
+Since we have concluded that the middle pulse in 
+
+<link id="a1150" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ is sufficiently 
+long to allow us to resolve the two peaks, let's see what we can learn from the 
+parameters that describe that pulse.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41032">
+<title>
+Pulse length and frequency separation
+
+</title>
+
+
+
+
+<para id="p1113">
+To begin with, the length of the pulse is 100 samples.
+
+</para>
+
+
+
+
+
+<para id="p1114">
+What about the frequency separation of the two sinusoids? Recall that the 
+frequency of one sinusoid is (0.0625 - 2.0/len) times the sampling frequency, 
+where len is the length of the time series containing the pulse. The frequency 
+of the other sinusoid is (0.0625 + 2.0/len) times the sampling frequency.
+
+</para>
+
+
+
+
+
+<para id="p1115">
+Thus, total separation between the two frequencies is 4/len, or 4/400. 
+Dividing through by 4 we see that the separation between the two frequencies is 
+1/100.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41033">
+<title>
+Eureka, we have found it
+
+</title>
+
+
+
+
+<para id="p1116">
+For the third pulse, the frequency separation  
+
+<emphasis id="strong1046" effect="bold">
+is the reciprocal of the length 
+of the pulse
+
+</emphasis>
+. Also, the length of the third pulse is barely sufficient to allow 
+for separation and identification of the two peaks in the spectrum. 
+
+</para>
+
+
+
+
+
+<para id="p1117">
+Thus, the 
+two spectral peaks are separable in the absence of noise if the frequency 
+separation is the reciprocal of the pulse length. 
+
+	
+
+<emphasis id="em1036" effect="italics">
+(That is too good to be a coincidence. I must have planned that way.)
+
+
+</emphasis>
+</para>
+
+
+
+
+
+<quote id="blockquote1013" display="block">
+<emphasis id="strong1047" effect="bold">
+Thus, we have reached another conclusion. Under ideal conditions, the two peaks in the spectrum can be resolved 
+	when the separation between the frequencies of the two sinusoids is equal to 
+	the reciprocal of the pulse length.
+
+</emphasis>
+</quote>
+
+
+
+
+
+</section>
+<section id="h41034">
+<title>
+The general answer
+
+</title>
+
+
+
+
+<para id="p1118">
+There is no single answer to the
+question 
+
+<emphasis id="em1037" effect="italics">
+"how long must 
+the operating bursts of this device be in order for you to resolve the peaks and 
+identify the enemy submarine under ideal conditions?"
+
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1119">
+The answer depends on the frequency separation. The general answer is that 
+the length of the bursts must be at least as long as the reciprocal of the 
+frequency separation for the two sinusoids. If the separation is large, the 
+pulse length may be short. If the separation is small, the pulse length must be 
+long.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h21006">
+<title>
+<emphasis id="The_program_named_Dsp032" effect="bold">
+
+The program named Dsp032
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1120">
+As I indicated earlier, the plots shown in 
+
+<link id="a1151" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ were the result of 
+running the program named 
+
+<emphasis id="strong1048" effect="bold">
+Dsp032
+
+</emphasis>
+ and displaying the data with the program named 
+
+
+<emphasis id="strong1049" effect="bold">
+Graph03
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<para id="p1121">
+The only thing that is new in this program is the code that generates the 
+five pulses and saves them in their respective data arrays. Even that code is 
+not really new, because it is identical to the code shown in 
+
+<link id="a1152" target-id="Listing_6">
+
+ Listing 6
+
+</link>
+
+. 
+Therefore, I won't discuss this program further in this module.
+
+</para>
+
+
+
+
+
+<section id="h31012">
+<title>
+<emphasis id="One_more_experiment" effect="bold">
+
+One more experiment
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1122">
+As you can surmise from the conclusions reached above, in order to be able to 
+resolve the two peaks in the spectrum, you can either keep the pulse length the 
+same and increase the frequency separation, or you can keep the frequency 
+separation the same and increase the pulse length.
+
+</para>
+
+
+
+
+
+<para id="p1123">
+Let's examine an example where we keep the pulse lengths the same as before 
+and adjust the frequency separation between the two sinusoids to make it barely 
+possible to resolve the peaks for each of the five pulses.
+
+</para>
+
+
+
+
+
+<para id="p1124">
+We will need to increase the frequency separation for the first two pulses, 
+and we can decrease the frequency separation for the fourth and fifth pulses. We 
+will leave the frequency separation the same as before for the third pulse since 
+it already seems to have the optimum relationship between pulse length and 
+frequency separation.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31013">
+<title>
+<emphasis id="The_five_pulses" effect="bold">
+
+The five pulses
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1125">
+The five pulses used in this experiment are shown in 
+
+<link id="a1153" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1011" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1011">
+<row id="tr1022">
+<entry id="th1011">
+
+
+
+<emphasis id="Figure_6" effect="bold">
+
+Figure 6.
+
+</emphasis>
+
+ Five pulses with additive sinusoids.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1011">
+<row id="tr1023">
+<entry id="td1011">
+
+
+
+
+<media id="media1005" alt="missing image" display="block">
+<image id="img1005" mime-type="image/jpeg" src="../../media/java1483a06.jpg" width="409" height="431"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<para id="p1126">
+Unlike in the previous two cases shown in 
+
+<link id="a1154" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ and 
+
+<link id="a1155" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+, each of 
+these pulses has a different shape from the others. In other words, in the 
+previous two cases, each pulse simply looked like a longer or shorter version of 
+the other pulses. That is not the case in this example.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1014" display="block">
+
+	
+
+<para id="p1127">
+<emphasis id="em1038" effect="italics">
+(Note however that the third pulse in 
+
+<link id="a1156" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+ looks just like the 
+	third pulse in 
+
+<link id="a1157" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+. They were created using the same parameters. 
+	However, none of the other pulses in 
+
+<link id="a1158" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+ look like the corresponding 
+	pulses in 
+
+<link id="a1159" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+, and none of the pulses in 
+
+<link id="a1160" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+ look like the pulses 
+	in 
+
+<link id="a1161" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h31014">
+<title>
+<emphasis id="Spectral_analysis_results" effect="bold">
+
+Spectral analysis results
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1128">
+<link id="a1162" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+ shows the result of performing spectral analysis on the five time 
+series containing the pulses shown in 
+
+<link id="a1163" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1012" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1012">
+<row id="tr1024">
+<entry id="th1012">
+
+
+
+<emphasis id="Figure_7" effect="bold">
+
+Figure 7.
+
+</emphasis>
+
+ Spectral analyses of five pulses.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1012">
+<row id="tr1025">
+<entry id="td1012">
+
+
+
+
+<media id="media1006" alt="missing image" display="block">
+<image id="img1006" mime-type="image/jpeg" src="../../media/java1483a07.jpg" width="409" height="431"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h41035">
+<title>
+Peaks for first two pulses are now resolvable
+
+</title>
+
+
+
+
+<para id="p1129">
+When we examine the code, you will see that the frequency separation for the 
+first two pulses has been increased to the reciprocal of the pulse length in 
+each case. This results in the two peaks in the spectrum for each of the first 
+two pulses being resolvable in 
+
+<link id="a1164" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41036">
+<title>
+Third pulse hasn't changed
+
+</title>
+
+
+
+
+<para id="p1130">
+The spectrum for the third pulse shown in 
+
+<link id="a1165" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+ is almost identical to the 
+spectrum for the third pulse shown in 
+
+<link id="a1166" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+. The only difference is that I 
+had to decrease the vertical scaling on all of the plots in 
+
+<link id="a1167" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ to keep the 
+peak in the top plot within the bounds of the plot.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41037">
+<title>
+Spectral peaks for last two pulses are closer
+
+</title>
+
+
+
+
+<para id="p1131">
+When we examine the code, you will also see that the frequency separation for 
+the last two pulses has been decreased to the reciprocal of the pulse length in 
+each case. This results in the two peaks in the spectrum for each of the last 
+two pulses being closer than before in 
+
+<link id="a1168" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1132">
+The peaks in the bottom two plots in 
+
+<link id="a1169" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+ appear to be resolvable, but we 
+can't be absolutely certain because they are so close together, particularly for 
+the last plot. 
+
+</para>
+
+
+
+
+
+<quote id="blockquote1015" display="block">
+
+	
+
+<para id="p1133">
+<emphasis id="em1039" effect="italics">
+(If you expand the Frame to full screen when you run this program, 
+	you will see that the two peaks are resolvable, but I can't do that and stay 
+	within this narrow publication format.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41038">
+<title>
+Expand the horizontal plotting scale
+
+</title>
+
+
+
+
+<para id="p1134">
+<link id="a1170" target-id="Figure_8">
+
+ Figure 8
+
+</link>
+
+ adjusts the plotting parameters to cause the left-most one-fourth of 
+the data in 
+
+<link id="a1171" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+ to be plotted in the full width of the Frame in 
+
+<link id="a1172" target-id="Figure_8">
+
+ Figure 8
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1013" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1013">
+<row id="tr1026">
+<entry id="th1013">
+
+
+
+<emphasis id="Figure_8" effect="bold">
+
+Figure 8.
+
+</emphasis>
+
+ Expanded spectral analyses of five pulses.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1013">
+<row id="tr1027">
+<entry id="td1013">
+
+
+
+
+<media id="media1007" alt="missing image" display="block">
+<image id="img1007" mime-type="image/jpeg" src="../../media/java1483a08.jpg" width="409" height="431"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+</section>
+<section id="h41039">
+<title>
+The peaks are barely resolvable
+
+</title>
+
+
+
+
+<para id="p1135">
+<link id="a1173" target-id="Figure_8">
+
+ Figure 8
+
+</link>
+
+ shows that the two peaks are barely resolvable for all five of the 
+pulses shown in 
+
+<link id="a1174" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1016" display="block">
+
+	
+
+<para id="p1136">
+<emphasis id="em1040" effect="italics">
+(There is no space between the peaks at the baseline in 
+
+<link id="a1175" target-id="Figure_8">
+
+ Figure 8
+
+</link>
+
+, but the 
+	plots do go almost down to the baseline half way between the two peaks.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h21007">
+<title>
+<emphasis id="The_program_named_Dsp033" effect="bold">
+
+The program named Dsp033
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1137">
+The plots in 
+
+<link id="a1176" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+ and 
+
+<link id="a1177" target-id="Figure_8">
+
+ Figure 8
+
+</link>
+
+ were produced by running the program named 
+
+
+<emphasis id="strong1050" effect="bold">
+Dsp033
+
+</emphasis>
+ and plotting the results with the program named 
+
+<emphasis id="strong1051" effect="bold">
+Graph03
+
+</emphasis>
+. 
+
+</para>
+
+
+
+
+
+<para id="p1138">
+A complete listing of the program named 
+
+<emphasis id="strong1052" effect="bold">
+Dsp033
+
+</emphasis>
+ is shown in 
+
+<link id="a1178" target-id="Listing_14">
+
+ Listing 14
+
+</link>
+
+ near 
+the end of the module.
+
+</para>
+
+
+
+
+
+<para id="p1139">
+This program is the same as 
+
+<emphasis id="strong1053" effect="bold">
+Dsp032
+
+</emphasis>
+ except that the separation between the 
+frequencies of the two sinusoids is the reciprocal of the length of the pulse in 
+each case.
+
+</para>
+
+
+
+
+
+<para id="p1140">
+The program performs spectral analysis on five separate time series, each 400 
+samples in length. Each time series contains a pulse and the pulses are 
+different lengths.
+
+</para>
+
+
+
+
+
+<para id="p1141">
+Each pulse consists of the sum of two sinusoids at closely spaced 
+frequencies. The frequencies of the two sinusoids are equidistant from a center 
+frequency of 0.0625 times the sampling frequency. The total separation between 
+the frequencies of the two sinusoids is the reciprocal of the length of the 
+pulse.
+
+</para>
+
+
+
+
+
+<para id="p1142">
+All frequency values are specified as type 
+
+<emphasis id="strong1054" effect="bold">
+double
+
+</emphasis>
+ as a fraction of the 
+sampling frequency.
+
+</para>
+
+
+
+
+
+<para id="p1143">
+The lengths of the pulses are:
+
+</para>
+
+
+
+
+
+<list id="ul1019" list-type="bulleted">
+
+	
+
+<item id="li1082">
+25 samples
+
+</item>
+
+
+	
+
+<item id="li1083">
+50 samples
+
+</item>
+
+
+	
+
+<item id="li1084">
+100 samples
+
+</item>
+
+
+	
+
+<item id="li1085">
+200 samples
+
+</item>
+
+
+	
+
+<item id="li1086">
+400 samples
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<section id="h31015">
+<title>
+<emphasis id="The_spectral_analysis" effect="bold">
+
+The spectral analysis
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1144">
+The spectral analysis computes the spectra at 400 equally spaced frequencies 
+between zero and the folding frequency 
+
+<emphasis id="em1041" effect="italics">
+(one-half the sampling frequency)
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<para id="p1145">
+The results of the spectral analysis are multiplied by the reciprocal of the 
+lengths of the individual pulses to normalize the five plots. Otherwise, the 
+results for the short pulses would be too small to see on the plots.
+
+</para>
+
+
+
+
+
+<para id="p1146">
+Because of the similarity of this program to the previous programs, my 
+discussion of the code will be very brief.
+
+</para>
+
+
+
+
+
+<section id="h41040">
+<title>
+Computation of the frequencies
+
+</title>
+
+
+
+
+<para id="p1147">
+The code in 
+
+<link id="a1179" target-id="Listing_7">
+
+ Listing 7
+
+</link>
+
+ shows the computation of the frequencies of the 
+sinusoids that will be added together to form each of the five pulses.
+
+</para>
+
+
+
+
+
+
+<table id="table1014" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1014">
+<row id="tr1028">
+
+
+
+<entry id="th1014">
+<emphasis id="Listing_7" effect="bold">
+
+Listing 7.
+
+</emphasis>
+
+ Computation of the frequencies.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1014">
+<row id="tr1029">
+<entry id="td1014">
+
+		
+
+<code id="pre1006" display="block">  //Frequencies of the sinusoids
+  double freq1a = 0.0625 - 8.0/len;
+  double freq2a = 0.0625 + 8.0/len;
+
+  double freq1b = 0.0625 - 4.0/len;
+  double freq2b = 0.0625 + 4.0/len;
+
+  double freq1c = 0.0625 - 2.0/len;
+  double freq2c = 0.0625 + 2.0/len;
+
+  double freq1d = 0.0625 - 1.0/len;
+  double freq2d = 0.0625 + 1.0/len;
+
+  double freq1e = 0.0625 - 0.5/len;
+  double freq2e = 0.0625 + 0.5/len;</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1148">
+Create the pulses
+
+</para>
+
+
+
+
+
+<para id="p1149">
+The code in 
+
+<link id="a1180" target-id="Listing_8">
+
+ Listing 8
+
+</link>
+
+ uses those frequency values to create the data for the 
+pulses and to store that data in the arrays used to hold the pulses.
+
+</para>
+
+
+
+
+
+<table id="table1015" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1015">
+<row id="tr1030">
+
+
+
+<entry id="th1015">
+<emphasis id="Listing_8" effect="bold">
+
+Listing 8.
+
+</emphasis>
+
+ Create the pulses.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1015">
+<row id="tr1031">
+<entry id="td1015">
+
+		
+
+<code id="pre1007" display="block">    //Create the raw data
+    for(int x = 0;x &lt; len/16;x++){
+      data1[x] = amp*Math.cos(2*pi*x*freq1a)
+                    + amp*Math.cos(2*pi*x*freq2a);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/8;x++){
+      data2[x] = amp*Math.cos(2*pi*x*freq1b)
+                    + amp*Math.cos(2*pi*x*freq2b);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/4;x++){
+      data3[x] = amp*Math.cos(2*pi*x*freq1c)
+                    + amp*Math.cos(2*pi*x*freq2c);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/2;x++){
+      data4[x] = amp*Math.cos(2*pi*x*freq1d)
+                    + amp*Math.cos(2*pi*x*freq2d);
+    }//end for loop
+
+    for(int x = 0;x &lt; len;x++){
+      data5[x] = amp*Math.cos(2*pi*x*freq1e)
+                   + amp*Math.cos(2*pi*x*freq2e);
+    }//end for loop</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1150">
+Other than the code shown in 
+
+<link id="a1181" target-id="Listing_7">
+
+ Listing 7
+
+</link>
+
+ and 
+
+<link id="a1182" target-id="Listing_8">
+
+ Listing 8
+
+</link>
+
+, the program named 
+Dsp033 is the same as the programs that were previously explained, and I won't 
+discuss it further.
+
+</para>
+
+
+
+
+
+
+</section>
+</section>
+</section>
+</section>
+<section id="h11004">
+<title>
+<emphasis id="Run_the_program" effect="bold">
+
+Run the programs
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+<para id="p1151">
+I encourage you to copy, compile, and run the programs provided in this 
+module. Experiment with them, making changes and observing the results of your 
+changes.
+
+</para>
+
+
+
+
+
+<para id="p1152">
+Create more complex experiments. For example, you could create pulses 
+containing three or more sinusoids at closely spaced frequencies, and you could 
+cause the amplitudes of the sinusoids to be different. See what it takes to 
+cause the peaks in the spectra of those pulses to be separable and identifiable.
+
+</para>
+
+
+
+
+
+<para id="p1153">
+If you really want to get fancy, you could create a pulse consisting of a 
+sinusoid whose frequency changes with time from the beginning to the end of the 
+pulse. 
+
+<emphasis id="em1042" effect="italics">
+(A pulse of this type is often referred to as a frequency modulated 
+sweep signal.)
+
+</emphasis>
+ See what you can conclude from doing spectral analysis on a 
+pulse of this type.
+
+</para>
+
+
+
+
+
+<para id="p1154">
+Try using the random number generator of the 
+
+<emphasis id="strong1055" effect="bold">
+Math
+
+</emphasis>
+ class to 
+add some random noise to every value in the 400-sample time series. See what 
+this does to your spectral analysis results.
+
+</para>
+
+
+
+
+
+<para id="p1155">
+Move the center frequency up and down the frequency axis. See if you can 
+explain what happens as the center frequency approaches zero and as the center 
+frequency approaches the folding frequency.
+
+</para>
+
+
+
+
+
+<para id="p1156">
+Most of all, enjoy yourself and learn something in the process.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h11005">
+<title>
+<emphasis id="Summary" effect="bold">
+
+Summary
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1157">
+This program provides the code for three spectral analysis experiments of 
+increasing complexity.
+
+</para>
+
+
+
+
+
+<para id="p1158">
+<emphasis id="strong1056" effect="bold">
+<emphasis id="em1043" effect="italics">
+Bandwidth versus pulse length
+
+</emphasis>
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1159">
+The first experiment performs spectral analyses on five simple pulses 
+consisting of truncated sinusoids. This experiment shows:
+
+</para>
+
+
+
+
+
+<list id="ul1020" list-type="bulleted">
+
+	
+
+<item id="li1087">
+Shorter pulses require greater bandwidth.
+
+</item>
+
+
+	
+
+<item id="li1088">
+The bandwidth of a truncated sinusoidal pulse is inversely proportional 
+	to the length of the pulse.
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1160">
+<emphasis id="strong1057" effect="bold">
+<emphasis id="em1044" effect="italics">
+Peak resolution versus pulse length and frequency separation
+
+</emphasis>
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1161">
+The second experiment performs spectral analyses on five more complex pulses 
+consisting of the sum of two truncated sinusoids having closely spaced 
+frequencies. The purpose is to determine the required length of the pulse in 
+order to use spectral analysis to resolve spectral peaks attributable to the two 
+sinusoids. The experiment shows that the peaks are barely resolvable when the 
+length of the pulse is the reciprocal of the frequency separation between the 
+two sinusoids.
+
+</para>
+
+
+
+
+
+<para id="p1162">
+<emphasis id="strong1058" effect="bold">
+<emphasis id="em1045" effect="italics">
+Five pulses with barely resolvable spectral peaks
+
+</emphasis>
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1163">
+The third experiment also performs spectral analyses on five pulses 
+consisting of the sum of two truncated sinusoids having closely spaced 
+frequencies. In this case, the frequency separation for each pulse is the 
+reciprocal of the length of the pulse. The results of the spectral analysis 
+reinforce the conclusions drawn in the second experiment.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h11006">
+<title>
+<emphasis id="Whats_next" effect="bold">
+
+What's next?
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1164">
+So far, the modules in this series have ignored the complex nature of the 
+results of spectral analysis. The complex results have been converted into real 
+results by computing the square root of the sum of the squares of the real and 
+imaginary parts.
+
+</para>
+
+
+
+
+
+<para id="p1165">
+The next module in the series will meet the issue of complex spectral results 
+head on and will explain the concept of phase angle. In addition, the module 
+will explain the behavior of the phase angle with respect to time shifts in the 
+input time series.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h11007">
+<title>
+<emphasis id="Complete_program_listings" effect="bold">
+
+Complete program listings
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1166">
+Complete listings of the main programs discussed in this module are provided 
+in this section. Listings for other programs mentioned in the module, such as
+
+
+<emphasis id="strong1059" effect="bold">
+Graph03
+
+</emphasis>
+ and 
+
+<emphasis id="strong1060" effect="bold">
+Graph06
+
+</emphasis>
+, are provided in other 
+modules. Those modules are identified in the text of this module. 
+
+</para>
+
+
+
+
+
+
+
+<table id="table1016" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1016">
+<row id="tr1032">
+
+
+
+<entry id="th1016">
+<emphasis id="Listing_9" effect="bold">
+
+Listing 9.
+
+</emphasis>
+
+ Dsp031a.java.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1016">
+<row id="tr1033">
+<entry id="td1016">
+
+		
+
+<code id="pre1008" display="block">/* File Dsp031a.java
+Copyright 2004, R.G.Baldwin
+Revised 5/17/2004
+
+Displays sinusoidal pulses identical to those
+processed by Dsp031.
+
+Creates and displays five separate time series,
+each 400 samples in length.
+
+Each time series contains a pulse and the pulses
+are different lengths.
+
+Each pulse consists of a truncated sinusoid.  The
+frequency of the sinusoid for all pulses is the
+same.
+
+All frequency values are specified as type
+double as a fraction of the sampling frequency.
+
+The frequency of all sinusoids is 0.0625 times
+the sampling frequency.
+
+The lengths of the pulses are:
+
+25 samples
+50 samples
+100 samples
+200 samples
+400 samples
+
+Tested using J2SEE 1.4.2 under WinXP.
+************************************************/
+import java.util.*;
+
+class Dsp031a implements GraphIntfc01{
+  final double pi = Math.PI;
+
+  int len = 400;//data length
+  int numberPulses = 5;
+  //Frequency of the sinusoids
+  double freq = 0.0625;
+  //Amplitude of the sinusoids
+  double amp = 160;
+
+  //Following arrays will contain sinusoidal data
+  double[] data1 = new double[len];
+  double[] data2 = new double[len];
+  double[] data3 = new double[len];
+  double[] data4 = new double[len];
+  double[] data5 = new double[len];
+
+  public Dsp031a(){//constructor
+
+    //Create the raw data
+    for(int x = 0;x &lt; len/16;x++){
+      data1[x] = amp*Math.cos(2*pi*x*freq);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/8;x++){
+      data2[x] = amp*Math.cos(2*pi*x*freq);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/4;x++){
+      data3[x] = amp*Math.cos(2*pi*x*freq);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/2;x++){
+      data4[x] = amp*Math.cos(2*pi*x*freq);
+    }//end for loop
+
+    for(int x = 0;x &lt; len;x++){
+      data5[x] = amp*Math.cos(2*pi*x*freq);
+    }//end for loop
+
+  }//end constructor
+
+  //-------------------------------------------//
+  //The following six methods are required by the
+  // interface named GraphIntfc01.
+  public int getNmbr(){
+    //Return number of functions to process.
+    // Must not exceed 5.
+    return 5;
+  }//end getNmbr
+  //-------------------------------------------//
+  public double f1(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; data1.length-1){
+      return 0;
+    }else{
+      //Scale the amplitude of the pulses to make
+      // them compatible with the default
+      // plotting amplitude of 100.0.
+      return data1[index]*90.0/amp;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f2(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; data2.length-1){
+      return 0;
+    }else{
+      return data2[index]*90.0/amp;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f3(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; data3.length-1){
+      return 0;
+    }else{
+      return data3[index]*90.0/amp;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f4(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; data4.length-1){
+      return 0;
+    }else{
+      return data4[index]*90.0/amp;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f5(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; data5.length-1){
+      return 0;
+    }else{
+      return data5[index]*90.0/amp;
+    }//end else
+  }//end function
+
+}//end sample class Dsp031a</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<table id="table1017" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1017">
+<row id="tr1034">
+
+
+
+<entry id="th1017">
+<emphasis id="Listing_10" effect="bold">
+
+Listing 10.
+
+</emphasis>
+
+ Dsp031.java.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1017">
+<row id="tr1035">
+<entry id="td1017">
+
+		
+
+<code id="pre1009" display="block">/* File Dsp031.java
+Copyright 2004, R.G.Baldwin
+Revised 5/17/2004
+
+Performs spectral analysis on five separate time
+series, each 400 samples in length.
+
+Each time series contains a pulse and the pulses
+are different lengths.
+
+Each pulse consists of a truncated sinusoid.  The
+frequency of the sinusoid for all pulses is the
+same.
+
+All frequency values are specified as type
+double as a fraction of the sampling frequency.
+
+The frequency of all sinusoids is 0.0625 times
+the sampling frequency.
+
+The lengths of the pulses are:
+
+25 samples
+50 samples
+100 samples
+200 samples
+400 samples
+
+The spectral analysis computes the spectra at
+400 equally spaced points between zero and the
+folding frequency (one-half the sampling
+frequency).
+
+The results of the spectral analysis are
+multiplied by the reciprocal of the lengths of
+the individual pulses to normalize all five
+plots to the same peak value.  Otherwise, the
+results for the short pulses would be too
+small to see on the plots.
+
+Tested using J2SEE 1.4.2 under WinXP.
+************************************************/
+import java.util.*;
+
+class Dsp031 implements GraphIntfc01{
+  final double pi = Math.PI;
+
+  int len = 400;//data length
+  //Sample that represents zero time.
+  int zeroTime = 0;
+  //Low and high frequency limits for the
+  // spectral analysis.
+  double lowF = 0.0;
+  double highF = 0.5;
+  int numberSpectra = 5;
+  //Frequency of the sinusoids
+  double freq = 0.0625;
+  //Amplitude of the sinusoids
+  double amp = 160;
+
+  //Following arrays will contain data that is
+  // input to the spectral analysis process.
+  double[] data1 = new double[len];
+  double[] data2 = new double[len];
+  double[] data3 = new double[len];
+  double[] data4 = new double[len];
+  double[] data5 = new double[len];
+
+  //Following arrays receive information back
+  // from the spectral analysis that is not used
+  // in this program.
+  double[] real;
+  double[] imag;
+  double[] angle;
+
+  //Following arrays receive the magnitude
+  // spectral information back from the spectral
+  // analysis process.
+  double[] mag1;
+  double[] mag2;
+  double[] mag3;
+  double[] mag4;
+  double[] mag5;
+
+  public Dsp031(){//constructor
+
+    //Create the raw data
+    for(int x = 0;x &lt; len/16;x++){
+      data1[x] = amp*Math.cos(2*pi*x*freq);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/8;x++){
+      data2[x] = amp*Math.cos(2*pi*x*freq);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/4;x++){
+      data3[x] = amp*Math.cos(2*pi*x*freq);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/2;x++){
+      data4[x] = amp*Math.cos(2*pi*x*freq);
+    }//end for loop
+
+    for(int x = 0;x &lt; len;x++){
+      data5[x] = amp*Math.cos(2*pi*x*freq);
+    }//end for loop
+
+
+    //Compute magnitude spectra of the raw data
+    // and save it in output arrays.  Note that
+    // the real, imag, and angle arrays are not
+    // used later, so they are discarded each
+    // time a new spectral analysis is performed.
+    mag1 = new double[len];
+    real = new double[len];
+    imag = new double[len];
+    angle = new double[len];
+    ForwardRealToComplex01.transform(data1,real,
+      imag,angle,mag1,zeroTime,lowF,highF);
+
+    mag2 = new double[len];
+    real = new double[len];
+    imag = new double[len];
+    angle = new double[len];
+    ForwardRealToComplex01.transform(data2,real,
+      imag,angle,mag2,zeroTime,lowF,highF);
+
+    mag3 = new double[len];
+    real = new double[len];
+    imag = new double[len];
+    angle = new double[len];
+    ForwardRealToComplex01.transform(data3,real,
+      imag,angle,mag3,zeroTime,lowF,highF);
+
+    mag4 = new double[len];
+    real = new double[len];
+    imag = new double[len];
+    angle = new double[len];
+    ForwardRealToComplex01.transform(data4,real,
+      imag,angle,mag4,zeroTime,lowF,highF);
+
+    mag5 = new double[len];
+    real = new double[len];
+    imag = new double[len];
+    angle = new double[len];
+    ForwardRealToComplex01.transform(data5,real,
+      imag,angle,mag5,zeroTime,lowF,highF);
+
+  }//end constructor
+
+  //-------------------------------------------//
+  //The following six methods are required by the
+  // interface named GraphIntfc01.
+  public int getNmbr(){
+    //Return number of functions to process.
+    // Must not exceed 5.
+    return 5;
+  }//end getNmbr
+  //-------------------------------------------//
+  public double f1(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; mag1.length-1){
+      return 0;
+    }else{
+      //Scale the magnitude data by the
+      // reciprocal of the length of the sinusoid
+      // to normalize the five plots to the same
+      // peak value.
+      return mag1[index]*16.0;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f2(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; mag2.length-1){
+      return 0;
+    }else{
+      return mag2[index]*8.0;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f3(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; mag3.length-1){
+      return 0;
+    }else{
+      return mag3[index]*4.0;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f4(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; mag4.length-1){
+      return 0;
+    }else{
+      return mag4[index]*2.0;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f5(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; mag5.length-1){
+      return 0;
+    }else{
+      return mag5[index]*1.0;
+    }//end else
+  }//end function
+
+}//end sample class Dsp031</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<table id="table1018" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1018">
+<row id="tr1036">
+
+
+
+<entry id="th1018">
+<emphasis id="Listing_11" effect="bold">
+
+Listing 11.
+
+</emphasis>
+
+ Dsp032a.java.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1018">
+<row id="tr1037">
+<entry id="td1018">
+
+		
+
+<code id="pre1010" display="block">/* File Dsp032a.java
+Copyright 2004, R.G.Baldwin
+Revised 5/17/2004
+
+Displays sinusoidal pulses identical to those
+processed by Dsp032.
+
+Creates and displays five separate time series,
+each 400 samples in length.
+
+Each time series contains a pulse and the pulses
+are different lengths.
+
+Each pulse consists of the sum of two sinusoids
+at closely spaced frequencies.  The frequencies
+of the two sinusoids for all pulses are the same.
+
+All frequency values are specified as type
+double as a fraction of the sampling frequency.
+
+The frequencies of the two sinusoids are
+equidistant from 0.0625 times the sampling
+frequency.
+
+The frequency of one sinusoid is
+(0.0625 - 2.0/len) times the sampling frequency.
+
+The frequency of the other sinusoid is
+(0.0625 + 2.0/len) times the sampling frequency.
+
+The lengths of the pulses are:
+
+25 samples
+50 samples
+100 samples
+200 samples
+400 samples
+
+Tested using J2SEE 1.4.2 under WinXP.
+************************************************/
+import java.util.*;
+
+class Dsp032a implements GraphIntfc01{
+  final double pi = Math.PI;
+
+  int len = 400;//data length
+  int numberPulses = 5;
+  //Frequencies of the sinusoids
+  double freq1 = 0.0625 - 2.0/len;
+  double freq2 = 0.0625 + 2.0/len;
+
+  //Amplitude of the sinusoids
+  double amp = 160;
+
+  //Following arrays will contain sinusoidal data
+  double[] data1 = new double[len];
+  double[] data2 = new double[len];
+  double[] data3 = new double[len];
+  double[] data4 = new double[len];
+  double[] data5 = new double[len];
+
+  public Dsp032a(){//constructor
+
+    //Create the raw data
+    for(int x = 0;x &lt; len/16;x++){
+      data1[x] = amp*Math.cos(2*pi*x*freq1)
+                    + amp*Math.cos(2*pi*x*freq2);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/8;x++){
+      data2[x] = amp*Math.cos(2*pi*x*freq1)
+                    + amp*Math.cos(2*pi*x*freq2);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/4;x++){
+      data3[x] = amp*Math.cos(2*pi*x*freq1)
+                    + amp*Math.cos(2*pi*x*freq2);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/2;x++){
+      data4[x] = amp*Math.cos(2*pi*x*freq1)
+                    + amp*Math.cos(2*pi*x*freq2);
+    }//end for loop
+
+    for(int x = 0;x &lt; len;x++){
+      data5[x] = amp*Math.cos(2*pi*x*freq1)
+                    + amp*Math.cos(2*pi*x*freq2);
+    }//end for loop
+
+  }//end constructor
+
+  //-------------------------------------------//
+  //The following six methods are required by the
+  // interface named GraphIntfc01.
+  public int getNmbr(){
+    //Return number of functions to process.
+    // Must not exceed 5.
+    return 5;
+  }//end getNmbr
+  //-------------------------------------------//
+  public double f1(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; data1.length-1){
+      return 0;
+    }else{
+      //Scale the amplitude of the pulses to make
+      // them compatible with the default
+      // plotting amplitude of 100.0.
+      return data1[index]*40.0/amp;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f2(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; data2.length-1){
+      return 0;
+    }else{
+      return data2[index]*40.0/amp;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f3(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; data3.length-1){
+      return 0;
+    }else{
+      return data3[index]*40.0/amp;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f4(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; data4.length-1){
+      return 0;
+    }else{
+      return data4[index]*40.0/amp;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f5(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; data5.length-1){
+      return 0;
+    }else{
+      return data5[index]*40.0/amp;
+    }//end else
+  }//end function
+
+}//end sample class Dsp032a</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<table id="table1019" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1019">
+<row id="tr1038">
+
+
+
+<entry id="th1019">
+<emphasis id="Listing_12" effect="bold">
+
+Listing 12.
+
+</emphasis>
+
+ File Dsp032.java.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1019">
+<row id="tr1039">
+<entry id="td1019">
+
+		
+
+<code id="pre1011" display="block">/* File Dsp032.java
+Copyright 2004, R.G.Baldwin
+Revised 5/17/2004
+
+Performs spectral analysis on five separate time
+series, each 400 samples in length.
+
+Each time series contains a pulse and the pulses
+are different lengths.
+
+Each pulse consists of the sum of two sinusoids
+at closely spaced frequencies.  The frequencies
+of the two sinusoids for all pulses are the same.
+
+All frequency values are specified as type
+double as a fraction of the sampling frequency.
+
+The frequencies of the two sinusoids are
+equidistant from 0.0625 times the sampling
+frequency.
+
+The frequency of one sinusoid is
+(0.0625 - 2.0/len) times the sampling frequency.
+
+The frequency of the other sinusoid is
+(0.0625 + 2.0/len) times the sampling frequency.
+
+The lengths of the pulses are:
+
+25 samples
+50 samples
+100 samples
+200 samples
+400 samples
+
+The spectral analysis computes the spectra at
+400 equally spaced points between zero and the
+folding frequency (one-half the sampling
+frequency).
+
+The results of the spectral analysis are
+multiplied by the reciprocal of the lengths of
+the individual pulses to normalize the five
+plots.  Otherwise, the results for the short
+pulses would be too small to see on the plots.
+
+Tested using J2SEE 1.4.2 under WinXP.
+************************************************/
+import java.util.*;
+
+class Dsp032 implements GraphIntfc01{
+  final double pi = Math.PI;
+
+  int len = 400;//data length
+  //Sample that represents zero time.
+  int zeroTime = 0;
+  //Low and high frequency limits for the
+  // spectral analysis.
+  double lowF = 0.0;
+  double highF = 0.5;
+  int numberSpectra = 5;
+  //Frequencies of the sinusoids
+  double freq1 = 0.0625 - 2.0/len;
+  double freq2 = 0.0625 + 2.0/len;
+
+  //Amplitude of the sinusoids
+  double amp = 160;
+
+  //Following arrays will contain data that is
+  // input to the spectral analysis process.
+  double[] data1 = new double[len];
+  double[] data2 = new double[len];
+  double[] data3 = new double[len];
+  double[] data4 = new double[len];
+  double[] data5 = new double[len];
+
+  //Following arrays receive information back
+  // from the spectral analysis that is not used
+  // in this program.
+  double[] real;
+  double[] imag;
+  double[] angle;
+
+  //Following arrays receive the magnitude
+  // spectral information back from the spectral
+  // analysis process.
+  double[] mag1;
+  double[] mag2;
+  double[] mag3;
+  double[] mag4;
+  double[] mag5;
+
+  public Dsp032(){//constructor
+
+    //Create the raw data
+    for(int x = 0;x &lt; len/16;x++){
+      data1[x] = amp*Math.cos(2*pi*x*freq1)
+                    + amp*Math.cos(2*pi*x*freq2);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/8;x++){
+      data2[x] = amp*Math.cos(2*pi*x*freq1)
+                    + amp*Math.cos(2*pi*x*freq2);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/4;x++){
+      data3[x] = amp*Math.cos(2*pi*x*freq1)
+                    + amp*Math.cos(2*pi*x*freq2);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/2;x++){
+      data4[x] = amp*Math.cos(2*pi*x*freq1)
+                    + amp*Math.cos(2*pi*x*freq2);
+    }//end for loop
+
+    for(int x = 0;x &lt; len;x++){
+      data5[x] = amp*Math.cos(2*pi*x*freq1)
+                    + amp*Math.cos(2*pi*x*freq2);
+    }//end for loop
+
+
+    //Compute magnitude spectra of the raw data
+    // and save it in output arrays.  Note that
+    // the real, imag, and angle arrays are not
+    // used later, so they are discarded each
+    // time a new spectral analysis is performed.
+    mag1 = new double[len];
+    real = new double[len];
+    imag = new double[len];
+    angle = new double[len];
+    ForwardRealToComplex01.transform(data1,real,
+      imag,angle,mag1,zeroTime,lowF,highF);
+
+    mag2 = new double[len];
+    real = new double[len];
+    imag = new double[len];
+    angle = new double[len];
+    ForwardRealToComplex01.transform(data2,real,
+      imag,angle,mag2,zeroTime,lowF,highF);
+
+    mag3 = new double[len];
+    real = new double[len];
+    imag = new double[len];
+    angle = new double[len];
+    ForwardRealToComplex01.transform(data3,real,
+      imag,angle,mag3,zeroTime,lowF,highF);
+
+    mag4 = new double[len];
+    real = new double[len];
+    imag = new double[len];
+    angle = new double[len];
+    ForwardRealToComplex01.transform(data4,real,
+      imag,angle,mag4,zeroTime,lowF,highF);
+
+    mag5 = new double[len];
+    real = new double[len];
+    imag = new double[len];
+    angle = new double[len];
+    ForwardRealToComplex01.transform(data5,real,
+      imag,angle,mag5,zeroTime,lowF,highF);
+
+  }//end constructor
+
+  //-------------------------------------------//
+  //The following six methods are required by the
+  // interface named GraphIntfc01.
+  public int getNmbr(){
+    //Return number of functions to process.
+    // Must not exceed 5.
+    return 5;
+  }//end getNmbr
+  //-------------------------------------------//
+  public double f1(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; mag1.length-1){
+      return 0;
+    }else{
+      //Scale the magnitude data by the
+      // reciprocal of the length of the sinusoid
+      // to normalize the five plots to the same
+      // peak value.
+      return mag1[index]*16.0;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f2(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; mag2.length-1){
+      return 0;
+    }else{
+      return mag2[index]*8.0;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f3(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; mag3.length-1){
+      return 0;
+    }else{
+      return mag3[index]*4.0;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f4(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; mag4.length-1){
+      return 0;
+    }else{
+      return mag4[index]*2.0;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f5(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; mag5.length-1){
+      return 0;
+    }else{
+      return mag5[index]*1.0;
+    }//end else
+  }//end function
+
+}//end sample class Dsp032</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<table id="table1020" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1020">
+<row id="tr1040">
+
+
+
+<entry id="th1020">
+<emphasis id="Listing_13" effect="bold">
+
+Listing 13.
+
+</emphasis>
+
+ Dsp033a.java.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1020">
+<row id="tr1041">
+<entry id="td1020">
+
+		
+
+<code id="pre1012" display="block">/* File Dsp033a.java
+Copyright 2004, R.G.Baldwin
+Revised 5/17/2004
+
+Displays sinusoidal pulses identical to those
+processed by Dsp033.
+
+Creates and displays five separate time series,
+each 400 samples in length.
+
+Each time series contains a pulse and the pulses
+are different lengths.
+
+Each pulse consists of the sum of two sinusoids
+at closely spaced frequencies.  The frequencies
+of the two sinusoids are equidistant from 0.0625
+times the sampling frequency.  The total
+separation between the frequencies of the two
+sinusoids is the reciprocal of the length of the
+pulse.
+
+All frequency values are specified as type
+double as a fraction of the sampling frequency.
+
+The lengths of the pulses are:
+
+25 samples
+50 samples
+100 samples
+200 samples
+400 samples
+
+Tested using J2SEE 1.4.2 under WinXP.
+************************************************/
+import java.util.*;
+
+class Dsp033a implements GraphIntfc01{
+  final double pi = Math.PI;
+
+  int len = 400;//data length
+  int numberPulses = 5;
+  //Frequencies of the sinusoids
+  double freq1a = 0.0625 - 8.0/len;
+  double freq2a = 0.0625 + 8.0/len;
+
+  double freq1b = 0.0625 - 4.0/len;
+  double freq2b = 0.0625 + 4.0/len;
+
+  double freq1c = 0.0625 - 2.0/len;
+  double freq2c = 0.0625 + 2.0/len;
+
+  double freq1d = 0.0625 - 1.0/len;
+  double freq2d = 0.0625 + 1.0/len;
+
+  double freq1e = 0.0625 - 0.5/len;
+  double freq2e = 0.0625 + 0.5/len;
+
+  //Amplitude of the sinusoids
+  double amp = 160;
+
+  //Following arrays will contain sinusoidal data
+  double[] data1 = new double[len];
+  double[] data2 = new double[len];
+  double[] data3 = new double[len];
+  double[] data4 = new double[len];
+  double[] data5 = new double[len];
+
+  public Dsp033a(){//constructor
+
+    //Create the raw data
+    for(int x = 0;x &lt; len/16;x++){
+      data1[x] = amp*Math.cos(2*pi*x*freq1a)
+                    + amp*Math.cos(2*pi*x*freq2a);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/8;x++){
+      data2[x] = amp*Math.cos(2*pi*x*freq1b)
+                    + amp*Math.cos(2*pi*x*freq2b);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/4;x++){
+      data3[x] = amp*Math.cos(2*pi*x*freq1c)
+                    + amp*Math.cos(2*pi*x*freq2c);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/2;x++){
+      data4[x] = amp*Math.cos(2*pi*x*freq1d)
+                    + amp*Math.cos(2*pi*x*freq2d);
+    }//end for loop
+
+    for(int x = 0;x &lt; len;x++){
+      data5[x] = amp*Math.cos(2*pi*x*freq1e)
+                   + amp*Math.cos(2*pi*x*freq2e);
+    }//end for loop
+
+  }//end constructor
+
+  //-------------------------------------------//
+  //The following six methods are required by the
+  // interface named GraphIntfc01.
+  public int getNmbr(){
+    //Return number of functions to process.
+    // Must not exceed 5.
+    return 5;
+  }//end getNmbr
+  //-------------------------------------------//
+  public double f1(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; data1.length-1){
+      return 0;
+    }else{
+      //Scale the amplitude of the pulses to make
+      // them compatible with the default
+      // plotting amplitude of 100.0.
+      return data1[index]*40.0/amp;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f2(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; data2.length-1){
+      return 0;
+    }else{
+      return data2[index]*40.0/amp;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f3(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; data3.length-1){
+      return 0;
+    }else{
+      return data3[index]*40.0/amp;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f4(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; data4.length-1){
+      return 0;
+    }else{
+      return data4[index]*40.0/amp;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f5(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; data5.length-1){
+      return 0;
+    }else{
+      return data5[index]*40.0/amp;
+    }//end else
+  }//end function
+
+}//end sample class Dsp033a</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<table id="table1021" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1021">
+<row id="tr1042">
+
+
+
+<entry id="th1021">
+<emphasis id="Listing_14" effect="bold">
+
+Listing 14.
+
+</emphasis>
+
+ File Dsp033.java.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1021">
+<row id="tr1043">
+<entry id="td1021">
+
+		
+
+<code id="pre1013" display="block">/* File Dsp033.java
+Copyright 2004, R.G.Baldwin
+Revised 5/17/2004
+
+Same as Dsp032 except that the separation between
+the frequencies of the two sinusoids is the
+reciprocal of the length of the pulse.
+
+Performs spectral analysis on five separate time
+series, each 400 samples in length.
+
+Each time series contains a pulse and the pulses
+are different lengths.
+
+Each pulse consists of the sum of two sinusoids
+at closely spaced frequencies.  The frequencies
+of the two sinusoids are equidistant from 0.0625
+times the sampling frequency.  The total
+separation between the frequencies of the two
+sinusoids is the reciprocal of the length of the
+pulse.
+
+All frequency values are specified as type
+double as a fraction of the sampling frequency.
+
+The lengths of the pulses are:
+
+25 samples
+50 samples
+100 samples
+200 samples
+400 samples
+
+The spectral analysis computes the spectra at
+400 equally spaced points between zero and the
+folding frequency (one-half the sampling
+frequency).
+
+The results of the spectral analysis are
+multiplied by the reciprocal of the lengths of
+the individual pulses to normalize the five
+plots.  Otherwise, the results for the short
+pulses would be too small to see on the plots.
+
+Tested using J2SEE 1.4.2 under WinXP.
+************************************************/
+import java.util.*;
+
+class Dsp033 implements GraphIntfc01{
+  final double pi = Math.PI;
+
+  int len = 400;//data length
+  //Sample that represents zero time.
+  int zeroTime = 0;
+  //Low and high frequency limits for the
+  // spectral analysis.
+  double lowF = 0.0;
+  double highF = 0.5;
+  int numberSpectra = 5;
+  //Frequencies of the sinusoids
+  double freq1a = 0.0625 - 8.0/len;
+  double freq2a = 0.0625 + 8.0/len;
+
+  double freq1b = 0.0625 - 4.0/len;
+  double freq2b = 0.0625 + 4.0/len;
+
+  double freq1c = 0.0625 - 2.0/len;
+  double freq2c = 0.0625 + 2.0/len;
+
+  double freq1d = 0.0625 - 1.0/len;
+  double freq2d = 0.0625 + 1.0/len;
+
+  double freq1e = 0.0625 - 0.5/len;
+  double freq2e = 0.0625 + 0.5/len;
+
+
+  //Amplitude of the sinusoids
+  double amp = 160;
+
+  //Following arrays will contain data that is
+  // input to the spectral analysis process.
+  double[] data1 = new double[len];
+  double[] data2 = new double[len];
+  double[] data3 = new double[len];
+  double[] data4 = new double[len];
+  double[] data5 = new double[len];
+
+  //Following arrays receive information back
+  // from the spectral analysis that is not used
+  // in this program.
+  double[] real;
+  double[] imag;
+  double[] angle;
+
+  //Following arrays receive the magnitude
+  // spectral information back from the spectral
+  // analysis process.
+  double[] mag1;
+  double[] mag2;
+  double[] mag3;
+  double[] mag4;
+  double[] mag5;
+
+  public Dsp033(){//constructor
+
+    //Create the raw data
+    for(int x = 0;x &lt; len/16;x++){
+      data1[x] = amp*Math.cos(2*pi*x*freq1a)
+                    + amp*Math.cos(2*pi*x*freq2a);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/8;x++){
+      data2[x] = amp*Math.cos(2*pi*x*freq1b)
+                    + amp*Math.cos(2*pi*x*freq2b);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/4;x++){
+      data3[x] = amp*Math.cos(2*pi*x*freq1c)
+                    + amp*Math.cos(2*pi*x*freq2c);
+    }//end for loop
+
+    for(int x = 0;x &lt; len/2;x++){
+      data4[x] = amp*Math.cos(2*pi*x*freq1d)
+                    + amp*Math.cos(2*pi*x*freq2d);
+    }//end for loop
+
+    for(int x = 0;x &lt; len;x++){
+      data5[x] = amp*Math.cos(2*pi*x*freq1e)
+                   + amp*Math.cos(2*pi*x*freq2e);
+    }//end for loop
+
+
+    //Compute magnitude spectra of the raw data
+    // and save it in output arrays.  Note that
+    // the real, imag, and angle arrays are not
+    // used later, so they are discarded each
+    // time a new spectral analysis is performed.
+    mag1 = new double[len];
+    real = new double[len];
+    imag = new double[len];
+    angle = new double[len];
+    ForwardRealToComplex01.transform(data1,real,
+      imag,angle,mag1,zeroTime,lowF,highF);
+
+    mag2 = new double[len];
+    real = new double[len];
+    imag = new double[len];
+    angle = new double[len];
+    ForwardRealToComplex01.transform(data2,real,
+      imag,angle,mag2,zeroTime,lowF,highF);
+
+    mag3 = new double[len];
+    real = new double[len];
+    imag = new double[len];
+    angle = new double[len];
+    ForwardRealToComplex01.transform(data3,real,
+      imag,angle,mag3,zeroTime,lowF,highF);
+
+    mag4 = new double[len];
+    real = new double[len];
+    imag = new double[len];
+    angle = new double[len];
+    ForwardRealToComplex01.transform(data4,real,
+      imag,angle,mag4,zeroTime,lowF,highF);
+
+    mag5 = new double[len];
+    real = new double[len];
+    imag = new double[len];
+    angle = new double[len];
+    ForwardRealToComplex01.transform(data5,real,
+      imag,angle,mag5,zeroTime,lowF,highF);
+
+  }//end constructor
+
+  //-------------------------------------------//
+  //The following six methods are required by the
+  // interface named GraphIntfc01.
+  public int getNmbr(){
+    //Return number of functions to process.
+    // Must not exceed 5.
+    return 5;
+  }//end getNmbr
+  //-------------------------------------------//
+  public double f1(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; mag1.length-1){
+      return 0;
+    }else{
+      //Scale the magnitude data by the
+      // reciprocal of the length of the sinusoid
+      // to normalize the five plots to the same
+      // peak value.
+      return mag1[index]*16.0;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f2(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; mag2.length-1){
+      return 0;
+    }else{
+      return mag2[index]*8.0;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f3(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; mag3.length-1){
+      return 0;
+    }else{
+      return mag3[index]*4.0;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f4(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; mag4.length-1){
+      return 0;
+    }else{
+      return mag4[index]*2.0;
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  public double f5(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; mag5.length-1){
+      return 0;
+    }else{
+      return mag5[index]*1.0;
+    }//end else
+  }//end function
+
+}//end sample class Dsp033</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+
+
+	
+
+</section>
+<section id="h11008">
+<title>
+<emphasis id="Miscellaneous" effect="bold">
+
+Miscellaneous
+
+</emphasis>
+
+
+</title>
+
+
+	
+
+<para id="p1167">
+This section contains a variety of miscellaneous information.
+
+</para>
+
+
+
+
+
+	
+
+<note id="note1000" type="">
+
+
+		
+
+
+			
+
+
+				
+
+<emphasis id="strong1061" effect="bold">
+Housekeeping material
+
+</emphasis>
+
+				
+
+<list id="ul1021" list-type="bulleted">
+
+					
+
+<item id="li1089">
+Module name: Java1483-Spectrum Analysis using Java, 
+					Frequency Resolution versus Data Length
+
+</item>
+
+
+					
+
+<item id="li1090">
+File: Java1483.htm
+
+</item>
+
+
+					
+
+<item id="li1091">
+Published: 08/10/04
+
+</item>
+
+
+
+				
+
+</list>
+
+
+
+
+<para id="p1168">
+Baldwin provides the code and explains the requirements for using spectral analysis to resolve spectral peaks for pulses containing closely spaced truncated sinusoids.
+
+</para>
+
+
+
+				
+
+</note>
+
+
+
+
+
+	
+
+<note id="note1001" type="">
+
+
+		
+
+
+			
+
+
+				
+
+<emphasis id="strong1062" effect="bold">
+Disclaimers:
+
+</emphasis>
+<para id="p1169">
+<emphasis id="strong1063" effect="bold">
+Financial
+
+</emphasis>
+: Although the Connexions
+site makes it possible for you to download a PDF file for this
+module at no charge, and also makes it possible for you to
+purchase a pre-printed version of the PDF file, you should be
+aware that some of the HTML elements in this module may not translate well into
+PDF.
+
+</para>
+
+
+
+				
+
+<para id="p1170">
+I also want you to know that, I receive no financial compensation from the Connexions website even if you purchase 
+	the PDF version of the module.
+
+</para>
+
+
+
+				
+
+<para id="p1171">
+In the past, unknown individuals have copied my modules from cnx.org, converted them to Kindle books, and 
+				placed them for sale on Amazon.com showing me as the author. I 
+				neither receive compensation for those sales nor do I know who does 
+				receive compensation. If you purchase such a book, please be 
+				aware that it is a copy of a module that is freely 
+				available on cnx.org and that it was made and published without 
+				my prior knowledge.
+
+</para>
+
+
+
+				
+
+<para id="p1172">
+<emphasis id="strong1064" effect="bold">
+Affiliation
+
+</emphasis>
+: I am a professor of Computer Information 
+	Technology at Austin Community College in Austin, TX.
+	
+
+</para>
+
+
+
+
+</note>
+
+
+
+	
+
+
+
+<para id="p1173">
+-end- 
+
+</para>
+
+
+
+
+
+
+
+</section>
+</content>
+
+
+
+
+</document>

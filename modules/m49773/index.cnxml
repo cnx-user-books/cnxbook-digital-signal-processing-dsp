@@ -1,0 +1,4350 @@
+<document xmlns="http://cnx.rice.edu/cnxml"> 
+<title>Dsp00104-Sampled Time Series</title>
+<metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m49773</md:content-id>
+  <md:title>Dsp00104-Sampled Time Series</md:title>
+  <md:abstract>Baldwin explains the meaning of sampling, and identifies some of the problems that arise when sampling and processing analog signals.  He explains the concept of the Nyquist folding frequency and illustrates the folding phenomena by plotting time series data as well as spectral data.</md:abstract>
+  <md:uuid>0d7ff757-3804-403b-8288-35d9cf8d08df</md:uuid>
+</metadata>
+
+<content>
+
+
+
+
+
+
+<quote id="blockquote1000" display="block">
+
+
+
+<para id="p1000">
+Revised: Fri Oct 16 23:11:24 CDT 2015
+
+</para>
+
+
+
+
+
+<para id="p1001">
+This page is included in the following books:
+
+</para>
+
+
+
+
+<list id="ul1000" list-type="bulleted">
+
+	
+
+<item id="li1000">
+<link id="a1000" url="http://cnx.org/contents/98d253c0-8044-4e22-a707-7b8d819bc8a7">
+
+
+        Digital Signal Processing - DSP
+
+</link>
+
+ 
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+</quote>
+
+
+
+
+
+
+
+
+
+
+
+<section id="h11000">
+<title>
+<emphasis id="Table_of_contents" effect="bold">
+
+Table of contents
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<list id="ul1001" list-type="bulleted">
+
+	
+
+<item id="li1001">
+<link id="a1001" target-id="Preface">
+
+Preface
+
+</link>
+
+
+	
+
+<list id="ul1002" list-type="bulleted">
+
+		
+
+<item id="li1002">
+<link id="a1002" target-id="Viewing_tip">
+
+Viewing tip
+
+</link>
+
+
+<list id="ul1003" list-type="bulleted">
+
+			
+
+<item id="li1003">
+<link id="a1003" target-id="Figures">
+
+Figures
+
+</link>
+
+
+</item>
+
+
+
+		
+
+</list>
+
+
+		
+
+</item>
+
+
+	
+
+</list>
+
+
+	
+
+</item>
+
+
+
+	
+
+<item id="li1004">
+<link id="a1004" target-id="Preview">
+
+Preview
+
+</link>
+
+
+</item>
+
+
+
+	
+
+<item id="li1005">
+<link id="a1005" target-id="Discussion_and_sample_code">
+
+Discussion
+
+</link>
+
+
+<list id="ul1004" list-type="bulleted">
+
+
+		
+
+<item id="li1006">
+<link id="a1006" target-id="Sinusoids_time_series_composition_and_decomposition">
+
+Sinusoids, time series, composition, and decomposition
+
+</link>
+
+
+</item>
+
+
+		
+
+<item id="li1007">
+<link id="a1007" target-id="The_notion_of_sampling_analog_signals">
+
+The notion of sampling analog signals
+
+</link>
+
+
+<list id="ul1005" list-type="bulleted">
+
+			
+
+<item id="li1008">
+<link id="a1008" target-id="What_is_meant_by_sampling">
+
+What is meant by sampling?
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1009">
+<link id="a1009" target-id="The_Nyquist_folding_frequency">
+
+The Nyquist folding frequency
+
+</link>
+
+
+</item>
+
+
+		
+
+</list>
+
+
+		
+
+</item>
+
+
+		
+
+<item id="li1010">
+<link id="a1010" target-id="A_few_comments_about_sampling">
+
+A few comments about sampling
+
+</link>
+
+
+<list id="ul1006" list-type="bulleted">
+
+			
+
+<item id="li1011">
+<link id="a1011" target-id="What_do_we_really_have">
+
+What do we really have?
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1012">
+<link id="a1012" target-id="Sampled_sinusoids">
+
+Sampled sinusoids
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1013">
+<link id="a1013" target-id="Estimating_the_values_in_between_the_samples">
+
+Estimating the values in between the samples
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1014">
+<link id="a1014" target-id="A_more_common_representation">
+
+A more common representation
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1015">
+<link id="a1015" target-id="The_most_common_representation">
+
+The most common representation
+
+</link>
+
+
+</item>
+
+
+		
+
+</list>
+
+
+		
+
+</item>
+
+
+		
+
+<item id="li1016">
+<link id="a1016" target-id="What_happens_when_the_sampling_frequency_is_reduced">
+
+What happens when the sampling frequency is reduced?
+
+</link>
+
+
+<list id="ul1007" list-type="bulleted">
+
+            
+
+<item id="li1017">
+<link id="a1017" target-id="Some_numbers">
+
+Some numbers
+
+</link>
+
+
+</item>
+
+
+            
+
+<item id="li1018">
+<link id="a1018" target-id="Comparison_of_frequencies_with_center_frequency">
+
+Comparison of frequencies with center frequency
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1019">
+<link id="a1019" target-id="Reduce_the_sampling_frequency">
+
+Reduce the sampling frequency
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1020">
+<link id="a1020" target-id="A_different_approach">
+
+A different approach
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1021">
+<link id="a1021" target-id="Introduce_a_sampling_problem">
+
+Introduce a sampling problem
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1022">
+<link id="a1022" target-id="Back_to_the_case_with_no_problems">
+
+Back to the case with no problems
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1023">
+<link id="a1023" target-id="Back_to_the_case_with_the_sampling_problem">
+
+Back to the case with the sampling problem
+
+</link>
+
+
+</item>
+
+
+
+		
+
+</list>
+
+
+		
+
+</item>
+
+
+		
+
+<item id="li1024">
+<link id="a1024" target-id="The_bottom_line">
+
+The bottom line
+
+</link>
+
+
+<list id="ul1008" list-type="bulleted">
+
+			
+
+<item id="li1025">
+<link id="a1025" target-id="Using_an_analog_lowpass_prefilter">
+
+Using an analog low-pass pre-filter
+
+</link>
+
+
+</item>
+
+
+			
+
+<item id="li1026">
+<link id="a1026" target-id="Digital_resampling">
+
+Digital re-sampling
+
+</link>
+
+
+</item>
+
+
+		
+
+</list>
+
+
+		
+
+</item>
+
+
+	
+
+</list>
+
+
+	
+
+</item>
+
+
+
+
+
+	
+
+<item id="li1027">
+<link id="a1027" target-id="Summary">
+
+Summary
+
+</link>
+
+
+</item>
+
+
+
+
+	
+
+<item id="li1028">
+<link id="a1028" target-id="Miscellaneous">
+
+Miscellaneous
+
+</link>
+
+
+</item>
+
+
+
+
+
+</list>
+
+
+	
+	
+
+</section>
+<section id="h11001">
+<title>
+<emphasis id="Preface" effect="bold">
+
+Preface
+
+</emphasis>
+
+
+</title>
+
+
+	
+	
+
+<para id="p1002">
+This is one in a series of modules designed to teach you about Digital 
+	Signal Processing (DSP) using Java. The purpose of the miniseries is to 
+	present the concepts of DSP in a way that can be understood by persons 
+	having no prior DSP experience. However, some experience in Java programming 
+	would be useful. Whenever it is necessary for me to write a program to 
+	illustrate a point, I will write it in Java. 
+
+</para>
+
+
+
+	
+	
+
+<section id="h21000">
+<title>
+<emphasis id="Viewing_tip" effect="bold">
+
+Viewing tip
+
+</emphasis>
+
+
+</title>
+
+
+	
+
+<para id="p1003">
+I recommend that you open another copy of this module in a separate 
+browser window and use the following links to easily find and view the Figures 
+while you are reading about them.
+
+</para>
+
+
+
+	
+
+<section id="h31000">
+<title>
+<emphasis id="Figures" effect="bold">
+
+Figures
+
+</emphasis>
+
+
+</title>
+
+
+	
+
+<list id="ul1009" list-type="bulleted">
+
+		
+
+<item id="li1029">
+<link id="a1029" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+. Samples from five different sinusoids. 
+
+</item>
+
+
+		
+
+<item id="li1030">
+<link id="a1030" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+. Rectangular representations of samples from five sinusoids. 
+
+</item>
+
+
+		
+
+<item id="li1031">
+<link id="a1031" target-id="Figure_3">
+
+Figure 3
+
+</link>
+
+. Trapezoidal representations of samples from five sinusoids. 
+
+</item>
+
+
+		
+
+<item id="li1032">
+<link id="a1032" target-id="Figure_4">
+
+Figure 4
+
+</link>
+
+. Most common representations of samples from five sinusoids. 
+
+</item>
+
+
+		
+
+<item id="li1033">
+<link id="a1033" target-id="Figure_5">
+
+Figure 5
+
+</link>
+
+. Five sampled sinusoids 
+
+</item>
+
+
+		
+
+<item id="li1034">
+<link id="a1034" target-id="Figure_6">
+
+Figure 6
+
+</link>
+
+. Result of re-sampling the five sinusoids. 
+
+</item>
+
+
+		
+
+<item id="li1035">
+<link id="a1035" target-id="Figure_7">
+
+Figure 7
+
+</link>
+
+. Spectral analyses of five sinusoids with no sampling problems. 
+
+</item>
+
+
+		
+
+<item id="li1036">
+<link id="a1036" target-id="Figure_8">
+
+Figure 8
+
+</link>
+
+. Spectral analyses of five sinusoids with sampling problem. 
+
+</item>
+
+
+		
+
+<item id="li1037">
+<link id="a1037" target-id="Figure_9">
+
+Figure 9
+
+</link>
+
+. Spectral analyses of five sinusoids with no sampling problems. 
+
+</item>
+
+
+		
+
+<item id="li1038">
+<link id="a1038" target-id="Figure_10">
+
+Figure 10
+
+</link>
+
+. Spectral analyses of five sinusoids with sampling problem 
+
+</item>
+
+
+
+	
+
+</list>
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h11002">
+<title>
+<emphasis id="Preview" effect="bold">
+
+Preview
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1004">
+I will explain the meaning of sampling, and will explain some of the problems 
+that arise when sampling and processing analog signals. Those problems generally 
+relate to the relationship between the sampling frequency and the high-frequency 
+components contained in the analog signal.
+
+</para>
+
+
+
+
+
+<para id="p1005">
+I will explain the concept of the 
+
+<emphasis id="em1000" effect="italics">
+Nyquist folding frequency
+
+</emphasis>
+, which 
+is half the sampling frequency 
+
+<emphasis id="em1001" effect="italics">
+(more commonly called the sampling rate)
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<para id="p1006">
+I will illustrate the frequency folding phenomena by plotting sampled time 
+series data as well as spectral data. 
+
+</para>
+
+
+
+	
+	
+
+</section>
+<section id="h11003">
+<title>
+<emphasis id="Discussion_and_sample_code" effect="bold">
+
+Discussion
+
+</emphasis>
+
+
+</title>
+
+
+	
+	
+
+<section id="h21001">
+<title>
+<emphasis id="Sinusoids_time_series_composition_and_decomposition" effect="bold">
+
+Sinusoids, 
+	time series, composition, and decomposition
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1007">
+I introduced you to sinusoids and sampled time series in an
+
+
+<link id="a1039" url="http://cnx.org/contents/f5045047-e3a1-4dec-945e-2a7c8051f294">
+
+earlier 
+module
+
+</link>
+
+. I taught you about sine and cosine functions, and the Java methods 
+used to calculate their values. I also introduced the concepts of 
+
+<emphasis id="em1002" effect="italics">
+period
+
+</emphasis>
+ 
+and 
+
+<emphasis id="em1003" effect="italics">
+frequency
+
+</emphasis>
+ for sinusoids.
+
+</para>
+
+
+
+
+
+<para id="p1008">
+While introducing 
+
+<emphasis id="em1004" effect="italics">
+decomposition
+
+</emphasis>
+, I told you that almost everything 
+we will discuss in this series on DSP is based on the premise that every time 
+series can be decomposed into a large number of sinusoids, each having its own 
+amplitude and frequency.
+
+</para>
+
+
+
+
+
+<para id="p1009">
+I also introduced the concept of 
+
+<emphasis id="em1005" effect="italics">
+composition
+
+</emphasis>
+, where any time series 
+can be created by adding together the correct set of sinusoids, each having its 
+own amplitude and frequency.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h21002">
+<title>
+<emphasis id="The_notion_of_sampling_analog_signals" effect="bold">
+
+The notion of sampling 
+analog signals
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1010">
+While signal processing can be accomplished in a variety of ways, including 
+analog processors, digital processors, and optical processors, DSP is based on 
+the notion that signals in nature can be sampled and converted into a series of 
+numbers. The numbers can be fed into some sort of digital device, which can 
+process the numbers to achieve some desired objective.
+
+</para>
+
+
+
+
+
+<section id="h31001">
+<title>
+<emphasis id="What_is_meant_by_sampling" effect="bold">
+
+What is meant by sampling
+
+</emphasis>
+
+?
+
+</title>
+
+
+
+
+<para id="p1011">
+To sample a signal means to measure and record its amplitude at a series of 
+points in time. For example, you might record the temperature in your office 
+every ten minutes for twenty-four hours. In this case, the actual temperature in 
+your office would be the analog signal. The 144 temperature values that you 
+record would be a sampled time series intended to represent that analog signal.
+
+
+</para>
+
+
+
+
+
+<section id="h41000">
+<title>
+Uniform sampling is most common
+
+</title>
+
+
+
+
+<para id="p1012">
+Although uniform sampling is not strictly necessary, in DSP, the most common 
+practice is to sample the signal at uniform intervals of time, 
+
+<emphasis id="em1006" effect="italics">
+(such as once 
+every ten minutes, once per second, or one-thousand times per second).
+
+</emphasis>
+ This 
+results in a uniform sampling frequency 
+
+<emphasis id="em1007" effect="italics">
+(sampling rate)
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1001" display="block">
+
+	
+
+<para id="p1013">
+<emphasis id="em1008" effect="italics">
+(Most of the discussions in this series of tutorials on DSP will 
+	assume a uniform sampling frequency.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41001">
+<title>
+Some problems arise
+
+</title>
+
+
+
+
+<para id="p1014">
+While sampled data can be used to simulate most of the signal-processing 
+capabilities available with analog devices, the process of sampling does 
+introduce some complications that must be dealt with. For the most part, these 
+complications have to do with the relationship between the sampling frequency 
+
+<emphasis id="em1009" effect="italics">
+
+(in samples per second)
+
+</emphasis>
+ and the highest frequency component contained in the 
+signal 
+
+<emphasis id="em1010" effect="italics">
+(in cycles per second).
+
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1015">
+Stated simply, if the analog signal contains any sinusoidal components whose 
+frequency is greater than half the sampling frequency, then those components 
+will appear in the sampled time series at a different frequency. This can result 
+in a variety of problems.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41002">
+<title>
+Reconstruction of the analog signal
+
+</title>
+
+
+
+
+<para id="p1016">
+Theoretically, if the sampling frequency is twice the highest frequency 
+component contained in the analog signal, then the samples can be used in 
+conjunction with an analog filter to reconstruct the original analog signal.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1002" display="block">
+
+	
+
+<para id="p1017">
+<emphasis id="em1011" effect="italics">
+(However, this requires the construction of a perfect analog filter. 
+	In practice, the sampling frequency needs to be perhaps five to ten times the 
+	highest frequency component in the analog signal to make it practical to do 
+	a good job of reconstructing the analog signal from the samples.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41003">
+<title>
+Reconstruction is not always required
+
+</title>
+
+
+
+
+<para id="p1018">
+Once the signal has been sampled and converted to digital form, there is 
+often no interest in reconstructing the analog signal from the samples. While 
+this eliminates the difficulty of reconstruction, it doesn't eliminate the 
+potential problems caused by having the sampling frequency be less than twice 
+the highest frequency component in the signal.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31002">
+<title>
+<emphasis id="The_Nyquist_folding_frequency" effect="bold">
+
+The Nyquist folding frequency
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1019">
+If the analog signal contains frequency components that are greater than half 
+the sampling frequency, those components will appear to be at a different 
+frequency in the sampled data.
+
+</para>
+
+
+
+
+
+<para id="p1020">
+The frequency that is equal to half the sampling frequency is often referred 
+to as the 
+
+<emphasis id="em1012" effect="italics">
+Nyquist folding frequency
+
+</emphasis>
+, or simply the 
+
+<emphasis id="em1013" effect="italics">
+folding frequency.
+
+</emphasis>
+ 
+The folding frequency is half the sampling frequency. I will provide examples 
+later to illustrate where this frequency gets its name.
+
+</para>
+
+
+
+
+
+<section id="h41004">
+<title>
+A brief description
+
+</title>
+
+
+
+
+<para id="p1021">
+If a frequency component in the analog signal is less than the sampling 
+frequency, but exceeds the folding frequency by an amount 
+
+<emphasis id="em1014" effect="italics">
+<emphasis id="strong1000" effect="bold">
+d
+
+</emphasis>
+,
+
+</emphasis>
+ it will 
+appear in the sampled data at a frequency that is the folding frequency minus 
+
+<emphasis id="em1015" effect="italics">
+
+
+
+<emphasis id="strong1001" effect="bold">
+d
+
+</emphasis>
+.
+
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1022">
+In other words, the entire frequency spectrum appears to fold around the 
+
+
+<emphasis id="em1016" effect="italics">
+folding frequency
+
+</emphasis>
+ such that all frequency components that are above the folding 
+frequency fold down to a similar position on the lower side of the folding 
+frequency. Those frequency components above the folding frequency produce a 
+mirror image below the folding frequency.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1003" display="block">
+
+	
+
+<para id="p1023">
+<emphasis id="em1017" effect="italics">
+(If a frequency component in the analog signal is greater than the 
+	sampling frequency, folding still occurs, but in a more complicated way.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41005">
+<title>
+Some specific numbers
+
+</title>
+
+
+
+
+<para id="p1024">
+Some specific numbers may make this easier to understand. Assume that the 
+sampling frequency is 2000 samples per second, giving a folding frequency of 
+1000 cycles per second.
+
+</para>
+
+
+
+
+
+<para id="p1025">
+If an analog signal contains a frequency component at 1100 cycles per second, 
+it will fold down and appear at 900 cycles per second in the sampled signal.
+
+</para>
+
+
+
+
+
+<para id="p1026">
+A frequency component at 1600 cycles per second in the analog signal will 
+fold down and appear at 400 cycles per second in the sampled signal.
+
+</para>
+
+
+
+
+
+<para id="p1027">
+A frequency component at 2000 cycles per second 
+
+<emphasis id="em1018" effect="italics">
+(the sampling frequency)
+
+</emphasis>
+ 
+will fold down and appear at zero frequency in the sampled signal.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h21003">
+<title>
+<emphasis id="A_few_comments_about_sampling" effect="bold">
+
+A few comments about sampling
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1028">
+The folding behavior is fairly easy to illustrate graphically, and I will do 
+that shortly. Before doing that, however, I need to make a few comments about 
+what it really means to sample an analog signal.
+
+</para>
+
+
+
+
+
+<section id="h31003">
+<title>
+<emphasis id="What_do_we_really_have" effect="bold">
+
+What do we really have
+
+</emphasis>
+
+?
+
+</title>
+
+
+
+
+<para id="p1029">
+First we need to think about what we really have when we have a sampled time 
+series. All that we really have is a set of values taken at specific times. In 
+reality, we know nothing about the values that actually existed for the analog 
+signal in-between the samples.
+
+</para>
+
+
+
+
+
+<para id="p1030">
+For example, in the temperature experiment described earlier, when we record 
+the temperature once every ten minutes, we can't really say what values we would 
+have recorded if we had recorded the temperature once every five minutes 
+instead. Therefore, we sometimes find ourselves estimating what the values are 
+between the recorded samples.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31004">
+<title>
+<emphasis id="Sampled_sinusoids" effect="bold">
+
+Sampled sinusoids
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1031">
+Consider the five plots shown in 
+
+<link id="a1040" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+<table id="table1000" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1000">
+<row id="tr1000">
+<entry id="th1000">
+
+
+
+<emphasis id="Figure_1" effect="bold">
+
+Figure 1.
+
+</emphasis>
+
+ Samples from five different sinusoids.
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1000">
+<row id="tr1001">
+<entry id="td1000">
+
+
+
+<media id="media1000" alt="missing image" display="block">
+<image id="img1000" mime-type="image/gif" src="../../media/dsp00104figa.gif" width="401" height="429"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<para id="p1032">
+<link id="a1041" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+ shows the values for samples taken from five different sinusoids 
+
+<emphasis id="em1019" effect="italics">
+
+(the height of each vertical bar represents the value of a sample).
+
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1033">
+All five sinusoids were sampled at the same sampling frequency. The sinusoid 
+in the center was sampled twenty times per cycle 
+
+<emphasis id="em1020" effect="italics">
+(not necessarily twenty 
+times per second).
+
+</emphasis>
+ 
+
+</para>
+
+
+
+
+
+<para id="p1034">
+The two sinusoids above the center had higher frequencies than the sinusoid 
+in the center, with the sinusoid at the top having the highest frequency. For a 
+fixed sampling frequency, the sinusoids above the center had fewer samples per 
+cycle than the sinusoid in the center. The sinusoid at the top had the fewest 
+number of samples per cycle.
+
+</para>
+
+
+
+
+
+<para id="p1035">
+The two sinusoids below the center had lower frequencies, than the sinusoid 
+in the center, with the sinusoid at the bottom having the lowest frequency. The 
+two sinusoids below the center had more samples per cycle than the sinusoid in 
+the center. The sinusoid at the bottom had the most samples per cycle.
+
+</para>
+
+
+
+
+
+<section id="h41006">
+<title>
+The number of samples 
+per cycle is important
+
+</title>
+
+
+
+
+<para id="p1036">
+In the final analysis, what really counts is not the number of samples per 
+second of the sampling frequency, or the number of cycles per second of the 
+signal frequency. What really counts is the number of 
+
+<emphasis id="strong1002" effect="bold">
+<emphasis id="em1021" effect="italics">
+samples per 
+cycle
+
+</emphasis>
+</emphasis>
+ of the highest frequency component. This value is 
+established by the combination of the signal frequency and the sampling 
+frequency.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41007">
+<title>
+The values between the samples
+
+</title>
+
+
+
+
+<para id="p1037">
+Because the plots in 
+
+<link id="a1042" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+ are pure sinusoids, I can mathematically 
+determine the values between the samples. However, if there had been the 
+slightest amount of random noise superimposed on the sinusoids, 
+
+<emphasis id="em1022" effect="italics">
+(which is the 
+more realistic situation),
+
+</emphasis>
+ I would have no way of knowing the values between 
+the samples. Thus, all of the information that I have about these five signals 
+is contained in the heights of the vertical bars shown in 
+
+<link id="a1043" target-id="Figure_1">
+
+Figure 1
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31005">
+<title>
+<emphasis id="Estimating_the_values_in_between_the_samples" effect="bold">
+
+Estimating the values 
+in between the samples
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1038">
+As mentioned earlier, we often find ourselves estimating the values in 
+between the samples. One way to do this is shown in 
+
+<link id="a1044" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+, which shows a 
+different graphical treatment for the same five sinusoids.
+
+</para>
+
+
+
+
+
+
+<table id="table1001" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1001">
+<row id="tr1002">
+<entry id="th1001">
+
+
+
+<emphasis id="Figure_2" effect="bold">
+
+Figure 2.
+
+</emphasis>
+
+ Rectangular representations of samples from five sinusoids.
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1001">
+<row id="tr1003">
+<entry id="td1001">
+
+
+
+<media id="media1001" alt="missing image" display="block">
+<image id="img1001" mime-type="image/gif" src="../../media/dsp00104figb.gif" width="401" height="431"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<para id="p1039">
+<link id="a1045" target-id="Figure_2">
+
+Figure 2
+
+</link>
+
+ represents each of the sample values as a rectangle. In effect, this 
+treatment estimates that there is no change in the value of the analog signal 
+for half a sample interval after the sample is taken. Then the value of the 
+analog signal jumps to the value of the next sample.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31006">
+<title>
+<emphasis id="A_more_common_representation" effect="bold">
+
+A more common representation
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1040">
+Now consider the graphical treatment for the same five sinusoids shown in 
+
+
+<link id="a1046" target-id="Figure_3">
+
+Figure 3
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+<table id="table1002" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1002">
+<row id="tr1004">
+<entry id="th1002">
+
+
+
+<emphasis id="Figure_3" effect="bold">
+
+Figure 3.
+
+</emphasis>
+
+ Trapezoidal representations of samples from five sinusoids.
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1002">
+<row id="tr1005">
+<entry id="td1002">
+
+
+
+<media id="media1002" alt="missing image" display="block">
+<image id="img1002" mime-type="image/gif" src="../../media/dsp00104figc.gif" width="401" height="431"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<para id="p1041">
+<link id="a1047" target-id="Figure_3">
+
+Figure 3
+
+</link>
+
+ shows a more common representation of the data. 
+
+<link id="a1048" target-id="Figure_3">
+
+Figure 3
+
+</link>
+
+ treats each 
+sample as a trapezoid consisting of a rectangle and a right triangle. The 
+triangle sets atop the rectangle and connects each sample value to the next with 
+a straight line.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31007">
+<title>
+<emphasis id="The_most_common_representation" effect="bold">
+
+The most common representation
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1042">
+Now consider the most common representation of the sampled data, as shown in 
+
+
+<link id="a1049" target-id="Figure_4">
+
+Figure 4
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+<table id="table1003" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1003">
+<row id="tr1006">
+<entry id="th1003">
+
+
+
+<emphasis id="Figure_4" effect="bold">
+
+Figure 4.
+
+</emphasis>
+
+ Most common representations of samples from five sinusoids.
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1003">
+<row id="tr1007">
+<entry id="td1003">
+
+
+
+<media id="media1003" alt="missing image" display="block">
+<image id="img1003" mime-type="image/gif" src="../../media/dsp00104figd.gif" width="401" height="431"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<para id="p1043">
+<link id="a1050" target-id="Figure_4">
+
+Figure 4
+
+</link>
+
+ shows the most common representation of the sampled data. 
+
+<link id="a1051" target-id="Figure_4">
+
+Figure 4
+
+</link>
+
+ 
+is the same as 
+
+<link id="a1052" target-id="Figure_3">
+
+Figure 3
+
+</link>
+
+ except that the vertical lines that identify the sides 
+of the trapezoids have been omitted. In 
+
+<link id="a1053" target-id="Figure_4">
+
+Figure 4
+
+</link>
+
+, each sample value is connected 
+to the next sample value with a straight-line segment.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h21004">
+<title>
+<emphasis id="What_happens_when_the_sampling_frequency_is_reduced" effect="bold">
+
+What happens 
+when the sampling frequency is reduced
+
+</emphasis>
+
+?
+
+</title>
+
+
+
+
+<para id="p1044">
+As you can see in these figures, regardless of which graphical treatment you 
+use, the sampling frequency relative to the signal frequency is sufficiently 
+high to present a respectable view of the sinusoidal signals. Now I'm going to 
+show you what happens when the sampling frequency is reduced without changing 
+the frequency of the sinusoids.
+
+</para>
+
+
+
+
+
+<para id="p1045">
+<link id="a1054" target-id="Figure_5">
+
+Figure 5
+
+</link>
+
+ shows the same five sinusoids as above, except that they are plotted 
+across a longer period of time. 
+
+<emphasis id="em1023" effect="italics">
+(The presentation in 
+
+<link id="a1055" target-id="Figure_5">
+
+Figure 5
+
+</link>
+
+ treats each 
+sample as a rectangle.)
+
+</emphasis>
+</para>
+
+
+
+
+
+
+<table id="table1004" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1004">
+<row id="tr1008">
+<entry id="th1004">
+
+
+
+<emphasis id="Figure_5" effect="bold">
+
+Figure 5.
+
+</emphasis>
+
+ Five sampled sinusoids
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1004">
+<row id="tr1009">
+<entry id="td1004">
+
+
+
+<media id="media1004" alt="missing image" display="block">
+<image id="img1004" mime-type="image/gif" src="../../media/dsp00104fige.gif" width="401" height="431"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<para id="p1046">
+In particular, you should note the obvious frequency difference between the 
+top sinusoid and the bottom sinusoid. Also note the frequency difference between 
+the two sinusoids immediately above and immediately below the center sinusoid.
+
+</para>
+
+
+
+
+
+<section id="h31008">
+<title>
+<emphasis id="Some_numbers" effect="bold">
+
+Some numbers
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1047">
+Let's put some numbers to the frequencies involved. If we consider the 
+sampling frequency to be 20 samples per second, then the center sinusoid has a 
+frequency of one cycle per second, with 20 samples per cycle. On that basis, the 
+frequencies of the sinusoids from top to bottom are as shown below:
+
+</para>
+
+
+
+
+
+<code id="pre1000" display="block">1.75 cycles per second
+1.50 cycles per second
+1.00 cycles per second
+0.50 cycles per second
+0.25 cycles per second</code>
+
+
+
+
+</section>
+<section id="h31009">
+<title>
+<emphasis id="Comparison_of_frequencies_with_center_frequency" effect="bold">
+
+Comparison of 
+frequencies with center frequency
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1048">
+The most important thing to note about these frequency values is how the four 
+outer frequencies relate to the center frequency. The top and bottom frequency 
+values differ from the center frequency by 0.75 cycles per second. In other 
+words, the frequency of the top sinusoid is 0.75 cycles per second above the 
+frequency of the center sinusoid, and the frequency of the bottom sinusoid is 
+0.75 cycles per second below the frequency of the center sinusoid.
+
+</para>
+
+
+
+
+
+<para id="p1049">
+Similarly, the second and fourth frequency values differ from the center 
+frequency by 0.50 cycles per second. Again, one is above and the other is below.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h31010">
+<title>
+<emphasis id="Reduce_the_sampling_frequency" effect="bold">
+
+Reduce the sampling frequency
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1050">
+What I am going to do now is to recalculate and re-plot the values for each 
+sinusoid at a sampling frequency of two samples per second instead of 20 samples 
+per second. This will place the frequency of the center sinusoid exactly at the 
+folding frequency of one cycle per second. More importantly, this will place the 
+frequencies of the top two sinusoids above the folding frequency.
+
+</para>
+
+
+
+
+
+<section id="h41008">
+<title>
+Re-plot the sampled data
+
+</title>
+
+
+
+
+<para id="p1051">
+I will re-plot the data for each sinusoid across the same period of time as 
+in 
+
+<link id="a1056" target-id="Figure_5">
+
+Figure 5
+
+</link>
+
+. The results are shown in 
+
+<link id="a1057" target-id="Figure_6">
+
+Figure 6
+
+</link>
+
+. It would probably be useful for 
+you to view 
+
+<link id="a1058" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+ and 
+
+<link id="a1059" target-id="Figure_6">
+
+Figure 6
+
+</link>
+
+ side-by-side in separate browser windows.
+
+</para>
+
+
+
+
+
+
+
+
+
+<table id="table1005" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1005">
+<row id="tr1010">
+<entry id="th1005">
+
+
+
+<emphasis id="Figure_6" effect="bold">
+
+Figure 6.
+
+</emphasis>
+
+ Result of re-sampling the five sinusoids.
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1005">
+<row id="tr1011">
+<entry id="td1005">
+
+
+
+<media id="media1005" alt="missing image" display="block">
+<image id="img1005" mime-type="image/gif" src="../../media/dsp00104figf.gif" width="401" height="431"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<para id="p1052">
+There are several important things to note about 
+
+<link id="a1060" target-id="Figure_6">
+
+Figure 6
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41009">
+<title>
+Center plot no longer 
+resembles a sinusoid
+
+</title>
+
+
+
+
+<para id="p1053">
+First, you will probably notice that the plot for the center sinusoid no 
+longer looks much like a sinusoid. Rather, it looks like a square wave. This is 
+the result of having exactly two samples per cycle of the sinusoid. One sample 
+is taken from the positive lobe of the sinusoid, and the next sample is taken 
+from the negative lobe of the sinusoid. This pattern repeats, producing 
+something that looks like a square wave. 
+
+<emphasis id="em1024" effect="italics">
+(A different graphical treatment 
+would make it look like a triangular wave.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</section>
+<section id="h41010">
+<title>
+The top two sinusoids
+
+</title>
+
+
+
+
+<para id="p1054">
+More important, however, is to note what has happened to the top two 
+sinusoids. Because the frequencies of the top two sinusoids are above the 
+folding frequency, they no longer have a minimum of two samples per cycle. Thus, 
+the apparent frequency of these two sinusoids has folded around the folding 
+frequency and appears as a lower frequency.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41011">
+<title>
+Top sinusoids match bottom 
+sinusoids
+
+</title>
+
+
+
+
+<para id="p1055">
+In fact, the plot of the top sinusoid now looks exactly like the plot of the 
+bottom sinusoid at a frequency of 0.25 cycles per second. This means that the 
+energy in the top sinusoid at 1.75 cycles per second has folded into a new 
+frequency of 0.25 cycles per second.
+
+</para>
+
+
+
+
+
+<para id="p1056">
+The plot of the sinusoid immediately above the center looks exactly like the 
+plot of the sinusoid immediately below the center at a frequency of 0.50 cycles 
+per second. This means that the energy in that sinusoid at 1.5 cycles per second 
+has folded into a new frequency of 0.5 cycles per second.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41012">
+<title>
+Bottom three plots are correct
+
+</title>
+
+
+
+
+<para id="p1057">
+The plots of the center sinusoid and the two sinusoids below the center are 
+still correct 
+
+<emphasis id="em1025" effect="italics">
+(although not very well sampled).
+
+</emphasis>
+ However, the frequency 
+information embodied in the top two sinusoids has been lost. The top two 
+sinusoids appear to be at a different frequency than the actual frequency of the 
+corresponding analog signals. The fact that the frequencies of these two 
+sinusoids were originally 1.75 and 1.50 cycles per second is now lost in the 
+sampled data.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31011">
+<title>
+<emphasis id="A_different_approach" effect="bold">
+
+A different approach
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1058">
+Now I'm going to illustrate the same folding phenomena from a different 
+perspective using spectral analyses. First I will show you a case having no 
+sampling problems. Then I will introduce a sampling problem and show you the 
+impact that the problem has on the final results.
+
+</para>
+
+
+
+
+
+<para id="p1059">
+<link id="a1061" target-id="Figure_7">
+
+Figure 7
+
+</link>
+
+ shows the result of performing spectral analyses on five different 
+sinusoids 
+
+<emphasis id="em1026" effect="italics">
+(not the same five as in the previous discussion).
+
+</emphasis>
+ Each plot in 
+
+
+<link id="a1062" target-id="Figure_7">
+
+Figure 7
+
+</link>
+
+ shows the spectrum of a different sinusoid. The spectrum is computed 
+and displayed from zero frequency on the left to the folding frequency on the 
+right.
+
+</para>
+
+
+
+
+
+
+<table id="table1006" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1006">
+<row id="tr1012">
+<entry id="th1006">
+
+
+
+<emphasis id="Figure_7" effect="bold">
+
+Figure 7.
+
+</emphasis>
+
+ Spectral analyses of five sinusoids with no sampling problems.
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1006">
+<row id="tr1013">
+<entry id="td1006">
+
+
+
+<media id="media1006" alt="missing image" display="block">
+<image id="img1006" mime-type="image/gif" src="../../media/dsp00104figh.gif" width="401" height="430"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h41013">
+<title>
+Sampling frequency 
+was four samples per second
+
+</title>
+
+
+
+
+<para id="p1060">
+The sampling frequency for the data in 
+
+<link id="a1063" target-id="Figure_7">
+
+Figure 7
+
+</link>
+
+ was four samples per second, 
+giving a folding frequency of two cycles per second. Thus, the horizontal scale 
+on each plot represents the frequencies from zero on the left to two cycles per 
+second on the right.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41014">
+<title>
+The five sinusoids
+
+</title>
+
+
+
+
+<para id="p1061">
+Starting at the top, each of the five plots represents the frequency spectrum 
+of a sinusoid having the amplitude and frequency shown in the following table.
+
+</para>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+<note id="note1000" type="">
+
+
+		
+
+
+			
+
+
+				
+
+<emphasis id="strong1003" effect="bold">
+Amplitudes and frequencies of sinusoids:
+
+</emphasis>
+
+
+
+<code id="pre1001" display="block">
+Plot  Amplitude  Frequency
+1     60         0.25 cycles per second
+2     70         0.50 cycles per second
+3     80         0.75 cycles per second
+4     90         1.50 cycles per second
+5     100        1.75 cycles per second
+</code>
+
+
+
+				
+				
+
+</note>
+
+
+
+	
+				
+
+				
+
+
+</section>
+<section id="h41015">
+<title>
+The heights of the spectral 
+peaks
+
+</title>
+
+
+
+
+<para id="p1062">
+The height of each spectral peak in 
+
+<link id="a1064" target-id="Figure_7">
+
+Figure 7
+
+</link>
+
+ is consistent with the amplitude 
+of the corresponding sinusoid given in the table.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41016">
+<title>
+The locations of the spectral 
+peaks
+
+</title>
+
+
+
+
+<para id="p1063">
+The spectral peaks in 
+
+<link id="a1065" target-id="Figure_7">
+
+Figure 7
+
+</link>
+
+ appear where you would expect to see them. For 
+example, the location of the peak in the first plot corresponds to a frequency 
+of 0.25 cycles per second within a total frequency range extending from zero to 
+two cycles per second. This matches the information given in the above table for 
+the first sinusoid.
+
+</para>
+
+
+
+
+
+<para id="p1064">
+The location of the spectral peak in the fifth plot corresponds to a 
+frequency of 1.75 cycles per second within a total frequency range extending 
+from zero to two cycles per second. This matches the information given in the 
+above table for the fifth sinusoid.
+
+</para>
+
+
+
+
+
+<para id="p1065">
+The location of the peak in each of the three plots between the first and the 
+last are correct for the frequency of the sinusoid involved.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31012">
+<title>
+<emphasis id="Introduce_a_sampling_problem" effect="bold">
+
+Introduce a sampling problem
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1066">
+Now I will introduce a sampling problem by keeping the frequencies of the 
+sinusoids the same and reducing the sampling frequency from four samples per 
+second to two samples per second. 
+
+</para>
+
+
+
+
+
+<para id="p1067">
+The result of this change is shown in 
+
+<link id="a1066" target-id="Figure_8">
+
+Figure 8
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<table id="table1007" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1007">
+<row id="tr1014">
+<entry id="th1007">
+
+
+
+<emphasis id="Figure_8" effect="bold">
+
+Figure 8.
+
+</emphasis>
+
+ Spectral analyses of five sinusoids with sampling problem.
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1007">
+<row id="tr1015">
+<entry id="td1007">
+
+
+
+<media id="media1007" alt="missing image" display="block">
+<image id="img1007" mime-type="image/gif" src="../../media/dsp00104figg.gif" width="401" height="431"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<para id="p1068">
+As before, each of the plots in 
+
+<link id="a1067" target-id="Figure_8">
+
+Figure 8
+
+</link>
+
+ shows the frequency spectrum of an 
+individual sinusoid. The spectrum is plotted from zero frequency on the left to 
+the folding frequency on the right.
+
+</para>
+
+
+
+
+
+<section id="h41017">
+<title>
+Sampling frequency 
+was two samples per second
+
+</title>
+
+
+
+
+<para id="p1069">
+In this case, the sampling frequency was two samples per second, giving a 
+folding frequency of one cycle per second. Therefore, the horizontal scale on 
+each plot represents the frequencies from zero on the left to one cycle per 
+second on the right.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41018">
+<title>
+The heights of the spectral peaks
+
+</title>
+
+
+
+
+<para id="p1070">
+Once again, the height of each spectral peak is consistent with the amplitude 
+of the sinusoid.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41019">
+<title>
+The locations of the spectral peaks
+
+</title>
+
+
+
+
+<para id="p1071">
+As before, the spectral peaks in the first three plots appear where you would 
+expect to see them. The peak in the first plot is about twenty-five percent of 
+the way across the total spectrum, corresponding to 0.25 cycles per second.
+
+</para>
+
+
+
+
+
+<para id="p1072">
+The spectral peak in the second plot is at the center, corresponding to 0.5 
+cycles per second. The third peak is in the correct location for 0.75 cycles per 
+second.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41020">
+<title>
+A problem with 
+the location of two spectral peaks
+
+</title>
+
+
+
+
+<para id="p1073">
+However, a problem exists with the spectral peaks in the last two plots.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1004" display="block">
+
+	
+
+<para id="p1074">
+<emphasis id="em1027" effect="italics">
+(I marked the two problem peaks with a red oval to make it obvious 
+	which ones I am talking about. You may find it helpful to compare 
+
+<link id="a1068" target-id="Figure_8">
+
+Figure 8
+
+</link>
+
+ 
+	side-by-side with 
+
+<link id="a1069" target-id="Figure_7">
+
+Figure 7
+
+</link>
+
+.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1075">
+The spectral peak in the fourth plot also appears about midway between zero 
+and one cycle per second. This indicates that the corresponding sinusoid had a 
+frequency of 0.5 cycles per second.
+
+</para>
+
+
+
+
+
+<para id="p1076">
+However, the frequency of the sinusoid for the fourth plot was 1.50 cycles 
+per second, not 0.5 cycles per second as indicated. Thus, that spectral peak 
+should have been off the scale on the right-hand side of the plot.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41021">
+<title>
+The folding frequency
+
+</title>
+
+
+
+
+<para id="p1077">
+Recall, however, that the right edge of the plot is the folding frequency. 
+Therefore, any spectral components that should appear to the right of the 
+folding frequency fold around and appear to the left of the folding frequency. 
+Therefore, the spectral peak in the fourth plot, which should appear at 0.50 
+cycles per second above the folding frequency, appears instead at 0.50 cycles 
+per second below the folding frequency.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41022">
+<title>
+The peak in the fifth plot
+
+</title>
+
+
+
+
+<para id="p1078">
+Similarly, the frequency of the sinusoid for the fifth plot was 1.75 cycles 
+per second. The peak for this sinusoid should have appeared 0.75 cycles per 
+second above the folding frequency, but appeared instead 0.75 cycles per second 
+below the folding frequency. In other words, the spectrum folded around the 
+folding frequency so that this peak appeared below the folding frequency.
+
+</para>
+
+
+
+
+
+<para id="p1079">
+I am going to show you two more views of the spectra of these sinusoids to 
+help you better understand the folding phenomena.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31013">
+<title>
+<emphasis id="Back_to_the_case_with_no_problems" effect="bold">
+
+Back to the case with no 
+problems
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+<para id="p1080">
+Let's go back and examine another view of the case that has no sampling 
+problems. This view is shown in 
+
+<link id="a1070" target-id="Figure_9">
+
+Figure 9
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<table id="table1008" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1008">
+<row id="tr1016">
+<entry id="th1008">
+
+
+
+<emphasis id="Figure_9" effect="bold">
+
+Figure 9.
+
+</emphasis>
+
+ Spectral analyses of five sinusoids with no sampling problems.
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1008">
+<row id="tr1017">
+<entry id="td1008">
+
+
+
+<media id="media1008" alt="missing image" display="block">
+<image id="img1008" mime-type="image/gif" src="../../media/dsp00104figi.gif" width="401" height="430"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h41023">
+<title>
+Sampled at four samples per 
+second
+
+</title>
+
+
+
+
+<para id="p1081">
+This is the case where all five sinusoids are sampled at a sampling frequency 
+of four samples per second, resulting in a folding frequency of two cycles per 
+second. If you compare 
+
+<link id="a1071" target-id="Figure_9">
+
+Figure 9
+
+</link>
+
+ with 
+
+<link id="a1072" target-id="Figure_7">
+
+Figure 7
+
+</link>
+
+, you will see that the left half 
+of 
+
+<link id="a1073" target-id="Figure_9">
+
+Figure 9
+
+</link>
+
+ is very similar to 
+
+<link id="a1074" target-id="Figure_7">
+
+Figure 7
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41024">
+<title>
+<link id="a1075" target-id="Figure_9">
+
+ Figure 9
+
+</link>
+
+ shows twice the 
+frequency range
+
+</title>
+
+
+
+
+<para id="p1082">
+In 
+
+<link id="a1076" target-id="Figure_7">
+
+Figure 7
+
+</link>
+
+, the spectral data was computed and displayed from zero frequency 
+on the left to the folding frequency 
+
+<emphasis id="em1028" effect="italics">
+(two cycles per second)
+
+</emphasis>
+ on the 
+right. In 
+
+<link id="a1077" target-id="Figure_9">
+
+Figure 9
+
+</link>
+
+, the spectral data was computed and displayed from zero 
+frequency on the left to the sampling frequency 
+
+<emphasis id="em1029" effect="italics">
+(four cycles per second)
+
+</emphasis>
+ 
+on the right.
+
+</para>
+
+
+
+
+
+<para id="p1083">
+Thus, the total frequency range for 
+
+<link id="a1078" target-id="Figure_9">
+
+Figure 9
+
+</link>
+
+ is twice the frequency range for 
+
+
+<link id="a1079" target-id="Figure_7">
+
+Figure 7
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41025">
+<title>
+Folding frequency at the center
+
+</title>
+
+
+
+
+<para id="p1084">
+In 
+
+<link id="a1080" target-id="Figure_9">
+
+Figure 9
+
+</link>
+
+, the folding frequency is exactly in the center of each plot. In 
+other words, the center of the plots in 
+
+<link id="a1081" target-id="Figure_9">
+
+Figure 9
+
+</link>
+
+ corresponds to the right edge 
+of the plots in 
+
+<link id="a1082" target-id="Figure_7">
+
+Figure 7
+
+</link>
+
+. Everything to the left of center in 
+
+<link id="a1083" target-id="Figure_9">
+
+Figure 9
+
+</link>
+
+ 
+corresponds to the plots in 
+
+<link id="a1084" target-id="Figure_7">
+
+Figure 7
+
+</link>
+
+. The material to the right of center in 
+
+
+<link id="a1085" target-id="Figure_9">
+
+Figure 9
+
+</link>
+
+ was not shown in 
+
+<link id="a1086" target-id="Figure_7">
+
+Figure 7
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41026">
+<title>
+Why is it called the 
+folding frequency?
+
+</title>
+
+
+
+
+<para id="p1085">
+Hopefully the display in 
+
+<link id="a1087" target-id="Figure_9">
+
+Figure 9
+
+</link>
+
+ will explain why the frequency that is half 
+the sampling frequency is called the folding frequency. The computed spectrum 
+folds around that frequency. Everything to the right of the folding frequency is 
+a mirror image of everything to the left of the folding frequency.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41027">
+<title>
+Peaks below folding 
+frequency are valid
+
+</title>
+
+
+
+
+<para id="p1086">
+All the peaks to the left of center in 
+
+<link id="a1088" target-id="Figure_9">
+
+Figure 9
+
+</link>
+
+ are valid spectral peaks 
+associated with the corresponding sinusoids. However, all the peaks to the right 
+of center, which I marked with red ovals, are artifacts of the sampling process. 
+Those peaks do not exist in the true spectrum of the original raw data. They 
+were created by the sampling process.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41028">
+<title>
+Normally don't compute the 
+mirror image
+
+</title>
+
+
+
+
+<para id="p1087">
+Normally we don't worry about this mirror image above the folding frequency 
+when doing spectral analyses. We know it is there and we simply ignore it. 
+
+</para>
+
+
+
+
+
+<para id="p1088">
+In fact, for reasons of economy, when doing spectral analyses using discrete 
+Fourier transforms, we usually don't even compute the spectrum at frequencies 
+above the folding frequency. Since it is always a mirror image of the spectrum 
+below the folding frequency, we know what it looks like without even computing 
+it.
+
+</para>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+<note id="note1001" type="">
+
+
+		
+
+
+			
+
+
+				
+
+<emphasis id="strong1004" effect="bold">
+What happened to the peak structure:
+
+</emphasis>
+
+				
+
+<para id="p1089">
+In case you are wondering why the peaks in 
+
+<link id="a1089" target-id="Figure_9">
+
+Figure 9
+
+</link>
+
+ have less 
+				structure than the peaks in 
+
+<link id="a1090" target-id="Figure_7">
+
+Figure 7
+
+</link>
+
+, this is because the points 
+				at which I computed the spectral data in 
+
+<link id="a1091" target-id="Figure_9">
+
+Figure 9
+
+</link>
+
+ were twice as 
+				far apart as the points at which I computed the spectral data in 
+				
+
+<link id="a1092" target-id="Figure_7">
+
+Figure 7
+
+</link>
+
+.
+
+</para>
+
+
+
+				
+
+<quote id="blockquote1005" display="block">
+
+					
+
+<para id="p1090">
+<emphasis id="em1030" effect="italics">
+(The total frequency range in 
+
+<link id="a1093" target-id="Figure_9">
+
+Figure 9
+
+</link>
+
+ is twice as 
+					wide as in 
+
+<link id="a1094" target-id="Figure_7">
+
+Figure 7
+
+</link>
+
+, but I computed the same number of 
+					points in both cases.)
+
+</emphasis>
+</para>
+
+
+
+				
+
+</quote>
+
+
+				
+				
+
+<para id="p1091">
+Although it's not obvious at this plotting scale, there are 
+				zero-valued points between the side lobes on the peaks in 
+				
+				
+
+<link id="a1095" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+. 
+				
+				
+
+</para>
+
+
+
+				
+
+<para id="p1092">
+The points in the spectral display of 
+
+<link id="a1096" target-id="Figure_9">
+
+Figure 9
+
+</link>
+
+ simply missed 
+				the side lobes and hit the zeros between the side lobes. I will 
+				have a lot more to say about this in a future module discussing 
+				spectral analysis.
+
+</para>
+
+
+
+				
+
+</note>
+
+
+
+
+				
+	
+
+
+</section>
+</section>
+<section id="h31014">
+<title>
+<emphasis id="Back_to_the_case_with_the_sampling_problem" effect="bold">
+
+Back to the case with 
+the sampling problem
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1093">
+Now let's take another look at the case with the sampling problem. This is 
+the case where the sampling frequency was reduced from four samples per second 
+to two samples per second but the frequencies of the sinusoids was not changed. 
+This view of the problem is shown in 
+
+<link id="a1097" target-id="Figure_10">
+
+Figure 10
+
+</link>
+
+. It will probably be useful for 
+you to compare 
+
+<link id="a1098" target-id="Figure_10">
+
+Figure 10
+
+</link>
+
+ with 
+
+<link id="a1099" target-id="Figure_8">
+
+Figure 8
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+<table id="table1009" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1009">
+<row id="tr1018">
+<entry id="th1009">
+
+
+
+<emphasis id="Figure_10" effect="bold">
+
+Figure 10.
+
+</emphasis>
+
+ Spectral analyses of five sinusoids with sampling problem
+
+
+</entry>
+</row>
+</thead>
+
+
+<tbody id="tbody1009">
+<row id="tr1019">
+<entry id="td1009">
+
+
+
+<media id="media1009" alt="missing image" display="block">
+<image id="img1009" mime-type="image/gif" src="../../media/dsp00104figj.gif" width="401" height="431"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h41029">
+<title>
+Folding frequency is at the 
+center
+
+</title>
+
+
+
+
+<para id="p1094">
+As with the previous case, each of the plotted spectra in 
+
+<link id="a1100" target-id="Figure_10">
+
+Figure 10
+
+</link>
+
+ shows the 
+frequency range from zero frequency to the sampling frequency of two samples per 
+second. The folding frequency of one cycle per second appears in the center of 
+each plot.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41030">
+<title>
+Peaks to left correspond to 
+
+
+<link id="a1101" target-id="Figure_8">
+
+ Figure 8
+
+</link>
+
+
+</title>
+
+
+
+
+<para id="p1095">
+The peaks to the left of center in 
+
+<link id="a1102" target-id="Figure_10">
+
+Figure 10
+
+</link>
+
+ correspond to the peaks in 
+
+
+<link id="a1103" target-id="Figure_8">
+
+Figure 8
+
+</link>
+
+. Because the right edge of 
+
+<link id="a1104" target-id="Figure_8">
+
+Figure 8
+
+</link>
+
+ is the folding frequency, the peaks 
+to the right of center in 
+
+<link id="a1105" target-id="Figure_10">
+
+Figure 10
+
+</link>
+
+ don't appear in 
+
+<link id="a1106" target-id="Figure_8">
+
+Figure 8
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41031">
+<title>
+A mirror image
+
+</title>
+
+
+
+
+<para id="p1096">
+As is always the case, everything to the right of the folding frequency in 
+
+
+<link id="a1107" target-id="Figure_10">
+
+Figure 10
+
+</link>
+
+ is a mirror image of everything to the left of the folding frequency.
+
+</para>
+
+
+
+
+
+<para id="p1097">
+I have identified the artifacts created by the sampling process with a red 
+oval in 
+
+<link id="a1108" target-id="Figure_10">
+
+Figure 10
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41032">
+<title>
+Raw data frequency 
+exceeds folding frequency
+
+</title>
+
+
+
+
+<para id="p1098">
+The problem, as you will recall, is that the frequency of the sinusoids 
+corresponding to the two bottom plots in 
+
+<link id="a1109" target-id="Figure_10">
+
+Figure 10
+
+</link>
+
+ is above the folding 
+frequency. Thus the peaks to the right of center in the bottom two plots of 
+
+
+<link id="a1110" target-id="Figure_10">
+
+Figure 10
+
+</link>
+
+ actually represent the frequencies of the corresponding sinusoids.
+
+</para>
+
+
+
+
+
+<para id="p1099">
+Unfortunately, these two peaks appear to the right of the folding frequency, 
+which the area of the spectra that we normally ignore. 
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41033">
+<title>
+Artifacts to the 
+left of the folding frequency
+
+</title>
+
+
+
+
+<para id="p1100">
+Furthermore, these two peaks are reflected through the folded mirror image 
+process into the area to the left of the folding frequency. For these two 
+sinusoids, the peaks to the left of the folding frequency are artifacts, and I 
+have identified them as such with ovals.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41034">
+<title>
+Normally can't identify artifacts
+
+</title>
+
+
+
+
+<para id="p1101">
+I am able to identify these two peaks as artifacts only because I know the 
+true frequency makeup of the raw data. In most real-world situations with 
+unknown data, there would be no way for me to identify these particular peaks to 
+the left of the folding frequency as artifacts.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41035">
+<title>
+Illustrates the folding 
+frequency
+
+</title>
+
+
+
+
+<para id="p1102">
+Hopefully this illustration will make the concept of the folding frequency 
+easier for you to understand. The folding frequency is one-half the sampling 
+frequency. The entire spectrum below the folding frequency folds around the 
+folding frequency and the peaks in that spectrum appear in mirror-image format 
+above the folding frequency.
+
+</para>
+
+
+
+
+
+<para id="p1103">
+The frequency information for all frequency components above the folding 
+frequency is lost when the signal is sampled. In addition, the energy associated 
+with those components will fold around and can corrupt the information for 
+frequency components that are below the folding frequency.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h21005">
+<title>
+<emphasis id="The_bottom_line" effect="bold">
+
+The bottom line
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1104">
+The bottom line is that you must be very careful when sampling analog signals 
+for later processing using DSP. In order to avoid erroneous results, you must 
+sample sufficiently fast to ensure that your sampling rate is greater than twice 
+the highest frequency components contained in the analog signal.
+
+</para>
+
+
+
+
+
+<para id="p1105">
+On the other hand, the greater your sampling rate, the more 
+computer-intensive will be most of the DSP techniques that you apply to the data 
+later. For economy reasons, therefore, you don't want your sampling frequency to 
+be excessively high.
+
+</para>
+
+
+
+
+
+<section id="h31015">
+<title>
+<emphasis id="Using_an_analog_lowpass_prefilter" effect="bold">
+
+Using an analog low-pass pre-filter
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1106">
+A common approach to sampling is to feed the analog signal into an 
+analog-to-digital 
+
+<emphasis id="em1031" effect="italics">
+(AtoD)
+
+</emphasis>
+ converter. This is a device that measures the 
+amplitude of the analog signal at a uniform sampling frequency. It is common 
+practice to place a low-pass analog filter immediately ahead of the converter to 
+suppress any analog frequency components that are greater than one-half the 
+sampling frequency.
+
+</para>
+
+
+
+
+
+
+</section>
+<section id="h31016">
+<title>
+<emphasis id="Digital_resampling" effect="bold">
+
+Digital re-sampling
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+<para id="p1107">
+Another common approach is to initially sample the analog signal at a 
+sufficiently high rate to ensure that the sampling rate is greater than twice 
+the highest frequency contained in the analog signal. Then, if you really don't 
+need all of that high-frequency information, you can apply a low-pass digital 
+filter to suppress the high-frequency energy. Then you can re-sample the data to 
+a lower sampling frequency simply by discarding samples. The data with the lower 
+sampling frequency can then be used for further DSP analysis. 
+
+</para>
+
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h11004">
+<title>
+<emphasis id="Summary" effect="bold">
+
+Summary
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1108">
+I explained the meaning of sampling, and explained some of the problems that 
+arise when sampling and processing analog signals.
+
+</para>
+
+
+
+
+
+<para id="p1109">
+The problems generally relate to the relationship between the sampling 
+frequency and the high-frequency components contained in the analog signal.
+
+</para>
+
+
+
+
+
+<para id="p1110">
+I explained the concept of the Nyquist folding frequency, which is half the 
+sampling frequency.
+
+</para>
+
+
+
+
+
+<para id="p1111">
+I illustrated the frequency folding phenomena by plotting sampled time series 
+data as well as spectral data.
+
+</para>
+
+
+
+
+
+	
+
+</section>
+<section id="h11005">
+<title>
+<emphasis id="Miscellaneous" effect="bold">
+
+Miscellaneous
+
+</emphasis>
+
+
+</title>
+
+
+	
+
+<para id="p1112">
+This section contains a variety of miscellaneous information.
+
+</para>
+
+
+
+
+
+	
+
+<note id="note1002" type="">
+
+
+		
+
+
+			
+
+
+				
+
+<emphasis id="strong1005" effect="bold">
+Housekeeping material
+
+</emphasis>
+
+				
+
+<list id="ul1010" list-type="bulleted">
+
+					
+
+<item id="li1039">
+Module name: Dsp00104: Digital Signal Processing (DSP) in Java, Sampled Time Series
+
+</item>
+
+
+					
+
+<item id="li1040">
+File: Dsp00104.htm
+
+</item>
+
+
+					
+
+<item id="li1041">
+Published: 10/04/02
+
+</item>
+
+
+			
+				
+
+</list>
+
+
+
+
+<para id="p1113">
+Baldwin explains the meaning of sampling, and identifies some of the problems that arise when sampling and processing analog signals. He explains the concept of the Nyquist folding frequency and illustrates the folding phenomena by plotting time series data as well as spectral data.
+
+</para>
+
+
+
+				
+
+</note>
+
+
+
+
+
+	
+
+<note id="note1003" type="">
+
+
+		
+
+
+			
+
+
+				
+
+<emphasis id="strong1006" effect="bold">
+Disclaimers:
+
+</emphasis>
+<para id="p1114">
+<emphasis id="strong1007" effect="bold">
+Financial
+
+</emphasis>
+: Although the Connexions
+site makes it possible for you to download a PDF file for this
+module at no charge, and also makes it possible for you to
+purchase a pre-printed version of the PDF file, you should be
+aware that some of the HTML elements in this module may not translate well into
+PDF.
+
+</para>
+
+
+
+				
+
+<para id="p1115">
+I also want you to know that, I receive no financial compensation from the Connexions website even if you purchase 
+	the PDF version of the module.
+
+</para>
+
+
+
+				
+
+<para id="p1116">
+In the past, unknown individuals have copied my modules from cnx.org, converted them to Kindle books, and 
+				placed them for sale on Amazon.com showing me as the author. I 
+				neither receive compensation for those sales nor do I know who does 
+				receive compensation. If you purchase such a book, please be 
+				aware that it is a copy of a module that is freely 
+				available on cnx.org and that it was made and published without 
+				my prior knowledge.
+
+</para>
+
+
+
+				
+
+<para id="p1117">
+<emphasis id="strong1008" effect="bold">
+Affiliation
+
+</emphasis>
+: I am a professor of Computer Information 
+	Technology at Austin Community College in Austin, TX.
+	
+
+</para>
+
+
+
+
+</note>
+
+
+
+	
+
+
+<para id="p1118">
+-end- 
+
+</para>
+
+
+
+
+
+
+
+</section>
+</content>
+
+
+
+
+</document>

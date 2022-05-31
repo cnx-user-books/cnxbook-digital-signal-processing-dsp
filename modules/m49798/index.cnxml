@@ -1,0 +1,6379 @@
+<document xmlns="http://cnx.rice.edu/cnxml"> 
+<title>Java1484-Spectrum Analysis using Java, Complex Spectrum and Phase Angle</title>
+<metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m49798</md:content-id>
+  <md:title>Java1484-Spectrum Analysis using Java, Complex Spectrum and Phase Angle</md:title>
+  <md:abstract>Baldwin discusses the complex spectrum and explains the relationship between the phase angle and shifts in the time domain.</md:abstract>
+  <md:uuid>50125581-8665-4687-b43f-fd30f2f1ba28</md:uuid>
+</metadata>
+
+<content>
+
+
+
+
+
+
+<quote id="blockquote1000" display="block">
+
+
+
+<para id="p1000">
+Revised: Fri Oct 16 18:22:28 CDT 2015
+
+</para>
+
+
+
+
+
+<para id="p1001">
+This page is included in the following books:
+
+</para>
+
+
+
+
+<list id="ul1000" list-type="bulleted">
+
+	
+
+<item id="li1000">
+<link id="a1000" url="http://cnx.org/contents/98d253c0-8044-4e22-a707-7b8d819bc8a7">
+
+
+        Digital Signal Processing - DSP
+
+</link>
+
+ 
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+</quote>
+
+
+
+
+
+
+
+
+
+
+
+<section id="h11000">
+<title>
+<emphasis id="Table_of_contents" effect="bold">
+
+Table of contents
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<list id="ul1001" list-type="bulleted">
+<item id="li1001">
+<link id="a1001" target-id="Table_of_contents">
+
+Table of contents
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1002">
+<link id="a1002" target-id="Preface">
+
+Preface
+
+</link>
+
+
+
+
+<list id="ul1002" list-type="bulleted">
+<item id="li1003">
+<link id="a1003" target-id="Viewing_tip">
+
+Viewing tip
+
+</link>
+
+
+
+
+<list id="ul1003" list-type="bulleted">
+<item id="li1004">
+<link id="a1004" target-id="Figures">
+
+Figures
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1005">
+<link id="a1005" target-id="Listings">
+
+Listings
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1006">
+<link id="a1006" target-id="Preview">
+
+Preview
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1007">
+<link id="a1007" target-id="Discussion_and_sample_code">
+
+Discussion and sample code
+
+</link>
+
+
+
+
+<list id="ul1004" list-type="bulleted">
+<item id="li1008">
+<link id="a1008" target-id="The_order_of_the_plotted_results">
+
+The order of the plotted results
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1009">
+<link id="a1009" target-id="Parameter_file_format">
+
+Parameter file format
+
+</link>
+
+
+
+
+<list id="ul1005" list-type="bulleted">
+<item id="li1010">
+<link id="a1010" target-id="Format_for_frequency_specifications">
+
+Format for frequency specifications
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1011">
+<link id="a1011" target-id="The_plotting_programs">
+
+The plotting programs
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1012">
+<link id="a1012" target-id="Spectral_analysis">
+
+Spectral analysis
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1013">
+<link id="a1013" target-id="Results">
+
+Results
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1014">
+<link id="a1014" target-id="Computing_the_Fourier_transform">
+
+Computing the Fourier transform
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1015">
+<link id="a1015" target-id="The_program_named_Dsp034">
+
+The program named Dsp034
+
+</link>
+
+
+
+
+<list id="ul1006" list-type="bulleted">
+<item id="li1016">
+<link id="a1016" target-id="The_beginning_of_the_Dsp034_class">
+
+The beginning of the Dsp034 class
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1017">
+<link id="a1017" target-id="More_examples">
+
+More examples
+
+</link>
+
+
+
+
+<list id="ul1007" list-type="bulleted">
+<item id="li1018">
+<link id="a1018" target-id="The_simplest_pulse_of_all_an_impulse">
+
+The simplest pulse of all, an impulse
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1019">
+<link id="a1019" target-id="Results_of_spectral_analysis_on_an_impulse">
+
+Results of spectral 
+analysis on an impulse
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1020">
+<link id="a1020" target-id="Introduce_a_time_delay">
+
+Introduce a time delay
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1021">
+<link id="a1021" target-id="Introduce_a_large_time_delay">
+
+Introduce a large time delay
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1022">
+<link id="a1022" target-id="A_boxcar_pulse">
+
+A boxcar pulse
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1023">
+<link id="a1023" target-id="The_magic_of_non_real-time_digital_processing">
+
+The magic of non real-time digital processing
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+</list>
+
+
+</item>
+
+
+<item id="li1024">
+<link id="a1024" target-id="Run_the_program">
+
+Run the program
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1025">
+<link id="a1025" target-id="Summary">
+
+Summary
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1026">
+<link id="a1026" target-id="Whats_next">
+
+What's next?
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1027">
+<link id="a1027" target-id="Complete_program_listings">
+
+Complete program listing
+
+</link>
+
+
+
+
+</item>
+
+
+<item id="li1028">
+<link id="a1028" target-id="Miscellaneous">
+
+Miscellaneous
+
+</link>
+
+
+
+
+</item>
+
+
+</list>
+
+
+	
+	
+
+</section>
+<section id="h11001">
+<title>
+<emphasis id="Preface" effect="bold">
+
+Preface
+
+</emphasis>
+
+
+</title>
+
+
+	
+	
+
+<para id="p1002">
+<emphasis id="strong1000" effect="bold">
+<emphasis id="em1000" effect="italics">
+Spectral analysis
+
+</emphasis>
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1003">
+A previous module titled 
+
+<link id="a1029" url="http://cnx.org/contents/201ece7a-a2bf-4576-9528-4c3c4e5322c9/Java1482-Spectrum-Analysis-usi">
+
+
+Fun with Java, How and Why Spectral Analysis Works
+
+</link>
+
+ explained some of the 
+fundamentals regarding spectral analysis. 
+
+</para>
+
+
+
+
+
+<para id="p1004">
+The module titled
+
+
+<link id="a1030" url="http://cnx.org/contents/201ece7a-a2bf-4576-9528-4c3c4e5322c9/Java1482-Spectrum-Analysis-usi">
+
+
+Spectrum Analysis using Java, Sampling Frequency, Folding Frequency, and the FFT 
+Algorithm
+
+</link>
+
+ presented and explained several Java programs for doing spectral 
+analysis, including both DFT programs and FFT programs. That module illustrated 
+the fundamental aspects of spectral analysis that center around the sampling 
+frequency and the Nyquist folding frequency.
+
+</para>
+
+
+
+
+
+<para id="p1005">
+The module titled
+
+
+<link id="a1031" url="http://cnx.org/contents/97db670f-e425-49a8-8899-875426fc316d/Java1483-Spectrum-Analysis-usi">
+
+
+Spectrum Analysis using Java, Frequency Resolution versus Data Length
+
+</link>
+
+ used 
+similar Java programs to explain spectral frequency resolution.
+
+</para>
+
+
+
+
+
+<para id="p1006">
+In this module, I will deal with issues involving the complex spectrum, the 
+phase angle, and shifts in the time domain.
+
+</para>
+
+
+
+	
+	
+
+<section id="h21000">
+<title>
+<emphasis id="Viewing_tip" effect="bold">
+
+Viewing tip
+
+</emphasis>
+
+
+</title>
+
+
+	
+
+<para id="p1007">
+I recommend that you open another copy of this module in a separate 
+browser window and use the following links to easily find and view the Figures 
+and Listings while you are reading about them.
+
+</para>
+
+
+
+	
+
+<section id="h31000">
+<title>
+<emphasis id="Figures" effect="bold">
+
+Figures
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+<list id="ul1008" list-type="bulleted">
+
+
+
+<item id="li1029">
+<link id="a1032" target-id="Figure_1">
+
+Figure 1.
+
+</link>
+
+
+ Sample parameters for testing.
+
+</item>
+
+
+
+
+<item id="li1030">
+<link id="a1033" target-id="Figure_2">
+
+Figure 2.
+
+</link>
+
+
+ Spectral analysis of a damped pulse.
+
+</item>
+
+
+
+
+<item id="li1031">
+<link id="a1034" target-id="Figure_3">
+
+Figure 3.
+
+</link>
+
+
+ Fourier transform equations.
+
+</item>
+
+
+
+
+<item id="li1032">
+<link id="a1035" target-id="Figure_4">
+
+Figure 4.
+
+</link>
+
+
+ The simplest pulse of all, an impulse.
+
+</item>
+
+
+
+
+<item id="li1033">
+<link id="a1036" target-id="Figure_5">
+
+Figure 5.
+
+</link>
+
+
+ Spectral analysis of an impulse at zero time.
+
+</item>
+
+
+
+
+<item id="li1034">
+<link id="a1037" target-id="Figure_6">
+
+Figure 6.
+
+</link>
+
+
+ Introduce a time delay.
+
+</item>
+
+
+
+
+<item id="li1035">
+<link id="a1038" target-id="Figure_7">
+
+Figure 7.
+
+</link>
+
+
+ Spectral analysis of an impulse with a one-sample delay.
+
+</item>
+
+
+
+
+<item id="li1036">
+<link id="a1039" target-id="Figure_8">
+
+Figure 8.
+
+</link>
+
+
+ Introduce a large time delay.
+
+</item>
+
+
+
+
+<item id="li1037">
+<link id="a1040" target-id="Figure_9">
+
+Figure 9.
+
+</link>
+
+
+ Spectral analysis of impulse with five-sample delay.
+
+</item>
+
+
+
+
+<item id="li1038">
+<link id="a1041" target-id="Figure_10">
+
+Figure 10.
+
+</link>
+
+
+ A boxcar pulse.
+
+</item>
+
+
+
+
+<item id="li1039">
+<link id="a1042" target-id="Figure_11">
+
+Figure 11.
+
+</link>
+
+
+ Spectral analysis of 11-sample boxcar pulse.
+
+</item>
+
+
+
+
+<item id="li1040">
+<link id="a1043" target-id="Figure_12">
+
+Figure 12.
+
+</link>
+
+
+ Shift the time base.
+
+</item>
+
+
+
+
+<item id="li1041">
+<link id="a1044" target-id="Figure_13">
+
+Figure 13.
+
+</link>
+
+
+ Spectral analysis of 11-sample boxcar centered in time.
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+	
+
+</section>
+<section id="h31001">
+<title>
+<emphasis id="Listings" effect="bold">
+
+Listings
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+<list id="ul1009" list-type="bulleted">
+
+
+
+<item id="li1042">
+<link id="a1045" target-id="Listing_1">
+
+Listing 1.
+
+</link>
+
+
+ Computation of the phase angle.
+
+</item>
+
+
+
+
+<item id="li1043">
+<link id="a1046" target-id="Listing_2">
+
+Listing 2.
+
+</link>
+
+
+ The beginning of the Dsp034 class.
+
+</item>
+
+
+
+
+<item id="li1044">
+<link id="a1047" target-id="Listing_3">
+
+Listing 3.
+
+</link>
+
+
+ Beginning of the constructor.
+
+</item>
+
+
+
+
+<item id="li1045">
+<link id="a1048" target-id="Listing_4">
+
+Listing 4.
+
+</link>
+
+
+ Store the pulse in the time series.
+
+</item>
+
+
+
+
+<item id="li1046">
+<link id="a1049" target-id="Listing_5">
+
+Listing 5.
+
+</link>
+
+
+ Perform the spectral analysis.
+
+</item>
+
+
+
+
+<item id="li1047">
+<link id="a1050" target-id="Listing_6">
+
+Listing 6.
+
+</link>
+
+
+ Dsp034.java.
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h11002">
+<title>
+<emphasis id="Preview" effect="bold">
+
+Preview
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1008">
+In this module, I will present and explain a program named 
+
+<emphasis id="strong1001" effect="bold">
+Dsp034
+
+</emphasis>
+. 
+This program will be used to illustrate the behavior of the complex spectrum and 
+the phase angle for several different scenarios.
+
+</para>
+
+
+
+
+
+<para id="p1009">
+In addition, I will use the following programs that I explained in the module 
+titled
+
+
+<link id="a1051" url="http://cnx.org/contents/201ece7a-a2bf-4576-9528-4c3c4e5322c9/Java1482-Spectrum-Analysis-usi">
+
+
+Spectrum Analysis using Java, Sampling Frequency, Folding Frequency, and the FFT 
+Algorithm
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<list id="ul1010" list-type="bulleted">
+
+	
+
+<item id="li1048">
+ForwardRealToComplex01 - Class that implements the DFT algorithm for 
+	spectral analysis.
+
+</item>
+
+
+	
+
+<item id="li1049">
+Graph03 - Used to display various types of data. 
+
+<emphasis id="em1001" effect="italics">
+(The concepts were 
+	explained in an earlier module.)
+
+</emphasis>
+</item>
+
+
+	
+
+<item id="li1050">
+Graph06 - Also used to display various types of data in a somewhat 
+	different format. 
+
+<emphasis id="em1002" effect="italics">
+(The concepts were also explained in an earlier 
+	module.)
+
+</emphasis>
+</item>
+
+
+
+
+</list>
+
+
+	
+	
+
+</section>
+<section id="h11003">
+<title>
+<emphasis id="Discussion_and_sample_code" effect="bold">
+
+Discussion and sample code
+
+</emphasis>
+
+
+</title>
+
+
+	
+	
+
+<para id="p1010">
+The program named 
+
+<emphasis id="strong1002" effect="bold">
+Dsp034
+
+</emphasis>
+, when run in conjunction with 
+	either 
+
+<emphasis id="strong1003" effect="bold">
+Graph03
+
+</emphasis>
+ or 
+
+<emphasis id="strong1004" effect="bold">
+Graph06
+
+</emphasis>
+ computes and 
+	plots the amplitude, real, imaginary, and phase angle spectrum for a pulse 
+	that is read from a file named 
+
+<emphasis id="strong1005" effect="bold">
+Dsp034.txt
+
+</emphasis>
+. If that file 
+	doesn't exist in the current directory, the program uses a set of default 
+	parameters that describe a damped sinusoidal pulse. The program also plots 
+	the pulse itself in addition to the spectral analysis results listed above.
+
+</para>
+
+
+
+
+
+
+<section id="h21001">
+<title>
+<emphasis id="The_order_of_the_plotted_results" effect="bold">
+
+The order of the plotted results
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1011">
+When the data is plotted 
+
+<emphasis id="em1003" effect="italics">
+(see 
+
+<link id="a1052" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+)
+
+</emphasis>
+ using the programs 
+
+<emphasis id="strong1006" effect="bold">
+
+Graph03
+
+</emphasis>
+ or 
+
+<emphasis id="strong1007" effect="bold">
+Graph06
+
+</emphasis>
+, the order of the plots from top to 
+bottom in the display is:
+
+</para>
+
+
+
+
+
+<list id="ul1011" list-type="bulleted">
+
+	
+
+<item id="li1051">
+The pulse
+
+</item>
+
+
+	
+
+<item id="li1052">
+The amplitude spectrum
+
+</item>
+
+
+	
+
+<item id="li1053">
+The real spectrum
+
+</item>
+
+
+	
+
+<item id="li1054">
+The imaginary spectrum
+
+</item>
+
+
+	
+
+<item id="li1055">
+The phase angle in degrees
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+</section>
+<section id="h21002">
+<title>
+<emphasis id="Parameter_file_format" effect="bold">
+
+Parameter file format
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1012">
+Each parameter value must be stored as characters on a separate line in the 
+file named 
+
+<emphasis id="strong1008" effect="bold">
+Dsp034.txt
+
+</emphasis>
+. The required parameters and their order 
+and type are as follows:
+
+</para>
+
+
+
+
+
+<list id="ul1012" list-type="bulleted">
+
+	
+
+<item id="li1056">
+Data length as type 
+
+<emphasis id="strong1009" effect="bold">
+int
+
+</emphasis>
+</item>
+
+
+	
+
+<item id="li1057">
+Pulse length as type 
+
+<emphasis id="strong1010" effect="bold">
+int
+
+</emphasis>
+</item>
+
+
+	
+
+<item id="li1058">
+Sample number representing zero time as type 
+
+<emphasis id="strong1011" effect="bold">
+int
+
+</emphasis>
+</item>
+
+
+	
+
+<item id="li1059">
+Low frequency bound as type 
+
+<emphasis id="strong1012" effect="bold">
+double
+
+</emphasis>
+</item>
+
+
+	
+
+<item id="li1060">
+High frequency bound as type 
+
+<emphasis id="strong1013" effect="bold">
+double
+
+</emphasis>
+</item>
+
+
+	
+
+<item id="li1061">
+Sample values for the pulse as type 
+
+<emphasis id="strong1014" effect="bold">
+double
+
+</emphasis>
+ or 
+
+<emphasis id="strong1015" effect="bold">
+
+	int
+
+</emphasis>
+ 
+
+<emphasis id="em1004" effect="italics">
+(they are automatically converted to type 
+
+</emphasis>
+<emphasis id="strong1016" effect="bold">
+<emphasis id="em1005" effect="italics">
+
+	double
+
+</emphasis>
+</emphasis>
+<emphasis id="em1006" effect="italics">
+ if they are provided as type 
+
+</emphasis>
+<emphasis id="strong1017" effect="bold">
+<emphasis id="em1007" effect="italics">
+int
+
+</emphasis>
+</emphasis>
+)
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1013">
+The number of sample values for the pulse must match the value for the pulse 
+length.
+
+</para>
+
+
+
+
+
+<section id="h31002">
+<title>
+<emphasis id="Format_for_frequency_specifications" effect="bold">
+
+Format for frequency specifications
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1014">
+All frequency values are specified as a 
+
+<emphasis id="strong1018" effect="bold">
+double
+
+</emphasis>
+ representing 
+a fractional part of the sampling frequency. For example, a value of 0.5 
+specifies a frequency that is half the sampling frequency.
+
+</para>
+
+
+
+
+
+<section id="h41000">
+<title>
+Sample parameters for testing
+
+</title>
+
+
+
+
+<para id="p1015">
+<link id="a1053" target-id="Figure_1">
+
+ Figure 1
+
+</link>
+
+ provides a set of sample parameter values that can be used to test 
+the program. This sample data describes a triangular pulse. Be careful when you 
+create the file containing these values. Don't allow blank lines at the end of 
+the data in the file.
+
+</para>
+
+
+
+
+
+<table id="table1000" summary="This is a table." pgwide="630">
+<tgroup cols="1">
+
+
+<thead id="thead1000">
+<row id="tr1000">
+<entry id="th1000">
+
+
+
+<emphasis id="Figure_1" effect="bold">
+
+Figure 1.
+
+</emphasis>
+
+ Sample parameters for testing.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1000">
+<row id="tr1001">
+<entry id="td1000">
+
+		
+
+<code id="pre1000" display="block">400
+11
+0
+0.0
+0.5
+0
+0
+0
+45
+90
+135
+90
+45
+0
+0
+0</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+</section>
+</section>
+<section id="h31003">
+<title>
+<emphasis id="The_plotting_programs" effect="bold">
+
+The plotting programs
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1016">
+The plotting program that is used to plot the output data from this program 
+requires that the program implement 
+
+<emphasis id="strong1019" effect="bold">
+GraphIntfc01
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1001" display="block">
+
+	
+
+<para id="p1017">
+<emphasis id="em1008" effect="italics">
+(I explained the plotting programs and this interface in earlier 
+	modules.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1018">
+For example, the plotting program named 
+
+<emphasis id="strong1020" effect="bold">
+Graph03
+
+</emphasis>
+ can be used 
+to plot the data produced by this program. When it is used, the following should 
+be entered at the command-line prompt:
+
+</para>
+
+
+
+
+
+<code id="pre1001" display="block">java Graph03 Dsp034</code>
+
+
+
+
+</section>
+<section id="h31004">
+<title>
+<emphasis id="Spectral_analysis" effect="bold">
+
+Spectral analysis
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1019">
+A static method named 
+
+<emphasis id="strong1021" effect="bold">
+transform
+
+</emphasis>
+ belonging to the class named
+
+
+<emphasis id="strong1022" effect="bold">
+ForwardRealToComplex01
+
+</emphasis>
+ is used to perform the actual spectral 
+analysis.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1002" display="block">
+
+	
+
+<para id="p1020">
+<emphasis id="em1009" effect="italics">
+(I explained this class and the 
+
+<emphasis id="strong1023" effect="bold">
+transform
+
+</emphasis>
+ method in 
+	the earlier module titled 
+
+</emphasis>
+
+	
+
+<link id="a1054" url="http://cnx.org/contents/201ece7a-a2bf-4576-9528-4c3c4e5322c9/Java1482-Spectrum-Analysis-usi">
+
+
+	
+
+<emphasis id="em1010" effect="italics">
+Spectrum Analysis using Java, Sampling Frequency, Folding Frequency, and 
+	the FFT Algorithm
+
+</emphasis>
+</link>
+
+
+<emphasis id="em1011" effect="italics">
+. However, I skipped over that portion of the 
+	method that computes the phase angle. I will explain that portion of the
+	
+
+<emphasis id="strong1024" effect="bold">
+transform
+
+</emphasis>
+ method in this module.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1021">
+The method named 
+
+<emphasis id="strong1025" effect="bold">
+transform
+
+</emphasis>
+ does not implement an FFT 
+algorithm. Rather, it implements a DFT algorithm, which is more general than, 
+but much slower than an FFT algorithm. 
+
+<emphasis id="em1012" effect="italics">
+(See the program named 
+
+</emphasis>
+<emphasis id="strong1026" effect="bold">
+
+
+
+<emphasis id="em1013" effect="italics">
+Dsp030
+
+</emphasis>
+</emphasis>
+<emphasis id="em1014" effect="italics">
+ in the module titled 
+
+</emphasis>
+
+
+
+<link id="a1055" url="http://cnx.org/contents/201ece7a-a2bf-4576-9528-4c3c4e5322c9/Java1482-Spectrum-Analysis-usi">
+
+
+
+
+<emphasis id="em1015" effect="italics">
+Spectrum Analysis using Java, Sampling Frequency, Folding Frequency, and the 
+FFT Algorithm
+
+</emphasis>
+</link>
+
+
+<emphasis id="em1016" effect="italics">
+ for the use of an FFT algorithm.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</section>
+<section id="h31005">
+<title>
+<emphasis id="Results" effect="bold">
+
+Results
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1022">
+Before getting into the technical details of the program, let's take a look 
+at some results. 
+
+<link id="a1056" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ shows the results produced by using the program named 
+
+
+<emphasis id="strong1027" effect="bold">
+Graph06
+
+</emphasis>
+ to plot the output for the program named 
+
+<emphasis id="strong1028" effect="bold">
+Dsp034
+
+</emphasis>
+ using default 
+parameters.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1003" display="block">
+
+	
+
+<para id="p1023">
+<emphasis id="em1017" effect="italics">
+(The file named 
+
+</emphasis>
+<emphasis id="strong1029" effect="bold">
+<emphasis id="em1018" effect="italics">
+Dsp034.txt
+
+</emphasis>
+</emphasis>
+<emphasis id="em1019" effect="italics">
+ did not exist in the current directory when 
+	the results shown in 
+
+<link id="a1057" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ were generated.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+
+<table id="table1001" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1001">
+<row id="tr1002">
+<entry id="th1001">
+
+
+
+<emphasis id="Figure_2" effect="bold">
+
+Figure 2.
+
+</emphasis>
+
+ Spectral analysis of a damped pulse.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1001">
+<row id="tr1003">
+<entry id="td1001">
+
+
+
+
+<media id="media1000" alt="missing image" display="block">
+<image id="img1000" mime-type="image/jpeg" src="../../media/java1484a01.jpg" width="409" height="431"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h41001">
+<title>
+The input pulse
+
+</title>
+
+
+
+
+<para id="p1024">
+First consider the input pulse shown in the top plot of 
+
+<link id="a1058" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+. This is the 
+sort of pulse that you would get if you hung a mass on a spring, gave it a swift 
+downward kick, and then allowed the mass to come to rest in an unimpeded 
+fashion.
+
+</para>
+
+
+
+
+
+<para id="p1025">
+The horizontal axis represents time moving from left to right. The values 
+above and below the axis represent the position of the mass over time relative 
+to its position at rest.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41002">
+<title>
+Potential energy in the spring
+
+</title>
+
+
+
+
+<para id="p1026">
+When the mass is at the most extreme positions and getting ready to reverse 
+directions, the spring is extended. Thus, potential energy is stored in the 
+spring. At these points in time, there is no kinetic energy stored in the mass.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41003">
+<title>
+Kinetic energy in the mass
+
+</title>
+
+
+
+
+<para id="p1027">
+As the mass goes through the rest position heading towards the other side, 
+the spring is no longer extended, and there is no potential energy stored in the 
+spring. However, at that point in time, the mass is moving causing it to have 
+kinetic energy.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41004">
+<title>
+An exchange of energy
+
+</title>
+
+
+
+
+<para id="p1028">
+The behavior of the spring/mass system is to exchange that energy between 
+potential energy and kinetic energy until such time as energy losses due to 
+friction dissipate the energy. At that point in time, the entire system comes to 
+rest, which is the case about one-third of the way across the top plot in 
+
+
+<link id="a1059" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1029">
+Now that our physics lesson for the day is over, let's get back to 
+programming and digital signal processing.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41005">
+<title>
+Capturing the position of the mass as a sampled time series
+
+</title>
+
+
+
+
+<para id="p1030">
+Assume that you use an analog to digital converter to capture the position of 
+the mass at a set of uniformly spaced intervals in time and then you plot those 
+samples along a time axis. You should see something resembling the top plot in 
+
+
+<link id="a1060" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1031">
+Having captured that positional information as a set of uniformly spaced 
+samples, you are now in a position to perform a Fourier transform on the sampled 
+time series.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31006">
+<title>
+<emphasis id="Computing_the_Fourier_transform" effect="bold">
+
+Computing the Fourier transform
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1032">
+In the module titled
+
+
+<link id="a1061" url="http://cnx.org/contents/201ece7a-a2bf-4576-9528-4c3c4e5322c9/Java1482-Spectrum-Analysis-usi">
+
+
+Fun with Java, How and Why Spectral Analysis Works
+
+</link>
+
+, I explained that you 
+could compute the Fourier transform of an input time series at any given 
+frequency F by evaluating the first two expressions in 
+
+<link id="a1062" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+. 
+
+<emphasis id="em1020" effect="italics">
+(The 
+notation used in 
+
+<link id="a1063" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+ was also explained in that module.)
+
+</emphasis>
+</para>
+
+
+
+
+
+<table id="table1002" summary="This is a table." pgwide="630">
+<tgroup cols="1">
+
+
+<thead id="thead1002">
+<row id="tr1004">
+<entry id="th1002">
+
+
+
+<emphasis id="Figure_3" effect="bold">
+
+Figure 3.
+
+</emphasis>
+
+ Fourier transform equations.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1002">
+<row id="tr1005">
+<entry id="td1002">
+
+		
+
+<code id="pre1002" display="block">Real(F) = S(n=0,N-1)[x(n)*cos(2Pi*F*n)]
+Imag(F) = S(n=0,N-1)[x(n)*sin(2Pi*F*n)]
+
+ComplexAmplitude(F) = Real(F) - j*Imag(F) </code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1033">
+I also explained that the Fourier transform of the input time series at that 
+frequency can be viewed as a complex number having a 
+
+<emphasis id="em1021" effect="italics">
+real part
+
+</emphasis>
+ and an 
+
+
+<emphasis id="em1022" effect="italics">
+imaginary 
+part
+
+</emphasis>
+ as in the third expression in 
+
+<link id="a1064" target-id="Figure_3">
+
+ Figure 3
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1004" display="block">
+<emphasis id="em1023" effect="italics">
+(The amplitude of the spectrum at that frequency can be determined by 
+computing the square root of the sum of the squares of the real and imaginary 
+parts at that frequency but that isn't of major interest in this module.)
+
+</emphasis>
+</quote>
+
+
+
+
+<para id="p1034">
+The Fourier transform of an input time series can be computed by performing 
+these calculations across a range of frequencies.
+
+</para>
+
+
+
+
+
+<section id="h41006">
+<title>
+The results of performing a spectral analysis on the pulse
+
+</title>
+
+
+
+
+<para id="p1035">
+The bottom four plots in 
+
+<link id="a1065" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ show the results of performing a Fourier 
+transform on the pulse in the top plot.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1005" display="block">
+
+	
+
+<para id="p1036">
+<emphasis id="em1024" effect="italics">
+(In this display format, which was produced by the program named Graph06, 
+	each sample value is represented by a vertical bar whose height is 
+	proportional to the value of the sample.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1037">
+These four plots show the values of the Fourier transform output at a set of 
+uniformly spaced frequencies ranging from zero to 0.25 times the sampling 
+frequency.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41007">
+<title>
+The amplitude spectrum
+
+</title>
+
+
+
+
+<para id="p1038">
+The second plot from the top in 
+
+<link id="a1066" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ shows the value of the amplitude 
+spectrum. This is the Fourier transform output that we have been using in the 
+previous modules in this series.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1006" display="block">
+
+	
+
+<para id="p1039">
+<emphasis id="em1025" effect="italics">
+(Those modules ignored the complex spectrum and the phase angle.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1040">
+As you can see, the amplitude spectrum peaks at a frequency equal to 0.0625 
+times the sampling frequency. The reason for this will become clear when we 
+examine the code that produced the pulse shown in the first plot.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41008">
+<title>
+The real and imaginary parts of the transform
+
+</title>
+
+
+
+
+<para id="p1041">
+The real part of the transform is shown in the third plot and the imaginary 
+part of the transform is shown in the fourth plot. 
+
+<emphasis id="em1026" effect="italics">
+(I believe that this is the first time that I 
+have presented the real and imaginary parts of the spectrum in this series of 
+modules.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</section>
+<section id="h41009">
+<title>
+The phase angle in degrees
+
+</title>
+
+
+
+
+<para id="p1042">
+The phase angle in degrees is shown in the bottom plot. There are a variety 
+of different ways to display phase angles. This program displays the phase angle 
+as values that range from -180 degrees to +180 degrees.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1007" display="block">
+
+	
+
+<para id="p1043">
+<emphasis id="em1027" effect="italics">
+(It is also possible to display the phase angle as ranging from 0 to 360 
+	degrees, or any combination that equates to 360 degrees or one full 
+	rotation. It is also possible to display the phase angle in radians instead 
+	of degrees.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41010">
+<title>
+How is the phase angle computed?
+
+</title>
+
+
+
+
+<para id="p1044">
+Basically, the phase angle is the angle that you get when you compute the arc 
+tangent of the ratio of the imaginary part to the real part of the complex 
+spectrum at a particular frequency. However, beyond computing the arc tangent, 
+you must do some additional work to take the quadrant into account.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41011">
+<title>
+How should we interpret the phase angle?
+
+</title>
+
+
+
+
+<para id="p1045">
+To begin with, you should ignore the result of phase angle computations at 
+those frequencies for which there is insignificant energy. It is always possible 
+to form a ratio of the values of the real and imaginary parts of the complex 
+Fourier transform at any frequency. However, if the real and imaginary values 
+produced by the Fourier transform at that frequency are both very small, the 
+phase angle resulting from that ratio is of no practical significance. In fact, 
+the angle can be corrupted by arithmetic errors resulting from performing 
+arithmetic on very small values.
+
+</para>
+
+
+
+
+
+<para id="p1046">
+Therefore, noting the amplitude spectrum in the second plot of 
+
+<link id="a1067" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+, 
+phase angle results to the right of the fourth tick mark are probably useless.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41012">
+<title>
+Many combinations
+
+</title>
+
+
+
+
+<para id="p1047">
+The phase angle produced by performing a Fourier transform on a pulse of a 
+given waveform is not unique. There are an infinite number of combinations of 
+real and imaginary parts that can result from performing a Fourier transform on 
+a given waveform, depending on how you define the origin of time. This means 
+that there are also an infinite number of phase angle curves that can be 
+produced from the ratio of those real and imaginary parts. I will explain this 
+in more detail later using simpler pulses.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41013">
+<title>
+The frequency band of primary interest
+
+</title>
+
+
+
+
+<para id="p1048">
+In the case shown in 
+
+<link id="a1068" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+, the frequency band of primary interest lies 
+approximately between the first and the third tick marks. Most of the energy can 
+be seen to lie between those limits on the basis of the amplitude plot.
+
+</para>
+
+
+
+
+
+<para id="p1049">
+The phase angle curve goes from a little more than zero degrees to a little 
+less than 180 degrees across this frequency interval. However, it is significant 
+to note that the phase angle is not linear across this frequency interval. 
+Rather the shape of the curve is more like an elongated S sloping to the right.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41014">
+<title>
+A nonlinear phase angle, so what?
+
+</title>
+
+
+
+
+<para id="p1050">
+What is the significance of the nonlinear phase angle? If this plot 
+represented the frequency response of your audio system, the existence of the 
+nonlinear phase angle would be bad news. In particular, it would mean that the 
+system would introduce phase distortion into your favorite music.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41015">
+<title>
+Computation of the phase angle
+
+</title>
+
+
+
+
+<para id="p1051">
+In an earlier module titled
+
+
+<link id="a1069" url="http://cnx.org/contents/201ece7a-a2bf-4576-9528-4c3c4e5322c9/Java1482-Spectrum-Analysis-usi">
+
+
+Spectrum Analysis using Java, Sampling Frequency, Folding Frequency, and the FFT 
+Algorithm
+
+</link>
+
+, I explained most of the code in the method named 
+
+<emphasis id="strong1030" effect="bold">
+transform
+
+</emphasis>
+ 
+belonging to the class named 
+
+<emphasis id="strong1031" effect="bold">
+ForwardRealToComplex01
+
+</emphasis>
+. However, I skipped over 
+that portion of the code that computes the phase angle on the basis of the 
+values of the real and imaginary parts. I am going to explain that 
+code in this module. For an explanation of the rest of the code in the 
+
+<emphasis id="strong1032" effect="bold">
+
+transform
+
+</emphasis>
+ method, go 
+back and review the module titled
+
+
+<link id="a1070" url="http://cnx.org/contents/201ece7a-a2bf-4576-9528-4c3c4e5322c9/Java1482-Spectrum-Analysis-usi">
+
+
+Spectrum Analysis using Java, Sampling Frequency, Folding Frequency, and the FFT 
+Algorithm
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1052">
+The code in the 
+
+<emphasis id="strong1033" effect="bold">
+transform
+
+</emphasis>
+ method that computes the phase angle for a 
+particular frequency is shown in 
+
+<link id="a1071" target-id="Listing_1">
+
+ Listing 1
+
+</link>
+
+. At this point in the execution of 
+the 
+
+<emphasis id="strong1034" effect="bold">
+transform
+
+</emphasis>
+ method, the values of the real part 
+
+<emphasis id="em1028" effect="italics">
+(real)
+
+</emphasis>
+ and the imaginary part 
+
+
+<emphasis id="em1029" effect="italics">
+(imag)
+
+</emphasis>
+ of 
+the Fourier transform at a particular frequency have been computed. Those values 
+are used to compute the phase angle at that frequency.
+
+</para>
+
+
+
+
+
+<table id="table1003" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1003">
+<row id="tr1006">
+
+
+
+<entry id="th1003">
+<emphasis id="Listing_1" effect="bold">
+
+Listing 1.
+
+</emphasis>
+
+ Computation of the phase angle.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1003">
+<row id="tr1007">
+<entry id="td1003">
+
+		
+
+<code id="pre1003" display="block">      if(imag == 0.0 &amp;&amp; real == 0.0){ang = 0.0;}
+      else{ang = Math.atan(imag/real)*180.0/pi;}
+
+      if(real &lt; 0.0 &amp;&amp; imag == 0.0){ang = 180.0;}
+      else if(real &lt; 0.0 &amp;&amp; imag == -0.0){
+                                   ang = -180.0;}
+      else if(real &lt; 0.0 &amp;&amp; imag &gt; 0.0){
+                                   ang += 180.0;}
+      else if(real &lt; 0.0 &amp;&amp; imag &lt; 0.0){
+                                  ang += -180.0;}
+      angleOut[i] = ang;</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+</section>
+<section id="h41016">
+<title>
+What if both values are zero?
+
+</title>
+
+
+
+
+<para id="p1053">
+The code begins by testing to see if both the real and imaginary parts are 
+equal to zero. If so, attempting to form the ratio of the imaginary part to the 
+real part would be meaningless. In this case, the code in 
+
+<link id="a1072" target-id="Listing_1">
+
+ Listing 1
+
+</link>
+
+ simply sets 
+the phase angle to a value of zero.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41017">
+<title>
+The atan method of the Math class
+
+</title>
+
+
+
+
+<para id="p1054">
+If both the real and imaginary parts are not zero, then the ratio of the 
+imaginary value to the real value is formed and passed as a parameter to the
+
+
+<emphasis id="strong1035" effect="bold">
+atan
+
+</emphasis>
+ method of the 
+
+<emphasis id="strong1036" effect="bold">
+Math
+
+</emphasis>
+ class.
+
+</para>
+
+
+
+
+
+<para id="p1055">
+The 
+
+<emphasis id="strong1037" effect="bold">
+atan
+
+</emphasis>
+ method returns the angle in radians whose tangent 
+matches the value received as a parameter. The angle that is returned is in the 
+range from -pi/2 to +pi/2 
+
+<emphasis id="em1030" effect="italics">
+(-90 degrees to +90 degrees)
+
+</emphasis>
+. The code in 
+
+
+<link id="a1073" target-id="Listing_1">
+
+ Listing 1
+
+</link>
+
+ multiplies that angle in radians by 180.0/pi to convert the angle from 
+radians to degrees.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41018">
+<title>
+Correction required for the quadrant
+
+</title>
+
+
+
+
+<para id="p1056">
+Although we have an intermediate answer at this point, we're still not 
+finished. There is more work to do. The 
+
+<emphasis id="strong1038" effect="bold">
+atan
+
+</emphasis>
+ method simply uses 
+the sign of its incoming parameter to decide whether to report the angle as 
+positive or negative, and it only covers angles in two quadrants 
+
+<emphasis id="em1031" effect="italics">
+(-90 
+degrees to + 90 degrees)
+
+</emphasis>
+. We know that the angle can actually be in any one 
+of four quadrants 
+
+<emphasis id="em1032" effect="italics">
+(-180 degrees to +180 degrees)
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41019">
+<title>
+The first and third quadrants
+
+</title>
+
+
+
+
+<para id="p1057">
+For example, a positive ratio can result from a positive imaginary value and 
+a positive real value, or from a negative imaginary value and a negative real 
+value. Both of these would be reported by the 
+
+<emphasis id="strong1039" effect="bold">
+atan
+
+</emphasis>
+ method as 
+being between 0 and 90 degrees when in fact, the negative imaginary value and 
+the negative real value means that the angle is actually between -90 degrees and 
+-180 degrees.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41020">
+<title>
+The second and fourth quadrants
+
+</title>
+
+
+
+
+<para id="p1058">
+Similarly, a negative ratio can result from a negative imaginary value and a 
+positive real value or from a positive imaginary value and a negative real 
+value. Both of these would be reported by the 
+
+<emphasis id="strong1040" effect="bold">
+atan
+
+</emphasis>
+ method as 
+being between 0 and -90 degrees when in fact, the positive imaginary value and 
+the negative real value means that the angle is actually between 90 degrees and 
+180 degrees.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41021">
+<title>
+An exercise for the reader
+
+</title>
+
+
+
+
+<para id="p1059">
+I will leave it as an exercise for the reader to work through the remaining 
+code in 
+
+<link id="a1074" target-id="Listing_1">
+
+ Listing 1
+
+</link>
+
+ to see how this code determines the proper quadrant and 
+adjusts the angle appropriately, all the while maintaining the angle between 
+-180 degrees and +180 degrees.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h21003">
+<title>
+<emphasis id="The_program_named_Dsp034" effect="bold">
+
+The program named Dsp034
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+<para id="p1060">
+I will discuss the program named 
+
+<emphasis id="strong1041" effect="bold">
+Dsp034
+
+</emphasis>
+ in fragments. A 
+complete listing of the program is provided in 
+
+<link id="a1075" target-id="Listing_6">
+
+ Listing 6
+
+</link>
+
+ near the end of the 
+module.
+
+</para>
+
+
+
+
+
+<para id="p1061">
+Due to the similarity of this program to programs explained in previous 
+modules in this series, this discussion will be rather brief. Following a 
+discussion of the code, I will provide and explain some more spectral analysis 
+results obtained by running the program with parameters read from the file named 
+
+
+<emphasis id="strong1042" effect="bold">
+Dsp034.txt
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<section id="h31007">
+<title>
+<emphasis id="The_beginning_of_the_Dsp034_class" effect="bold">
+
+The beginning of the Dsp034 class
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1062">
+The beginning of the class, along with the declaration of several variables 
+is shown in 
+
+<link id="a1076" target-id="Listing_2">
+
+ Listing 2
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1008" display="block">
+
+	
+
+<para id="p1063">
+<emphasis id="em1033" effect="italics">
+(Note that the class implements the interface named GraphIntfc01.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1064">
+The variable names and the embedded comments should make the purpose of these 
+variables self explanatory. If not, you will see how they are used later in the 
+program.
+
+</para>
+
+
+
+
+
+<table id="table1004" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1004">
+<row id="tr1008">
+
+
+
+<entry id="th1004">
+<emphasis id="Listing_2" effect="bold">
+
+Listing 2.
+
+</emphasis>
+
+ The beginning of the Dsp034 class.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1004">
+<row id="tr1009">
+<entry id="td1004">
+
+		
+
+<code id="pre1004" display="block">class Dsp034 implements GraphIntfc01{
+  final double pi = Math.PI;//for simplification
+
+  int dataLen;//data length
+  int pulseLen;//length of the pulse
+  int zeroTime;//sample that represents zero time
+  //Low and high frequency limits for the
+  // spectral analysis.
+  double lowF;
+  double highF;
+  double[] pulse;//data describing the pulse
+
+  //Following array stores input data for the
+  // spectral analysis process.
+  double[] data;
+
+  //Following arrays receive information back
+  // from the spectral analysis process
+  double[] real;
+  double[] imag;
+  double[] angle;
+  double[] mag;</code>
+
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1065">
+<emphasis id="The_constructor" effect="bold">
+
+The constructor
+
+</emphasis>
+
+
+</para>
+
+
+
+
+
+<para id="p1066">
+The constructor begins in 
+
+<link id="a1077" target-id="Listing_3">
+
+ Listing 3
+
+</link>
+
+. The code in the constructor either calls 
+the getParameters method to get the operating parameters from the file named 
+Dsp034.txt, or creates a set of operating parameters on the fly if that file 
+does not exist in the current directory. In either case, many of the variables 
+declared in 
+
+<link id="a1078" target-id="Listing_2">
+
+ Listing 2
+
+</link>
+
+ are populated as a result of that action. 
+
+</para>
+
+
+
+
+
+<table id="table1005" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1005">
+<row id="tr1010">
+
+
+
+<entry id="th1005">
+<emphasis id="Listing_3" effect="bold">
+
+Listing 3.
+
+</emphasis>
+
+ Beginning of the constructor.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1005">
+<row id="tr1011">
+<entry id="td1005">
+
+		
+
+<code id="pre1005" display="block">  public Dsp034(){//constructor
+
+    //Get the parameters from a file named
+    // Dsp034.txt.  Create and use default
+    // parameters describing a damped sinusoidal
+    // pulse if the file doesn't exist in the
+    // current directory.
+    if(new File("Dsp034.txt").exists()){
+      getParameters();
+    }else{
+      //Create default parameters
+      dataLen = 400;//data length
+      pulseLen = 100;//pulse length
+      //Sample that represents zero time.
+      zeroTime = 0;
+      //Low and high frequency limits for the
+      // spectral analysis.
+      lowF = 0.0;
+      highF = 0.5;//half the sampling frequency
+      pulse = new double[pulseLen];
+      double scale = 240.0;
+      for(int cnt = 0;cnt &lt; pulseLen;cnt++){
+        scale = 0.94*scale;//damping scale factor
+        pulse[cnt] =
+                 scale*Math.sin(2*pi*cnt*0.0625);
+      }//end for loop
+      //End default parameters
+    }//end else</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41022">
+<title>
+The damped sinusoidal pulse
+
+</title>
+
+
+
+
+<para id="p1067">
+For the case where the file named 
+
+<emphasis id="strong1043" effect="bold">
+Dsp034.txt
+
+</emphasis>
+ doesn't exist 
+in the current directory, the code in the 
+
+<emphasis id="strong1044" effect="bold">
+else
+
+</emphasis>
+ clause in 
+
+
+<link id="a1079" target-id="Listing_3">
+
+ Listing 3
+
+</link>
+
+ establishes default operating parameters, and creates the damped 
+sinusoid pulse shown in the top plot of 
+
+<link id="a1080" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41023">
+<title>
+Store the pulse in the time series
+
+</title>
+
+
+
+
+<para id="p1068">
+At this point in the process, the array referred to by the reference variable 
+named 
+
+<emphasis id="strong1045" effect="bold">
+pulse
+
+</emphasis>
+ contains a set of samples that constitutes a pulse. 
+The code in 
+
+<link id="a1081" target-id="Listing_4">
+
+ Listing 4
+
+</link>
+
+ creates a data array containing the data upon which 
+spectral analysis will be performed and stores the pulse in that array.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1009" display="block">
+
+	
+
+<para id="p1069">
+<emphasis id="em1034" effect="italics">
+(All elements in the data array other than those elements occupied by 
+	values of the pulse have a value of zero.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+
+<table id="table1006" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1006">
+<row id="tr1012">
+
+
+
+<entry id="th1006">
+<emphasis id="Listing_4" effect="bold">
+
+Listing 4.
+
+</emphasis>
+
+ Store the pulse in the time series.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1006">
+<row id="tr1013">
+<entry id="td1006">
+
+		
+
+<code id="pre1006" display="block">    data = new double[dataLen];
+    for(int cnt = 0;cnt &lt; pulse.length;cnt++){
+      data[cnt] = pulse[cnt];
+    }//end for loop</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+</section>
+<section id="h41024">
+<title>
+Print the parameters and the pulse
+
+</title>
+
+
+
+
+<para id="p1070">
+Following this, code in the constructor prints the parameters and the values 
+of the samples that constitute the pulse. You can view that code in 
+
+<link id="a1082" target-id="Listing_6">
+
+ Listing 6
+
+</link>
+
+ 
+near the end of the module.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41025">
+<title>
+Perform the spectral analysis
+
+</title>
+
+
+
+
+<para id="p1071">
+Finally, the code in 
+
+<link id="a1083" target-id="Listing_5">
+
+ Listing 5
+
+</link>
+
+ creates the array objects that will receive 
+the results of the spectral analysis, and calls the 
+
+<emphasis id="strong1046" effect="bold">
+transform
+
+</emphasis>
+ method of the 
+
+
+<emphasis id="strong1047" effect="bold">
+ForwardRealToComplex01
+
+</emphasis>
+ class to perform the spectral analysis.
+
+</para>
+
+
+
+
+
+<table id="table1007" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1007">
+<row id="tr1014">
+
+
+
+<entry id="th1007">
+<emphasis id="Listing_5" effect="bold">
+
+Listing 5.
+
+</emphasis>
+
+ Perform the spectral analysis.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1007">
+<row id="tr1015">
+<entry id="td1007">
+
+		
+
+<code id="pre1007" display="block">    mag = new double[dataLen];
+    real = new double[dataLen];
+    imag = new double[dataLen];
+    angle = new double[dataLen];
+    ForwardRealToComplex01.transform(data,real,
+      imag,angle,mag,zeroTime,lowF,highF);
+
+  }//end constructor</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<para id="p1072">
+<link id="a1084" target-id="Listing_5">
+
+ Listing 5
+
+</link>
+
+ also signals the end of the constructor. At this point, the object 
+has been instantiated and it's array objects have been populated with the input 
+and output data from the spectral analysis process. This data is ready to be 
+handed over to the plotting program to be plotted, as shown in 
+
+<link id="a1085" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41026">
+<title>
+The getParameters method
+
+</title>
+
+
+
+
+<para id="p1073">
+The 
+
+<emphasis id="strong1048" effect="bold">
+getParameters
+
+</emphasis>
+ method, called in 
+
+<link id="a1086" target-id="Listing_3">
+
+ Listing 3
+
+</link>
+
+, reads 
+parameter and pulse data from the file named 
+
+<emphasis id="strong1049" effect="bold">
+Dsp034.txt
+
+</emphasis>
+, and 
+deposits that data into the variables and the pulse array declared in 
+
+<link id="a1087" target-id="Listing_2">
+
+ Listing 2
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1074">
+The code in the 
+
+<emphasis id="strong1050" effect="bold">
+getParameters
+
+</emphasis>
+ method is straightforward, so 
+I won't bore you with an explanation. You can view the method in 
+
+<link id="a1088" target-id="Listing_6">
+
+ Listing 6
+
+</link>
+
+ near 
+the end of the module.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41027">
+<title>
+The interface methods
+
+</title>
+
+
+
+
+<para id="p1075">
+As pointed out earlier, the 
+
+<emphasis id="strong1051" effect="bold">
+Dsp034
+
+</emphasis>
+ class implements the
+
+
+<emphasis id="strong1052" effect="bold">
+GraphIntfc01
+
+</emphasis>
+ interface. As such, the class must define the six 
+methods declared in that interface. These methods are called by the plotting 
+program to obtain the data that is to be plotted.
+
+</para>
+
+
+
+
+
+<para id="p1076">
+You have seen implementations of these methods in several earlier modules, so 
+there is nothing new here. Consequently, I won't discuss the interface methods. 
+You can view the methods in 
+
+<link id="a1089" target-id="Listing_6">
+
+ Listing 6
+
+</link>
+
+ near the end of the module.
+
+</para>
+
+
+
+
+
+<para id="p1077">
+The one thing that you might want to pay attention to in these methods is the 
+scaling that is applied to the data before it is returned. This is an attempt to 
+cause all of the curves to plot reasonably well within a value range of -180 to 
++180. This range is dictated by the fact that this is the range of values for 
+the phase angle data.
+
+</para>
+
+
+
+
+
+<para id="p1078">
+Now that you understand the inner workings of the program, let's look at some 
+more examples, this time getting the input data from the file named 
+
+<emphasis id="strong1053" effect="bold">
+
+Dsp034.txt
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+</section>
+<section id="h21004">
+<title>
+<emphasis id="More_examples" effect="bold">
+
+More examples
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<section id="h31008">
+<title>
+<emphasis id="The_simplest_pulse_of_all_an_impulse" effect="bold">
+
+The simplest pulse of all, an impulse
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+<para id="p1079">
+The simplest pulse that you can create is a single non-zero valued sample 
+among a bunch of zero-valued samples. This simple pulse, commonly called an 
+impulse in digital signal processing, is an extremely important type of 
+signal. It is used for a variety of purposes in testing both digital and analog 
+signal processing systems.
+
+</para>
+
+
+
+
+
+<para id="p1080">
+Let's examine the result of performing spectral analysis on an impulse.
+
+</para>
+
+
+
+
+
+<para id="p1081">
+The parameters used for this experiment are shown in 
+
+<link id="a1090" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1008" summary="This is a table." pgwide="630">
+<tgroup cols="1">
+
+
+<thead id="thead1008">
+<row id="tr1016">
+<entry id="th1008">
+
+
+
+<emphasis id="Figure_4" effect="bold">
+
+Figure 4.
+
+</emphasis>
+
+ The simplest pulse of all, an impulse.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1008">
+<row id="tr1017">
+<entry id="td1008">
+
+		
+
+<code id="pre1008" display="block">Parameters read from file
+Data length: 400
+Pulse length: 11
+Sample for zero time: 0
+Lower frequency bound: 0.0
+Upper frequency bound: 0.5
+Pulse Values
+180.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41028">
+<title>
+Screen output from the getParameters method
+
+</title>
+
+
+
+
+<para id="p1082">
+The data that you see in 
+
+<link id="a1091" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ is the screen output from the method named
+
+
+<emphasis id="strong1054" effect="bold">
+getParameters
+
+</emphasis>
+. To orient you with this format, the second item 
+in 
+
+<link id="a1092" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ indicates that the entire length of the data upon which spectral 
+analysis was performed was 400 samples. All 400 samples had a value of zero 
+except for the values of the sample in the pulse that occurred at the beginning. 
+In this program, setting the total data length to 400 causes the spectral 
+analysis to be performed at 400 individual frequencies.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1010" display="block">
+
+	
+
+<para id="p1083">
+<emphasis id="em1035" effect="italics">
+(By now, you may be suspecting that I have a particular affinity for a 
+	data length of 400 samples. If so, you are correct. This is not a technical 
+	affinity. Rather, it is a visual one. These figures are formatted such that 
+	the plotted data occupies an area of the screen containing approximately 400 
+	pixels. By matching the plotted points to the positions of the pixels, it is 
+	possible to avoid, or at least minimize, the distortion that can occur when 
+	attempting to map from sample points to pixel locations when there is a 
+	mismatch between the two.
+
+</emphasis>
+</para>
+
+
+
+	
+
+<para id="p1084">
+<emphasis id="em1036" effect="italics">
+To see the result of such mapping problems, repeat the experiment shown 
+	in 
+
+<link id="a1093" target-id="Figure_2">
+
+ Figure 2
+
+</link>
+
+ and use your mouse to stretch the Frame horizontally by a very 
+	small amount. Depending on how much you stretch the Frame, you should see 
+	vertical lines disappear, vertical lines that are too close together, or a 
+	combination of the two. This is another manifestation of the impact of 
+	sampling that I don't have the time to get into at this point.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41029">
+<title>
+The length of the pulse
+
+</title>
+
+
+
+
+<para id="p1085">
+As you can see in 
+
+<link id="a1094" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+, the length of the pulse for this experiment was 
+11 samples, all but one of which had a value of zero.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1011" display="block">
+
+	
+
+<para id="p1086">
+<emphasis id="em1037" effect="italics">
+(In this case, I could have made the pulse length 1 but for simplicity, I 
+	will keep it at 11 for several different experiments.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+<section id="h41030">
+<title>
+Defining the origin of time
+
+</title>
+
+
+
+
+<para id="p1087">
+As you may have discovered by playing video games, we can do things with a 
+computer that we can't do in the real world. For example, the Fourier transform 
+program allows me to specify which sample I regard as representing zero time. 
+Samples to the left of that sample represent negative time 
+
+<emphasis id="em1038" effect="italics">
+(history)
+
+</emphasis>
+ and samples 
+to the right of that one represent positive time 
+
+<emphasis id="em1039" effect="italics">
+(the future)
+
+</emphasis>
+.
+
+</para>
+
+
+
+
+
+<para id="p1088">
+In this case, I specified that the first sample 
+
+<emphasis id="em1040" effect="italics">
+(sample number 0)
+
+</emphasis>
+ represents 
+zero time. As you will see later, this has a significant impact on the 
+distribution of energy between the real and imaginary parts of the transform 
+results, and as such, has a significant impact on the phase angle.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41031">
+<title>
+Computational frequency range
+
+</title>
+
+
+
+
+<para id="p1089">
+Because I am using a DFT algorithm 
+
+<emphasis id="em1041" effect="italics">
+(instead of an FFT algorithm)
+
+</emphasis>
+ I can 
+compute the Fourier transform across a range of frequencies of my choosing. As 
+shown in 
+
+<link id="a1095" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+, I chose to compute the transform across the range of 
+frequencies from zero to one-half the sampling frequency, known as the Nyquist 
+folding frequency. Thus, the spectral analysis was performed at 400 individual 
+frequencies between these two limits.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41032">
+<title>
+The values that make up the pulse
+
+</title>
+
+
+
+
+<para id="p1090">
+The computational frequency range is followed in 
+
+<link id="a1096" target-id="Figure_4">
+
+ Figure 4
+
+</link>
+
+ by the values of the samples that make up the 
+pulse. Note that the first sample has a value of 180 while the other ten samples 
+all have a value of 0.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31009">
+<title>
+<emphasis id="Results_of_spectral_analysis_on_an_impulse" effect="bold">
+
+Results of spectral 
+analysis on an impulse
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1091">
+I used the program named 
+
+<emphasis id="strong1055" effect="bold">
+Graph03
+
+</emphasis>
+ to plot the output from this program, and 
+the results are shown in 
+
+<link id="a1097" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1012" display="block">
+
+	
+
+<para id="p1092">
+<emphasis id="em1042" effect="italics">
+(Note that rather than plotting each sample value as a vertical bar, 
+	
+
+<emphasis id="strong1056" effect="bold">
+Graph03
+
+</emphasis>
+ plots each sample as a dot and connects the dots with straight line 
+	segments.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+
+
+<table id="table1009" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1009">
+<row id="tr1018">
+<entry id="th1009">
+
+
+
+<emphasis id="Figure_5" effect="bold">
+
+Figure 5.
+
+</emphasis>
+
+ Spectral analysis of an impulse at zero time.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1009">
+<row id="tr1019">
+<entry id="td1009">
+
+
+
+
+<media id="media1001" alt="missing image" display="block">
+<image id="img1001" mime-type="image/jpeg" src="../../media/java1484a02.jpg" width="409" height="431"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<section id="h41033">
+<title>
+Where is that impulse?
+
+</title>
+
+
+
+
+<para id="p1093">
+If you strain your eyes and you know exactly where to look, you may be able 
+to see a single black spike with an amplitude of 180 at the far left of the top 
+plot. If you can't see it, you will simply have to trust me when I tell you that 
+it is there.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41034">
+<title>
+The amplitude spectrum
+
+</title>
+
+
+
+
+<para id="p1094">
+Now take a look at the amplitude spectrum in the second plot from the top. 
+What you should see is a straight black line extending from zero to the folding 
+frequency on the right. This is because such an impulse 
+
+<emphasis id="em1043" effect="italics">
+(theoretically)
+
+</emphasis>
+ 
+contains an equal distribution of energy at every frequency from zero to 
+infinity.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1013" display="block">
+
+	
+
+<para id="p1095">
+<emphasis id="em1044" effect="italics">
+(In reality, there is no such thing as a perfect impulse, so there is 
+	no such thing as infinite bandwidth. However, the bandwidth of a practical 
+	impulse is very wide and the amplitude spectrum is very flat.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<para id="p1096">
+That is one of the things that make the impulse so useful. It is often used 
+for various testing purposes in both the analog world and the digital world.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41035">
+<title>
+The real spectrum
+
+</title>
+
+
+
+
+<para id="p1097">
+Now look at the real spectrum in the second plot from the top. As you can 
+see, it looks exactly like the amplitude spectrum. This is because the impulse 
+appears at zero time. We will change this in the next experiment so that you can 
+see the impact of a time delay on the complex spectrum.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41036">
+<title>
+The imaginary spectrum
+
+</title>
+
+
+
+
+<para id="p1098">
+Moving on down the page, the imaginary part of the spectrum is a flat line 
+with a value of zero across the entire frequency range. Once again, this is 
+because the impulse appears at zero time.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41037">
+<title>
+The phase angle
+
+</title>
+
+
+
+
+<para id="p1099">
+Because the imaginary value is zero everywhere, the ratio of the imaginary 
+value to the real value is also zero everywhere. Thus, the phase angle is also 
+zero at all frequencies within the range.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31010">
+<title>
+<emphasis id="Introduce_a_time_delay" effect="bold">
+
+Introduce a time delay
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1100">
+Now we are going to introduce a one-sample time delay in the location of the 
+impulse relative to the time origin. We will keep the zero time reference at the 
+first sample and cause the impulse to appear as the second sample in the 
+eleven-sample sequence.
+
+</para>
+
+
+
+
+
+<para id="p1101">
+The new parameters are shown in 
+
+<link id="a1098" target-id="Figure_6">
+
+ Figure 6
+
+</link>
+
+. The only change is the move of the 
+impulse from the first sample in the eleven-sample pulse to the second sample in 
+the eleven-sample pulse.
+
+</para>
+
+
+
+
+
+
+<table id="table1010" summary="This is a table." pgwide="630">
+<tgroup cols="1">
+
+
+<thead id="thead1010">
+<row id="tr1020">
+<entry id="th1010">
+
+
+
+<emphasis id="Figure_6" effect="bold">
+
+Figure 6.
+
+</emphasis>
+
+ Introduce a time delay.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1010">
+<row id="tr1021">
+<entry id="td1010">
+
+		
+
+<code id="pre1009" display="block">Parameters read from file
+Data length: 400
+Pulse length: 11
+Sample for zero time: 0
+Lower frequency bound: 0.0
+Upper frequency bound: 0.5
+Pulse Values
+0.0
+180.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41038">
+<title>
+The spectral analysis output
+
+</title>
+
+
+
+
+<para id="p1102">
+The result of performing the spectral analysis on this new time series is 
+shown in 
+
+<link id="a1099" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1011" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1011">
+<row id="tr1022">
+<entry id="th1011">
+
+
+
+<emphasis id="Figure_7" effect="bold">
+
+Figure 7.
+
+</emphasis>
+
+ Spectral analysis of an impulse with a one-sample delay.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1011">
+<row id="tr1023">
+<entry id="td1011">
+
+
+
+
+<media id="media1002" alt="missing image" display="block">
+<image id="img1002" mime-type="image/jpeg" src="../../media/java1484a03.jpg" width="409" height="431"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<para id="p1103">
+Once again, if you strain your eyes, you may be able to see the impulse on 
+the left end of the top plot. It has been shifted one sample to the right 
+relative to that shown in 
+
+<link id="a1100" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41039">
+<title>
+The amplitude spectrum
+
+</title>
+
+
+
+
+<para id="p1104">
+The amplitude spectrum in the second plot looks exactly like it looked in 
+
+
+<link id="a1101" target-id="Figure_5">
+
+ Figure 5
+
+</link>
+
+. That is as it should be. The spectral content of a pulse is determined 
+by its waveform, not by its location in time. Simply moving the impulse by one 
+sample into the future doesn't change its spectral content.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41040">
+<title>
+The real and imaginary parts of the spectrum
+
+</title>
+
+
+
+
+<para id="p1105">
+However, moving the impulse one sample into the future 
+
+<emphasis id="em1045" effect="italics">
+(a time delay)
+
+</emphasis>
+ 
+did change the values of the real and imaginary parts of the complex spectrum. 
+As you can see from the third plot in 
+
+<link id="a1102" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+, the real part of the spectrum is 
+no longer a replica of the amplitude spectrum. Also the imaginary part of the 
+spectrum in the fourth plot is no longer zero across the frequency range from 
+zero to the folding frequency.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41041">
+<title>
+Real and imaginary values are intrinsically linked
+
+</title>
+
+
+
+
+<para id="p1106">
+However, the real and imaginary parts cannot change in arbitrary ways 
+relative to one another. Recall that the amplitude spectrum at each individual 
+frequency is the square root of the sum of the squares of the real and imaginary 
+parts. In order for the amplitude spectrum to stay the same, changes to the real 
+part of the spectrum must be accompanied by changes to the imaginary part that 
+will maintain that relationship.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41042">
+<title>
+The phase angle spectrum
+
+</title>
+
+
+
+
+<para id="p1107">
+Finally, the phase angle shown in the bottom plot is no longer zero. Rather 
+it is a straight line with a value of zero at zero frequency and a value of 180 
+degrees at the folding frequency.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41043">
+<title>
+An important conclusion
+
+</title>
+
+
+
+
+<para id="p1108">
+Simply shifting an impulse forward or backward in time introduces a phase 
+shift that is linear with frequency. Shifting the pulse forward in time 
+introduces a linear phase shift with a positive slope. Shifting the pulse 
+backwards in time introduces a linear phase shift with a negative slope. In both 
+cases, the amount of slope depends on the amount of time shift.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41044">
+<title>
+The converse is also true
+
+</title>
+
+
+
+
+<para id="p1109">
+A shift in time introduces a linear phase shift. Conversely, introducing a 
+linear phase shift causes a shift in time.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41045">
+<title>
+A more acceptable form of phase distortion
+
+</title>
+
+
+
+
+<para id="p1110">
+Once again, consider your audio system. If your audio system introduces a 
+phase shift across the frequency band of interest, you would probably like for 
+that phase shift to be linear with frequency. That will simply cause the music 
+to be delayed in time. In other words, all frequency components in the music 
+will be delayed an equal amount of time.
+
+</para>
+
+
+
+
+
+<para id="p1111">
+On the other hand, if the phase shift is not linear with frequency, some 
+frequencies will delayed more than other frequencies. This sometimes results in 
+noticeable phase distortion in your music.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31011">
+<title>
+<emphasis id="Introduce_a_large_time_delay" effect="bold">
+
+Introduce a large time delay
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1112">
+Now let's move the impulse to the center of the eleven-sample pulse and 
+observe the result. The new parameters are shown in 
+
+<link id="a1103" target-id="Figure_8">
+
+ Figure 8
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+<table id="table1012" summary="This is a table." pgwide="630">
+<tgroup cols="1">
+
+
+<thead id="thead1012">
+<row id="tr1024">
+<entry id="th1012">
+
+
+
+<emphasis id="Figure_8" effect="bold">
+
+Figure 8.
+
+</emphasis>
+
+ Introduce a large time delay.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1012">
+<row id="tr1025">
+<entry id="td1012">
+
+		
+
+<code id="pre1010" display="block">Parameters read from file
+Data length: 400
+Pulse length: 11
+Sample for zero time: 0
+Lower frequency bound: 0.0
+Upper frequency bound: 0.5
+Pulse Values
+0.0
+0.0
+0.0
+0.0
+0.0
+180.0
+0.0
+0.0
+0.0
+0.0
+0.0</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41046">
+<title>
+The output from the spectral analysis
+
+</title>
+
+
+
+
+<para id="p1113">
+<link id="a1104" target-id="Figure_9">
+
+ Figure 9
+
+</link>
+
+ shows the result of performing a spectral analysis on the time 
+series containing this new time-delayed impulse.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1013" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1013">
+<row id="tr1026">
+<entry id="th1013">
+
+
+
+<emphasis id="Figure_9" effect="bold">
+
+Figure 9.
+
+</emphasis>
+
+ Spectral analysis of impulse with five-sample delay.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1013">
+<row id="tr1027">
+<entry id="td1013">
+
+
+
+
+<media id="media1003" alt="missing image" display="block">
+<image id="img1003" mime-type="image/jpeg" src="../../media/java1484a04.jpg" width="409" height="431"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<para id="p1114">
+Finally, you can probably see the impulse on the left side of the top plot in 
+
+
+<link id="a1105" target-id="Figure_9">
+
+ Figure 9
+
+</link>
+
+ without straining your eyes too much.
+
+</para>
+
+
+
+
+
+<para id="p1115">
+As we would expect, the amplitude spectrum hasn't changed.
+
+</para>
+
+
+
+
+
+<para id="p1116">
+Although it wasn't apparent in 
+
+<link id="a1106" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+, 
+
+<link id="a1107" target-id="Figure_9">
+
+ Figure 9
+
+</link>
+
+ shows that the real part of 
+the spectrum takes on the shape of a cosine wave, while the imaginary part of 
+the spectrum takes on the shape of a sine wave as a result of the time delay of 
+the impulse.
+
+</para>
+
+
+
+
+
+<para id="p1117">
+The phase shift is still linear across frequency as would be expected, but 
+the slope is now five times greater than the slope of the phase shift in 
+
+
+<link id="a1108" target-id="Figure_7">
+
+ Figure 7
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<quote id="blockquote1014" display="block">
+
+	
+
+<para id="p1118">
+<emphasis id="em1046" effect="italics">
+(Note that the time delay is five times greater in 
+
+<link id="a1109" target-id="Figure_9">
+
+ Figure 9
+
+</link>
+
+. Note 
+	also that the plot of the phase angle wraps around from +180 degrees to -180 
+	degrees each time the phase angle reaches +180 degrees. This produces the 
+	saw tooth effect shown in the bottom plot in 
+
+<link id="a1110" target-id="Figure_9">
+
+ Figure 9
+
+</link>
+
+.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+</section>
+</section>
+<section id="h31012">
+<title>
+<emphasis id="A_boxcar_pulse" effect="bold">
+
+A boxcar pulse
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1119">
+If an impulse is the simplest kind of pulse to generate digitally, a boxcar 
+pulse is probably the next simplest. A "boxcar" pulse is one where several 
+adjacent samples have the same non-zero value. Let's examine the case for an 
+eleven-sample boxcar pulse. The new parameters for this case are shown in 
+
+
+<link id="a1111" target-id="Figure_10">
+
+ Figure 10
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+<table id="table1014" summary="This is a table." pgwide="630">
+<tgroup cols="1">
+
+
+<thead id="thead1014">
+<row id="tr1028">
+<entry id="th1014">
+
+
+
+<emphasis id="Figure_10" effect="bold">
+
+Figure 10.
+
+</emphasis>
+
+ A boxcar pulse.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1014">
+<row id="tr1029">
+<entry id="td1014">
+
+		
+
+<code id="pre1011" display="block">Parameters read from file
+Data length: 400
+Pulse length: 11
+Sample for zero time: 0
+Lower frequency bound: 0.0
+Upper frequency bound: 0.5
+Pulse Values
+40.0
+40.0
+40.0
+40.0
+40.0
+40.0
+40.0
+40.0
+40.0
+40.0
+40.0</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<section id="h41047">
+<title>
+The spectral analysis output for the boxcar pulse
+
+</title>
+
+
+
+
+<para id="p1120">
+The spectral analysis output for the eleven-sample boxcar pulse is shown in 
+
+
+<link id="a1112" target-id="Figure_11">
+
+ Figure 11
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1015" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1015">
+<row id="tr1030">
+<entry id="th1015">
+
+
+
+<emphasis id="Figure_11" effect="bold">
+
+Figure 11.
+
+</emphasis>
+
+ Spectral analysis of 11-sample boxcar pulse.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1015">
+<row id="tr1031">
+<entry id="td1015">
+
+
+
+
+<media id="media1004" alt="missing image" display="block">
+<image id="img1004" mime-type="image/jpeg" src="../../media/java1484a05.jpg" width="409" height="431"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<para id="p1121">
+The pulse itself is relatively easy to see on the leftmost end of the top 
+plot.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41048">
+<title>
+The amplitude spectrum
+
+</title>
+
+
+
+
+<para id="p1122">
+The amplitude spectrum is no longer flat. Rather it has a peak at zero 
+frequency and goes to zero between frequency sample 72 and frequency sample 73.
+
+</para>
+
+
+
+
+
+<para id="p1123">
+Without getting into the technical details, I will simply tell you that the 
+location of the point where it goes to zero is related to the reciprocal of the 
+pulse width. If that sounds familiar, it is because we encountered similar 
+situations involving bandwidth in the module titled
+
+
+<link id="a1113" url="http://cnx.org/contents/97db670f-e425-49a8-8899-875426fc316d/Java1483-Spectrum-Analysis-usi">
+
+
+Spectrum Analysis using Java, Frequency Resolution versus Data Length
+
+</link>
+
+.
+
+</para>
+
+
+
+
+
+<para id="p1124">
+In fact, the shape of the amplitude spectrum is a familiar (sin x)/x curve 
+with the negative lobes flipped up and turned into positive lobes instead.
+
+</para>
+
+
+
+
+
+<para id="p1125">
+The phase angle is still linear with frequency although it now shows some 
+discontinuities at those frequencies where the amplitude spectrum touches zero.
+
+</para>
+
+
+
+
+
+</section>
+</section>
+<section id="h31013">
+<title>
+<emphasis id="The_magic_of_non_real-time_digital_processing" effect="bold">
+
+The magic of non real-time digital processing
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1126">
+When working with 
+
+<emphasis id="em1047" effect="italics">
+(recorded non real-time)
+
+</emphasis>
+ digital time series, it 
+is not only possible to physically shift pulses forward or backward in time, it 
+is also possible to leave the pulses where they are and redefine the underlying 
+time base. For the next experiment, I will leave everything else the same and 
+redefine the location of the origin of time. I will place the time origin at the 
+middle of the boxcar pulse.
+
+</para>
+
+
+
+
+
+<para id="p1127">
+The new parameters for this experiment are shown in 
+
+<link id="a1114" target-id="Figure_12">
+
+ Figure 12
+
+</link>
+
+. Note that the 
+only significant difference between 
+
+<link id="a1115" target-id="Figure_12">
+
+ Figure 12
+
+</link>
+
+ and 
+
+<link id="a1116" target-id="Figure_10">
+
+ Figure 10
+
+</link>
+
+ is the redefinition 
+of the sample that represents zero time. I redefined the time origin from sample 
+0 to sample 5. This causes the boxcar pulse to be centered on zero time. Five of 
+the samples in the boxcar pulse occur in negative 
+
+<emphasis id="em1048" effect="italics">
+(history)
+
+</emphasis>
+ time. One sample occurs 
+exactly at zero time. The other five samples occur in positive 
+
+<emphasis id="em1049" effect="italics">
+(future)
+
+</emphasis>
+ time .
+
+</para>
+
+
+
+
+
+
+<table id="table1016" summary="This is a table." pgwide="630">
+<tgroup cols="1">
+
+
+<thead id="thead1016">
+<row id="tr1032">
+<entry id="th1016">
+
+
+
+<emphasis id="Figure_12" effect="bold">
+
+Figure 12.
+
+</emphasis>
+
+ Shift the time base.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1016">
+<row id="tr1033">
+<entry id="td1016">
+
+		
+
+<code id="pre1012" display="block">Parameters read from file
+Data length: 400
+Pulse length: 11
+Sample for zero time: 5
+Lower frequency bound: 0.0
+Upper frequency bound: 0.5
+Pulse Values
+40.0
+40.0
+40.0
+40.0
+40.001
+40.0
+40.0
+40.0
+40.0
+40.0
+40.0</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+<quote id="blockquote1015" display="block">
+
+	
+
+<para id="p1128">
+<emphasis id="em1050" effect="italics">
+(I did make one other change. This change was to add a tiny spike to 
+	one of the samples near the center of the pulse. This creates a tiny amount 
+	of wide-band energy and tends to stabilize the computation of the phase 
+	angle. It prevents the imaginary part of the spectrum from switching back 
+	and forth between very small positive and negative values due to arithmetic 
+	errors.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</quote>
+
+
+
+
+<section id="h41049">
+<title>
+The spectral analysis output
+
+</title>
+
+
+
+
+<para id="p1129">
+The output from the spectral analysis is shown in 
+
+<link id="a1117" target-id="Figure_13">
+
+ Figure 13
+
+</link>
+
+. The magnitude 
+spectrum hasn't changed. The real part of the spectrum has changed 
+significantly. It is now a true (sin x)/x curve with both positive and negative 
+lobes.
+
+</para>
+
+
+
+
+
+
+
+<table id="table1017" summary="This is a table." pgwide="1">
+<tgroup cols="1">
+
+
+<thead id="thead1017">
+<row id="tr1034">
+<entry id="th1017">
+
+
+
+<emphasis id="Figure_13" effect="bold">
+
+Figure 13.
+
+</emphasis>
+
+ Spectral analysis of 11-sample boxcar centered in time.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1017">
+<row id="tr1035">
+<entry id="td1017">
+
+
+
+
+<media id="media1005" alt="missing image" display="block">
+<image id="img1005" mime-type="image/jpeg" src="../../media/java1484a06.jpg" width="409" height="431"/>
+</media>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+
+<para id="p1130">
+The imaginary part of the spectrum is zero or nearly zero at every frequency.
+
+
+<emphasis id="em1051" effect="italics">
+(It would be zero in the absence of arithmetic errors.)
+
+</emphasis>
+</para>
+
+
+
+
+
+<para id="p1131">
+The phase angle is zero across the entire main energy lobe of the spectrum. 
+It is -180 degrees in those frequency areas where the real part of the spectrum 
+is negative, and is zero in those frequency areas where the real part of the 
+spectrum is positive. There is no linear phase shift because the boxcar pulse is 
+centered on the time origin.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h41050">
+<title>
+Probably more than you ever wanted to know
+
+</title>
+
+
+
+
+<para id="p1132">
+And that is probably more than you ever wanted to know about the complex 
+spectrum, phase angles, and time shifts. I will stop writing and leave it at 
+that.
+
+</para>
+
+
+
+
+
+
+
+</section>
+</section>
+</section>
+</section>
+<section id="h11004">
+<title>
+<emphasis id="Run_the_program" effect="bold">
+
+Run the program
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+<para id="p1133">
+I encourage you to copy, compile, and run the program provided in this 
+module. Experiment with it, making changes and observing the results of your 
+changes.
+
+</para>
+
+
+
+
+
+<para id="p1134">
+Create more complex experiments. For example, you could create pulses of 
+different lengths with complex shapes and examine the complex spectra and phase 
+angles for those pulses.
+
+</para>
+
+
+
+
+
+<para id="p1135">
+If you really want to get fancy, you could create a pulse consisting of a 
+sinusoid whose frequency changes with time from the beginning to the end of the 
+pulse. 
+
+<emphasis id="em1052" effect="italics">
+(A pulse of this type is often referred to as a frequency modulated 
+sweep signal.)
+
+</emphasis>
+ See what you can conclude from doing spectral analysis on a 
+pulse of this type. Pay particular attention to the phase angle across the 
+frequency band containing most of the energy.
+
+</para>
+
+
+
+
+
+<para id="p1136">
+Most of all enjoy yourself and learn something in the process.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h11005">
+<title>
+<emphasis id="Summary" effect="bold">
+
+Summary
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1137">
+The default pulse for the 
+
+<emphasis id="strong1057" effect="bold">
+Dsp034
+
+</emphasis>
+ program is a damped 
+sinusoid. This is a pulse whose shape is commonly found in mechanical and 
+electronic systems in the real world. The phase angle in the complex spectrum 
+for a pulse of this shape is nonlinear. Among other things, nonlinear phase 
+angles introduce phase distortion into audio systems.
+
+</para>
+
+
+
+
+
+<para id="p1138">
+The simplest pulse of all is a single impulse. A pulse of this type has an 
+infinite bandwidth 
+
+<emphasis id="em1053" effect="italics">
+(theoretically)
+
+</emphasis>
+ and a linear phase angle. The slope 
+of the phase angle depends on the location of the pulse relative to the time 
+origin.
+
+</para>
+
+
+
+
+
+<para id="p1139">
+Shifting a pulse in time introduces a linear phase angle to the complex 
+spectrum. Conversely, introducing a linear phase angle to the complex spectrum 
+causes a pulse to be shifted in time.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h11006">
+<title>
+<emphasis id="Whats_next" effect="bold">
+
+What's next?
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1140">
+The next module in this series will introduce the 
+
+<emphasis id="em1054" effect="italics">
+inverse
+
+</emphasis>
+ Fourier 
+transform 
+
+<emphasis id="em1055" effect="italics">
+(as opposed to the forward Fourier transform)
+
+</emphasis>
+ and will 
+explain the reversible nature of the Fourier transform.
+
+</para>
+
+
+
+
+
+</section>
+<section id="h11007">
+<title>
+<emphasis id="Complete_program_listings" effect="bold">
+
+Complete program listing
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1141">
+A complete listing of the program discussed in this module is provided in 
+Listing 6 below. Listings for other programs mentioned in the module, such as
+
+
+<emphasis id="strong1058" effect="bold">
+Graph03
+
+</emphasis>
+ and 
+
+<emphasis id="strong1059" effect="bold">
+Graph06
+
+</emphasis>
+, are provided in other 
+modules. Those modules are identified in the text of this module. 
+
+</para>
+
+
+
+
+
+<table id="table1018" summary="This is a table." pgwide="677">
+<tgroup cols="1">
+
+
+<thead id="thead1018">
+<row id="tr1036">
+
+
+
+<entry id="th1018">
+<emphasis id="Listing_6" effect="bold">
+
+Listing 6.
+
+</emphasis>
+
+ Dsp034.java.
+
+</entry>
+
+
+
+</row>
+</thead>
+
+
+<tbody id="tbody1018">
+<row id="tr1037">
+<entry id="td1018">
+
+		
+
+<code id="pre1013" display="block">/* File Dsp034.java
+Copyright 2004, R.G.Baldwin
+Rev 5/21/04
+
+Computes and plots the amplitude, real, imag,
+and phase angle spectrum of a pulse that is read
+from a file named Dsp034.txt.  If that file
+doesn't exist in the current directory, the
+program uses a set of default parameters
+describing a damped sinusoidal pulse.
+
+The program also plots the pulse.  When the data
+is plotted using the programs Graph03 or Graph06,
+the order of the plots from top to bottom in the
+display are:
+The pulse
+The amplitude spectrum
+The real spectrum
+The imaginary spectrum
+The phase angle in degrees
+
+Each parameter value must be stored as characters
+on a separate line in the file named Dsp034.txt.
+The required parameters are as follows:
+
+Data length as type int
+Pulse length as type int
+Sample number representing zero time as type int
+Low frequency bound as type double
+High frequency bound as type double
+Sample values for the pulse as type double
+
+The number of sample values must match the value
+for the pulse length.
+
+All frequency values are specified as a
+double representing a fractional part of the
+sampling frequency.  For example, a value of 0.5
+specifies a frequency that is half the sampling
+frequency.
+
+Here is a set of sample parameter values that can
+be used to test the program.  This sample data
+describes a triangular pulse.  Don't allow blank
+lines at the end of the data in the file.
+
+400
+11
+0
+0.0
+0.5
+0
+0
+0
+45
+90
+135
+90
+45
+0
+0
+0
+
+
+The plotting program that is used to plot the
+output data from this program requires that the
+program implement GraphIntfc01.  For example,
+the plotting program named Graph03 can be used
+to plot the data produced by this program.  When
+it is used, the usage information is:
+
+java Graph03 Dsp034
+
+A static method named transform belonging to the
+class named ForwardRealToComplex01 is used to
+perform the actual spectral analysis.  The
+method named transform does not implement an FFT
+algorithm.  Rather, it is more general than, but
+much slower than an FFT algorithm.  (See the
+program named Dsp030 for the use of an FFT
+algorithm.)
+
+Tested using SDK 1.4.2 under WinXP.
+************************************************/
+import java.util.*;
+import java.io.*;
+
+class Dsp034 implements GraphIntfc01{
+  final double pi = Math.PI;//for simplification
+
+  int dataLen;//data length
+  int pulseLen;//length of the pulse
+  int zeroTime;//sample that represents zero time
+  //Low and high frequency limits for the
+  // spectral analysis.
+  double lowF;
+  double highF;
+  double[] pulse;//data describing the pulse
+
+  //Following array stores input data for the
+  // spectral analysis process.
+  double[] data;
+
+  //Following arrays receive information back
+  // from the spectral analysis process
+  double[] real;
+  double[] imag;
+  double[] angle;
+  double[] mag;
+
+  public Dsp034(){//constructor
+
+    //Get the parameters from a file named
+    // Dsp034.txt.  Create and use default
+    // parameters describing a damped sinusoidal
+    // pulse if the file doesn't exist in the
+    // current directory.
+    if(new File("Dsp034.txt").exists()){
+      getParameters();
+    }else{
+      //Create default parameters
+      dataLen = 400;//data length
+      pulseLen = 100;//pulse length
+      //Sample that represents zero time.
+      zeroTime = 0;
+      //Low and high frequency limits for the
+      // spectral analysis.
+      lowF = 0.0;
+      highF = 0.5;//half the sampling frequency
+      pulse = new double[pulseLen];
+      double scale = 240.0;
+      for(int cnt = 0;cnt &lt; pulseLen;cnt++){
+        scale = 0.94*scale;//damping scale factor
+        pulse[cnt] =
+                 scale*Math.sin(2*pi*cnt*0.0625);
+      }//end for loop
+      //End default parameters
+    }//end else
+
+    //Create the data array and deposit the pulse
+    // in it.
+    data = new double[dataLen];
+    for(int cnt = 0;cnt &lt; pulse.length;cnt++){
+      data[cnt] = pulse[cnt];
+    }//end for loop
+
+    //Print parameter values.
+    System.out.println(
+                      "Data length: " + dataLen);
+    System.out.println(
+                    "Pulse length: " + pulseLen);
+    System.out.println(
+            "Sample for zero time: " + zeroTime);
+    System.out.println(
+               "Lower frequency bound: " + lowF);
+    System.out.println(
+              "Upper frequency bound: " + highF);
+    System.out.println("Pulse Values");
+    for(int cnt = 0;cnt &lt; pulseLen;cnt++){
+      System.out.println(pulse[cnt]);
+    }//end for loop
+
+    //Create array objects to receive the results
+    // and perform the spectral analysis.
+    mag = new double[dataLen];
+    real = new double[dataLen];
+    imag = new double[dataLen];
+    angle = new double[dataLen];
+    ForwardRealToComplex01.transform(data,real,
+      imag,angle,mag,zeroTime,lowF,highF);
+
+  }//end constructor
+  //-------------------------------------------//
+
+  //This method gets processing parameters from
+  // a file named Dsp034.txt and stores those
+  // parameters in instance variables belonging
+  // to the object of type Dsp034.
+  void getParameters(){
+
+    int cnt = 0;
+    //Temporary holding area for strings.  Allow
+    // space for a few blank lines at the end
+    // of the data in the file.
+    String[] data = new String[20];
+    try{
+      //Open an input stream.
+      BufferedReader inData =
+               new BufferedReader(new FileReader(
+                                  "Dsp034.txt"));
+      //Read and save the strings from each of
+      // the lines in the file.  Be careful to
+      // avoid having blank lines at the end,
+      // which may cause an ArrayIndexOutOfBounds
+      // exception to be thrown.
+      while((data[cnt] =
+                     inData.readLine()) != null){
+        cnt++;
+      }//end while
+      inData.close();
+    }catch(IOException e){}
+
+    //Move the parameter values from the
+    // temporary holding array into the instance
+    // variables, converting from characters to
+    // numeric values in the process.
+    cnt = 0;
+    dataLen =
+            (int)Double.parseDouble(data[cnt++]);
+    pulseLen =
+            (int)Double.parseDouble(data[cnt++]);
+    zeroTime =
+            (int)Double.parseDouble(data[cnt++]);
+    lowF = Double.parseDouble(data[cnt++]);
+    highF = Double.parseDouble(data[cnt++]);
+
+    //Create a new array object for the pulse
+    // and populate it from the file data.
+    pulse = new double[pulseLen];
+    for(int pCnt = 0;pCnt &lt; pulseLen;pCnt++){
+      pulse[pCnt] = Double.parseDouble(
+                                    data[cnt++]);
+    }//end for loop
+    System.out.println(
+                    "Parameters read from file");
+
+  }//end getParameters
+  //-------------------------------------------//
+  //The following six methods are required by the
+  // interface named GraphIntfc01.  The plotting
+  // program pulls the data values to be plotted
+  // by calling these methods.
+  public int getNmbr(){
+    //Return number of functions to process.
+    // Must not exceed 5.
+    return 5;
+  }//end getNmbr
+  //-------------------------------------------//
+  //Provide the input data for plotting.
+  public double f1(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; data.length-1){
+      return 0;
+    }else{
+      return data[index];
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  //Provide the amplitude spectral data for
+  // plotting.  Attempt to scale it so that it
+  // will plot well in the range 0 to 180.
+  public double f2(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; mag.length-1){
+      return 0;
+    }else{
+      return (4*dataLen/pulseLen)*mag[index];
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  //Provide the real spectral data for
+  // plotting.  Attempt to scale it so that it
+  // will plot well in the range -180 to 180.
+  public double f3(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; real.length-1){
+      return 0;
+    }else{
+      //Scale for convenient display
+      return (4*dataLen/pulseLen)*real[index];
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  //Provide the imaginary spectral data for
+  // plotting.  Attempt to scale it so that it
+  // will plot well in the range -180 to 180.
+  public double f4(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; imag.length-1){
+      return 0;
+    }else{
+      //Scale for convenient display
+      return (4*dataLen/pulseLen)*imag[index];
+    }//end else
+  }//end function
+  //-------------------------------------------//
+  //Provide the phase angle data for plotting.
+  // The angle ranges from -180 degrees to +180
+  // degrees.  This is thing that drives the
+  // attempt to cause the other curves to plot
+  // well in the range -180 to +180.
+  public double f5(double x){
+    int index = (int)Math.round(x);
+    if(index &lt; 0 || index &gt; angle.length-1){
+      return 0;
+    }else{
+      return angle[index];
+    }//end else
+  }//end function
+  //-------------------------------------------//
+
+}//end class Dsp034</code>
+
+
+
+
+</entry>
+</row>
+</tbody>
+
+
+</tgroup>
+</table>
+
+
+
+
+	
+
+</section>
+<section id="h11008">
+<title>
+<emphasis id="Miscellaneous" effect="bold">
+
+Miscellaneous
+
+</emphasis>
+
+
+</title>
+
+
+	
+
+<para id="p1142">
+This section contains a variety of miscellaneous information.
+
+</para>
+
+
+
+
+
+	
+
+<note id="note1000" type="">
+
+
+		
+
+
+			
+
+
+				
+
+<emphasis id="strong1060" effect="bold">
+Housekeeping material
+
+</emphasis>
+
+				
+
+<list id="ul1013" list-type="bulleted">
+
+					
+
+<item id="li1062">
+Module name: Java1484-Spectrum Analysis using Java, 
+					Complex Spectrum and Phase Angle
+
+</item>
+
+
+					
+
+<item id="li1063">
+File: Java1484.htm
+
+</item>
+
+
+					
+
+<item id="li1064">
+Published: 09/21/04
+
+</item>
+
+
+				
+
+</list>
+
+
+
+
+<para id="p1143">
+Baldwin discusses the complex spectrum and explains the relationship between the phase angle and shifts in the time domain. 
+
+</para>
+
+
+
+				
+
+</note>
+
+
+
+
+
+	
+
+<note id="note1001" type="">
+
+
+		
+
+
+			
+
+
+				
+
+<emphasis id="strong1061" effect="bold">
+Disclaimers:
+
+</emphasis>
+<para id="p1144">
+<emphasis id="strong1062" effect="bold">
+Financial
+
+</emphasis>
+: Although the Connexions
+site makes it possible for you to download a PDF file for this
+module at no charge, and also makes it possible for you to
+purchase a pre-printed version of the PDF file, you should be
+aware that some of the HTML elements in this module may not translate well into
+PDF.
+
+</para>
+
+
+
+				
+
+<para id="p1145">
+I also want you to know that, I receive no financial compensation from the Connexions website even if you purchase 
+	the PDF version of the module.
+
+</para>
+
+
+
+				
+
+<para id="p1146">
+In the past, unknown individuals have copied my modules from cnx.org, converted them to Kindle books, and 
+				placed them for sale on Amazon.com showing me as the author. I 
+				neither receive compensation for those sales nor do I know who does 
+				receive compensation. If you purchase such a book, please be 
+				aware that it is a copy of a module that is freely 
+				available on cnx.org and that it was made and published without 
+				my prior knowledge.
+
+</para>
+
+
+
+				
+
+<para id="p1147">
+<emphasis id="strong1063" effect="bold">
+Affiliation
+
+</emphasis>
+:: I am a professor of Computer Information 
+	Technology at Austin Community College in Austin, TX.
+	
+
+</para>
+
+
+
+
+</note>
+
+
+
+	
+
+
+
+<para id="p1148">
+-end- 
+
+</para>
+
+
+
+
+
+
+
+</section>
+</content>
+
+
+
+
+</document>

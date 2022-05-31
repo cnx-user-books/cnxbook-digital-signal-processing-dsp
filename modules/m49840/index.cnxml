@@ -1,0 +1,642 @@
+<document xmlns="http://cnx.rice.edu/cnxml"> 
+<title>Java2350-Adaptive Filtering in Java, Getting Started</title>
+<metadata xmlns:md="http://cnx.rice.edu/mdml">
+  <md:content-id>m49840</md:content-id>
+  <md:title>Java2350-Adaptive Filtering in Java, Getting Started</md:title>
+  <md:abstract>Learn how to write a Java program to adaptively design a time-delay convolution filter with a flat amplitude response and a linear phase response using an LMS adaptive algorithm.</md:abstract>
+  <md:uuid>7f108976-574e-48cd-b80d-0ee16dd95704</md:uuid>
+</metadata>
+
+<content>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section id="h11000">
+<title>
+Table of contents
+
+</title>
+
+
+
+
+<list id="ul1000" list-type="bulleted">
+
+	
+
+<item id="li1000">
+<link id="a1000" target-id="Preface">
+
+Preface
+
+</link>
+
+
+	
+
+</item>
+
+
+	
+
+<item id="li1001">
+<link id="a1001" target-id="Tutorial_Links">
+
+Tutorial links
+
+</link>
+
+
+</item>
+
+
+	
+
+<item id="li1002">
+<link id="a1002" target-id="Legacy_content_and_references">
+
+Legacy content and references
+
+</link>
+
+
+</item>
+
+
+	
+
+<item id="li1003">
+<link id="a1003" target-id="Legacy_versus_openstax_presentation_format">
+
+Legacy versus 
+	openstax presentation format
+
+</link>
+
+
+</item>
+
+
+	
+
+<item id="li1004">
+<link id="a1004" target-id="Miscellaneous">
+
+Miscellaneous
+
+</link>
+
+
+</item>
+
+
+
+
+</list>
+
+
+	
+
+	
+
+</section>
+<section id="h11001">
+<title>
+<emphasis id="Preface" effect="bold">
+
+Preface
+
+</emphasis>
+
+
+</title>
+
+
+	
+
+	
+
+<para id="p1000">
+This is a cover page for a tutorial named 
+
+<emphasis id="strong1000" effect="bold">
+<emphasis id="em1000" effect="italics">
+Adaptive Filtering in Java, Getting Started
+
+</emphasis>
+</emphasis>
+ that was published by 
+	Prof. Baldwin around 2005. Some things don't change with time and the contents 
+	of the tutorial are as relevant today as when the tutorial was originally 
+	published.
+
+</para>
+
+
+
+
+</section>
+<section id="h11002">
+<title>
+<emphasis id="Tutorial_Links" effect="bold">
+
+Tutorial Links
+
+</emphasis>
+
+
+</title>
+
+
+
+
+<para id="p1001">
+You can access the tutorial in either HTML or PDF format by clicking on one 
+of the links below:
+
+</para>
+
+
+
+
+<list id="ul1001" list-type="bulleted">
+
+	
+
+<item id="li1005">
+<link id="a1005" url="Java2350.htm">
+
+HTML
+
+</link>
+
+
+</item>
+
+
+	
+
+<item id="li1006">
+<link id="a1006" url="Java2350.pdf">
+
+PDF
+
+</link>
+
+
+</item>
+
+
+
+
+</list>
+
+
+
+
+<para id="p1002">
+<emphasis id="em1001" effect="italics">
+(See the caution below regarding HTML and the 
+
+<emphasis id="strong1001" effect="bold">
+openstax
+
+</emphasis>
+ 
+presentation format.)
+
+</emphasis>
+</para>
+
+
+
+
+
+</section>
+<section id="h11003">
+<title>
+<emphasis id="Legacy_content_and_references" effect="bold">
+
+Legacy content and references
+
+</emphasis>
+
+
+</title>
+
+
+
+
+
+<para id="p1003">
+The tutorial may contain references to source code that is defined in other 
+tutorials. Prof. Baldwin has attempted to make certain that all of the source code required 
+by each tutorial is contained within that tutorial. However, if the tutorial refers to another tutorial or to a program that is not 
+included, try searching for it by title on cnx.org or on the web. It is 
+probably available somewhere.
+
+</para>
+
+
+
+
+<para id="p1004">
+The tutorial may contain internal links to other tutorials that Prof. Baldwin 
+has written and published somewhere on the web. Those links may, or may not 
+still be good. In any event, if you search cnx.org for the referenced tutorial by title or 
+by topic, you will probably find a clean copy of the referenced tutorial on cnx.org.
+
+</para>
+
+
+
+
+<para id="p1005">
+By publishing the tutorial on the 
+
+<emphasis id="strong1002" effect="bold">
+openstax CNX
+
+</emphasis>
+
+site, the tutorial is being licensed under a Creative Commons Attribution 4.0 License 
+even though the copyright notice on the original tutorial document may be more 
+restrictive.
+
+</para>
+
+
+
+
+</section>
+<section id="h11004">
+<title>
+<emphasis id="Legacy_versus_openstax_presentation_format" effect="bold">
+
+Legacy versus openstax 
+presentation format
+
+</emphasis>
+
+
+</title>
+
+
+
+				
+
+<para id="p1006">
+Early in 2014, 
+
+<link id="a1007" url="http://cnx.org/">
+
+cnx.org
+
+</link>
+
+ began a 
+				transition from a
+				
+
+<link url="/content/col11441/latest/" id="a1008">
+
+legacy 
+				presentation format
+
+</link>
+
+ to a new
+				
+
+<link id="a1009" url="http://cnx.org/contents/fb64661c-5b3f-4ea8-97c6-e48df112438a">
+
+
+				openstax
+
+</link>
+
+ presentation format. As of April 7, 2014, some of 
+				the functionality of the legacy presentation format that is 
+				required by this module had not yet been ported to the 
+
+<emphasis id="strong1003" effect="bold">
+
+				openstax
+
+</emphasis>
+ presentation format. 
+
+<emphasis id="em1002" effect="italics">
+(In particular, image 
+				files referenced by hyperlinks in the HTML version of the 
+				tutorial may not display properly in the 
+
+</emphasis>
+
+				
+
+<emphasis id="strong1004" effect="bold">
+<emphasis id="em1003" effect="italics">
+openstax
+
+</emphasis>
+</emphasis>
+<emphasis id="em1004" effect="italics">
+ presentation format.)
+
+</emphasis>
+</para>
+
+
+				
+
+<para id="p1007">
+This issue should be resolved at some point in the future. In the meantime, one of your options is to select and view the PDF 
+				version of the tutorial using the PDF link provided above.
+
+</para>
+
+
+				
+
+<para id="p1008">
+A second option is to click the 
+
+<emphasis id="strong1005" effect="bold">
+Legacy Site
+
+</emphasis>
+ 
+				link at the top of this page 
+
+<emphasis id="em1005" effect="italics">
+(assuming that you are not 
+				already on the Legacy Site)
+
+</emphasis>
+ and view the tutorial in its 
+				original HTML format.
+
+<emphasis id="em1006" effect="italics">
+ (The HTML format is 
+				more reliable than the PDF format, particularly with regard 
+				to source code listings.)
+
+</emphasis>
+</para>
+
+
+				
+
+<para id="p1009">
+Later, when the issue mentioned above is 
+				resolved, you can select either the PDF version or the HTML 
+				version directly from the 
+
+<emphasis id="strong1006" effect="bold">
+openstax
+
+</emphasis>
+ presentation 
+				page, whichever you prefer.
+
+</para>
+
+
+	
+
+</section>
+<section id="h11005">
+<title>
+<emphasis id="Miscellaneous" effect="bold">
+
+Miscellaneous
+
+</emphasis>
+
+
+</title>
+
+
+	
+
+<para id="p1010">
+This section contains a variety of miscellaneous information.
+
+</para>
+
+
+
+
+
+	
+
+<note id="note1000" type="miscellaneous">
+
+
+		
+
+
+			
+
+
+				
+
+<emphasis id="strong1007" effect="bold">
+Housekeeping material
+
+</emphasis>
+
+				
+
+<list id="ul1002" list-type="bulleted">
+
+					
+
+<item id="li1007">
+Module name: Java2350-Adaptive Filtering in Java, 
+					Getting Started
+
+</item>
+
+
+					
+
+<item id="li1008">
+File: Java2350.htm
+
+
+</item>
+
+
+					
+
+<item id="li1009">
+Published: 04/21/14
+
+</item>
+
+
+
+				
+
+</list>
+
+
+				
+
+</note>
+
+			
+
+
+		
+
+
+
+	
+
+
+
+
+
+
+	
+
+<note id="note1001" type="miscellaneous">
+
+
+		
+
+
+			
+
+
+				
+
+<emphasis id="strong1008" effect="bold">
+Disclaimers:
+
+</emphasis>
+<para id="p1011">
+<emphasis id="strong1009" effect="bold">
+Financial
+
+</emphasis>
+: Although the 
+				
+
+<emphasis id="strong1010" effect="bold">
+openstax CNX
+
+</emphasis>
+
+site makes it possible for you to download a PDF file for the collection that 
+				contains this
+module at no charge, and also makes it possible for you to
+purchase a pre-printed version of the PDF file, you should be
+aware that some of the HTML elements in this module may not translate well into
+PDF.
+
+</para>
+
+
+				
+
+<para id="p1012">
+You also need to know that Prof. Baldwin receives no financial compensation from 
+				
+
+<emphasis id="strong1011" effect="bold">
+openstax CNX 
+
+</emphasis>
+even if you purchase 
+	the PDF version of the collection.
+
+</para>
+
+
+				
+
+<para id="p1013">
+In the past, unknown individuals have copied Prof. Baldwin's modules from cnx.org, converted them to Kindle books, and 
+				placed them for sale on Amazon.com showing Prof. Baldwin as the author. 
+				Prof. Baldwin 
+				neither receive compensation for those sales nor does he know who does 
+				receive compensation. If you purchase such a book, please be 
+				aware that it is a copy of a collection that is freely 
+				available on 
+
+<emphasis id="strong1012" effect="bold">
+openstax CNX
+
+</emphasis>
+ and that it was made and published without 
+				the prior knowledge of Prof. Baldwin.
+
+</para>
+
+
+				
+
+<para id="p1014">
+<emphasis id="strong1013" effect="bold">
+Affiliation
+
+</emphasis>
+: Prof. Baldwin is a professor of Computer Information 
+	Technology at Austin Community College in Austin, TX.
+	
+
+</para>
+
+
+				
+
+</note>
+
+			
+
+
+		
+
+
+
+	
+
+
+
+
+
+<para id="p1015">
+-end- 
+
+</para>
+
+
+
+
+
+
+
+</section>
+</content>
+
+
+
+
+</document>
